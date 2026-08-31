@@ -123,9 +123,10 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .nav-title{font-size:20px;font-weight:800;letter-spacing:-0.5px}
 .nav-title span{color:var(--accent-light)}
 .nav-actions{display:flex;align-items:center;gap:12px}
-.nav-btn{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);transition:all .3s}
+.nav-btn{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);transition:all .3s;position:relative}
 .nav-btn:hover{background:rgba(255,255,255,0.1);transform:scale(1.1)}
 .nav-btn svg{width:20px;height:20px}
+.nav-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:var(--danger);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg-primary)}
 .nav-avatar{width:40px;height:40px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:2px solid rgba(255,255,255,0.15);overflow:hidden;cursor:pointer;box-shadow:0 4px 15px var(--accent-glow);transition:transform .3s}
 .nav-avatar:hover{transform:scale(1.08)}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
@@ -144,7 +145,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .story-ring.add svg{width:24px;height:24px;color:var(--text-secondary)}
 .story-name{font-size:11px;color:var(--text-secondary);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* Content area - PADDING FIX */
+/* Content area */
 .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:20px 20px 180px;-webkit-overflow-scrolling:touch}
 .content::-webkit-scrollbar{width:0}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
@@ -301,6 +302,22 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .profile-logout{width:100%;padding:16px;background:rgba(239,68,68,0.1);border:1px solid var(--danger);border-radius:16px;color:var(--danger);font-weight:700;font-size:15px;transition:all .3s;margin-top:16px}
 .profile-logout:hover{background:rgba(239,68,68,0.2);transform:translateY(-2px)}
 
+/* My stories in profile */
+.my-stories-list{display:flex;flex-direction:column;gap:8px}
+.my-story-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-card-hover);border-radius:12px;transition:all .2s}
+.my-story-item:hover{background:rgba(255,255,255,0.08)}
+.my-story-cover{width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.my-story-cover img{width:100%;height:100%;object-fit:cover}
+.my-story-info{flex:1;min-width:0}
+.my-story-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.my-story-meta{font-size:11px;color:var(--text-secondary);margin-top:2px;display:flex;gap:10px}
+.my-story-views{display:flex;align-items:center;gap:4px}
+.my-story-views svg{width:12px;height:12px}
+.my-story-delete{width:32px;height:32px;border-radius:50%;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.my-story-delete:hover{background:var(--danger);transform:scale(1.1)}
+.my-story-delete svg{width:14px;height:14px;color:var(--danger)}
+.my-story-delete:hover svg{color:white}
+
 /* ===================== FRIENDS VIEW ===================== */
 .invite-card{background:linear-gradient(135deg,rgba(51,133,230,0.15),rgba(107,70,255,0.15));border:1px solid var(--border-light);border-radius:20px;padding:20px;margin-bottom:24px;text-align:center}
 .invite-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
@@ -335,7 +352,9 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 /* ===================== MODALS ===================== */
 .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.9);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.active{display:flex}
+.modal-overlay.center{align-items:center}
 .modal{width:100%;max-width:500px;max-height:90vh;background:var(--bg-card);border-radius:24px 24px 0 0;overflow:hidden;animation:slideUp .3s ease;border:1px solid var(--border-light);border-bottom:none}
+.modal-overlay.center .modal{border-radius:24px;max-height:85vh}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid var(--border)}
 .modal-title{font-size:18px;font-weight:700}
@@ -349,6 +368,19 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .modal-btn.secondary:hover{background:rgba(255,255,255,0.1)}
 .modal-btn.primary{background:var(--gradient-primary);box-shadow:0 6px 20px var(--accent-glow)}
 .modal-btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow)}
+.modal-btn.danger{background:var(--danger);box-shadow:0 6px 20px rgba(239,68,68,0.4)}
+
+/* Info modal (security) */
+.info-modal-icon{width:80px;height:80px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;background:var(--gradient-primary);box-shadow:0 10px 40px var(--accent-glow)}
+.info-modal-icon svg{width:40px;height:40px}
+.info-modal-title{text-align:center;font-size:22px;font-weight:800;margin-bottom:12px}
+.info-modal-desc{text-align:center;color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:20px}
+.info-features{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.info-feature{display:flex;gap:12px;padding:12px;background:var(--bg-card-hover);border-radius:12px}
+.info-feature-icon{width:36px;height:36px;border-radius:10px;background:rgba(51,133,230,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-feature-icon svg{width:18px;height:18px;color:var(--accent-light)}
+.info-feature-text{font-size:13px;line-height:1.5}
+.info-feature-text strong{color:var(--text-primary);display:block;margin-bottom:2px}
 
 /* Story preview */
 .story-preview{width:100%;aspect-ratio:9/16;max-height:380px;border-radius:16px;overflow:hidden;position:relative;margin-bottom:20px;background:linear-gradient(135deg,#1a1a2e,#16213e)}
@@ -364,6 +396,21 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .story-preview-player-artist{font-size:10px;color:var(--text-secondary)}
 .story-preview-player-btn{width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px var(--accent-glow)}
 .story-preview-player-btn svg{width:16px;height:16px}
+
+/* Tag input for stories */
+.tag-input-wrap{margin-bottom:16px}
+.tag-input-label{font-size:12px;color:var(--text-secondary);margin-bottom:8px;display:block}
+.tag-input{width:100%;height:44px;background:var(--bg-primary);border:1px solid var(--border);border-radius:12px;padding:0 14px;font-size:14px;color:var(--text-primary);transition:all .3s}
+.tag-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.tag-input::placeholder{color:var(--text-muted)}
+.tag-suggestions{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.tag-suggestion{padding:6px 12px;background:var(--bg-card-hover);border-radius:20px;font-size:12px;color:var(--accent-light);cursor:pointer;transition:all .2s;border:1px solid transparent}
+.tag-suggestion:hover{border-color:var(--accent);background:rgba(51,133,230,0.15)}
+.tag-suggestion.added{background:var(--accent);color:white}
+.tags-display{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag-chip{padding:4px 10px;background:var(--accent);border-radius:12px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
+.tag-chip-remove{cursor:pointer;opacity:0.7}
+.tag-chip-remove:hover{opacity:1}
 
 /* Privacy selector */
 .privacy-section-title{font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
@@ -400,7 +447,10 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .story-viewer-cover{width:200px;height:200px;border-radius:20px;overflow:hidden;margin-bottom:24px;box-shadow:0 30px 80px rgba(0,0,0,0.7)}
 .story-viewer-cover img{width:100%;height:100%;object-fit:cover}
 .story-viewer-title{font-size:26px;font-weight:800;text-align:center;margin-bottom:8px}
-.story-viewer-artist{font-size:16px;color:var(--text-secondary);text-align:center;margin-bottom:30px}
+.story-viewer-artist{font-size:16px;color:var(--text-secondary);text-align:center;margin-bottom:16px}
+.story-tags-display{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:20px;max-width:90%}
+.story-tag{padding:6px 12px;background:rgba(51,133,230,0.3);backdrop-filter:blur(10px);border:1px solid rgba(51,133,230,0.5);border-radius:20px;font-size:12px;font-weight:600;color:white;cursor:pointer;transition:all .2s}
+.story-tag:hover{background:var(--accent);transform:scale(1.05)}
 .story-viewer-player{width:100%;max-width:320px;height:56px;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border-radius:28px;display:flex;align-items:center;padding:8px 8px 8px 20px;gap:14px;border:1px solid rgba(255,255,255,0.1)}
 .story-viewer-player-info{flex:1;min-width:0}
 .story-viewer-player-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -410,6 +460,44 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .story-nav{position:absolute;top:50%;transform:translateY(-50%);width:50%;height:100%;z-index:5}
 .story-nav.prev{left:0}
 .story-nav.next{right:0}
+.story-viewer-actions{position:absolute;bottom:20px;left:16px;right:16px;display:flex;gap:10px;z-index:10}
+.story-action-btn{flex:1;height:44px;border-radius:22px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:600;transition:all .2s}
+.story-action-btn:hover{background:rgba(255,255,255,0.2)}
+.story-action-btn.liked{background:rgba(239,68,68,0.3);border-color:var(--danger)}
+.story-action-btn.liked svg{fill:var(--danger);stroke:var(--danger)}
+.story-action-btn svg{width:18px;height:18px}
+.story-views-btn{position:absolute;top:24px;right:60px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:700}
+.story-views-btn svg{width:14px;height:14px}
+
+/* Views list modal */
+.views-list{display:flex;flex-direction:column;gap:8px}
+.view-item{display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg-card-hover);border-radius:12px}
+.view-item-avatar{width:40px;height:40px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.view-item-info{flex:1;min-width:0}
+.view-item-name{font-size:13px;font-weight:600}
+.view-item-time{font-size:11px;color:var(--text-secondary)}
+
+/* Notifications panel */
+.notifications-panel{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:380px;background:var(--bg-card);z-index:700;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);border-left:1px solid var(--border);display:flex;flex-direction:column}
+.notifications-panel.active{transform:translateX(0)}
+.notifications-header{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.notifications-title{font-size:18px;font-weight:700}
+.notifications-list{flex:1;overflow-y:auto;padding:12px}
+.notification-item{display:flex;gap:12px;padding:12px;background:var(--bg-card-hover);border-radius:12px;margin-bottom:8px;transition:all .2s}
+.notification-item.unread{background:rgba(51,133,230,0.1);border-left:3px solid var(--accent)}
+.notification-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.notification-icon.like{background:rgba(239,68,68,0.2)}
+.notification-icon.like svg{color:var(--danger)}
+.notification-icon.play{background:rgba(16,185,129,0.2)}
+.notification-icon.play svg{color:var(--success)}
+.notification-icon.friend{background:rgba(51,133,230,0.2)}
+.notification-icon.friend svg{color:var(--accent)}
+.notification-icon svg{width:20px;height:20px}
+.notification-content{flex:1;min-width:0}
+.notification-text{font-size:13px;line-height:1.4}
+.notification-text strong{color:var(--text-primary)}
+.notification-time{font-size:11px;color:var(--text-secondary);margin-top:4px}
+.notification-empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
 
 /* Toast */
 .toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;padding:14px 24px;font-size:14px;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:10000;transition:transform .5s cubic-bezier(.4,0,.2,1);max-width:90%;backdrop-filter:blur(20px)}
@@ -439,6 +527,28 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .track-list-btn svg{width:18px;height:18px}
 .track-list-btn.liked{color:var(--danger)}
 .track-list-btn.downloaded{color:var(--success)}
+
+/* Onboarding tutorial */
+.onboarding-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:24px}
+.onboarding-overlay.active{display:flex}
+.onboarding-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:24px;padding:32px;max-width:400px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.8);text-align:center;position:relative;overflow:hidden}
+.onboarding-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gradient-primary)}
+.onboarding-illustration{width:120px;height:120px;margin:0 auto 20px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 40px var(--accent-glow);animation:pulse 2s ease-in-out infinite}
+.onboarding-illustration svg{width:60px;height:60px}
+.onboarding-step-label{font-size:11px;color:var(--accent-light);font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.onboarding-title{font-size:22px;font-weight:800;margin-bottom:12px;line-height:1.3}
+.onboarding-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:24px}
+.onboarding-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;text-align:left}
+.onboarding-feature{display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg-card-hover);border-radius:12px}
+.onboarding-feature-icon{width:32px;height:32px;border-radius:8px;background:rgba(51,133,230,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.onboarding-feature-icon svg{width:16px;height:16px;color:var(--accent-light)}
+.onboarding-feature-text{font-size:13px}
+.onboarding-progress{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
+.onboarding-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all .3s}
+.onboarding-dot.active{background:var(--accent);box-shadow:0 0 10px var(--accent-glow);width:24px;border-radius:4px}
+.onboarding-btn{width:100%;height:48px;background:var(--gradient-primary);border-radius:14px;font-weight:700;font-size:15px;box-shadow:0 6px 20px var(--accent-glow);transition:all .3s}
+.onboarding-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow)}
+.onboarding-skip{display:block;margin-top:12px;font-size:13px;color:var(--text-secondary);text-decoration:underline}
 
 /* Responsive */
 @media (min-width:768px){
@@ -506,8 +616,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 <div class="profile-setup-modal" id="profile-setup-modal">
   <div class="profile-setup-card">
     <h2>¡Bienvenido! 🎵</h2>
-    <p id="setup-subtitle">Configura tu perfil para comenzar. Elige un <strong>@username</strong> único que será tu identificador.</p>
-    
+    <p>Configura tu perfil para comenzar. Elige un <strong>@username</strong> único que será tu identificador.</p>
     <div class="avatar-upload" id="avatar-upload">
       <span id="avatar-initial">?</span>
       <img id="avatar-preview" style="display:none" alt="" />
@@ -516,7 +625,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
       </div>
     </div>
     <input type="file" id="avatar-file-input" accept="image/*" style="display:none" />
-    
     <input type="text" class="setup-input" id="setup-name" placeholder="Tu nombre" autocomplete="off" />
     <input type="text" class="setup-input" id="setup-username" placeholder="@username (único)" autocomplete="off" style="text-transform:lowercase" />
     <div class="setup-hint">Solo letras minúsculas, números, puntos y guiones bajos · 3-20 caracteres · <strong>La foto es opcional</strong></div>
@@ -538,11 +646,18 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
       <div class="nav-title">Music<span>Horizon</span></div>
     </div>
     <div class="nav-actions">
-      <button class="nav-btn" id="nav-search-btn" aria-label="Buscar">
+      <button class="nav-btn" id="nav-search-btn" aria-label="Buscar" title="Buscar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <circle cx="11" cy="11" r="7"/>
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
+      </button>
+      <button class="nav-btn" id="nav-notif-btn" aria-label="Notificaciones" title="Notificaciones">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="nav-badge" id="notif-badge" style="display:none">0</span>
       </button>
       <div class="nav-avatar" id="nav-avatar">?</div>
     </div>
@@ -606,7 +721,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
     </button>
   </div>
   <div class="full-tabs">
-    <div class="full-tab active" data-tab="music"> Música</div>
+    <div class="full-tab active" data-tab="music">🎵 Música</div>
     <div class="full-tab" data-tab="video">🎬 Video</div>
     <div class="full-tab" data-tab="lyrics">📝 Letras</div>
   </div>
@@ -676,7 +791,15 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
           </div>
         </div>
       </div>
-      <div class="privacy-section-title">¿Quién puede ver esta historia?</div>
+      
+      <div class="tag-input-wrap">
+        <label class="tag-input-label"> Etiquetar amigos (opcional)</label>
+        <input type="text" class="tag-input" id="tag-input" placeholder="Escribe @ para etiquetar..." />
+        <div class="tag-suggestions" id="tag-suggestions"></div>
+        <div class="tags-display" id="tags-display"></div>
+      </div>
+      
+      <div class="privacy-section-title">🔒 ¿Quién puede ver esta historia?</div>
       <div id="privacy-options">
         <div class="privacy-option selected" data-privacy="all">
           <div class="privacy-icon">
@@ -747,6 +870,10 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
         <div class="story-viewer-name" id="story-viewer-name">—</div>
         <div class="story-viewer-time" id="story-viewer-time">hace 1h</div>
       </div>
+      <button class="story-views-btn" id="story-views-btn" title="Ver quién vio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span id="story-views-count">0</span>
+      </button>
       <button class="story-viewer-close" id="story-viewer-close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -757,16 +884,31 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
         <div class="story-viewer-cover"><img id="story-viewer-cover" alt="" /></div>
         <div class="story-viewer-title" id="story-viewer-title">—</div>
         <div class="story-viewer-artist" id="story-viewer-artist">—</div>
+        <div class="story-tags-display" id="story-tags-display"></div>
         <div class="story-viewer-player">
           <div class="story-viewer-player-info">
             <div class="story-viewer-player-title" id="story-viewer-player-title">—</div>
             <div class="story-viewer-player-artist" id="story-viewer-player-artist">—</div>
           </div>
-          <div class="story-viewer-player-btn">
+          <button class="story-viewer-player-btn" id="story-play-btn">
             <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-          </div>
+          </button>
         </div>
       </div>
+    </div>
+    <div class="story-viewer-actions" id="story-viewer-actions">
+      <button class="story-action-btn" id="story-like-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <span>Me gusta</span>
+      </button>
+      <button class="story-action-btn" id="story-share-action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/>
+        </svg>
+        <span>Compartir</span>
+      </button>
     </div>
     <div class="story-nav prev" id="story-prev"></div>
     <div class="story-nav next" id="story-next"></div>
@@ -789,13 +931,121 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
   </div>
 </div>
 
+<!-- INFO MODAL (Security/Privacy) -->
+<div class="modal-overlay center" id="info-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="info-modal-title">Información</h3>
+      <button class="modal-close" id="info-modal-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="info-modal-body"></div>
+    <div class="modal-footer">
+      <button class="modal-btn primary" id="info-modal-ok">Entendido</button>
+    </div>
+  </div>
+</div>
+
+<!-- VISIBILITY SETTINGS MODAL -->
+<div class="modal-overlay" id="visibility-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">👁️ Visibilidad de historias</h3>
+      <button class="modal-close" id="visibility-modal-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px;line-height:1.5">Elige quién puede ver tus historias por defecto. Puedes cambiar la privacidad de cada historia al publicarla.</p>
+      <div class="privacy-section-title">Privacidad por defecto</div>
+      <div id="default-privacy-options">
+        <div class="privacy-option selected" data-privacy="all">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="privacy-info">
+            <div class="privacy-label">Todos</div>
+            <div class="privacy-desc">Cualquiera podrá ver tus historias</div>
+          </div>
+          <div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+        <div class="privacy-option" data-privacy="friends">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="privacy-info">
+            <div class="privacy-label">Mis Amigos</div>
+            <div class="privacy-desc">Solo tus amigos agregados</div>
+          </div>
+          <div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+        <div class="privacy-option" data-privacy="close">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="privacy-info">
+            <div class="privacy-label">Mejores Amigos</div>
+            <div class="privacy-desc">Solo tu círculo más cercano</div>
+          </div>
+          <div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+        <div class="privacy-option" data-privacy="partner">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="privacy-info">
+            <div class="privacy-label">Novio/a</div>
+            <div class="privacy-desc">Solo tu pareja</div>
+          </div>
+          <div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn secondary" id="visibility-cancel">Cancelar</button>
+      <button class="modal-btn primary" id="visibility-save">Guardar preferencias</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEWS LIST MODAL -->
+<div class="modal-overlay" id="views-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">👁️ Quién vio tu historia</h3>
+      <button class="modal-close" id="views-modal-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="views-list" id="views-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notifications-panel" id="notifications-panel">
+  <div class="notifications-header">
+    <h3 class="notifications-title">🔔 Notificaciones</h3>
+    <button class="modal-close" id="notif-panel-close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="notifications-list" id="notifications-list"></div>
+</div>
+
+<!-- ONBOARDING OVERLAY -->
+<div class="onboarding-overlay" id="onboarding-overlay">
+  <div class="onboarding-card" id="onboarding-card"></div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <!-- AUDIO -->
 <audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
 
-<!-- FIREBASE + APP -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
@@ -852,14 +1102,17 @@ const state = {
   favorites: [],
   downloads: [],
   playlists: [],
+  notifications: [],
   selectedPrivacy: 'all',
+  defaultPrivacy: 'all',
   storyViewerIndex: 0,
   storyViewerTimer: null,
+  currentViewingStory: null,
   tourDone: localStorage.getItem('mh_tour_completed') === '1',
   pendingTrackForPlaylist: null,
-  // Shuffle & Repeat state
+  storyTags: [],
   shuffleEnabled: false,
-  repeatMode: 0, // 0=off, 1=all, 2=one
+  repeatMode: 0,
   shuffledQueue: [],
   shuffledIndex: 0,
 };
@@ -901,52 +1154,91 @@ function validateUsername(username) {
   return null;
 }
 
+// ===================== NOTIFICATIONS =====================
+function addNotification(type, fromUser, message, storyId = null) {
+  const notif = {
+    id: Date.now() + Math.random(),
+    type,
+    fromUser,
+    message,
+    storyId,
+    read: false,
+    createdAt: Date.now()
+  };
+  state.notifications.unshift(notif);
+  Storage.save('notifications_' + state.user.username, state.notifications);
+  updateNotifBadge();
+}
+
+function updateNotifBadge() {
+  const unread = state.notifications.filter(n => !n.read).length;
+  const badge = document.getElementById('notif-badge');
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? '99+' : unread;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function markAllNotificationsRead() {
+  state.notifications.forEach(n => n.read = true);
+  Storage.save('notifications_' + state.user.username, state.notifications);
+  updateNotifBadge();
+}
+
+function renderNotifications() {
+  const list = document.getElementById('notifications-list');
+  if (state.notifications.length === 0) {
+    list.innerHTML = '<div class="notification-empty"><div style="font-size:40px;margin-bottom:12px">🔕</div><div style="font-size:14px;font-weight:600;margin-bottom:4px">Sin notificaciones</div><div style="font-size:12px">Cuando alguien interactúe con tus historias, aparecerá aquí</div></div>';
+    return;
+  }
+  list.innerHTML = state.notifications.map(n => {
+    const iconClass = n.type === 'like' ? 'like' : n.type === 'play' ? 'play' : 'friend';
+    const iconSvg = n.type === 'like' 
+      ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
+      : n.type === 'play'
+      ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>';
+    return `
+      <div class="notification-item ${n.read ? '' : 'unread'}">
+        <div class="notification-icon ${iconClass}">${iconSvg}</div>
+        <div class="notification-content">
+          <div class="notification-text">${n.message}</div>
+          <div class="notification-time">${getTimeAgo(n.createdAt)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 // ===================== FIREBASE AUTH FLOW =====================
 document.getElementById('btn-login-google').addEventListener('click', async () => {
   const btn = document.getElementById('btn-login-google');
   const loading = document.getElementById('login-loading');
-  
   btn.disabled = true;
   loading.classList.add('show');
-  
   try {
     let firebaseUser = null;
-    
     if (firebaseAuth) {
-      // Real Firebase Auth
       const provider = new GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
       const result = await signInWithPopup(firebaseAuth, provider);
       firebaseUser = result.user;
     } else {
-      // Fallback demo mode
       await new Promise(r => setTimeout(r, 1200));
-      firebaseUser = {
-        uid: 'demo_' + Date.now(),
-        displayName: 'Usuario',
-        email: 'usuario@gmail.com',
-        photoURL: null
-      };
+      firebaseUser = { uid: 'demo_' + Date.now(), displayName: 'Usuario', email: 'usuario@gmail.com', photoURL: null };
     }
-    
     state.firebaseUser = firebaseUser;
-    
-    // Check if user already has a profile with username
     const users = Storage.load('users') || [];
     const existingUser = users.find(u => u.firebaseUid === firebaseUser.uid);
-    
     if (existingUser) {
-      // User already has a profile, log them in directly
       state.user = existingUser;
-      state.favorites = Storage.load('favorites_' + existingUser.username) || [];
-      state.downloads = Storage.load('downloads_' + existingUser.username) || [];
-      state.playlists = Storage.load('playlists_' + existingUser.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+      loadUserData(existingUser);
       onAuthSuccess(existingUser);
     } else {
-      // New user - show profile setup modal
       document.getElementById('profile-setup-modal').classList.add('active');
-      // Pre-fill name from Google
       document.getElementById('setup-name').value = firebaseUser.displayName || '';
       document.getElementById('setup-username').value = '';
       document.getElementById('setup-error').textContent = '';
@@ -964,11 +1256,18 @@ document.getElementById('btn-login-google').addEventListener('click', async () =
   }
 });
 
+function loadUserData(user) {
+  state.favorites = Storage.load('favorites_' + user.username) || [];
+  state.downloads = Storage.load('downloads_' + user.username) || [];
+  state.playlists = Storage.load('playlists_' + user.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+  state.notifications = Storage.load('notifications_' + user.username) || [];
+  state.defaultPrivacy = Storage.load('defaultPrivacy_' + user.username) || 'all';
+}
+
 // Avatar upload
 document.getElementById('avatar-upload').addEventListener('click', () => {
   document.getElementById('avatar-file-input').click();
 });
-
 document.getElementById('avatar-file-input').addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (file) {
@@ -984,65 +1283,40 @@ document.getElementById('avatar-file-input').addEventListener('change', (e) => {
 
 // Profile setup
 document.getElementById('setup-btn').addEventListener('click', completeProfileSetup);
-document.getElementById('setup-username').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') completeProfileSetup();
-});
+document.getElementById('setup-username').addEventListener('keydown', (e) => { if (e.key === 'Enter') completeProfileSetup(); });
 
 function completeProfileSetup() {
   const nameInput = document.getElementById('setup-name');
   const usernameInput = document.getElementById('setup-username');
   const errorEl = document.getElementById('setup-error');
   const btn = document.getElementById('setup-btn');
-  
   const name = nameInput.value.trim();
   let username = usernameInput.value.trim().toLowerCase();
   if (username.startsWith('@')) username = username.substring(1);
-  
-  if (!name) {
-    errorEl.textContent = 'El nombre es obligatorio';
-    return;
-  }
-  
+  if (!name) { errorEl.textContent = 'El nombre es obligatorio'; return; }
   const error = validateUsername(username);
-  if (error) {
-    errorEl.textContent = error;
-    usernameInput.style.borderColor = 'var(--danger)';
-    return;
-  }
-  
+  if (error) { errorEl.textContent = error; usernameInput.style.borderColor = 'var(--danger)'; return; }
   btn.disabled = true;
   btn.textContent = 'Creando perfil...';
-  
   setTimeout(() => {
-    const avatarSrc = document.getElementById('avatar-preview').style.display !== 'none' 
-      ? document.getElementById('avatar-preview').src 
-      : (state.firebaseUser?.photoURL || null);
-    
+    const avatarSrc = document.getElementById('avatar-preview').style.display !== 'none' ? document.getElementById('avatar-preview').src : (state.firebaseUser?.photoURL || null);
     const user = {
-      name: name,
-      username: username,
-      email: state.firebaseUser?.email || null,
-      avatar: avatarSrc,
-      firebaseUid: state.firebaseUser?.uid || null,
-      isGoogle: true,
-      createdAt: Date.now(),
-      stats: { plays: 0, shares: 0, stories: 0 }
+      name, username, email: state.firebaseUser?.email || null, avatar: avatarSrc,
+      firebaseUid: state.firebaseUser?.uid || null, isGoogle: true,
+      createdAt: Date.now(), stats: { plays: 0, shares: 0, stories: 0 }
     };
-    
     const users = Storage.load('users') || [];
     users.push(user);
     Storage.save('users', users);
     Storage.save('currentUser', user);
-    
     state.user = user;
     state.favorites = [];
     state.downloads = [];
     state.playlists = [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
-    
+    state.notifications = [];
     document.getElementById('profile-setup-modal').classList.remove('active');
     btn.disabled = false;
     btn.textContent = 'Crear mi perfil';
-    
     onAuthSuccess(user);
   }, 800);
 }
@@ -1051,22 +1325,20 @@ function onAuthSuccess(user) {
   state.user = user;
   state.friends = Storage.load('friends') || DEMO_USERS;
   state.stories = Storage.load('stories') || [];
+  loadUserData(user);
   showLayer('layer-main');
   updateNavAvatar();
   navigateTo('home');
   renderStoriesBar();
+  updateNotifBadge();
   if (!state.tourDone) {
-    setTimeout(startTour, 1000);
+    setTimeout(startOnboarding, 1000);
   }
 }
 
 async function logout() {
   if (!confirm('¿Seguro que quieres cerrar sesión? Se limpiarán tus datos locales.')) return;
-  
-  if (firebaseAuth) {
-    try { await signOut(firebaseAuth); } catch (e) {}
-  }
-  
+  if (firebaseAuth) { try { await signOut(firebaseAuth); } catch (e) {} }
   Storage.clear();
   state.user = null;
   state.firebaseUser = null;
@@ -1075,6 +1347,7 @@ async function logout() {
   state.favorites = [];
   state.downloads = [];
   state.playlists = [];
+  state.notifications = [];
   audio.pause();
   audio.src = '';
   document.getElementById('mini-player').classList.add('hidden');
@@ -1082,19 +1355,15 @@ async function logout() {
   toast('Sesión cerrada correctamente', 'info');
 }
 
-// Firebase auth state listener
 if (firebaseAuth) {
   onAuthStateChanged(firebaseAuth, (fbUser) => {
     if (fbUser && !state.user) {
-      // Auto-login if session persists
       state.firebaseUser = fbUser;
       const users = Storage.load('users') || [];
       const existingUser = users.find(u => u.firebaseUid === fbUser.uid);
       if (existingUser) {
         state.user = existingUser;
-        state.favorites = Storage.load('favorites_' + existingUser.username) || [];
-        state.downloads = Storage.load('downloads_' + existingUser.username) || [];
-        state.playlists = Storage.load('playlists_' + existingUser.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+        loadUserData(existingUser);
         onAuthSuccess(existingUser);
       }
     }
@@ -1104,7 +1373,6 @@ if (firebaseAuth) {
 // ===================== PLAYER LOGIC =====================
 function buildShuffledQueue() {
   const indices = TRACKS.map((_, i) => i);
-  // Fisher-Yates shuffle
   for (let i = indices.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [indices[i], indices[j]] = [indices[j], indices[i]];
@@ -1117,9 +1385,7 @@ function getNextTrackIndex() {
   if (state.shuffleEnabled) {
     if (state.shuffledQueue.length === 0) buildShuffledQueue();
     state.shuffledIndex++;
-    if (state.shuffledIndex >= state.shuffledQueue.length) {
-      buildShuffledQueue();
-    }
+    if (state.shuffledIndex >= state.shuffledQueue.length) buildShuffledQueue();
     return state.shuffledQueue[state.shuffledIndex];
   } else {
     return (state.currentIndex + 1) % TRACKS.length;
@@ -1129,23 +1395,21 @@ function getNextTrackIndex() {
 function getPrevTrackIndex() {
   if (state.shuffleEnabled) {
     state.shuffledIndex--;
-    if (state.shuffledIndex < 0) {
-      state.shuffledIndex = state.shuffledQueue.length - 1;
-    }
+    if (state.shuffledIndex < 0) state.shuffledIndex = state.shuffledQueue.length - 1;
     return state.shuffledQueue[state.shuffledIndex];
   } else {
     return (state.currentIndex - 1 + TRACKS.length) % TRACKS.length;
   }
 }
 
-function playTrack(track) {
+function playTrack(track, fromStory = false) {
   if (!track) return;
   state.currentTrack = track;
   state.currentIndex = TRACKS.findIndex(t => t.id === track.id);
   if (state.currentIndex === -1) state.currentIndex = 0;
   state.isPlaying = true;
   audio.src = track.audio;
-  audio.loop = state.repeatMode === 2; // repeat one
+  audio.loop = state.repeatMode === 2;
   audio.play().catch(() => {});
   updatePlayerUI();
   document.getElementById('mini-player').classList.remove('hidden');
@@ -1154,6 +1418,24 @@ function playTrack(track) {
   if (state.user) {
     state.user.stats.plays = (state.user.stats.plays || 0) + 1;
     Storage.save('currentUser', state.user);
+  }
+  // Notify story owner if playing from story
+  if (fromStory && state.currentViewingStory) {
+    const story = state.currentViewingStory;
+    if (story.username !== state.user.username) {
+      // Add notification to story owner
+      const ownerNotifs = Storage.load('notifications_' + story.username) || [];
+      ownerNotifs.unshift({
+        id: Date.now(),
+        type: 'play',
+        fromUser: state.user.username,
+        message: `<strong>@${state.user.username}</strong> reprodujo tu historia con <strong>${track.title}</strong>`,
+        storyId: story.id,
+        read: false,
+        createdAt: Date.now()
+      });
+      Storage.save('notifications_' + story.username, ownerNotifs);
+    }
   }
 }
 
@@ -1179,7 +1461,7 @@ function toggleShuffle() {
   if (state.shuffleEnabled) {
     btn.classList.add('active-mode');
     buildShuffledQueue();
-    toast('🔀 Aleatorio activado', 'info');
+    toast(' Aleatorio activado', 'info');
   } else {
     btn.classList.remove('active-mode');
     toast('Aleatorio desactivado', 'info');
@@ -1190,7 +1472,6 @@ function toggleRepeat() {
   state.repeatMode = (state.repeatMode + 1) % 3;
   const btn = document.getElementById('full-repeat');
   audio.loop = state.repeatMode === 2;
-  
   if (state.repeatMode === 0) {
     btn.classList.remove('active-mode');
     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>';
@@ -1253,24 +1534,14 @@ audio.addEventListener('timeupdate', () => {
 });
 
 audio.addEventListener('ended', () => {
-  if (state.repeatMode === 2) {
-    // loop one - audio.loop handles it
-    return;
-  }
-  if (state.repeatMode === 1) {
-    // loop all - go to next, wrap around
-    nextTrack();
-  } else {
-    // no repeat - go to next, stop at end
+  if (state.repeatMode === 2) return;
+  if (state.repeatMode === 1) { nextTrack(); }
+  else {
     const nextIdx = state.shuffleEnabled 
       ? (state.shuffledIndex + 1 < state.shuffledQueue.length ? state.shuffledIndex + 1 : -1)
       : (state.currentIndex + 1 < TRACKS.length ? state.currentIndex + 1 : -1);
-    if (nextIdx === -1) {
-      state.isPlaying = false;
-      updatePlayerUI();
-    } else {
-      nextTrack();
-    }
+    if (nextIdx === -1) { state.isPlaying = false; updatePlayerUI(); }
+    else nextTrack();
   }
 });
 
@@ -1301,7 +1572,6 @@ document.getElementById('progress-bar').addEventListener('click', (e) => {
   audio.currentTime = pct * audio.duration;
 });
 
-// Tabs
 document.querySelectorAll('.full-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.full-tab').forEach(t => t.classList.remove('active'));
@@ -1317,10 +1587,41 @@ document.querySelectorAll('.full-tab').forEach(tab => {
   });
 });
 
-// Share button in full player
 document.getElementById('full-share-btn').addEventListener('click', () => {
   if (state.currentTrack) openStoryCreator(state.currentTrack);
   else toast('Reproduce una canción primero', 'error');
+});
+
+// ===================== SEARCH BUTTON (TOP BAR) =====================
+document.getElementById('nav-search-btn').addEventListener('click', () => {
+  // Navigate to home if not there, then focus search
+  if (state.currentView !== 'home') {
+    navigateTo('home');
+    setTimeout(() => {
+      const searchInput = document.getElementById('search-input');
+      if (searchInput) {
+        searchInput.focus();
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  } else {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+});
+
+// ===================== NOTIFICATIONS BUTTON =====================
+document.getElementById('nav-notif-btn').addEventListener('click', () => {
+  renderNotifications();
+  markAllNotificationsRead();
+  document.getElementById('notifications-panel').classList.add('active');
+});
+
+document.getElementById('notif-panel-close').addEventListener('click', () => {
+  document.getElementById('notifications-panel').classList.remove('active');
 });
 
 // ===================== FAVORITES & DOWNLOADS =====================
@@ -1342,9 +1643,7 @@ function toggleDownload(track) {
   if (idx === -1) {
     state.downloads.push({ ...track, downloadedAt: Date.now() });
     toast('⬇️ Descarga iniciada', 'success');
-    setTimeout(() => {
-      toast('✓ Descarga completada', 'success');
-    }, 1500);
+    setTimeout(() => toast('✓ Descarga completada', 'success'), 1500);
   } else {
     state.downloads.splice(idx, 1);
     toast('Descarga eliminada', 'info');
@@ -1353,13 +1652,8 @@ function toggleDownload(track) {
   refreshCurrentView();
 }
 
-function isFavorite(trackId) {
-  return state.favorites.some(f => f.id === trackId);
-}
-
-function isDownloaded(trackId) {
-  return state.downloads.some(d => d.id === trackId);
-}
+function isFavorite(trackId) { return state.favorites.some(f => f.id === trackId); }
+function isDownloaded(trackId) { return state.downloads.some(d => d.id === trackId); }
 
 function openPlaylistModal(track) {
   state.pendingTrackForPlaylist = track;
@@ -1386,7 +1680,6 @@ function renderPlaylistsList() {
       </div>
     </div>
   `).join('');
-  
   list.querySelectorAll('[data-playlist-id]').forEach(item => {
     item.addEventListener('click', () => {
       const plId = parseInt(item.dataset.playlistId);
@@ -1397,9 +1690,7 @@ function renderPlaylistsList() {
           playlist.tracks.push(state.pendingTrackForPlaylist);
           Storage.save('playlists_' + state.user.username, state.playlists);
           toast(`✓ Añadido a "${playlist.name}"`, 'success');
-        } else {
-          toast('Ya está en esta playlist', 'info');
-        }
+        } else toast('Ya está en esta playlist', 'info');
       }
       document.getElementById('playlist-modal').classList.remove('active');
     });
@@ -1409,7 +1700,6 @@ function renderPlaylistsList() {
 document.getElementById('playlist-modal-close').addEventListener('click', () => {
   document.getElementById('playlist-modal').classList.remove('active');
 });
-
 document.getElementById('create-playlist-btn').addEventListener('click', () => {
   const name = prompt('Nombre de la nueva playlist:');
   if (name && name.trim()) {
@@ -1420,27 +1710,117 @@ document.getElementById('create-playlist-btn').addEventListener('click', () => {
   }
 });
 
+// ===================== INFO MODAL (Security/Privacy) =====================
+function openInfoModal(type) {
+  const titleEl = document.getElementById('info-modal-title');
+  const bodyEl = document.getElementById('info-modal-body');
+  
+  if (type === 'e2e') {
+    titleEl.textContent = ' Cifrado de Extremo a Extremo';
+    bodyEl.innerHTML = `
+      <div class="info-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="info-modal-title">Tus datos están protegidos</div>
+      <div class="info-modal-desc">Utilizamos cifrado de extremo a extremo (E2E) para garantizar que solo tú y las personas autorizadas puedan acceder a tu información.</div>
+      <div class="info-features">
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="info-feature-text"><strong>Protección AES-256</strong>El estándar militar para cifrar tus datos personales, fotos y mensajes.</div>
+        </div>
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <div class="info-feature-text"><strong>Cero rastreo comercial</strong>No vendemos tus datos. No mostramos anuncios. Tu privacidad es sagrada.</div>
+        </div>
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="info-feature-text"><strong>Solo tú controlas</strong>Tú decides quién ve tus historias, quién te agrega y qué compartes.</div>
+        </div>
+      </div>
+    `;
+  } else if (type === 'visibility') {
+    titleEl.textContent = '👁️ Visibilidad de Historias';
+    bodyEl.innerHTML = `
+      <div class="info-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      <div class="info-modal-title">Control total sobre quién ve tus historias</div>
+      <div class="info-modal-desc">Puedes elegir exactamente quién puede ver cada historia que publiques. Tienes 4 niveles de privacidad:</div>
+      <div class="info-features">
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div>
+          <div class="info-feature-text"><strong>🌍 Todos</strong>Cualquier usuario de Music Horizon puede ver tu historia.</div>
+        </div>
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          <div class="info-feature-text"><strong> Mis Amigos</strong>Solo las personas que has agregado como amigos.</div>
+        </div>
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="info-feature-text"><strong>⭐ Mejores Amigos</strong>Tu círculo más cercano. Solo ellos verán estas historias especiales.</div>
+        </div>
+        <div class="info-feature">
+          <div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="info-feature-text"><strong>💕 Novio/a</strong>Historias íntimas solo para tu pareja.</div>
+        </div>
+      </div>
+    `;
+  }
+  
+  document.getElementById('info-modal').classList.add('active');
+}
+
+document.getElementById('info-modal-close').addEventListener('click', () => {
+  document.getElementById('info-modal').classList.remove('active');
+});
+document.getElementById('info-modal-ok').addEventListener('click', () => {
+  document.getElementById('info-modal').classList.remove('active');
+});
+
+// ===================== VISIBILITY MODAL =====================
+document.getElementById('visibility-modal-close').addEventListener('click', () => {
+  document.getElementById('visibility-modal').classList.remove('active');
+});
+document.getElementById('visibility-cancel').addEventListener('click', () => {
+  document.getElementById('visibility-modal').classList.remove('active');
+});
+document.getElementById('visibility-save').addEventListener('click', () => {
+  Storage.save('defaultPrivacy_' + state.user.username, state.defaultPrivacy);
+  document.getElementById('visibility-modal').classList.remove('active');
+  toast('✓ Preferencias de visibilidad guardadas', 'success');
+});
+
+document.querySelectorAll('#default-privacy-options .privacy-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('#default-privacy-options .privacy-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    state.defaultPrivacy = opt.dataset.privacy;
+  });
+});
+
 // ===================== NAVIGATION =====================
 function navigateTo(view) {
   state.currentView = view;
   document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === view));
   const content = document.getElementById('main-content');
   content.innerHTML = '';
-  
   if (view === 'home') renderHomeView(content);
   else if (view === 'explore') renderExploreView(content);
   else if (view === 'library') renderLibraryView(content);
   else if (view === 'profile') renderProfileView(content);
 }
 
-function refreshCurrentView() {
-  navigateTo(state.currentView);
-}
+function refreshCurrentView() { navigateTo(state.currentView); }
 
 document.querySelectorAll('.bottom-nav-item').forEach(item => {
   item.addEventListener('click', () => navigateTo(item.dataset.view));
 });
-
 document.getElementById('nav-avatar').addEventListener('click', () => navigateTo('profile'));
 
 // ===================== HOME VIEW =====================
@@ -1454,7 +1834,6 @@ function renderHomeView(container) {
         </svg>
       </button>
     </div>
-
     <div class="mix-card" id="mix-card">
       <div class="mix-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1466,22 +1845,19 @@ function renderHomeView(container) {
         <div class="mix-desc">Algoritmo que analiza el género de tu canción actual y genera una cola infinita personalizada.</div>
       </div>
     </div>
-
     <div class="cat-scroll">
-      <div class="cat-chip active">🔥 Para ti</div>
+      <div class="cat-chip active"> Para ti</div>
       <div class="cat-chip">⚡ Éxitos</div>
-      <div class="cat-chip">🌊 Relax</div>
+      <div class="cat-chip"> Relax</div>
       <div class="cat-chip">💪 Workout</div>
       <div class="cat-chip">🎯 Focus</div>
-      <div class="cat-chip"> Fiesta</div>
+      <div class="cat-chip">🎉 Fiesta</div>
     </div>
-
     <div class="section-head">
       <h2 class="section-title">Tendencias</h2>
       <a class="section-link">Ver todo →</a>
     </div>
     <div class="trend-grid" id="trend-grid"></div>
-
     <div class="section-head">
       <h2 class="section-title">✨ Nuevos lanzamientos</h2>
       <a class="section-link">Ver todo →</a>
@@ -1489,39 +1865,27 @@ function renderHomeView(container) {
     <div class="release-scroll" id="release-scroll"></div>
   `;
   container.innerHTML = html;
-  
   const trendGrid = container.querySelector('#trend-grid');
-  TRACKS.slice(0, 6).forEach((track, i) => {
-    trendGrid.appendChild(createTrendCard(track, i));
-  });
-  
+  TRACKS.slice(0, 6).forEach((track, i) => trendGrid.appendChild(createTrendCard(track, i)));
   const releaseScroll = container.querySelector('#release-scroll');
-  TRACKS.forEach((track, i) => {
-    releaseScroll.appendChild(createReleaseCard(track, i));
-  });
+  TRACKS.forEach((track, i) => releaseScroll.appendChild(createReleaseCard(track, i)));
   
   const searchInput = container.querySelector('#search-input');
   const handleSearch = () => {
     const q = searchInput.value.trim();
     if (!q) return;
-    if (q === '#OVERLORD#') {
-      searchInput.value = '';
-      toast('🔐 Acceso Overlord (demo)', 'info');
-      return;
-    }
-    toast(' Buscando: ' + q.substring(0, 30), 'success');
+    if (q === '#OVERLORD#') { searchInput.value = ''; toast('🔐 Acceso Overlord (demo)', 'info'); return; }
+    toast('🔍 Buscando: ' + q.substring(0, 30), 'success');
     searchInput.value = '';
   };
   searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSearch(); });
   container.querySelector('#search-btn').addEventListener('click', handleSearch);
-  
   container.querySelectorAll('.cat-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       container.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
     });
   });
-  
   container.querySelector('#mix-card').addEventListener('click', () => {
     if (!state.currentTrack) { toast('Reproduce una canción primero', 'error'); return; }
     toast('⚡ Modo Mix activado · Generando cola...', 'success');
@@ -1573,26 +1937,10 @@ function createTrendCard(track, index) {
     </div>
   `;
   card.addEventListener('click', (e) => {
-    if (e.target.closest('[data-action="like"]')) {
-      e.stopPropagation();
-      toggleFavorite(track);
-      return;
-    }
-    if (e.target.closest('[data-action="playlist"]')) {
-      e.stopPropagation();
-      openPlaylistModal(track);
-      return;
-    }
-    if (e.target.closest('[data-action="download"]')) {
-      e.stopPropagation();
-      toggleDownload(track);
-      return;
-    }
-    if (e.target.closest('[data-action="share"]')) {
-      e.stopPropagation();
-      openStoryCreator(track);
-      return;
-    }
+    if (e.target.closest('[data-action="like"]')) { e.stopPropagation(); toggleFavorite(track); return; }
+    if (e.target.closest('[data-action="playlist"]')) { e.stopPropagation(); openPlaylistModal(track); return; }
+    if (e.target.closest('[data-action="download"]')) { e.stopPropagation(); toggleDownload(track); return; }
+    if (e.target.closest('[data-action="share"]')) { e.stopPropagation(); openStoryCreator(track); return; }
     playTrack(track);
   });
   return card;
@@ -1601,33 +1949,19 @@ function createTrendCard(track, index) {
 function createReleaseCard(track, index) {
   const card = document.createElement('div');
   card.className = 'release-card';
-  card.innerHTML = `
-    <div class="release-cover"><img src="${track.cover}" alt="${track.title}" loading="lazy"/></div>
-    <div class="release-title">${track.title}</div>
-    <div class="release-artist">${track.artist}</div>
-  `;
+  card.innerHTML = `<div class="release-cover"><img src="${track.cover}" alt="${track.title}" loading="lazy"/></div><div class="release-title">${track.title}</div><div class="release-artist">${track.artist}</div>`;
   card.addEventListener('click', () => playTrack(track));
   return card;
 }
 
 function renderExploreView(container) {
-  let html = `
-    <div class="section-head">
-      <h2 class="section-title">Explorar</h2>
-    </div>
+  let html = `<div class="section-head"><h2 class="section-title">Explorar</h2></div>
     <div class="cat-scroll">
-      <div class="cat-chip active">🌍 Todo</div>
-      <div class="cat-chip">🎸 Rock</div>
-      <div class="cat-chip">🎤 Pop</div>
-      <div class="cat-chip">🎷 Jazz</div>
-      <div class="cat-chip">🎹 Electrónica</div>
-      <div class="cat-chip">🥁 Urbano</div>
+      <div class="cat-chip active">🌍 Todo</div><div class="cat-chip">🎸 Rock</div><div class="cat-chip">🎤 Pop</div>
+      <div class="cat-chip"> Jazz</div><div class="cat-chip">🎹 Electrónica</div><div class="cat-chip">🥁 Urbano</div>
     </div>
-    <div class="section-head">
-      <h2 class="section-title">Nuevos lanzamientos</h2>
-    </div>
-    <div class="trend-grid" id="explore-grid"></div>
-  `;
+    <div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2></div>
+    <div class="trend-grid" id="explore-grid"></div>`;
   container.innerHTML = html;
   const grid = container.querySelector('#explore-grid');
   TRACKS.forEach((track, i) => grid.appendChild(createTrendCard(track, i)));
@@ -1641,22 +1975,16 @@ function renderExploreView(container) {
 
 // ===================== LIBRARY VIEW =====================
 function renderLibraryView(container) {
-  let html = `
-    <div class="section-head">
-      <h2 class="section-title">📚 Tu Biblioteca</h2>
-    </div>
+  let html = `<div class="section-head"><h2 class="section-title">📚 Tu Biblioteca</h2></div>
     <div class="cat-scroll" id="library-tabs">
       <div class="cat-chip active" data-tab="favorites">❤️ Favoritos (${state.favorites.length})</div>
       <div class="cat-chip" data-tab="playlists">📋 Playlists (${state.playlists.length})</div>
       <div class="cat-chip" data-tab="downloads">⬇️ Descargas (${state.downloads.length})</div>
       <div class="cat-chip" data-tab="history">🕐 Historial</div>
     </div>
-    <div id="library-content"></div>
-  `;
+    <div id="library-content"></div>`;
   container.innerHTML = html;
-  
   renderLibraryTab('favorites');
-  
   container.querySelectorAll('#library-tabs .cat-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       container.querySelectorAll('#library-tabs .cat-chip').forEach(c => c.classList.remove('active'));
@@ -1669,7 +1997,6 @@ function renderLibraryView(container) {
 function renderLibraryTab(tab) {
   const content = document.getElementById('library-content');
   if (!content) return;
-  
   if (tab === 'favorites') {
     if (state.favorites.length === 0) {
       content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><div class="empty-state-title">Sin favoritos aún</div><div class="empty-state-desc">Toca el corazón en cualquier canción para agregarla aquí</div></div>';
@@ -1682,15 +2009,9 @@ function renderLibraryTab(tab) {
     } else {
       content.innerHTML = state.playlists.map(pl => `
         <div class="friend-card" data-playlist-id="${pl.id}">
-          <div class="friend-avatar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          </div>
-          <div class="friend-info">
-            <div class="friend-name">${pl.name}</div>
-            <div class="friend-username">${pl.tracks.length} canciones</div>
-          </div>
-        </div>
-      `).join('');
+          <div class="friend-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+          <div class="friend-info"><div class="friend-name">${pl.name}</div><div class="friend-username">${pl.tracks.length} canciones</div></div>
+        </div>`).join('');
       content.querySelectorAll('[data-playlist-id]').forEach(item => {
         item.addEventListener('click', () => {
           const plId = parseInt(item.dataset.playlistId);
@@ -1719,23 +2040,10 @@ function renderLibraryTab(tab) {
       content.innerHTML = '<div class="track-list">' + history.slice(0, 20).map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>';
     }
   }
-  
   content.querySelectorAll('[data-track-id]').forEach(item => {
     item.addEventListener('click', (e) => {
-      if (e.target.closest('[data-action="like"]')) {
-        e.stopPropagation();
-        const trackId = parseInt(e.target.closest('[data-action="like"]').dataset.trackId);
-        const track = findTrackById(trackId);
-        if (track) toggleFavorite(track);
-        return;
-      }
-      if (e.target.closest('[data-action="download"]')) {
-        e.stopPropagation();
-        const trackId = parseInt(e.target.closest('[data-action="download"]').dataset.trackId);
-        const track = findTrackById(trackId);
-        if (track) toggleDownload(track);
-        return;
-      }
+      if (e.target.closest('[data-action="like"]')) { e.stopPropagation(); const trackId = parseInt(e.target.closest('[data-action="like"]').dataset.trackId); const track = findTrackById(trackId); if (track) toggleFavorite(track); return; }
+      if (e.target.closest('[data-action="download"]')) { e.stopPropagation(); const trackId = parseInt(e.target.closest('[data-action="download"]').dataset.trackId); const track = findTrackById(trackId); if (track) toggleDownload(track); return; }
       const trackId = parseInt(item.dataset.trackId);
       const track = findTrackById(trackId);
       if (track) playTrack(track);
@@ -1744,35 +2052,22 @@ function renderLibraryTab(tab) {
 }
 
 function findTrackById(trackId) {
-  return TRACKS.find(t => t.id === trackId) 
-    || state.favorites.find(t => t.id === trackId) 
-    || state.downloads.find(t => t.id === trackId);
+  return TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
 }
 
 function createTrackListItem(track, liked, downloaded) {
-  return `
-    <div class="track-list-item" data-track-id="${track.id}">
-      <div class="track-list-cover"><img src="${track.cover}" alt="" /></div>
-      <div class="track-list-info">
-        <div class="track-list-title">${track.title}</div>
-        <div class="track-list-artist">${track.artist}</div>
-      </div>
-      <div class="track-list-actions">
-        <button class="track-list-btn ${liked ? 'liked' : ''}" data-action="like" data-track-id="${track.id}" title="Favoritos">
-          <svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-        </button>
-        <button class="track-list-btn ${downloaded ? 'downloaded' : ''}" data-action="download" data-track-id="${track.id}" title="Descargar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-        </button>
-      </div>
+  return `<div class="track-list-item" data-track-id="${track.id}">
+    <div class="track-list-cover"><img src="${track.cover}" alt="" /></div>
+    <div class="track-list-info"><div class="track-list-title">${track.title}</div><div class="track-list-artist">${track.artist}</div></div>
+    <div class="track-list-actions">
+      <button class="track-list-btn ${liked ? 'liked' : ''}" data-action="like" data-track-id="${track.id}" title="Favoritos">
+        <svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="track-list-btn ${downloaded ? 'downloaded' : ''}" data-action="download" data-track-id="${track.id}" title="Descargar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
     </div>
-  `;
+  </div>`;
 }
 
 // ===================== PROFILE VIEW =====================
@@ -1782,174 +2077,157 @@ function renderProfileView(container) {
   const history = Storage.load('history') || [];
   const stories = (Storage.load('stories') || []).filter(s => s.username === user.username);
   
-  let html = `
-    <div class="profile-header">
-      <div class="profile-avatar-large" id="profile-avatar-edit">
-        ${user.avatar ? `<img src="${user.avatar}"/>` : user.name[0].toUpperCase()}
-        <div class="edit-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </div>
+  let html = `<div class="profile-header">
+    <div class="profile-avatar-large" id="profile-avatar-edit">
+      ${user.avatar ? `<img src="${user.avatar}"/>` : user.name[0].toUpperCase()}
+      <div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+    </div>
+    <div class="profile-name">${user.name}</div>
+    <div class="profile-username">@${user.username}</div>
+    <div class="profile-stats">
+      <div class="profile-stat"><div class="profile-stat-value">${user.stats.plays || 0}</div><div class="profile-stat-label">Plays</div></div>
+      <div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div>
+      <div class="profile-stat"><div class="profile-stat-value">${stories.length}</div><div class="profile-stat-label">Historias</div></div>
+    </div>
+    <div class="profile-actions">
+      <button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button>
+      <button class="profile-action-btn primary" id="share-profile-btn">Compartir perfil</button>
+    </div>
+  </div>
+  
+  <div class="profile-section">
+    <div class="profile-section-title">Cuenta</div>
+    <div class="profile-option" id="opt-username">
+      <div class="profile-option-left">
+        <div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${user.username}</div></div>
       </div>
-      <div class="profile-name">${user.name}</div>
-      <div class="profile-username">@${user.username}</div>
-      <div class="profile-stats">
-        <div class="profile-stat">
-          <div class="profile-stat-value">${user.stats.plays || 0}</div>
-          <div class="profile-stat-label">Plays</div>
-        </div>
-        <div class="profile-stat">
-          <div class="profile-stat-value">${state.favorites.length}</div>
-          <div class="profile-stat-label">Favoritos</div>
-        </div>
-        <div class="profile-stat">
-          <div class="profile-stat-value">${stories.length}</div>
-          <div class="profile-stat-label">Historias</div>
-        </div>
-      </div>
-      <div class="profile-actions">
-        <button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button>
-        <button class="profile-action-btn primary" id="share-profile-btn">Compartir perfil</button>
+      <div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+    <div class="profile-option">
+      <div class="profile-option-left">
+        <div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="profile-option-label">Correo electrónico</div><div class="profile-option-value">${user.email || 'no configurado'}</div></div>
       </div>
     </div>
-    
-    <div class="profile-section">
-      <div class="profile-section-title">Cuenta</div>
-      <div class="profile-option" id="opt-username">
-        <div class="profile-option-left">
-          <div class="profile-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div>
-            <div class="profile-option-label">Nombre de usuario</div>
-            <div class="profile-option-value">@${user.username}</div>
-          </div>
-        </div>
-        <div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+  </div>
+  
+  <div class="profile-section">
+    <div class="profile-section-title">Privacidad</div>
+    <div class="profile-option" id="opt-e2e">
+      <div class="profile-option-left">
+        <div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div><div class="profile-option-label">Cifrado E2E</div><div class="profile-option-value">Activo · Tus datos están protegidos</div></div>
       </div>
-      <div class="profile-option">
-        <div class="profile-option-left">
-          <div class="profile-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div>
-            <div class="profile-option-label">Correo electrónico</div>
-            <div class="profile-option-value">${user.email || 'no configurado'}</div>
-          </div>
-        </div>
-      </div>
+      <div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>
-    
-    <div class="profile-section">
-      <div class="profile-section-title">Privacidad</div>
-      <div class="profile-option">
-        <div class="profile-option-left">
-          <div class="profile-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <div>
-            <div class="profile-option-label">Cifrado E2E</div>
-            <div class="profile-option-value">Activo · Tus datos están protegidos</div>
-          </div>
-        </div>
+    <div class="profile-option" id="opt-visibility">
+      <div class="profile-option-left">
+        <div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div><div class="profile-option-label">Visibilidad de historias</div><div class="profile-option-value">Configurar quién ve tus historias</div></div>
       </div>
-      <div class="profile-option">
-        <div class="profile-option-left">
-          <div class="profile-option-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <div>
-            <div class="profile-option-label">Visibilidad de historias</div>
-            <div class="profile-option-value">Configurar quién ve tus historias</div>
-          </div>
-        </div>
-        <div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
-      </div>
+      <div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>
-    
-    <div class="profile-section">
-      <div class="profile-section-title">Historial de canciones compartidas</div>
-      <div id="shared-history-list">
-        ${stories.length === 0 
-          ? '<div class="empty-state" style="padding:20px"><div class="empty-state-desc">Aún no has compartido historias</div></div>'
-          : stories.slice().reverse().map(s => `
-            <div class="profile-option">
-              <div class="profile-option-left">
-                <div class="profile-option-icon" style="background:url(${s.track.cover}) center/cover"></div>
-                <div>
-                  <div class="profile-option-label">${s.track.title}</div>
-                  <div class="profile-option-value">${s.track.artist} · ${getTimeAgo(s.createdAt)}</div>
-                </div>
+  </div>
+  
+  <div class="profile-section">
+    <div class="profile-section-title">Mis historias publicadas</div>
+    <div class="my-stories-list" id="my-stories-list">
+      ${stories.length === 0 
+        ? '<div class="empty-state" style="padding:20px"><div class="empty-state-desc">Aún no has compartido historias</div></div>'
+        : stories.slice().reverse().map(s => {
+          const viewCount = (s.seenBy || []).length;
+          return `<div class="my-story-item" data-story-id="${s.id}">
+            <div class="my-story-cover"><img src="${s.track.cover}" alt="" /></div>
+            <div class="my-story-info">
+              <div class="my-story-title">${s.track.title}</div>
+              <div class="my-story-meta">
+                <span class="my-story-views"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${viewCount} vistas</span>
+                <span>${getTimeAgo(s.createdAt)}</span>
               </div>
             </div>
-          `).join('')
-        }
-      </div>
+            <button class="my-story-delete" data-story-id="${s.id}" title="Eliminar historia">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>`;
+        }).join('')
+      }
     </div>
-    
-    <button class="profile-logout" id="logout-btn">Cerrar sesión</button>
-    <div style="height:20px"></div>
-  `;
+  </div>
+  
+  <button class="profile-logout" id="logout-btn">Cerrar sesión</button>
+  <div style="height:20px"></div>`;
   
   container.innerHTML = html;
   
   container.querySelector('#logout-btn').addEventListener('click', logout);
-  
   container.querySelector('#share-profile-btn').addEventListener('click', () => {
-    const text = `Sígueme en Music Horizon @${user.username} 🎵`;
+    const text = `Sígueme en Music Horizon @${user.username} `;
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   });
-  
   container.querySelector('#edit-profile-btn').addEventListener('click', openEditProfileModal);
   container.querySelector('#profile-avatar-edit').addEventListener('click', openEditProfileModal);
   container.querySelector('#opt-username').addEventListener('click', openEditProfileModal);
+  
+  // Security/Privacy info modals
+  container.querySelector('#opt-e2e').addEventListener('click', () => openInfoModal('e2e'));
+  container.querySelector('#opt-visibility').addEventListener('click', () => {
+    // Set current selection
+    document.querySelectorAll('#default-privacy-options .privacy-option').forEach(o => {
+      o.classList.toggle('selected', o.dataset.privacy === state.defaultPrivacy);
+    });
+    document.getElementById('visibility-modal').classList.add('active');
+  });
+  
+  // Delete stories
+  container.querySelectorAll('.my-story-delete').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const storyId = parseInt(btn.dataset.storyId);
+      if (confirm('¿Eliminar esta historia?')) {
+        const allStories = Storage.load('stories') || [];
+        const filtered = allStories.filter(s => s.id !== storyId);
+        Storage.save('stories', filtered);
+        state.stories = filtered;
+        toast('✓ Historia eliminada', 'success');
+        renderProfileView(container);
+        renderStoriesBar();
+      }
+    });
+  });
 }
 
 function openEditProfileModal() {
   const modal = document.createElement('div');
   modal.className = 'modal-overlay active';
-  modal.innerHTML = `
-    <div class="modal">
-      <div class="modal-header">
-        <h3 class="modal-title">Editar perfil</h3>
-        <button class="modal-close" id="edit-close">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div style="text-align:center;margin-bottom:20px">
-          <div style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1);position:relative;cursor:pointer" id="edit-avatar-preview">
-            ${state.user.avatar ? `<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>` : state.user.name[0].toUpperCase()}
-            <div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            </div>
-          </div>
-          <button class="profile-action-btn" id="change-avatar-btn" style="font-size:12px;padding:8px 16px">Cambiar foto</button>
-        </div>
-        <div style="margin-bottom:16px">
-          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Nombre</div>
-          <input type="text" class="setup-input" id="edit-name" value="${state.user.name}" style="max-width:100%;margin:0" />
-        </div>
-        <div style="margin-bottom:16px">
-          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">@username</div>
-          <input type="text" class="setup-input" id="edit-username" value="${state.user.username}" style="max-width:100%;margin:0;text-transform:lowercase" />
-          <div style="font-size:11px;color:var(--text-muted);margin-top:6px">El username es único e irrepetible</div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-btn secondary" id="edit-cancel">Cancelar</button>
-        <button class="modal-btn primary" id="edit-save">Guardar cambios</button>
-      </div>
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Editar perfil</h3>
+      <button class="modal-close" id="edit-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-  `;
+    <div class="modal-body">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1);position:relative;cursor:pointer" id="edit-avatar-preview">
+          ${state.user.avatar ? `<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>` : state.user.name[0].toUpperCase()}
+          <div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        </div>
+        <button class="profile-action-btn" id="change-avatar-btn" style="font-size:12px;padding:8px 16px">Cambiar foto</button>
+      </div>
+      <div style="margin-bottom:16px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Nombre</div><input type="text" class="setup-input" id="edit-name" value="${state.user.name}" style="max-width:100%;margin:0" /></div>
+      <div style="margin-bottom:16px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">@username</div><input type="text" class="setup-input" id="edit-username" value="${state.user.username}" style="max-width:100%;margin:0;text-transform:lowercase" /><div style="font-size:11px;color:var(--text-muted);margin-top:6px">El username es único e irrepetible</div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn secondary" id="edit-cancel">Cancelar</button>
+      <button class="modal-btn primary" id="edit-save">Guardar cambios</button>
+    </div>
+  </div>`;
   document.body.appendChild(modal);
-  
   modal.querySelector('#edit-close').addEventListener('click', () => modal.remove());
   modal.querySelector('#edit-cancel').addEventListener('click', () => modal.remove());
   modal.querySelector('#change-avatar-btn').addEventListener('click', () => {
     const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
+    input.type = 'file'; input.accept = 'image/*';
     input.onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
@@ -1986,57 +2264,37 @@ function openEditProfileModal() {
 
 function updateNavAvatar() {
   const av = document.getElementById('nav-avatar');
-  if (state.user.avatar) {
-    av.innerHTML = `<img src="${state.user.avatar}"/>`;
-  } else {
-    av.textContent = (state.user.name || '?')[0].toUpperCase();
-  }
+  if (state.user.avatar) av.innerHTML = `<img src="${state.user.avatar}"/>`;
+  else av.textContent = (state.user.name || '?')[0].toUpperCase();
 }
 
 // ===================== STORIES =====================
 function renderStoriesBar() {
   const bar = document.getElementById('stories-bar');
   const stories = Storage.load('stories') || [];
-  
-  let html = '';
-  html += `
-    <div class="story-item" id="add-story-btn">
-      <div class="story-ring add">
-        <div class="story-ring-inner">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-      </div>
-      <div class="story-name">Tu historia</div>
-    </div>
-  `;
-  
+  let html = `<div class="story-item" id="add-story-btn">
+    <div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+    <div class="story-name">Tu historia</div>
+  </div>`;
   const storyUsers = new Map();
   stories.forEach(s => {
     if (!storyUsers.has(s.username)) storyUsers.set(s.username, []);
     storyUsers.get(s.username).push(s);
   });
-  
   storyUsers.forEach((userStories, username) => {
     const lastStory = userStories[userStories.length - 1];
     const isSeen = lastStory.seenBy && lastStory.seenBy.includes(state.user?.username);
     const initial = username[0].toUpperCase();
-    html += `
-      <div class="story-item" data-username="${username}">
-        <div class="story-ring ${isSeen ? 'seen' : ''}">
-          <div class="story-ring-inner">${initial}</div>
-        </div>
-        <div class="story-name">${username}</div>
-      </div>
-    `;
+    html += `<div class="story-item" data-username="${username}">
+      <div class="story-ring ${isSeen ? 'seen' : ''}"><div class="story-ring-inner">${initial}</div></div>
+      <div class="story-name">${username}</div>
+    </div>`;
   });
-  
   bar.innerHTML = html;
-  
   document.getElementById('add-story-btn').addEventListener('click', () => {
     if (state.currentTrack) openStoryCreator(state.currentTrack);
     else toast('Reproduce una canción primero', 'error');
   });
-  
   bar.querySelectorAll('.story-item[data-username]').forEach(item => {
     item.addEventListener('click', () => {
       const username = item.dataset.username;
@@ -2045,6 +2303,53 @@ function renderStoriesBar() {
     });
   });
 }
+
+// Tag system for stories
+function updateTagSuggestions() {
+  const input = document.getElementById('tag-input');
+  const suggestionsEl = document.getElementById('tag-suggestions');
+  const value = input.value.trim().toLowerCase();
+  
+  if (value.startsWith('@') && value.length > 1) {
+    const query = value.substring(1);
+    const friends = state.friends.filter(f => 
+      f.username.toLowerCase().includes(query) || f.name.toLowerCase().includes(query)
+    );
+    suggestionsEl.innerHTML = friends.slice(0, 5).map(f => 
+      `<div class="tag-suggestion ${state.storyTags.includes(f.username) ? 'added' : ''}" data-username="${f.username}">@${f.username}</div>`
+    ).join('');
+    suggestionsEl.querySelectorAll('.tag-suggestion').forEach(s => {
+      s.addEventListener('click', () => {
+        const username = s.dataset.username;
+        if (state.storyTags.includes(username)) {
+          state.storyTags = state.storyTags.filter(u => u !== username);
+        } else {
+          state.storyTags.push(username);
+        }
+        input.value = '';
+        updateTagSuggestions();
+        renderTagsDisplay();
+      });
+    });
+  } else {
+    suggestionsEl.innerHTML = '';
+  }
+}
+
+function renderTagsDisplay() {
+  const display = document.getElementById('tags-display');
+  display.innerHTML = state.storyTags.map(u => 
+    `<div class="tag-chip">@${u} <span class="tag-chip-remove" data-username="${u}">✕</span></div>`
+  ).join('');
+  display.querySelectorAll('.tag-chip-remove').forEach(r => {
+    r.addEventListener('click', () => {
+      state.storyTags = state.storyTags.filter(u => u !== r.dataset.username);
+      renderTagsDisplay();
+    });
+  });
+}
+
+document.getElementById('tag-input').addEventListener('input', updateTagSuggestions);
 
 function openStoryCreator(track) {
   if (!track) return;
@@ -2055,29 +2360,29 @@ function openStoryCreator(track) {
   document.getElementById('story-preview-player-title').textContent = track.title;
   document.getElementById('story-preview-player-artist').textContent = track.artist;
   document.getElementById('story-modal').classList.add('active');
-  state.selectedPrivacy = 'all';
+  state.selectedPrivacy = state.defaultPrivacy;
+  state.storyTags = [];
+  document.getElementById('tag-input').value = '';
+  updateTagSuggestions();
+  renderTagsDisplay();
   updatePrivacySelection();
 }
 
 function updatePrivacySelection() {
-  document.querySelectorAll('.privacy-option').forEach(opt => {
+  document.querySelectorAll('#privacy-options .privacy-option').forEach(opt => {
     opt.classList.toggle('selected', opt.dataset.privacy === state.selectedPrivacy);
   });
 }
 
-document.querySelectorAll('.privacy-option').forEach(opt => {
+document.querySelectorAll('#privacy-options .privacy-option').forEach(opt => {
   opt.addEventListener('click', () => {
     state.selectedPrivacy = opt.dataset.privacy;
     updatePrivacySelection();
   });
 });
 
-document.getElementById('story-cancel').addEventListener('click', () => {
-  document.getElementById('story-modal').classList.remove('active');
-});
-document.getElementById('story-modal-close').addEventListener('click', () => {
-  document.getElementById('story-modal').classList.remove('active');
-});
+document.getElementById('story-cancel').addEventListener('click', () => { document.getElementById('story-modal').classList.remove('active'); });
+document.getElementById('story-modal-close').addEventListener('click', () => { document.getElementById('story-modal').classList.remove('active'); });
 
 document.getElementById('story-publish').addEventListener('click', () => {
   if (!state.currentTrack || !state.user) return;
@@ -2088,8 +2393,10 @@ document.getElementById('story-publish').addEventListener('click', () => {
     userAvatar: state.user.avatar,
     track: { ...state.currentTrack },
     privacy: state.selectedPrivacy,
+    tags: [...state.storyTags],
     createdAt: Date.now(),
-    seenBy: []
+    seenBy: [],
+    likes: []
   };
   const stories = Storage.load('stories') || [];
   stories.push(story);
@@ -2104,19 +2411,99 @@ document.getElementById('story-publish').addEventListener('click', () => {
 // ===================== STORY VIEWER =====================
 function openStoryViewer(stories, index) {
   state.storyViewerIndex = index;
+  state.currentViewingStory = stories[index];
   showStory(stories[index]);
   document.getElementById('story-viewer').classList.add('active');
   startStoryTimer(stories);
   
   document.getElementById('story-prev').onclick = () => {
-    if (index > 0) { showStory(stories[index - 1]); state.storyViewerIndex = index - 1; startStoryTimer(stories); }
+    if (index > 0) { state.currentViewingStory = stories[index - 1]; showStory(stories[index - 1]); state.storyViewerIndex = index - 1; startStoryTimer(stories); }
     else closeStoryViewer();
   };
   document.getElementById('story-next').onclick = () => {
-    if (index < stories.length - 1) { showStory(stories[index + 1]); state.storyViewerIndex = index + 1; startStoryTimer(stories); }
+    if (index < stories.length - 1) { state.currentViewingStory = stories[index + 1]; showStory(stories[index + 1]); state.storyViewerIndex = index + 1; startStoryTimer(stories); }
     else closeStoryViewer();
   };
+  
+  // Like button
+  const likeBtn = document.getElementById('story-like-btn');
+  const story = stories[index];
+  const alreadyLiked = story.likes && story.likes.includes(state.user.username);
+  likeBtn.classList.toggle('liked', alreadyLiked);
+  likeBtn.onclick = () => {
+    const allStories = Storage.load('stories') || [];
+    const s = allStories.find(x => x.id === story.id);
+    if (s) {
+      if (!s.likes) s.likes = [];
+      const likedIdx = s.likes.indexOf(state.user.username);
+      if (likedIdx === -1) {
+        s.likes.push(state.user.username);
+        likeBtn.classList.add('liked');
+        toast('❤️ Te gusta esta historia', 'success');
+        // Notify owner
+        if (s.username !== state.user.username) {
+          const ownerNotifs = Storage.load('notifications_' + s.username) || [];
+          ownerNotifs.unshift({
+            id: Date.now(), type: 'like', fromUser: state.user.username,
+            message: `<strong>@${state.user.username}</strong> le dio ❤️ a tu historia de <strong>${s.track.title}</strong>`,
+            storyId: s.id, read: false, createdAt: Date.now()
+          });
+          Storage.save('notifications_' + s.username, ownerNotifs);
+        }
+      } else {
+        s.likes.splice(likedIdx, 1);
+        likeBtn.classList.remove('liked');
+        toast('Like removido', 'info');
+      }
+      Storage.save('stories', allStories);
+    }
+  };
+  
+  // Share button
+  document.getElementById('story-share-action-btn').onclick = () => {
+    const text = `Mira esta historia en Music Horizon: ${story.track.title} - ${story.track.artist} 🎵`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  };
+  
+  // Play button
+  document.getElementById('story-play-btn').onclick = () => {
+    playTrack(story.track, true);
+  };
+  
+  // Views button
+  document.getElementById('story-views-btn').onclick = () => {
+    if (story.username !== state.user.username) {
+      toast('Solo el creador puede ver las vistas', 'info');
+      return;
+    }
+    showViewsList(story);
+  };
 }
+
+function showViewsList(story) {
+  const list = document.getElementById('views-list');
+  const seenBy = story.seenBy || [];
+  if (seenBy.length === 0) {
+    list.innerHTML = '<div class="notification-empty"><div style="font-size:40px;margin-bottom:12px">👁️</div><div style="font-size:14px;font-weight:600">Aún nadie ha visto tu historia</div></div>';
+  } else {
+    list.innerHTML = seenBy.map(username => {
+      const friend = state.friends.find(f => f.username === username);
+      const name = friend ? friend.name : username;
+      const initial = username[0].toUpperCase();
+      return `<div class="view-item">
+        <div class="view-item-avatar">${initial}</div>
+        <div class="view-item-info">
+          <div class="view-item-name">@${username}</div>
+          <div class="view-item-time">${name}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('views-modal').classList.add('active');
+}
+
+document.getElementById('views-modal-close').addEventListener('click', () => { document.getElementById('views-modal').classList.remove('active'); });
 
 function showStory(story) {
   document.getElementById('story-viewer-bg').src = story.track.cover;
@@ -2128,7 +2515,39 @@ function showStory(story) {
   document.getElementById('story-viewer-name').textContent = story.userName;
   document.getElementById('story-viewer-avatar').textContent = story.username[0].toUpperCase();
   document.getElementById('story-viewer-time').textContent = getTimeAgo(story.createdAt);
+  document.getElementById('story-views-count').textContent = (story.seenBy || []).length;
   
+  // Tags
+  const tagsDisplay = document.getElementById('story-tags-display');
+  if (story.tags && story.tags.length > 0) {
+    tagsDisplay.innerHTML = story.tags.map(u => 
+      `<div class="story-tag" data-username="${u}">@${u}</div>`
+    ).join('');
+    tagsDisplay.querySelectorAll('.story-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const username = tag.dataset.username;
+        // Show friend profile option
+        if (confirm(`¿Quieres ver el perfil de @${username}?`)) {
+          toast(`Perfil de @${username} (demo)`, 'info');
+        }
+      });
+    });
+  } else {
+    tagsDisplay.innerHTML = '';
+  }
+  
+  // Hide actions if viewing own story
+  const actionsEl = document.getElementById('story-viewer-actions');
+  const viewsBtn = document.getElementById('story-views-btn');
+  if (story.username === state.user.username) {
+    actionsEl.style.display = 'none';
+    viewsBtn.style.display = 'flex';
+  } else {
+    actionsEl.style.display = 'flex';
+    viewsBtn.style.display = 'none';
+  }
+  
+  // Mark as seen
   const stories = Storage.load('stories') || [];
   const s = stories.find(x => x.id === story.id);
   if (s) {
@@ -2136,6 +2555,7 @@ function showStory(story) {
     if (!s.seenBy.includes(state.user?.username)) {
       s.seenBy.push(state.user?.username);
       Storage.save('stories', stories);
+      document.getElementById('story-views-count').textContent = s.seenBy.length;
     }
   }
 }
@@ -2151,6 +2571,7 @@ function startStoryTimer(stories) {
     if (progress >= 100) {
       clearInterval(state.storyViewerTimer);
       if (state.storyViewerIndex < stories.length - 1) {
+        state.currentViewingStory = stories[state.storyViewerIndex + 1];
         showStory(stories[state.storyViewerIndex + 1]);
         state.storyViewerIndex++;
         startStoryTimer(stories);
@@ -2162,6 +2583,7 @@ function startStoryTimer(stories) {
 function closeStoryViewer() {
   clearInterval(state.storyViewerTimer);
   document.getElementById('story-viewer').classList.remove('active');
+  state.currentViewingStory = null;
   renderStoriesBar();
 }
 
@@ -2178,64 +2600,116 @@ function getTimeAgo(timestamp) {
   return 'hace ' + days + 'd';
 }
 
-// ===================== TOUR =====================
-const TOUR_STEPS = [
-  { target:'#search-wrap', text:'Pega aquí tus links de YouTube, TikTok o IG para descargar audio/video limpio.' },
-  { target:'#mini-player', text:'Controla tu música desde aquí, sin interrupciones. Toca para expandir el reproductor completo.' },
-  { target:null, text:'❤️ Favoritos, ⬇️ Descargas y 📋 Playlists. Organiza tu música como quieras. Todo se guarda localmente.', center:true },
-  { target:null, text:'Música Non-Stop y Privacidad Total. Minimiza la app o bloquea tu pantalla y la música seguirá sonando.', center:true },
-  { target:null, text:'Bienvenido a Horizon. Tu música, tus reglas. ¡Disfruta!', center:true, final:true },
+// ===================== ONBOARDING TUTORIAL =====================
+const ONBOARDING_STEPS = [
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    label: 'Paso 1 de 5',
+    title: '¡Bienvenido a Music Horizon! 🎵',
+    desc: 'Tu nueva forma de descubrir, compartir y disfrutar música. Te mostraremos todo lo que puedes hacer.',
+    features: []
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    label: 'Paso 2 de 5',
+    title: 'Busca y descarga música',
+    desc: 'Pega links de YouTube, TikTok o Instagram para descargar audio limpio al instante.',
+    features: [
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>', text: 'Buscador inteligente en la parte superior' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>', text: 'Descarga directa con un clic' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg>', text: 'Organiza en playlists personales' }
+    ]
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/></svg>',
+    label: 'Paso 3 de 5',
+    title: 'Crea historias musicales',
+    desc: 'Comparte lo que escuchas con filtros de privacidad granulares y etiqueta a tus amigos.',
+    features: [
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>', text: ' Todos · 👥 Amigos ·  Mejores amigos · 💕 Novio/a' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67"/></svg>', text: 'Etiqueta amigos con @username' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>', text: 'Ve quién vio cada historia' }
+    ]
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',
+    label: 'Paso 4 de 5',
+    title: 'Agrega amigos y comparte',
+    desc: 'Conecta con otros usuarios, invita por WhatsApp y descubre qué música escuchan.',
+    features: [
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>', text: 'Busca amigos por @username' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>', text: 'Invita por WhatsApp con un clic' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>', text: 'Recibe notificaciones de interacciones' }
+    ]
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>',
+    label: 'Paso 5 de 5',
+    title: 'Reproductor flotante + Modo Mix',
+    desc: 'La música sigue sonando mientras navegas. Activa el Modo Mix para una cola infinita personalizada.',
+    features: [
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>', text: 'Mini player flotante persistente' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg>', text: '🔀 Shuffle y 🔁 Repeat funcionales' },
+      { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', text: '⚡ Modo Mix Inteligente' }
+    ]
+  }
 ];
-let tourStep = 0;
 
-function startTour() {
+let onboardingStep = 0;
+
+function startOnboarding() {
   if (state.tourDone) return;
-  const overlay = document.createElement('div');
-  overlay.className = 'tour-overlay active';
-  overlay.id = 'tour-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(10px)';
-  overlay.innerHTML = `
-    <div class="tour-spotlight" id="tour-spotlight" style="position:fixed;pointer-events:none;transition:all .6s;border-radius:20px;border:3px solid var(--accent);box-shadow:0 0 0 9999px rgba(0,0,0,0.9),0 0 40px var(--accent-glow)"></div>
-    <div class="tour-card" id="tour-card" style="position:relative;z-index:10000;background:var(--bg-card);border:1px solid var(--border-light);border-radius:20px;padding:24px;max-width:340px;box-shadow:0 24px 80px rgba(0,0,0,0.8)">
-      <div class="tour-step" id="tour-step" style="font-size:12px;color:var(--accent-light);font-weight:700;letter-spacing:1.5px;margin-bottom:10px">PASO 1 / ${TOUR_STEPS.length}</div>
-      <div class="tour-text" id="tour-text" style="font-size:15px;line-height:1.6;margin-bottom:20px;color:var(--text-primary)"></div>
-      <button class="tour-btn" id="tour-btn" style="width:100%;height:48px;background:var(--gradient-primary);border-radius:12px;font-weight:700;font-size:15px;box-shadow:0 6px 20px var(--accent-glow)">Continuar</button>
-      <div class="tour-dots" id="tour-dots" style="display:flex;justify-content:center;gap:8px;margin-top:16px"></div>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-  tourStep = 0;
-  renderTourStep();
-  
-  overlay.querySelector('#tour-btn').addEventListener('click', () => {
-    tourStep++;
-    if (tourStep >= TOUR_STEPS.length) {
-      overlay.remove();
-      localStorage.setItem('mh_tour_completed', '1');
-      state.tourDone = true;
-    } else renderTourStep();
-  });
+  onboardingStep = 0;
+  renderOnboardingStep();
+  document.getElementById('onboarding-overlay').classList.add('active');
 }
 
-function renderTourStep() {
-  const step = TOUR_STEPS[tourStep];
-  const spot = document.getElementById('tour-spotlight');
-  document.getElementById('tour-step').textContent = `PASO ${tourStep + 1} / ${TOUR_STEPS.length}`;
-  document.getElementById('tour-text').textContent = step.text;
-  document.getElementById('tour-btn').textContent = step.final ? '¡Comenzar!' : 'Continuar';
-  document.getElementById('tour-dots').innerHTML = TOUR_STEPS.map((_, i) => `<div style="width:8px;height:8px;border-radius:50%;background:${i === tourStep ? 'var(--accent)' : 'rgba(255,255,255,0.2)'};box-shadow:${i === tourStep ? '0 0 10px var(--accent-glow)' : 'none'};transition:all .3s"></div>`).join('');
-  if (step.center) {
-    spot.style.display = 'none';
-  } else {
-    spot.style.display = 'block';
-    const el = document.querySelector(step.target);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      spot.style.left = (rect.left - 8) + 'px';
-      spot.style.top = (rect.top - 8) + 'px';
-      spot.style.width = (rect.width + 16) + 'px';
-      spot.style.height = (rect.height + 16) + 'px';
+function renderOnboardingStep() {
+  const step = ONBOARDING_STEPS[onboardingStep];
+  const card = document.getElementById('onboarding-card');
+  const isLast = onboardingStep === ONBOARDING_STEPS.length - 1;
+  
+  card.innerHTML = `
+    <div class="onboarding-illustration">${step.icon}</div>
+    <div class="onboarding-step-label">${step.label}</div>
+    <div class="onboarding-title">${step.title}</div>
+    <div class="onboarding-desc">${step.desc}</div>
+    ${step.features.length > 0 ? `
+      <div class="onboarding-features">
+        ${step.features.map(f => `
+          <div class="onboarding-feature">
+            <div class="onboarding-feature-icon">${f.icon}</div>
+            <div class="onboarding-feature-text">${f.text}</div>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
+    <div class="onboarding-progress">
+      ${ONBOARDING_STEPS.map((_, i) => `<div class="onboarding-dot ${i === onboardingStep ? 'active' : ''}"></div>`).join('')}
+    </div>
+    <button class="onboarding-btn" id="onboarding-next">${isLast ? '¡Comenzar a usar! 🚀' : 'Continuar'}</button>
+    ${!isLast ? '<button class="onboarding-skip" id="onboarding-skip">Saltar tutorial</button>' : ''}
+  `;
+  
+  document.getElementById('onboarding-next').addEventListener('click', () => {
+    onboardingStep++;
+    if (onboardingStep >= ONBOARDING_STEPS.length) {
+      document.getElementById('onboarding-overlay').classList.remove('active');
+      localStorage.setItem('mh_tour_completed', '1');
+      state.tourDone = true;
+      toast('¡Bienvenido a Music Horizon! 🎵', 'success');
+    } else {
+      renderOnboardingStep();
     }
+  });
+  
+  const skipBtn = document.getElementById('onboarding-skip');
+  if (skipBtn) {
+    skipBtn.addEventListener('click', () => {
+      document.getElementById('onboarding-overlay').classList.remove('active');
+      localStorage.setItem('mh_tour_completed', '1');
+      state.tourDone = true;
+    });
   }
 }
 
@@ -2247,6 +2721,11 @@ document.addEventListener('keydown', (e) => {
     if (document.getElementById('story-modal').classList.contains('active')) document.getElementById('story-modal').classList.remove('active');
     if (document.getElementById('playlist-modal').classList.contains('active')) document.getElementById('playlist-modal').classList.remove('active');
     if (document.getElementById('profile-setup-modal').classList.contains('active')) document.getElementById('profile-setup-modal').classList.remove('active');
+    if (document.getElementById('info-modal').classList.contains('active')) document.getElementById('info-modal').classList.remove('active');
+    if (document.getElementById('visibility-modal').classList.contains('active')) document.getElementById('visibility-modal').classList.remove('active');
+    if (document.getElementById('views-modal').classList.contains('active')) document.getElementById('views-modal').classList.remove('active');
+    if (document.getElementById('notifications-panel').classList.contains('active')) document.getElementById('notifications-panel').classList.remove('active');
+    if (document.getElementById('onboarding-overlay').classList.contains('active')) document.getElementById('onboarding-overlay').classList.remove('active');
   }
   if (e.key === ' ' && document.activeElement.tagName !== 'INPUT') {
     e.preventDefault();
@@ -2259,13 +2738,12 @@ const savedUser = Storage.load('currentUser');
 if (savedUser) {
   state.user = savedUser;
   state.friends = Storage.load('friends') || DEMO_USERS;
-  state.favorites = Storage.load('favorites_' + savedUser.username) || [];
-  state.downloads = Storage.load('downloads_' + savedUser.username) || [];
-  state.playlists = Storage.load('playlists_' + savedUser.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+  loadUserData(savedUser);
   showLayer('layer-main');
   updateNavAvatar();
   navigateTo('home');
   renderStoriesBar();
+  updateNotifBadge();
 }
 </script>
 </body>
