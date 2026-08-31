@@ -81,12 +81,17 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .btn-google::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.3) 50%,transparent 100%);transform:translateX(-100%);transition:transform .5s}
 .btn-google:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 50px rgba(0,0,0,0.4)}
 .btn-google:hover::before{transform:translateX(100%)}
+.btn-google:disabled{opacity:0.7;cursor:not-allowed}
 .btn-google svg{width:24px;height:24px}
 .login-stats{display:flex;gap:16px;margin-top:40px;animation:fadeInUp 1.4s ease-out}
 .stat-badge{padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--text-secondary);backdrop-filter:blur(10px)}
 .stat-badge strong{color:var(--accent-light);font-weight:700}
 .privacy-note{margin-top:36px;max-width:340px;text-align:center;font-size:12px;color:var(--text-muted);line-height:1.7;opacity:0.8;animation:fadeInUp 1.2s ease-out}
 .privacy-note strong{color:var(--text-secondary);font-weight:600}
+.login-loading{display:none;align-items:center;gap:10px;color:var(--text-secondary);font-size:14px;margin-top:16px}
+.login-loading.show{display:flex}
+.spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ===================== PROFILE SETUP MODAL ===================== */
 .profile-setup-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px}
@@ -108,11 +113,10 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .setup-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow)}
 .setup-btn:disabled{opacity:0.5;cursor:not-allowed}
 .setup-error{color:var(--danger);font-size:12px;text-align:center;margin-bottom:12px;min-height:16px}
-.setup-skip{display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--text-secondary);text-decoration:underline}
 
 /* ===================== MAIN APP ===================== */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:linear-gradient(180deg,rgba(13,19,33,0.98) 0%,rgba(13,19,33,0.85) 100%);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid var(--border)}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:linear-gradient(180deg,rgba(13,19,33,0.98) 0%,rgba(13,19,33,0.85) 100%);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid var(--border);z-index:60;position:relative}
 .nav-left{display:flex;align-items:center;gap:12px}
 .nav-logo{width:40px;height:40px;border-radius:12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px var(--accent-glow);position:relative;overflow:hidden}
 .nav-logo svg{width:20px;height:20px}
@@ -127,7 +131,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
 
 /* Stories bar */
-.stories-bar{display:flex;gap:12px;padding:16px 20px;overflow-x:auto;border-bottom:1px solid var(--border)}
+.stories-bar{display:flex;gap:12px;padding:16px 20px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--bg-primary)}
 .stories-bar::-webkit-scrollbar{height:0}
 .story-item{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
 .story-ring{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#3385E6,#6B46FF,#FF6B6B);transition:transform .2s}
@@ -140,8 +144,8 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .story-ring.add svg{width:24px;height:24px;color:var(--text-secondary)}
 .story-name{font-size:11px;color:var(--text-secondary);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* Content area */
-.content{flex:1;overflow-y:auto;padding:20px 20px 160px;-webkit-overflow-scrolling:touch}
+/* Content area - PADDING FIX */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:20px 20px 180px;-webkit-overflow-scrolling:touch}
 .content::-webkit-scrollbar{width:0}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .section-title{font-size:22px;font-weight:800;letter-spacing:-0.5px}
@@ -207,7 +211,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .mix-desc{font-size:12px;color:var(--text-secondary);line-height:1.5}
 
 /* ===================== MINI PLAYER ===================== */
-.mini-player{position:fixed;left:12px;right:12px;bottom:12px;height:72px;background:rgba(26,37,64,0.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid var(--border-light);border-radius:20px;display:flex;align-items:center;gap:14px;padding:10px 12px 10px 10px;z-index:100;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:0 12px 50px rgba(0,0,0,0.6)}
+.mini-player{position:fixed;left:12px;right:12px;bottom:calc(var(--nav-height) + 12px);height:72px;background:rgba(26,37,64,0.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid var(--border-light);border-radius:20px;display:flex;align-items:center;gap:14px;padding:10px 12px 10px 10px;z-index:95;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:0 12px 50px rgba(0,0,0,0.6)}
 .mini-player.hidden{opacity:0;transform:translateY(100px);pointer-events:none}
 .mini-player:hover{transform:translateY(-4px);box-shadow:0 16px 60px rgba(0,0,0,0.7);border-color:var(--accent)}
 .mini-cover{width:56px;height:56px;border-radius:14px;overflow:hidden;background:#2a3550;flex-shrink:0;box-shadow:0 4px 15px rgba(0,0,0,0.4)}
@@ -238,7 +242,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .full-art-wrap{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
 .vinyl{width:min(80vw,360px);aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle at center,#1a1a1a 0%,#0a0a0a 60%,#000 100%);position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center}
 .vinyl.playing{animation:spin 20s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 .vinyl::before{content:'';position:absolute;inset:24px;border-radius:50%;background:repeating-radial-gradient(circle at center,#222 0,#222 2px,#111 2px,#111 4px)}
 .vinyl-cover{position:absolute;width:48%;height:48%;border-radius:50%;overflow:hidden;z-index:2;border:5px solid #0a0a0a;box-shadow:inset 0 0 30px rgba(0,0,0,0.9)}
 .vinyl-cover img{width:100%;height:100%;object-fit:cover}
@@ -258,6 +261,8 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .full-btn.play{width:72px;height:72px;background:var(--gradient-primary);box-shadow:0 10px 35px var(--accent-glow)}
 .full-btn.play:hover{transform:scale(1.15);box-shadow:0 14px 45px var(--accent-glow)}
 .full-btn.play svg{width:28px;height:28px}
+.full-btn.active-mode{color:var(--accent-light)}
+.full-btn.active-mode svg{stroke:var(--accent-light)}
 
 /* Lyrics */
 .lyrics-panel{max-height:200px;overflow-y:auto;text-align:center;padding:0 20px}
@@ -482,13 +487,17 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
       </svg>
       Continuar con Google
     </button>
+    <div class="login-loading" id="login-loading">
+      <div class="spinner"></div>
+      <span>Autenticando con Google...</span>
+    </div>
     <div class="login-stats">
       <div class="stat-badge"><strong>2.8K+</strong> usuarios</div>
       <div class="stat-badge"><strong>∞</strong> música</div>
       <div class="stat-badge"><strong>0</strong> anuncios</div>
     </div>
     <p class="privacy-note">
-      <strong>🔒 Privacidad total.</strong> Tus datos están protegidos bajo cifrado de extremo a extremo. Cero anuncios. Cero rastreo comercial.
+      <strong> Privacidad total.</strong> Tus datos están protegidos bajo cifrado de extremo a extremo. Cero anuncios. Cero rastreo comercial.
     </p>
   </div>
 </section>
@@ -497,7 +506,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 <div class="profile-setup-modal" id="profile-setup-modal">
   <div class="profile-setup-card">
     <h2>¡Bienvenido! 🎵</h2>
-    <p>Configura tu perfil para comenzar. Elige un <strong>@username</strong> único que será tu identificador.</p>
+    <p id="setup-subtitle">Configura tu perfil para comenzar. Elige un <strong>@username</strong> único que será tu identificador.</p>
     
     <div class="avatar-upload" id="avatar-upload">
       <span id="avatar-initial">?</span>
@@ -592,7 +601,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
     </button>
     <div style="font-size:13px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.5px;font-weight:600">Reproduciendo</div>
-    <button class="full-close" id="full-share-btn">
+    <button class="full-close" id="full-share-btn" title="Compartir historia">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
     </button>
   </div>
@@ -616,7 +625,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
     <div class="progress-times"><span id="time-cur">0:00</span><span id="time-dur">0:00</span></div>
   </div>
   <div class="full-controls">
-    <button class="full-btn" id="full-shuffle">
+    <button class="full-btn" id="full-shuffle" title="Aleatorio">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
     </button>
     <button class="full-btn" id="full-prev">
@@ -628,7 +637,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
     <button class="full-btn" id="full-next">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
     </button>
-    <button class="full-btn" id="full-repeat">
+    <button class="full-btn" id="full-repeat" title="Repetir">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
     </button>
   </div>
@@ -768,7 +777,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 <div class="modal-overlay" id="playlist-modal">
   <div class="modal">
     <div class="modal-header">
-      <h3 class="modal-title"> Agregar a playlist</h3>
+      <h3 class="modal-title">📋 Agregar a playlist</h3>
       <button class="modal-close" id="playlist-modal-close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -786,7 +795,30 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 <!-- AUDIO -->
 <audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
 
-<script>
+<!-- FIREBASE + APP -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+// ===================== FIREBASE CONFIG =====================
+const firebaseConfig = {
+  apiKey: "AIzaSyCYG4QAvUCYkXDC_anHjG9Lu8Zyt54yMGg",
+  authDomain: "music-horizon-844de.firebaseapp.com",
+  projectId: "music-horizon-844de",
+  storageBucket: "music-horizon-844de.firebasestorage.app",
+  messagingSenderId: "418224032968",
+  appId: "1:418224032968:web:62dcf87c3fac9bd829e9fd",
+  measurementId: "G-EGEZNLYLBM"
+};
+
+let firebaseAuth = null;
+try {
+  const fbApp = initializeApp(firebaseConfig);
+  firebaseAuth = getAuth(fbApp);
+} catch (e) {
+  console.warn('Firebase no disponible, usando modo demo:', e);
+}
+
 // ===================== DATA =====================
 const TRACKS = [
   { id:1, title:'Neon Midnight', artist:'Luna Vega', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1789399b8-e820-4e63-a50d-b11ded66f9b1.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', genre:'electronic' },
@@ -810,7 +842,7 @@ const DEMO_USERS = [
 // ===================== STATE =====================
 const state = {
   user: null,
-  pendingGoogleUser: null,
+  firebaseUser: null,
   currentTrack: null,
   currentIndex: 0,
   isPlaying: false,
@@ -825,6 +857,11 @@ const state = {
   storyViewerTimer: null,
   tourDone: localStorage.getItem('mh_tour_completed') === '1',
   pendingTrackForPlaylist: null,
+  // Shuffle & Repeat state
+  shuffleEnabled: false,
+  repeatMode: 0, // 0=off, 1=all, 2=one
+  shuffledQueue: [],
+  shuffledIndex: 0,
 };
 
 const audio = document.getElementById('audio');
@@ -864,26 +901,67 @@ function validateUsername(username) {
   return null;
 }
 
-// ===================== AUTH FLOW =====================
-document.getElementById('btn-login-google').addEventListener('click', () => {
-  // Simulación de autenticación con Google
-  const tempUser = {
-    name: 'Usuario',
-    email: 'usuario@gmail.com',
-    photoURL: null,
-    isGoogle: true
-  };
-  state.pendingGoogleUser = tempUser;
+// ===================== FIREBASE AUTH FLOW =====================
+document.getElementById('btn-login-google').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-login-google');
+  const loading = document.getElementById('login-loading');
   
-  // Mostrar modal de configuración de perfil
-  document.getElementById('profile-setup-modal').classList.add('active');
-  document.getElementById('setup-name').value = '';
-  document.getElementById('setup-username').value = '';
-  document.getElementById('setup-error').textContent = '';
-  document.getElementById('avatar-preview').style.display = 'none';
-  document.getElementById('avatar-initial').style.display = 'block';
-  document.getElementById('avatar-initial').textContent = '?';
-  document.getElementById('setup-name').focus();
+  btn.disabled = true;
+  loading.classList.add('show');
+  
+  try {
+    let firebaseUser = null;
+    
+    if (firebaseAuth) {
+      // Real Firebase Auth
+      const provider = new GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      const result = await signInWithPopup(firebaseAuth, provider);
+      firebaseUser = result.user;
+    } else {
+      // Fallback demo mode
+      await new Promise(r => setTimeout(r, 1200));
+      firebaseUser = {
+        uid: 'demo_' + Date.now(),
+        displayName: 'Usuario',
+        email: 'usuario@gmail.com',
+        photoURL: null
+      };
+    }
+    
+    state.firebaseUser = firebaseUser;
+    
+    // Check if user already has a profile with username
+    const users = Storage.load('users') || [];
+    const existingUser = users.find(u => u.firebaseUid === firebaseUser.uid);
+    
+    if (existingUser) {
+      // User already has a profile, log them in directly
+      state.user = existingUser;
+      state.favorites = Storage.load('favorites_' + existingUser.username) || [];
+      state.downloads = Storage.load('downloads_' + existingUser.username) || [];
+      state.playlists = Storage.load('playlists_' + existingUser.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+      onAuthSuccess(existingUser);
+    } else {
+      // New user - show profile setup modal
+      document.getElementById('profile-setup-modal').classList.add('active');
+      // Pre-fill name from Google
+      document.getElementById('setup-name').value = firebaseUser.displayName || '';
+      document.getElementById('setup-username').value = '';
+      document.getElementById('setup-error').textContent = '';
+      document.getElementById('avatar-preview').style.display = 'none';
+      document.getElementById('avatar-initial').style.display = 'block';
+      document.getElementById('avatar-initial').textContent = (firebaseUser.displayName || '?')[0].toUpperCase();
+      document.getElementById('setup-username').focus();
+    }
+  } catch (e) {
+    console.error('Auth error:', e);
+    toast('Error al autenticar: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    loading.classList.remove('show');
+  }
 });
 
 // Avatar upload
@@ -938,14 +1016,15 @@ function completeProfileSetup() {
   setTimeout(() => {
     const avatarSrc = document.getElementById('avatar-preview').style.display !== 'none' 
       ? document.getElementById('avatar-preview').src 
-      : null;
+      : (state.firebaseUser?.photoURL || null);
     
     const user = {
       name: name,
       username: username,
-      email: state.pendingGoogleUser?.email || null,
+      email: state.firebaseUser?.email || null,
       avatar: avatarSrc,
-      isGoogle: state.pendingGoogleUser?.isGoogle || false,
+      firebaseUid: state.firebaseUser?.uid || null,
+      isGoogle: true,
       createdAt: Date.now(),
       stats: { plays: 0, shares: 0, stories: 0 }
     };
@@ -956,10 +1035,9 @@ function completeProfileSetup() {
     Storage.save('currentUser', user);
     
     state.user = user;
-    state.pendingGoogleUser = null;
-    state.favorites = Storage.load('favorites') || [];
-    state.downloads = Storage.load('downloads') || [];
-    state.playlists = Storage.load('playlists') || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+    state.favorites = [];
+    state.downloads = [];
+    state.playlists = [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
     
     document.getElementById('profile-setup-modal').classList.remove('active');
     btn.disabled = false;
@@ -982,10 +1060,16 @@ function onAuthSuccess(user) {
   }
 }
 
-function logout() {
+async function logout() {
   if (!confirm('¿Seguro que quieres cerrar sesión? Se limpiarán tus datos locales.')) return;
+  
+  if (firebaseAuth) {
+    try { await signOut(firebaseAuth); } catch (e) {}
+  }
+  
   Storage.clear();
   state.user = null;
+  state.firebaseUser = null;
   state.currentTrack = null;
   state.isPlaying = false;
   state.favorites = [];
@@ -998,7 +1082,62 @@ function logout() {
   toast('Sesión cerrada correctamente', 'info');
 }
 
-// ===================== PLAYER =====================
+// Firebase auth state listener
+if (firebaseAuth) {
+  onAuthStateChanged(firebaseAuth, (fbUser) => {
+    if (fbUser && !state.user) {
+      // Auto-login if session persists
+      state.firebaseUser = fbUser;
+      const users = Storage.load('users') || [];
+      const existingUser = users.find(u => u.firebaseUid === fbUser.uid);
+      if (existingUser) {
+        state.user = existingUser;
+        state.favorites = Storage.load('favorites_' + existingUser.username) || [];
+        state.downloads = Storage.load('downloads_' + existingUser.username) || [];
+        state.playlists = Storage.load('playlists_' + existingUser.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+        onAuthSuccess(existingUser);
+      }
+    }
+  });
+}
+
+// ===================== PLAYER LOGIC =====================
+function buildShuffledQueue() {
+  const indices = TRACKS.map((_, i) => i);
+  // Fisher-Yates shuffle
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  state.shuffledQueue = indices;
+  state.shuffledIndex = 0;
+}
+
+function getNextTrackIndex() {
+  if (state.shuffleEnabled) {
+    if (state.shuffledQueue.length === 0) buildShuffledQueue();
+    state.shuffledIndex++;
+    if (state.shuffledIndex >= state.shuffledQueue.length) {
+      buildShuffledQueue();
+    }
+    return state.shuffledQueue[state.shuffledIndex];
+  } else {
+    return (state.currentIndex + 1) % TRACKS.length;
+  }
+}
+
+function getPrevTrackIndex() {
+  if (state.shuffleEnabled) {
+    state.shuffledIndex--;
+    if (state.shuffledIndex < 0) {
+      state.shuffledIndex = state.shuffledQueue.length - 1;
+    }
+    return state.shuffledQueue[state.shuffledIndex];
+  } else {
+    return (state.currentIndex - 1 + TRACKS.length) % TRACKS.length;
+  }
+}
+
 function playTrack(track) {
   if (!track) return;
   state.currentTrack = track;
@@ -1006,6 +1145,7 @@ function playTrack(track) {
   if (state.currentIndex === -1) state.currentIndex = 0;
   state.isPlaying = true;
   audio.src = track.audio;
+  audio.loop = state.repeatMode === 2; // repeat one
   audio.play().catch(() => {});
   updatePlayerUI();
   document.getElementById('mini-player').classList.remove('hidden');
@@ -1024,13 +1164,46 @@ function togglePlay() {
 }
 
 function nextTrack() {
-  const idx = (state.currentIndex + 1) % TRACKS.length;
+  const idx = getNextTrackIndex();
   playTrack(TRACKS[idx]);
 }
 
 function prevTrack() {
-  const idx = (state.currentIndex - 1 + TRACKS.length) % TRACKS.length;
+  const idx = getPrevTrackIndex();
   playTrack(TRACKS[idx]);
+}
+
+function toggleShuffle() {
+  state.shuffleEnabled = !state.shuffleEnabled;
+  const btn = document.getElementById('full-shuffle');
+  if (state.shuffleEnabled) {
+    btn.classList.add('active-mode');
+    buildShuffledQueue();
+    toast('🔀 Aleatorio activado', 'info');
+  } else {
+    btn.classList.remove('active-mode');
+    toast('Aleatorio desactivado', 'info');
+  }
+}
+
+function toggleRepeat() {
+  state.repeatMode = (state.repeatMode + 1) % 3;
+  const btn = document.getElementById('full-repeat');
+  audio.loop = state.repeatMode === 2;
+  
+  if (state.repeatMode === 0) {
+    btn.classList.remove('active-mode');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>';
+    toast('Repetir desactivado', 'info');
+  } else if (state.repeatMode === 1) {
+    btn.classList.add('active-mode');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>';
+    toast('🔁 Repetir todo', 'info');
+  } else {
+    btn.classList.add('active-mode');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/><text x="12" y="15" font-size="8" font-weight="bold" fill="currentColor" text-anchor="middle" stroke="none">1</text></svg>';
+    toast('🔂 Repetir una', 'info');
+  }
 }
 
 function updatePlayerUI() {
@@ -1078,7 +1251,29 @@ audio.addEventListener('timeupdate', () => {
   document.getElementById('time-cur').textContent = fmtTime(audio.currentTime);
   document.getElementById('time-dur').textContent = fmtTime(audio.duration);
 });
-audio.addEventListener('ended', nextTrack);
+
+audio.addEventListener('ended', () => {
+  if (state.repeatMode === 2) {
+    // loop one - audio.loop handles it
+    return;
+  }
+  if (state.repeatMode === 1) {
+    // loop all - go to next, wrap around
+    nextTrack();
+  } else {
+    // no repeat - go to next, stop at end
+    const nextIdx = state.shuffleEnabled 
+      ? (state.shuffledIndex + 1 < state.shuffledQueue.length ? state.shuffledIndex + 1 : -1)
+      : (state.currentIndex + 1 < TRACKS.length ? state.currentIndex + 1 : -1);
+    if (nextIdx === -1) {
+      state.isPlaying = false;
+      updatePlayerUI();
+    } else {
+      nextTrack();
+    }
+  }
+});
+
 audio.addEventListener('play', () => { state.isPlaying = true; updatePlayerUI(); });
 audio.addEventListener('pause', () => { state.isPlaying = false; updatePlayerUI(); });
 
@@ -1095,6 +1290,8 @@ document.getElementById('mini-next').addEventListener('click', (e) => { e.stopPr
 document.getElementById('mini-prev').addEventListener('click', (e) => { e.stopPropagation(); prevTrack(); });
 document.getElementById('full-next').addEventListener('click', nextTrack);
 document.getElementById('full-prev').addEventListener('click', prevTrack);
+document.getElementById('full-shuffle').addEventListener('click', toggleShuffle);
+document.getElementById('full-repeat').addEventListener('click', toggleRepeat);
 document.getElementById('mini-player').addEventListener('click', () => { document.getElementById('full-player').classList.add('active'); });
 document.getElementById('full-close').addEventListener('click', () => { document.getElementById('full-player').classList.remove('active'); });
 document.getElementById('progress-bar').addEventListener('click', (e) => {
@@ -1136,7 +1333,7 @@ function toggleFavorite(track) {
     state.favorites.splice(idx, 1);
     toast('Eliminado de favoritos', 'info');
   }
-  Storage.save('favorites', state.favorites);
+  Storage.save('favorites_' + state.user.username, state.favorites);
   refreshCurrentView();
 }
 
@@ -1144,8 +1341,7 @@ function toggleDownload(track) {
   const idx = state.downloads.findIndex(d => d.id === track.id);
   if (idx === -1) {
     state.downloads.push({ ...track, downloadedAt: Date.now() });
-    toast('️ Descarga iniciada', 'success');
-    // Simular descarga
+    toast('⬇️ Descarga iniciada', 'success');
     setTimeout(() => {
       toast('✓ Descarga completada', 'success');
     }, 1500);
@@ -1153,7 +1349,7 @@ function toggleDownload(track) {
     state.downloads.splice(idx, 1);
     toast('Descarga eliminada', 'info');
   }
-  Storage.save('downloads', state.downloads);
+  Storage.save('downloads_' + state.user.username, state.downloads);
   refreshCurrentView();
 }
 
@@ -1199,7 +1395,7 @@ function renderPlaylistsList() {
         const exists = playlist.tracks.some(t => t.id === state.pendingTrackForPlaylist.id);
         if (!exists) {
           playlist.tracks.push(state.pendingTrackForPlaylist);
-          Storage.save('playlists', state.playlists);
+          Storage.save('playlists_' + state.user.username, state.playlists);
           toast(`✓ Añadido a "${playlist.name}"`, 'success');
         } else {
           toast('Ya está en esta playlist', 'info');
@@ -1218,7 +1414,7 @@ document.getElementById('create-playlist-btn').addEventListener('click', () => {
   const name = prompt('Nombre de la nueva playlist:');
   if (name && name.trim()) {
     state.playlists.push({ id: Date.now(), name: name.trim(), tracks: [] });
-    Storage.save('playlists', state.playlists);
+    Storage.save('playlists_' + state.user.username, state.playlists);
     renderPlaylistsList();
     toast('✓ Playlist creada', 'success');
   }
@@ -1277,7 +1473,7 @@ function renderHomeView(container) {
       <div class="cat-chip">🌊 Relax</div>
       <div class="cat-chip">💪 Workout</div>
       <div class="cat-chip">🎯 Focus</div>
-      <div class="cat-chip">🎉 Fiesta</div>
+      <div class="cat-chip"> Fiesta</div>
     </div>
 
     <div class="section-head">
@@ -1313,7 +1509,7 @@ function renderHomeView(container) {
       toast('🔐 Acceso Overlord (demo)', 'info');
       return;
     }
-    toast('🔍 Buscando: ' + q.substring(0, 30), 'success');
+    toast(' Buscando: ' + q.substring(0, 30), 'success');
     searchInput.value = '';
   };
   searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSearch(); });
@@ -1420,7 +1616,7 @@ function renderExploreView(container) {
       <h2 class="section-title">Explorar</h2>
     </div>
     <div class="cat-scroll">
-      <div class="cat-chip active"> Todo</div>
+      <div class="cat-chip active">🌍 Todo</div>
       <div class="cat-chip">🎸 Rock</div>
       <div class="cat-chip">🎤 Pop</div>
       <div class="cat-chip">🎷 Jazz</div>
@@ -1524,28 +1720,33 @@ function renderLibraryTab(tab) {
     }
   }
   
-  // Attach listeners
   content.querySelectorAll('[data-track-id]').forEach(item => {
     item.addEventListener('click', (e) => {
       if (e.target.closest('[data-action="like"]')) {
         e.stopPropagation();
         const trackId = parseInt(e.target.closest('[data-action="like"]').dataset.trackId);
-        const track = TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
+        const track = findTrackById(trackId);
         if (track) toggleFavorite(track);
         return;
       }
       if (e.target.closest('[data-action="download"]')) {
         e.stopPropagation();
         const trackId = parseInt(e.target.closest('[data-action="download"]').dataset.trackId);
-        const track = TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
+        const track = findTrackById(trackId);
         if (track) toggleDownload(track);
         return;
       }
       const trackId = parseInt(item.dataset.trackId);
-      const track = TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
+      const track = findTrackById(trackId);
       if (track) playTrack(track);
     });
   });
+}
+
+function findTrackById(trackId) {
+  return TRACKS.find(t => t.id === trackId) 
+    || state.favorites.find(t => t.id === trackId) 
+    || state.downloads.find(t => t.id === trackId);
 }
 
 function createTrackListItem(track, liked, downloaded) {
@@ -2058,9 +2259,9 @@ const savedUser = Storage.load('currentUser');
 if (savedUser) {
   state.user = savedUser;
   state.friends = Storage.load('friends') || DEMO_USERS;
-  state.favorites = Storage.load('favorites') || [];
-  state.downloads = Storage.load('downloads') || [];
-  state.playlists = Storage.load('playlists') || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
+  state.favorites = Storage.load('favorites_' + savedUser.username) || [];
+  state.downloads = Storage.load('downloads_' + savedUser.username) || [];
+  state.playlists = Storage.load('playlists_' + savedUser.username) || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
   showLayer('layer-main');
   updateNavAvatar();
   navigateTo('home');
