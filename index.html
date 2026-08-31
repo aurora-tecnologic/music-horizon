@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0D1321" />
+<title>Music Horizon — Tu música, tus reglas</title>
+<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"Music Horizon","short_name":"Horizon","start_url":".","display":"standalone","orientation":"portrait","background_color":"%230D1321","theme_color":"%230D1321","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22><rect width=%22192%22 height=%22192%22 rx=%2240%22 fill=%22%230D1321%22/><circle cx=%2296%22 cy=%2296%22 r=%2240%22 fill=%22%233385E6%22/></svg>","sizes":"192x192","type":"image/svg+xml"}]}' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.0/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-fira-code@5.0.0/index.css" />
+<style>
+/* ===================== RESET & BASE ===================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#0D1321;
+  color:#F0F4FF;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer}
+input{font-family:inherit;border:none;outline:none;color:inherit}
+
+:root{
+  --bg-primary:#0D1321;
+  --bg-secondary:#0a0f1a;
+  --bg-card:#1A2540;
+  --bg-card-hover:#243055;
+  --accent:#3385E6;
+  --accent-light:#5BA3FF;
+  --accent-glow:rgba(51,133,230,0.5);
+  --accent-purple:#6B46FF;
+  --text-primary:#F0F4FF;
+  --text-secondary:#8899B4;
+  --text-muted:#5a6a85;
+  --border:rgba(255,255,255,0.08);
+  --border-light:rgba(255,255,255,0.12);
+  --danger:#EF4444;
+  --success:#10B981;
+  --warning:#F59E0B;
+  --gradient-primary:linear-gradient(135deg,#3385E6 0%,#6B46FF 100%);
+  --gradient-warm:linear-gradient(135deg,#FF6B6B 0%,#FFA07A 100%);
+  --gradient-cool:linear-gradient(135deg,#00D9FF 0%,#0099FF 100%);
+}
+
+/* ===================== LAYER SYSTEM ===================== */
+.layer{
+  position:fixed;inset:0;
+  display:none;
+  opacity:0;
+  transition:opacity .5s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+.layer.active{display:flex;opacity:1}
+.layer.fade-in{animation:fadeIn .6s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes fadeIn{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
+
+/* ===================== CAPA 0: LOGIN ===================== */
+#layer-login{
+  flex-direction:column;align-items:center;justify-content:center;
+  background:var(--bg-secondary);
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Animated covers background */
+.login-covers-bg{
+  position:absolute;inset:0;
+  overflow:hidden;
+  z-index:0;
+}
+.floating-cover{
+  position:absolute;
+  width:140px;height:140px;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  opacity:0.15;
+  animation:floatCover 20s ease-in-out infinite;
+}
+.floating-cover img{width:100%;height:100%;object-fit:cover}
+.floating-cover:nth-child(1){top:10%;left:5%;animation-delay:0s;animation-duration:18s}
+.floating-cover:nth-child(2){top:60%;left:8%;animation-delay:-3s;animation-duration:22s}
+.floating-cover:nth-child(3){top:20%;right:5%;animation-delay:-6s;animation-duration:20s}
+.floating-cover:nth-child(4){top:70%;right:10%;animation-delay:-9s;animation-duration:24s}
+.floating-cover:nth-child(5){top:40%;left:15%;animation-delay:-12s;animation-duration:19s}
+.floating-cover:nth-child(6){top:50%;right:15%;animation-delay:-15s;animation-duration:21s}
+
+@keyframes floatCover{
+  0%,100%{transform:translateY(0) rotate(0deg) scale(1)}
+  25%{transform:translateY(-30px) rotate(5deg) scale(1.05)}
+  50%{transform:translateY(-15px) rotate(-3deg) scale(0.98)}
+  75%{transform:translateY(-40px) rotate(8deg) scale(1.02)}
+}
+
+/* Gradient orbs */
+.gradient-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:0.3;
+  animation:pulse 8s ease-in-out infinite;
+}
+.orb-1{
+  width:400px;height:400px;
+  background:var(--accent);
+  top:-100px;left:-100px;
+  animation-delay:0s;
+}
+.orb-2{
+  width:350px;height:350px;
+  background:var(--accent-purple);
+  bottom:-100px;right:-100px;
+  animation-delay:-4s;
+}
+.orb-3{
+  width:300px;height:300px;
+  background:#FF6B6B;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  animation-delay:-2s;
+  opacity:0.15;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:0.3}
+  50%{transform:scale(1.2);opacity:0.4}
+}
+
+.login-content{
+  position:relative;z-index:10;
+  display:flex;flex-direction:column;align-items:center;
+  max-width:420px;width:100%;
+}
+
+.login-logo{
+  width:120px;height:120px;
+  border-radius:32px;
+  background:var(--gradient-primary);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 20px 80px var(--accent-glow),0 0 0 1px rgba(255,255,255,0.1) inset;
+  margin-bottom:32px;
+  animation:logoFloat 4s ease-in-out infinite,logoGlow 3s ease-in-out infinite;
+  position:relative;
+  overflow:hidden;
+}
+.login-logo::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.2) 50%,transparent 100%);
+  animation:shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+@keyframes logoGlow{0%,100%{box-shadow:0 20px 80px var(--accent-glow),0 0 0 1px rgba(255,255,255,0.1) inset}50%{box-shadow:0 30px 100px var(--accent-glow),0 0 0 1px rgba(255,255,255,0.15) inset}}
+.login-logo svg{width:60px;height:60px;position:relative;z-index:1}
+
+.login-title{
+  font-size:42px;font-weight:800;letter-spacing:-1px;
+  margin-bottom:12px;
+  text-align:center;
+  background:linear-gradient(135deg,#fff 0%,#a8c0ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:titleShine 4s ease-in-out infinite;
+}
+@keyframes titleShine{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
+.login-title span{
+  background:var(--gradient-primary);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-weight:900;
+}
+
+.login-sub{
+  color:var(--text-secondary);font-size:16px;
+  margin-bottom:48px;text-align:center;
+  line-height:1.6;max-width:320px;
+  animation:fadeInUp .8s ease-out;
+}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.btn-google{
+  width:100%;height:60px;
+  background:rgba(255,255,255,0.95);
+  color:#1a1a1a;
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  font-weight:700;font-size:16px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.1) inset;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  animation:fadeInUp 1s ease-out;
+}
+.btn-google::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.3) 50%,transparent 100%);
+  transform:translateX(-100%);
+  transition:transform .5s;
+}
+.btn-google:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 15px 50px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.2) inset;
+}
+.btn-google:hover::before{transform:translateX(100%)}
+.btn-google:active{transform:translateY(-1px) scale(1.01)}
+.btn-google svg{width:24px;height:24px}
+
+.privacy-note{
+  margin-top:36px;max-width:340px;text-align:center;
+  font-size:12px;color:var(--text-muted);line-height:1.7;
+  opacity:0.8;
+  animation:fadeInUp 1.2s ease-out;
+}
+.privacy-note strong{color:var(--text-secondary);font-weight:600}
+
+/* Stats badges */
+.login-stats{
+  display:flex;gap:16px;margin-top:40px;
+  animation:fadeInUp 1.4s ease-out;
+}
+.stat-badge{
+  padding:8px 16px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-size:11px;color:var(--text-secondary);
+  backdrop-filter:blur(10px);
+}
+.stat-badge strong{color:var(--accent-light);font-weight:700}
+
+/* ===================== CAPA 1: FACHADA ===================== */
+#layer-facade{flex-direction:column;background:var(--bg-primary)}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px 16px;
+  background:linear-gradient(180deg,rgba(13,19,33,0.98) 0%,rgba(13,19,33,0.85) 100%);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border-bottom:1px solid var(--border);
+}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.logo-mark{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--gradient-primary);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 20px var(--accent-glow);
+  position:relative;overflow:hidden;
+}
+.logo-mark::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.2) 50%,transparent 100%);
+}
+.logo-mark svg{width:20px;height:20px;position:relative;z-index:1}
+.logo-text{font-size:20px;font-weight:800;letter-spacing:-0.5px}
+.logo-text span{color:var(--accent-light)}
+
+.user-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--gradient-primary);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:15px;
+  border:2px solid rgba(255,255,255,0.15);
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .3s,box-shadow .3s;
+  box-shadow:0 4px 15px var(--accent-glow);
+}
+.user-avatar:hover{transform:scale(1.08);box-shadow:0 6px 25px var(--accent-glow)}
+.user-avatar img{width:100%;height:100%;object-fit:cover}
+
+.facade-scroll{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:24px 24px 160px;
+  -webkit-overflow-scrolling:touch;
+}
+.facade-scroll::-webkit-scrollbar{width:0}
+
+/* Search */
+.search-wrap{position:relative;margin-bottom:32px}
+.search-input{
+  width:100%;height:56px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:50px;
+  padding:0 56px 0 24px;
+  font-size:15px;color:var(--text-primary);
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+}
+.search-input::placeholder{color:var(--text-muted)}
+.search-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px var(--accent-glow),0 8px 30px rgba(0,0,0,0.3);
+  background:var(--bg-card-hover);
+}
+.search-btn{
+  position:absolute;right:8px;top:8px;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--gradient-primary);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 4px 15px var(--accent-glow);
+}
+.search-btn:hover{transform:scale(1.1) rotate(10deg);box-shadow:0 6px 25px var(--accent-glow)}
+.search-btn svg{width:18px;height:18px}
+
+/* Section headers */
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.section-title{font-size:22px;font-weight:800;letter-spacing:-0.5px}
+.section-link{
+  font-size:13px;color:var(--accent-light);font-weight:600;
+  padding:6px 12px;border-radius:20px;
+  background:rgba(51,133,230,0.1);
+  transition:all .3s;
+}
+.section-link:hover{background:rgba(51,133,230,0.2);transform:translateX(2px)}
+
+/* Trending grid */
+.trend-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  margin-bottom:36px;
+}
+.trend-card{
+  position:relative;aspect-ratio:1/1;
+  border-radius:20px;overflow:hidden;
+  background:var(--bg-card);
+  cursor:pointer;
+  transition:all .4s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+.trend-card:hover{
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 16px 40px rgba(0,0,0,0.5);
+}
+.trend-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.9) 100%);
+  z-index:1;
+}
+.trend-card img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+.trend-card:hover img{transform:scale(1.1)}
+.trend-info{position:absolute;left:14px;right:14px;bottom:12px;z-index:2}
+.trend-title{font-size:15px;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trend-artist{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trend-play{
+  position:absolute;right:12px;bottom:12px;z-index:2;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--gradient-primary);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 20px var(--accent-glow);
+  opacity:0;transform:translateY(10px) scale(0.8);
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.trend-card:hover .trend-play{opacity:1;transform:translateY(0) scale(1)}
+.trend-play svg{width:16px;height:16px}
+
+/* Releases carousel */
+.release-scroll{
+  display:flex;gap:16px;overflow-x:auto;
+  padding-bottom:12px;margin-bottom:36px;
+  scroll-snap-type:x mandatory;
+}
+.release-scroll::-webkit-scrollbar{height:0}
+.release-card{
+  flex:0 0 170px;scroll-snap-align:start;
+  cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);
+}
+.release-card:hover{transform:translateY(-6px)}
+.release-cover{
+  width:170px;height:170px;border-radius:16px;overflow:hidden;
+  background:var(--bg-card);margin-bottom:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  position:relative;
+}
+.release-cover::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.1) 50%,transparent 100%);
+  opacity:0;transition:opacity .3s;
+}
+.release-card:hover .release-cover::before{opacity:1}
+.release-cover img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.release-card:hover .release-cover img{transform:scale(1.08)}
+.release-title{font-size:14px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.release-artist{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Categories */
+.cat-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;margin-bottom:36px}
+.cat-scroll::-webkit-scrollbar{height:0}
+.cat-chip{
+  flex:0 0 auto;height:44px;padding:0 20px;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:50px;
+  display:flex;align-items:center;
+  font-size:14px;font-weight:600;
+  white-space:nowrap;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+.cat-chip.active{
+  background:var(--gradient-primary);
+  border-color:transparent;
+  box-shadow:0 6px 20px var(--accent-glow);
+}
+.cat-chip:hover:not(.active){
+  border-color:var(--accent);
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* ===================== MINI PLAYER ===================== */
+.mini-player{
+  position:fixed;left:12px;right:12px;bottom:12px;
+  height:72px;
+  background:rgba(26,37,64,0.95);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border:1px solid var(--border-light);
+  border-radius:20px;
+  display:flex;align-items:center;gap:14px;
+  padding:10px 12px 10px 10px;
+  z-index:100;
+  cursor:pointer;
+  transition:all .4s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 12px 50px rgba(0,0,0,0.6);
+}
+.mini-player.hidden{opacity:0;transform:translateY(100px);pointer-events:none}
+.mini-player:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 60px rgba(0,0,0,0.7);
+  border-color:var(--accent);
+}
+.mini-cover{
+  width:56px;height:56px;border-radius:14px;overflow:hidden;
+  background:#2a3550;flex-shrink:0;
+  box-shadow:0 4px 15px rgba(0,0,0,0.4);
+}
+.mini-cover img{width:100%;height:100%;object-fit:cover}
+.mini-info{flex:1;min-width:0}
+.mini-title{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-artist{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.mini-controls{display:flex;align-items:center;gap:6px}
+.mini-btn{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.mini-btn:hover{background:rgba(255,255,255,0.1);transform:scale(1.1)}
+.mini-btn svg{width:22px;height:22px}
+.mini-btn.play{
+  background:var(--gradient-primary);
+  box-shadow:0 6px 20px var(--accent-glow);
+}
+.mini-btn.play:hover{transform:scale(1.15);box-shadow:0 8px 30px var(--accent-glow)}
+.mini-btn.play svg{width:20px;height:20px}
+
+/* ===================== FULLSCREEN PLAYER ===================== */
+.full-player{
+  position:fixed;inset:0;z-index:200;
+  background:linear-gradient(180deg,#1A2540 0%,#0D1321 100%);
+  display:flex;flex-direction:column;
+  padding:24px 28px 48px;
+  transform:translateY(100%);
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.full-player.active{transform:translateY(0)}
+.full-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
+.full-close{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+.full-close:hover{background:rgba(255,255,255,0.1);transform:scale(1.1)}
+.full-close svg{width:24px;height:24px}
+.full-label{font-size:13px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+.full-art-wrap{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.vinyl{
+  width:min(80vw,360px);aspect-ratio:1/1;
+  border-radius:50%;
+  background:radial-gradient(circle at center,#1a1a1a 0%,#0a0a0a 60%,#000 100%);
+  position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.8);
+  display:flex;align-items:center;justify-content:center;
+}
+.vinyl.playing{animation:spin 20s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vinyl::before{
+  content:'';position:absolute;inset:24px;border-radius:50%;
+  background:repeating-radial-gradient(circle at center,#222 0,#222 2px,#111 2px,#111 4px);
+}
+.vinyl-cover{
+  position:absolute;width:48%;height:48%;border-radius:50%;
+  overflow:hidden;z-index:2;
+  border:5px solid #0a0a0a;
+  box-shadow:inset 0 0 30px rgba(0,0,0,0.9),0 8px 25px rgba(0,0,0,0.5);
+}
+.vinyl-cover img{width:100%;height:100%;object-fit:cover}
+.vinyl-center{
+  position:absolute;width:16%;height:16%;border-radius:50%;
+  background:#0D1321;z-index:3;
+  border:3px solid #222;
+  box-shadow:0 4px 15px rgba(0,0,0,0.5);
+}
+.full-info{text-align:center;margin:32px 0 24px}
+.full-title{font-size:26px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px}
+.full-artist{font-size:15px;color:var(--text-secondary)}
+.full-progress{margin-bottom:24px}
+.progress-bar{
+  width:100%;height:6px;background:rgba(255,255,255,0.1);
+  border-radius:3px;position:relative;cursor:pointer;
+  margin-bottom:10px;
+  transition:height .2s;
+}
+.progress-bar:hover{height:8px}
+.progress-fill{
+  height:100%;
+  background:var(--gradient-primary);
+  border-radius:3px;width:0%;
+  transition:width .3s;
+  box-shadow:0 0 10px var(--accent-glow);
+}
+.progress-times{display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);font-weight:500}
+.full-controls{display:flex;align-items:center;justify-content:space-around}
+.full-btn{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+.full-btn:hover{background:rgba(255,255,255,0.1);transform:scale(1.1)}
+.full-btn svg{width:26px;height:26px}
+.full-btn.play{
+  width:72px;height:72px;
+  background:var(--gradient-primary);
+  box-shadow:0 10px 35px var(--accent-glow);
+}
+.full-btn.play:hover{transform:scale(1.15);box-shadow:0 14px 45px var(--accent-glow)}
+.full-btn.play svg{width:28px;height:28px}
+
+/* ===================== CAPA 2: QR SCANNER ===================== */
+#layer-qr{
+  flex-direction:column;align-items:center;justify-content:center;
+  background:#000;
+  padding:24px;
+}
+.qr-status{
+  position:absolute;top:40px;left:0;right:0;text-align:center;
+  font-family:'Fira Code',monospace;font-size:12px;
+  color:var(--danger);letter-spacing:2px;
+  animation:blink 1.5s infinite;
+  font-weight:600;
+}
+@keyframes blink{50%{opacity:0.4}}
+.qr-frame{
+  position:relative;width:min(85vw,380px);aspect-ratio:1/1;
+  border:2px solid rgba(239,68,68,0.3);
+  border-radius:24px;
+  overflow:hidden;
+  background:#0a0a0a;
+  box-shadow:0 0 60px rgba(239,68,68,0.2);
+}
+.qr-frame video,.qr-frame canvas{width:100%!important;height:100%!important;object-fit:cover}
+.qr-corners{position:absolute;inset:0;pointer-events:none}
+.qr-corner{
+  position:absolute;width:40px;height:40px;
+  border:4px solid var(--danger);
+  box-shadow:0 0 20px rgba(239,68,68,0.5);
+}
+.qr-corner.tl{top:16px;left:16px;border-right:none;border-bottom:none;border-top-left-radius:12px}
+.qr-corner.tr{top:16px;right:16px;border-left:none;border-bottom:none;border-top-right-radius:12px}
+.qr-corner.bl{bottom:16px;left:16px;border-right:none;border-top:none;border-bottom-left-radius:12px}
+.qr-corner.br{bottom:16px;right:16px;border-left:none;border-top:none;border-bottom-right-radius:12px}
+.qr-scanline{
+  position:absolute;left:16px;right:16px;height:3px;
+  background:linear-gradient(90deg,transparent,var(--danger),transparent);
+  box-shadow:0 0 15px var(--danger);
+  animation:scan 2.2s ease-in-out infinite;
+}
+@keyframes scan{0%,100%{top:16px}50%{top:calc(100% - 19px)}}
+.qr-label{
+  margin-top:28px;text-align:center;
+  font-family:'Fira Code',monospace;font-size:13px;
+  color:var(--text-secondary);letter-spacing:1px;
+  max-width:340px;line-height:1.7;
+}
+.qr-label strong{color:var(--danger);font-weight:700}
+.qr-exit{
+  position:absolute;top:24px;right:24px;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(239,68,68,0.15);border:1px solid var(--danger);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+.qr-exit:hover{background:rgba(239,68,68,0.25);transform:scale(1.1)}
+.qr-exit svg{width:22px;height:22px;color:var(--danger)}
+.qr-result{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.95);
+  display:none;align-items:center;justify-content:center;
+  flex-direction:column;gap:20px;
+  z-index:10;
+}
+.qr-result.show{display:flex}
+.qr-result-msg{
+  font-family:'Fira Code',monospace;font-size:18px;
+  font-weight:700;letter-spacing:2px;
+}
+.qr-result-msg.ok{color:var(--success)}
+.qr-result-msg.fail{color:var(--danger)}
+
+/* ===================== CAPA 3: OVERLORD ===================== */
+#layer-overlord{
+  flex-direction:column;
+  background:#000;
+  font-family:'Fira Code',monospace;
+}
+.ov-header{
+  padding:18px 24px;
+  border-bottom:1px solid #1a1a1a;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(10px);
+}
+.ov-uptime,.ov-lat{color:#00FF00;font-weight:600}
+.ov-alert{
+  color:#FF0000;font-weight:700;
+  animation:blink 1s infinite;
+  letter-spacing:1.5px;
+}
+.ov-body{flex:1;overflow-y:auto;padding:20px 24px 100px;font-size:14px;line-height:1.8}
+.ov-body::-webkit-scrollbar{width:6px}
+.ov-body::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+.ov-line{margin-bottom:6px;white-space:pre-wrap;word-break:break-word}
+.ov-line .prompt{color:#00FF00}
+.ov-line .cmd{color:#F0F4FF}
+.ov-line .out{color:#8899B4}
+.ov-line .warn{color:#F59E0B}
+.ov-line .err{color:#FF0000}
+.ov-line .ok{color:#00FF00}
+.ov-input-wrap{
+  position:fixed;bottom:0;left:0;right:0;
+  padding:16px 24px;
+  background:#000;border-top:1px solid #1a1a1a;
+  display:flex;align-items:center;gap:10px;
+  backdrop-filter:blur(10px);
+}
+.ov-prompt{color:#00FF00;font-size:14px;white-space:nowrap;font-weight:600}
+.ov-input{
+  flex:1;background:transparent;font-family:inherit;font-size:14px;
+  color:#F0F4FF;
+}
+.ov-panic{
+  position:fixed;top:24px;right:24px;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(239,68,68,0.2);border:1px solid var(--danger);
+  display:flex;align-items:center;justify-content:center;
+  z-index:50;
+  transition:all .3s;
+}
+.ov-panic:hover{background:rgba(239,68,68,0.3);transform:scale(1.1)}
+.ov-panic svg{width:22px;height:22px;color:var(--danger)}
+
+/* ===================== TOUR SPOTLIGHT ===================== */
+.tour-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,0.9);
+  display:none;align-items:center;justify-content:center;
+  padding:24px;
+  backdrop-filter:blur(10px);
+}
+.tour-overlay.active{display:flex}
+.tour-spotlight{
+  position:fixed;
+  pointer-events:none;
+  transition:all .6s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 0 9999px rgba(0,0,0,0.9);
+  border-radius:20px;
+  border:3px solid var(--accent);
+  box-shadow:0 0 0 9999px rgba(0,0,0,0.9),0 0 40px var(--accent-glow);
+}
+.tour-card{
+  position:relative;z-index:10000;
+  background:var(--bg-card);
+  border:1px solid var(--border-light);
+  border-radius:20px;
+  padding:24px;
+  max-width:340px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.8);
+  backdrop-filter:blur(20px);
+}
+.tour-step{font-size:12px;color:var(--accent-light);font-weight:700;letter-spacing:1.5px;margin-bottom:10px}
+.tour-text{font-size:15px;line-height:1.6;margin-bottom:20px;color:var(--text-primary)}
+.tour-btn{
+  width:100%;height:48px;
+  background:var(--gradient-primary);
+  border-radius:12px;
+  font-weight:700;font-size:15px;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 6px 20px var(--accent-glow);
+}
+.tour-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow)}
+.tour-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+.tour-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all .3s}
+.tour-dot.active{background:var(--accent);box-shadow:0 0 10px var(--accent-glow)}
+
+/* ===================== TOAST ===================== */
+.toast{
+  position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);
+  background:var(--bg-card);
+  border:1px solid var(--border-light);
+  border-radius:14px;
+  padding:14px 24px;
+  font-size:14px;font-weight:600;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+  z-index:10000;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  max-width:90%;
+  backdrop-filter:blur(20px);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-left:4px solid var(--success)}
+.toast.error{border-left:4px solid var(--danger)}
+
+/* ===================== UTILS ===================== */
+.hidden{display:none!important}
+@media (min-width:768px){
+  .trend-grid{grid-template-columns:repeat(4,1fr)}
+  .release-card{flex:0 0 190px}
+  .release-cover{width:190px;height:190px}
+  .floating-cover{width:180px;height:180px}
+}
+@media (max-width:380px){
+  .login-title{font-size:36px}
+  .trend-grid{gap:12px}
+  .section-title{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA 0: LOGIN ============ -->
+<section id="layer-login" class="layer active">
+  <div class="login-covers-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1789399b8-e820-4e63-a50d-b11ded66f9b1.png" alt="" /></div>
+    <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/149411c3b-6e85-47a8-9a82-9990eb95acde.png" alt="" /></div>
+    <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/120d5c5d9-40af-4bea-beae-c86fd06ad39c.png" alt="" /></div>
+    <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1c74965db-f333-42ab-8b3e-e8b2b9070d7d.png" alt="" /></div>
+    <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1aba76d27-d6a5-4d46-8ba2-bd8445feab35.png" alt="" /></div>
+    <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/176cc5bcd-fe8d-464a-96f3-617aa4b5c666.png" alt="" /></div>
+  </div>
+  
+  <div class="login-content">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/>
+      </svg>
+    </div>
+    <h1 class="login-title">Music <span>Horizon</span></h1>
+    <p class="login-sub">Tu música, tus reglas. Accede a un universo sonoro sin límites ni fronteras.</p>
+    <button class="btn-google" id="btn-login-google">
+      <svg viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      Continuar con Google
+    </button>
+    <div class="login-stats">
+      <div class="stat-badge"><strong>2.8K+</strong> usuarios</div>
+      <div class="stat-badge"><strong>∞</strong> música</div>
+      <div class="stat-badge"><strong>0</strong> anuncios</div>
+    </div>
+    <p class="privacy-note">
+      <strong>🔒 Privacidad total.</strong> Tus datos están protegidos bajo cifrado de extremo a extremo. Cero anuncios. Cero rastreo comercial. Solo el Administrador de la plataforma puede auditar el sistema.
+    </p>
+  </div>
+</section>
+
+<!-- ============ CAPA 1: FACHADA ============ -->
+<section id="layer-facade" class="layer">
+  <header class="topbar">
+    <div class="logo-wrap">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/>
+        </svg>
+      </div>
+      <div class="logo-text">Music<span>Horizon</span></div>
+    </div>
+    <div class="user-avatar" id="user-avatar">?</div>
+  </header>
+
+  <div class="facade-scroll" id="facade-scroll">
+    <div class="search-wrap" id="search-wrap">
+      <input type="text" class="search-input" id="search-input" placeholder=" Pega un link de YouTube, TikTok o IG..." autocomplete="off" />
+      <button class="search-btn" id="search-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cat-scroll">
+      <div class="cat-chip active">🔥 Para ti</div>
+      <div class="cat-chip">⚡ Éxitos</div>
+      <div class="cat-chip"> Relax</div>
+      <div class="cat-chip">💪 Workout</div>
+      <div class="cat-chip"> Focus</div>
+      <div class="cat-chip">🎉 Fiesta</div>
+    </div>
+
+    <div class="section-head">
+      <h2 class="section-title"> Tendencias</h2>
+      <a class="section-link">Ver todo →</a>
+    </div>
+    <div class="trend-grid" id="trend-grid"></div>
+
+    <div class="section-head">
+      <h2 class="section-title">✨ Nuevos lanzamientos</h2>
+      <a class="section-link">Ver todo →</a>
+    </div>
+    <div class="release-scroll" id="release-scroll"></div>
+  </div>
+
+  <!-- Mini player -->
+  <div class="mini-player hidden" id="mini-player">
+    <div class="mini-cover"><img id="mini-cover-img" alt="" /></div>
+    <div class="mini-info">
+      <div class="mini-title" id="mini-title">—</div>
+      <div class="mini-artist" id="mini-artist">—</div>
+    </div>
+    <div class="mini-controls">
+      <button class="mini-btn" id="mini-prev">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+      </button>
+      <button class="mini-btn play" id="mini-play">
+        <svg id="mini-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="mini-btn" id="mini-next">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FULL PLAYER ============ -->
+<section class="full-player" id="full-player">
+  <div class="full-top">
+    <button class="full-close" id="full-close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="full-label">Reproduciendo</div>
+    <button class="full-close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </button>
+  </div>
+  <div class="full-art-wrap">
+    <div class="vinyl" id="vinyl">
+      <div class="vinyl-cover"><img id="full-cover-img" alt="" /></div>
+      <div class="vinyl-center"></div>
+    </div>
+  </div>
+  <div class="full-info">
+    <div class="full-title" id="full-title">—</div>
+    <div class="full-artist" id="full-artist">—</div>
+  </div>
+  <div class="full-progress">
+    <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-times"><span id="time-cur">0:00</span><span id="time-dur">0:00</span></div>
+  </div>
+  <div class="full-controls">
+    <button class="full-btn" id="full-shuffle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+    </button>
+    <button class="full-btn" id="full-prev">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+    </button>
+    <button class="full-btn play" id="full-play">
+      <svg id="full-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="full-btn" id="full-next">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+    </button>
+    <button class="full-btn" id="full-repeat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ============ CAPA 2: QR SCANNER ============ -->
+<section id="layer-qr" class="layer">
+  <button class="qr-exit" id="qr-exit">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="qr-status">● AUTENTICACIÓN REQUERIDA</div>
+  <div class="qr-frame" id="qr-frame">
+    <div id="qr-reader"></div>
+    <div class="qr-corners">
+      <div class="qr-corner tl"></div>
+      <div class="qr-corner tr"></div>
+      <div class="qr-corner bl"></div>
+      <div class="qr-corner br"></div>
+    </div>
+    <div class="qr-scanline"></div>
+    <div class="qr-result" id="qr-result">
+      <div class="qr-result-msg" id="qr-result-msg"></div>
+    </div>
+  </div>
+  <div class="qr-label">
+    <strong>ESCANEE TOKEN DE ALTA ENTROPÍA</strong><br/>
+    Válidez: 120 segundos · Canal seguro encriptado
+  </div>
+</section>
+
+<!-- ============ CAPA 3: OVERLORD ============ -->
+<section id="layer-overlord" class="layer">
+  <button class="ov-panic" id="ov-panic" title="Cerrar sesión segura">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+  </button>
+  <div class="ov-header">
+    <span class="ov-uptime" id="ov-uptime">UPTIME: 00:00:00</span>
+    <span class="ov-alert">⚠ SESIÓN ENCRIPTADA</span>
+    <span class="ov-lat" id="ov-lat">LAT: 12ms</span>
+  </div>
+  <div class="ov-body" id="ov-body"></div>
+  <div class="ov-input-wrap">
+    <span class="ov-prompt">root@horizon-overlord:~#</span>
+    <input type="text" class="ov-input" id="ov-input" autocomplete="off" spellcheck="false" />
+  </div>
+</section>
+
+<!-- ============ TOUR ============ -->
+<div class="tour-overlay" id="tour-overlay">
+  <div class="tour-spotlight" id="tour-spotlight"></div>
+  <div class="tour-card" id="tour-card">
+    <div class="tour-step" id="tour-step">PASO 1 / 4</div>
+    <div class="tour-text" id="tour-text"></div>
+    <button class="tour-btn" id="tour-btn">Continuar</button>
+    <div class="tour-dots" id="tour-dots"></div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ AUDIO ============ -->
+<audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
+
+<!-- ============ SCRIPTS ============ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+/* ===================== FIREBASE ===================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyCYG4QAvUCYkXDC_anHjG9Lu8Zyt54yMGg",
+  authDomain: "music-horizon-844de.firebaseapp.com",
+  projectId: "music-horizon-844de",
+  storageBucket: "music-horizon-844de.firebasestorage.app",
+  messagingSenderId: "418224032968",
+  appId: "1:418224032968:web:62dcf87c3fac9bd829e9fd",
+  measurementId: "G-EGEZNLYLBM"
+};
+let auth;
+try {
+  const app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+} catch(e){ console.warn('Firebase init failed:', e); }
+
+/* ===================== DATA ===================== */
+const TRACKS = [
+  { id:1, title:'Neon Midnight', artist:'Luna Vega', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1789399b8-e820-4e63-a50d-b11ded66f9b1.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { id:2, title:'Urban Pulse', artist:'Kairo', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/149411c3b-6e85-47a8-9a82-9990eb95acde.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+  { id:3, title:'Cosmic Drift', artist:'Stellaris', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/120d5c5d9-40af-4bea-beae-c86fd06ad39c.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+  { id:4, title:'Golden Hour', artist:'Aria Sol', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1c74965db-f333-42ab-8b3e-e8b2b9070d7d.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+  { id:5, title:'Liquid Chrome', artist:'Nyx', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1aba76d27-d6a5-4d46-8ba2-bd8445feab35.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+  { id:6, title:'Biolumin', artist:'Forest Echo', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/176cc5bcd-fe8d-464a-96f3-617aa4b5c666.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
+  { id:7, title:'Retro Sunset', artist:'Vapor Dreams', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1c2252ed0-5c77-474e-9bfe-729e0e184670.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
+  { id:8, title:'Frequency', artist:'Pulse Wave', cover:'https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/1ab89be89-4cd4-4450-9bc3-fd33c2954727.png', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+];
+
+/* ===================== STATE ===================== */
+const state = {
+  user: null,
+  currentTrack: null,
+  currentIndex: 0,
+  isPlaying: false,
+  tourDone: localStorage.getItem('mh_tour_completed') === '1',
+  qrScanner: null,
+};
+
+/* ===================== DOM ===================== */
+const $ = (id) => document.getElementById(id);
+const layers = {
+  login: $('layer-login'),
+  facade: $('layer-facade'),
+  qr: $('layer-qr'),
+  overlord: $('layer-overlord'),
+};
+
+function showLayer(name){
+  Object.entries(layers).forEach(([k,el])=>{
+    el.classList.remove('active');
+  });
+  layers[name].classList.add('active','fade-in');
+}
+
+/* ===================== TOAST ===================== */
+let toastTimer;
+function toast(msg, type='success'){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.classList.remove('show'); }, 3500);
+}
+
+/* ===================== RENDER CONTENT ===================== */
+function renderTrends(){
+  const grid = $('trend-grid');
+  grid.innerHTML = TRACKS.slice(0,6).map((t,i)=>`
+    <div class="trend-card" data-idx="${i}">
+      <img src="${t.cover}" alt="${t.title}" loading="lazy"/>
+      <div class="trend-info">
+        <div class="trend-title">${t.title}</div>
+        <div class="trend-artist">${t.artist}</div>
+      </div>
+      <div class="trend-play">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.trend-card').forEach(c=>{
+    c.addEventListener('click',()=>playTrack(parseInt(c.dataset.idx)));
+  });
+}
+
+function renderReleases(){
+  const scroll = $('release-scroll');
+  scroll.innerHTML = TRACKS.map((t,i)=>`
+    <div class="release-card" data-idx="${i}">
+      <div class="release-cover"><img src="${t.cover}" alt="${t.title}" loading="lazy"/></div>
+      <div class="release-title">${t.title}</div>
+      <div class="release-artist">${t.artist}</div>
+    </div>
+  `).join('');
+  scroll.querySelectorAll('.release-card').forEach(c=>{
+    c.addEventListener('click',()=>playTrack(parseInt(c.dataset.idx)));
+  });
+}
+
+/* ===================== AUDIO PLAYER ===================== */
+const audio = $('audio');
+function playTrack(idx){
+  const track = TRACKS[idx];
+  if(!track) return;
+  state.currentTrack = track;
+  state.currentIndex = idx;
+  state.isPlaying = true;
+  audio.src = track.audio;
+  audio.play().catch(()=>{});
+  updatePlayerUI();
+  $('mini-player').classList.remove('hidden');
+  updateMediaSession();
+}
+
+function togglePlay(){
+  if(!state.currentTrack){ playTrack(0); return; }
+  if(state.isPlaying){ audio.pause(); } else { audio.play().catch(()=>{}); }
+  state.isPlaying = !state.isPlaying;
+  updatePlayerUI();
+  updateMediaSession();
+}
+
+function nextTrack(){
+  const idx = (state.currentIndex + 1) % TRACKS.length;
+  playTrack(idx);
+}
+function prevTrack(){
+  const idx = (state.currentIndex - 1 + TRACKS.length) % TRACKS.length;
+  playTrack(idx);
+}
+
+function updatePlayerUI(){
+  if(!state.currentTrack) return;
+  const t = state.currentTrack;
+  $('mini-title').textContent = t.title;
+  $('mini-artist').textContent = t.artist;
+  $('mini-cover-img').src = t.cover;
+  $('full-title').textContent = t.title;
+  $('full-artist').textContent = t.artist;
+  $('full-cover-img').src = t.cover;
+  const playIcon = `<path d="M8 5v14l11-7z"/>`;
+  const pauseIcon = `<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>`;
+  $('mini-play-icon').innerHTML = state.isPlaying ? pauseIcon : playIcon;
+  $('full-play-icon').innerHTML = state.isPlaying ? pauseIcon : playIcon;
+  const vinyl = $('vinyl');
+  if(state.isPlaying) vinyl.classList.add('playing');
+  else vinyl.classList.remove('playing');
+}
+
+audio.addEventListener('timeupdate',()=>{
+  if(!audio.duration) return;
+  const pct = (audio.currentTime / audio.duration) * 100;
+  $('progress-fill').style.width = pct + '%';
+  $('time-cur').textContent = fmtTime(audio.currentTime);
+  $('time-dur').textContent = fmtTime(audio.duration);
+});
+audio.addEventListener('ended', nextTrack);
+audio.addEventListener('play',()=>{ state.isPlaying=true; updatePlayerUI(); updateMediaSession(); });
+audio.addEventListener('pause',()=>{ state.isPlaying=false; updatePlayerUI(); updateMediaSession(); });
+
+function fmtTime(s){
+  const m = Math.floor(s/60);
+  const sec = Math.floor(s%60).toString().padStart(2,'0');
+  return `${m}:${sec}`;
+}
+
+$('mini-play').addEventListener('click',(e)=>{ e.stopPropagation(); togglePlay(); });
+$('full-play').addEventListener('click', togglePlay);
+$('mini-next').addEventListener('click',(e)=>{ e.stopPropagation(); nextTrack(); });
+$('mini-prev').addEventListener('click',(e)=>{ e.stopPropagation(); prevTrack(); });
+$('full-next').addEventListener('click', nextTrack);
+$('full-prev').addEventListener('click', prevTrack);
+$('mini-player').addEventListener('click',()=>{ $('full-player').classList.add('active'); });
+$('full-close').addEventListener('click',()=>{ $('full-player').classList.remove('active'); });
+$('progress-bar').addEventListener('click',(e)=>{
+  if(!audio.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = pct * audio.duration;
+});
+
+/* ===================== MEDIA SESSION API ===================== */
+function updateMediaSession(){
+  if(!('mediaSession' in navigator) || !state.currentTrack) return;
+  const t = state.currentTrack;
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: t.title,
+    artist: t.artist,
+    album: 'Music Horizon',
+    artwork: [{ src: t.cover, sizes: '512x512', type: 'image/png' }]
+  });
+  navigator.mediaSession.setActionHandler('play', ()=>{ if(!state.isPlaying) togglePlay(); });
+  navigator.mediaSession.setActionHandler('pause', ()=>{ if(state.isPlaying) togglePlay(); });
+  navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
+  navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+}
+
+/* ===================== SEARCH / TRIGGER ===================== */
+const searchInput = $('search-input');
+function handleSearch(){
+  const q = searchInput.value.trim();
+  if(!q) return;
+  if(q === '#OVERLORD#'){
+    searchInput.value = '';
+    activateQR();
+    return;
+  }
+  toast('🔍 Buscando: ' + q.substring(0,30) + (q.length>30?'...':''), 'success');
+  fetch('http://localhost:8080/api/download',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ url: q, format:'mp3' })
+  }).then(r=>r.json()).then(()=>{
+    toast('✓ Descarga iniciada', 'success');
+  }).catch(()=>{
+    toast('⚠ Backend no disponible (modo demo)', 'error');
+  });
+  searchInput.value = '';
+}
+searchInput.addEventListener('keydown',(e)=>{ if(e.key==='Enter') handleSearch(); });
+$('search-btn').addEventListener('click', handleSearch);
+
+/* ===================== QR SCANNER ===================== */
+async function activateQR(){
+  showLayer('qr');
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    stream.getTracks().forEach(t=>t.stop());
+  } catch(e){
+    toast('📷 Permiso de cámara denegado', 'error');
+    showLayer('facade');
+    return;
+  }
+  if(!window.Html5Qrcode){
+    await new Promise((res,rej)=>{
+      const s = document.createElement('script');
+      s.src = 'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  try {
+    if(state.qrScanner){ try{ state.qrScanner.stop(); state.qrScanner.clear(); }catch(e){} }
+    state.qrScanner = new Html5Qrcode('qr-reader');
+    await state.qrScanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 240, height: 240 } },
+      onQRSuccess,
+      ()=>{}
+    );
+  } catch(e){
+    console.warn('QR start failed:', e);
+    toast('Error al iniciar cámara', 'error');
+    setTimeout(()=>showLayer('facade'), 1500);
+  }
+}
+
+async function onQRSuccess(text){
+  if(!state.qrScanner) return;
+  try { await state.qrScanner.stop(); state.qrScanner.clear(); } catch(e){}
+  state.qrScanner = null;
+  const resEl = $('qr-result');
+  const msgEl = $('qr-result-msg');
+  resEl.classList.add('show');
+  try {
+    const r = await fetch('http://localhost:8080/api/verify-admin',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ code: text })
+    });
+    const data = await r.json();
+    if(data.status === 'success'){
+      msgEl.textContent = '✓ ACCESO CONCEDIDO';
+      msgEl.className = 'qr-result-msg ok';
+      setTimeout(()=>{ resEl.classList.remove('show'); showLayer('overlord'); initOverlord(); }, 1200);
+    } else {
+      throw new Error('invalid');
+    }
+  } catch(e){
+    msgEl.textContent = ' TOKEN CADUCADO / INVÁLIDO';
+    msgEl.className = 'qr-result-msg fail';
+    setTimeout(()=>{
+      resEl.classList.remove('show');
+      showLayer('facade');
+    }, 1800);
+  }
+}
+
+$('qr-exit').addEventListener('click', async ()=>{
+  if(state.qrScanner){ try{ await state.qrScanner.stop(); state.qrScanner.clear(); }catch(e){} state.qrScanner=null; }
+  showLayer('facade');
+});
+
+/* ===================== OVERLORD TERMINAL ===================== */
+let ovStartTime;
+function initOverlord(){
+  ovStartTime = Date.now();
+  const body = $('ov-body');
+  body.innerHTML = '';
+  printLine('HORIZON OVERLORD CONSOLE v3.1.7', 'ok');
+  printLine('Sistema OSINT de grado militar iniciado.', 'out');
+  printLine('Escribe "help" para ver comandos disponibles.', 'warn');
+  printLine('');
+  startUptime();
+  $('ov-input').focus();
+}
+
+function printLine(text, cls='out'){
+  const body = $('ov-body');
+  const div = document.createElement('div');
+  div.className = 'ov-line';
+  if(cls === 'prompt'){
+    div.innerHTML = `<span class="prompt">root@horizon-overlord:~# </span><span class="cmd">${escHtml(text)}</span>`;
+  } else {
+    div.innerHTML = `<span class="${cls}">${escHtml(text)}</span>`;
+  }
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function typeLine(text, cls='out', speed=18){
+  return new Promise(res=>{
+    const body = $('ov-body');
+    const div = document.createElement('div');
+    div.className = 'ov-line';
+    div.innerHTML = `<span class="${cls}"></span>`;
+    body.appendChild(div);
+    const span = div.querySelector('span');
+    let i = 0;
+    const iv = setInterval(()=>{
+      span.textContent += text[i];
+      i++;
+      body.scrollTop = body.scrollHeight;
+      if(i >= text.length){ clearInterval(iv); res(); }
+    }, speed);
+  });
+}
+
+const COMMANDS = {
+  help: async ()=>{
+    await typeLine('Comandos disponibles:','ok');
+    await typeLine('  help      — Muestra esta ayuda','out');
+    await typeLine('  status    — Estado del sistema','out');
+    await typeLine('  netstat   — Conexiones activas','out');
+    await typeLine('  scan      — Escaneo de red','out');
+    await typeLine('  users     — Usuarios conectados','out');
+    await typeLine('  clear     — Limpia la terminal','out');
+    await typeLine('  exit      — Cierra sesión segura','out');
+  },
+  status: async ()=>{
+    await typeLine('[OK] Núcleo: ONLINE','ok');
+    await typeLine('[OK] Cifrado AES-256: ACTIVO','ok');
+    await typeLine('[OK] Firewall: 0 intrusiones','ok');
+    await typeLine('[WARN] Latencia: 12ms','warn');
+    await typeLine('[OK] Storage: 42% utilizado','ok');
+  },
+  netstat: async ()=>{
+    await typeLine('Proto  Estado       Dirección remota','out');
+    await typeLine('TCP    ESTABLISHED  192.168.1.104:443','out');
+    await typeLine('TCP    ESTABLISHED  10.0.0.5:8080','out');
+    await typeLine('UDP    LISTEN       0.0.0.0:53','out');
+    await typeLine('TCP    TIME_WAIT    172.16.0.2:22','warn');
+  },
+  scan: async ()=>{
+    await typeLine('Iniciando escaneo de red...','warn');
+    await new Promise(r=>setTimeout(r,600));
+    await typeLine('[1/4] Descubriendo hosts...','out');
+    await new Promise(r=>setTimeout(r,500));
+    await typeLine('[2/4] Analizando puertos...','out');
+    await new Promise(r=>setTimeout(r,500));
+    await typeLine('[3/4] Fingerprinting...','out');
+    await new Promise(r=>setTimeout(r,400));
+    await typeLine('[4/4] Generando reporte...','out');
+    await typeLine('✓ 3 hosts activos · 0 vulnerabilidades críticas','ok');
+  },
+  users: async ()=>{
+    await typeLine('Usuarios activos en la plataforma:','out');
+    await typeLine('  • tú (admin) — sesión encriptada','ok');
+    await typeLine('  • 2,847 usuarios anónimos','out');
+    await typeLine('  • 0 intentos de intrusión hoy','ok');
+  },
+  clear: ()=>{ $('ov-body').innerHTML = ''; },
+  exit: ()=>{ $('ov-panic').click(); },
+};
+
+$('ov-input').addEventListener('keydown', async (e)=>{
+  if(e.key !== 'Enter') return;
+  const cmd = e.target.value.trim().toLowerCase();
+  e.target.value = '';
+  if(!cmd) return;
+  printLine(cmd, 'prompt');
+  if(COMMANDS[cmd]){
+    await COMMANDS[cmd]();
+  } else {
+    await typeLine(`Comando no reconocido: ${cmd}. Escribe "help".`, 'err');
+  }
+  printLine('');
+});
+
+function startUptime(){
+  setInterval(()=>{
+    const diff = Math.floor((Date.now()-ovStartTime)/1000);
+    const h = String(Math.floor(diff/3600)).padStart(2,'0');
+    const m = String(Math.floor((diff%3600)/60)).padStart(2,'0');
+    const s = String(diff%60).padStart(2,'0');
+    $('ov-uptime').textContent = `UPTIME: ${h}:${m}:${s}`;
+    $('ov-lat').textContent = `LAT: ${8+Math.floor(Math.random()*8)}ms`;
+  }, 1000);
+}
+
+$('ov-panic').addEventListener('click', async ()=>{
+  printLine('Cerrando sesión segura...','warn');
+  await new Promise(r=>setTimeout(r,800));
+  if(auth){ try{ await signOut(auth); }catch(e){} }
+  state.user = null;
+  showLayer('login');
+});
+
+/* ===================== TOUR ===================== */
+const TOUR_STEPS = [
+  { target:'#search-wrap', text:'Pega aquí tus links de YouTube, TikTok o IG para descargar audio/video limpio.' },
+  { target:'#mini-player', text:'Controla tu música desde aquí, sin interrupciones. Toca para expandir.' },
+  { target:null, text:'Música Non-Stop y Privacidad Total. Minimiza la app o bloquea tu pantalla y la música seguirá sonando de fondo. Además, tu información está blindada: sin rastreadores, sin interrupciones.', center:true },
+  { target:null, text:'Bienvenido a Horizon. Tu música, tus reglas.', center:true, final:true },
+];
+let tourStep = 0;
+
+function startTour(){
+  if(state.tourDone) return;
+  const overlay = $('tour-overlay');
+  overlay.classList.add('active');
+  tourStep = 0;
+  renderTourStep();
+}
+
+function renderTourStep(){
+  const step = TOUR_STEPS[tourStep];
+  const spot = $('tour-spotlight');
+  const card = $('tour-card');
+  $('tour-step').textContent = `PASO ${tourStep+1} / ${TOUR_STEPS.length}`;
+  $('tour-text').textContent = step.text;
+  $('tour-btn').textContent = step.final ? 'Comenzar' : (tourStep === TOUR_STEPS.length-2 ? 'Entendido, ¡A escuchar!' : 'Continuar');
+  $('tour-dots').innerHTML = TOUR_STEPS.map((_,i)=>`<div class="tour-dot ${i===tourStep?'active':''}"></div>`).join('');
+  if(step.center){
+    spot.style.display = 'none';
+    card.style.position = 'relative';
+    card.style.transform = 'none';
+  } else {
+    spot.style.display = 'block';
+    const el = document.querySelector(step.target);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      spot.style.left = (rect.left-8)+'px';
+      spot.style.top = (rect.top-8)+'px';
+      spot.style.width = (rect.width+16)+'px';
+      spot.style.height = (rect.height+16)+'px';
+      const below = rect.bottom + 140 < window.innerHeight;
+      card.style.position = 'fixed';
+      card.style.left = '20px';
+      card.style.right = '20px';
+      card.style.bottom = below ? 'auto' : (rect.top - 20) + 'px';
+      card.style.top = below ? (rect.bottom + 20) + 'px' : 'auto';
+      card.style.transform = 'none';
+    }
+  }
+}
+
+$('tour-btn').addEventListener('click',()=>{
+  tourStep++;
+  if(tourStep >= TOUR_STEPS.length){
+    $('tour-overlay').classList.remove('active');
+    localStorage.setItem('mh_tour_completed','1');
+    state.tourDone = true;
+  } else {
+    renderTourStep();
+  }
+});
+
+/* ===================== AUTH FLOW ===================== */
+$('btn-login-google').addEventListener('click', async ()=>{
+  if(!auth){
+    state.user = { displayName:'Usuario Horizon', photoURL:null, email:'demo@horizon.app' };
+    onAuthSuccess(state.user);
+    return;
+  }
+  try {
+    const provider = new GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    const result = await signInWithPopup(auth, provider);
+    state.user = result.user;
+    onAuthSuccess(state.user);
+  } catch(e){
+    console.error(e);
+    toast('Error de autenticación', 'error');
+  }
+});
+
+function onAuthSuccess(user){
+  state.user = user;
+  const av = $('user-avatar');
+  if(user.photoURL){
+    av.innerHTML = `<img src="${user.photoURL}" alt="avatar"/>`;
+  } else {
+    av.textContent = (user.displayName || user.email || '?')[0].toUpperCase();
+  }
+  showLayer('facade');
+  renderTrends();
+  renderReleases();
+  setTimeout(startTour, 800);
+}
+
+if(auth){
+  onAuthStateChanged(auth, (user)=>{
+    if(user){
+      state.user = user;
+      onAuthSuccess(user);
+    }
+  });
+}
+
+/* ===================== CATEGORY CHIPS ===================== */
+document.querySelectorAll('.cat-chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.cat-chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+  });
+});
+
+/* ===================== KEYBOARD SHORTCUT ===================== */
+document.addEventListener('keydown',(e)=>{
+  if(e.key === 'Escape'){
+    if($('full-player').classList.contains('active')) $('full-player').classList.remove('active');
+    else if(layers.qr.classList.contains('active')) $('qr-exit').click();
+    else if(layers.overlord.classList.contains('active')) $('ov-panic').click();
+  }
+  if(e.key === ' ' && document.activeElement.tagName !== 'INPUT'){
+    e.preventDefault();
+    togglePlay();
+  }
+});
+
+/* ===================== INIT ===================== */
+renderTrends();
+renderReleases();
+</script>
+</body>
+</html>
