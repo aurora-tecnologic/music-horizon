@@ -8,11 +8,11 @@ CORS(app)
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    return jsonify({"status": "online", "message": "Backend con YouTube Activo"})
+    return jsonify({"status": "online", "message": "Backend activo"})
 
 @app.route('/')
 def home():
-    return jsonify({"status": "online", "message": "Music Horizon - Motor YouTube Activo"})
+    return jsonify({"status": "online", "message": "Music Horizon Backend Operativo"})
 
 @app.route('/api/search', methods=['POST', 'GET'])
 def search_youtube():
@@ -31,12 +31,16 @@ def search_youtube():
     else:
         search_query = f"ytsearch10:{query}"
 
+    # Opciones avanzadas con User-Agent para evitar bloqueos de IP en Render
     ydl_opts = {
         'format': 'bestaudio/best',
         'extract_flat': False,
         'skip_download': True,
         'quiet': True,
         'no_warnings': True,
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+        }
     }
 
     results = []
@@ -54,11 +58,10 @@ def search_youtube():
                     "artist": entry.get('uploader') or entry.get('channel') or 'Desconocido',
                     "cover": entry.get('thumbnail') or 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500',
                     "streamUrl": entry.get('url'),
-                    "duration": entry.get('duration', 0),
-                    "is_video": True if entry.get('duration', 0) > 600 else False
+                    "duration": entry.get('duration', 0)
                 })
     except Exception as e:
-        print(f"Error en búsqueda de YouTube: {e}")
+        print(f"Error crítico en yt-dlp: {e}")
 
     return jsonify({"results": results})
 
@@ -66,7 +69,14 @@ def search_youtube():
 def get_stream(video_id):
     try:
         url = f"https://www.youtube.com/watch?v={video_id}"
-        ydl_opts = {'format': 'bestaudio/best', 'skip_download': True, 'quiet': True}
+        ydl_opts = {
+            'format': 'bestaudio/best', 
+            'skip_download': True, 
+            'quiet': True,
+            'http_headers': {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+            }
+        }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             return jsonify({"streamUrl": info.get('url')})
