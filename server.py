@@ -8,7 +8,7 @@ CORS(app)
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    return jsonify({"status": "online", "message": "Backend definitivo activo"})
+    return jsonify({"status": "online", "message": "Backend rápido activo"})
 
 @app.route('/')
 def home():
@@ -28,17 +28,14 @@ def search_music():
 
     results = []
     
-    # 1. Intentar extracción real con yt-dlp protegido
     try:
-        search_query = query if ("youtube.com" in query or "youtu.be" in query) else f"ytsearch5:{query}"
+        search_query = query if ("youtube.com" in query or "youtu.be" in query) else f"ytsearch8:{query}"
+        # Usamos extract_flat para que la respuesta de YouTube sea inmediata y no se pegue
         ydl_opts = {
-            'format': 'bestaudio/best',
+            'extract_flat': True,
             'skip_download': True,
             'quiet': True,
             'no_warnings': True,
-            'http_headers': {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
-            }
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(search_query, download=False)
@@ -47,26 +44,33 @@ def search_music():
             for entry in entries:
                 if not entry:
                     continue
-                video_id = entry.get('id', 'default')
+                video_id = entry.get('id')
+                if not video_id:
+                    continue
+                
+                title = entry.get('title', query)
+                uploader = entry.get('uploader') or entry.get('channel') or 'YouTube'
+                # Miniatura oficial directa de YouTube para mayor velocidad
+                cover = f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"
+                
                 results.append({
                     "id": video_id,
-                    "title": entry.get('title', query),
-                    "artist": entry.get('uploader') or entry.get('channel') or 'YouTube Music',
-                    "cover": entry.get('thumbnail') or "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&auto=format&fit=crop&q=60",
+                    "title": title,
+                    "artist": uploader,
+                    "cover": cover,
                     "streamUrl": f"{request.host_url.rstrip('/')}/api/stream/{video_id}",
                     "duration": entry.get('duration', 180)
                 })
     except Exception as e:
-        print(f"Aviso de yt-dlp (activando respaldo dinámico): {e}")
+        print(f"Error optimizando yt-dlp: {e}")
 
-    # 2. Respaldo garantizado si la red o IP sufre restricciones
+    # Fallback de seguridad por si la red falla por completo
     if not results:
-        safe_id = "fallback_" + str(abs(hash(query)))[:8]
         results.append({
-            "id": safe_id,
+            "id": "fallback_1",
             "title": query.capitalize(),
-            "artist": "Music Horizon Live",
-            "cover": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&auto=format&fit=crop&q=60",
+            "artist": "YouTube Search",
+            "cover": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500",
             "streamUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
             "duration": 200
         })
@@ -80,14 +84,7 @@ def get_stream(video_id):
     
     try:
         url = f"https://www.youtube.com/watch?v={video_id}"
-        ydl_opts = {
-            'format': 'bestaudio/best', 
-            'skip_download': True, 
-            'quiet': True,
-            'http_headers': {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
-            }
-        }
+        ydl_opts = {'format': 'bestaudio/best', 'skip_download': True, 'quiet': True}
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             audio_url = info.get('url')
@@ -100,7 +97,7 @@ def get_stream(video_id):
 
 @app.route('/api/download', methods=['POST'])
 def download_track():
-    return jsonify({"success": True, "message": "Descarga procesada con éxito"})
+    return jsonify({"success": True, "message": "Descarga lista"})
 
 @app.route('/api/mix', methods=['POST'])
 def smart_mix():
