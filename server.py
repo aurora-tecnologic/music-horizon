@@ -14,7 +14,6 @@ def health_check():
 def home():
     return jsonify({"status": "online", "message": "Music Horizon - Motor YouTube Activo"})
 
-# Buscador inteligente conectado 100% a YouTube
 @app.route('/api/search', methods=['POST', 'GET'])
 def search_youtube():
     query = ""
@@ -27,11 +26,9 @@ def search_youtube():
     if not query:
         return jsonify({"results": []})
 
-    # Si el usuario pegó una URL directa de YouTube
     if "youtube.com" in query or "youtu.be" in query:
         search_query = query
     else:
-        # Búsqueda general (YouTube maneja la corrección de ortografía automáticamente)
         search_query = f"ytsearch10:{query}"
 
     ydl_opts = {
@@ -46,8 +43,6 @@ def search_youtube():
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(search_query, download=False)
-            
-            # Si es una lista de resultados (búsqueda)
             entries = info.get('entries', [info]) if 'entries' in info else [info]
             
             for entry in entries:
@@ -56,11 +51,11 @@ def search_youtube():
                 results.append({
                     "id": entry.get('id'),
                     "title": entry.get('title'),
-                    "artist": entry.get('uploader') || entry.get('channel') || 'Desconocido',
-                    "cover": entry.get('thumbnail') || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500',
-                    "streamUrl": entry.get('url'), # URL directa de streaming de audio/video
+                    "artist": entry.get('uploader') or entry.get('channel') or 'Desconocido',
+                    "cover": entry.get('thumbnail') or 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500',
+                    "streamUrl": entry.get('url'),
                     "duration": entry.get('duration', 0),
-                    "is_video": True if entry.get('duration', 0) > 600 else False # Detectar si es video largo o canción
+                    "is_video": True if entry.get('duration', 0) > 600 else False
                 })
     except Exception as e:
         print(f"Error en búsqueda de YouTube: {e}")
