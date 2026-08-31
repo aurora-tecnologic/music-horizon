@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.0/index.css" />
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
+html,body{height:100%;width:100%}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0D1321;color:#F0F4FF;-webkit-font-smoothing:antialiased;user-select:none;overflow:hidden}
 button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit;border:none;outline:none;color:inherit;background:transparent}
@@ -29,50 +29,69 @@ svg{display:block}
 .layer{position:fixed;inset:0;display:none;opacity:0;transition:opacity .45s var(--ease-out-expo);overflow:hidden}
 .layer.active{display:flex;opacity:1}
 
-/* ============ LOGIN (100% viewport, sin franjas) ============ */
-#layer-login{background:var(--bg-secondary)}
-#layer-login.active{display:block}
-.login-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:flex}
-.login-bg{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
-.login-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.25;animation:pulse 10s ease-in-out infinite}
-.login-orb-1{width:52vmax;height:52vmax;background:var(--accent);top:-20vmax;left:-20vmax}
-.login-orb-2{width:46vmax;height:46vmax;background:var(--accent-purple);bottom:-20vmax;right:-20vmax;animation-delay:-5s}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.25}50%{transform:scale(1.15);opacity:.35}}
-.floating-cover{position:absolute;width:clamp(90px,18vw,180px);aspect-ratio:1;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);opacity:.14;animation:floatCover 20s ease-in-out infinite}
-.floating-cover img{width:100%;height:100%;object-fit:cover}
-.fc1{top:8%;left:4%;animation-duration:18s}
-.fc2{top:58%;left:2%;animation-delay:-3s;animation-duration:22s}
-.fc3{top:14%;right:4%;animation-delay:-6s;animation-duration:20s}
-.fc4{top:64%;right:6%;animation-delay:-9s;animation-duration:24s}
-.fc5{top:36%;left:12%;animation-delay:-12s;animation-duration:19s}
-.fc6{top:44%;right:12%;animation-delay:-15s;animation-duration:21s}
-@keyframes floatCover{0%,100%{transform:translateY(0) rotate(0) scale(1)}25%{transform:translateY(-26px) rotate(4deg) scale(1.05)}50%{transform:translateY(-12px) rotate(-3deg) scale(.98)}75%{transform:translateY(-32px) rotate(6deg) scale(1.02)}}
-.login-content{position:relative;z-index:10;margin:auto;width:100%;max-width:420px;padding:48px 24px;display:flex;flex-direction:column;align-items:center;text-align:center}
-.login-logo{width:104px;height:104px;border-radius:28px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px var(--accent-glow);margin-bottom:22px;position:relative;overflow:hidden;animation:logoFloat 4s ease-in-out infinite;flex-shrink:0}
-.login-logo::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,.25) 50%,transparent 100%);animation:shimmer 3s ease-in-out infinite}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+/* ============ LOGIN RESPONSIVE DEFINITIVO ============ */
+#auth-login-screen{
+  position:fixed;top:0;left:0;
+  width:100vw;height:100vh;min-height:100vh;
+  background:#0D1321;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;
+  overflow-y:auto;
+  padding:20px;
+  box-sizing:border-box;
+}
+.login-grid-bg{
+  position:absolute;width:100%;height:100%;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  opacity:0.15;pointer-events:none;
+  transform:scale(1.1);filter:blur(2px);
+  z-index:0;
+}
+.login-grid-bg div{border-radius:20px;height:180px}
+.login-grid-bg .g1{background:linear-gradient(135deg,#3385E6,#1D2A44)}
+.login-grid-bg .g2{background:linear-gradient(135deg,#1D2A44,#0D1321);margin-top:40px}
+.login-grid-bg .g3{background:linear-gradient(135deg,#3385E6,#0D1321)}
+.login-grid-bg .g4{background:linear-gradient(135deg,#6B46FF,#0D1321);margin-top:-20px}
+.login-grid-bg .g5{background:linear-gradient(135deg,#1D2A44,#3385E6)}
+.login-grid-bg .g6{background:linear-gradient(135deg,#0D1321,#6B46FF);margin-top:30px}
+.login-content-wrap{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  max-width:400px;width:100%;text-align:center;
+  margin:auto;
+}
+.login-logo-box{
+  width:80px;height:80px;border-radius:24px;
+  background:linear-gradient(135deg,#3385E6,#1D2A44);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+  box-shadow:0 10px 30px rgba(51,133,230,0.3);
+  animation:logoFloat 4s ease-in-out infinite;
+}
 @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.login-logo svg{width:52px;height:52px;position:relative;z-index:1}
-.login-title{font-size:clamp(28px,7vw,40px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;background:linear-gradient(135deg,#fff 0%,#a8c0ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.login-title span{background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900}
-.login-sub{color:var(--text-secondary);font-size:14px;margin-bottom:26px;line-height:1.5;max-width:300px}
-.btn-google{width:100%;height:52px;background:rgba(255,255,255,.97);color:#1a1a1a;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:all .3s var(--ease-out-back);position:relative;overflow:hidden}
-.btn-google:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.4)}
-.btn-google:active{transform:translateY(0)}
-.btn-google:disabled{opacity:.6;cursor:not-allowed}
-.btn-google svg{width:20px;height:20px;flex-shrink:0}
-.login-loading{display:none;align-items:center;gap:8px;color:var(--text-secondary);font-size:13px;margin-top:14px}
+.login-logo-box svg{width:40px;height:40px}
+.login-title-text{font-size:28px;font-weight:bold;color:#fff;margin-bottom:8px}
+.login-title-text span{color:#3385E6}
+.login-sub-text{font-size:14px;color:#a0aec0;margin-bottom:30px;line-height:1.5}
+#google-login-btn{
+  background:#fff;color:#1a1a1a;
+  padding:14px 24px;border-radius:14px;
+  font-weight:bold;font-size:15px;
+  width:100%;display:flex;align-items:center;justify-content:center;gap:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  transition:all .3s var(--ease-out-back);
+}
+#google-login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+#google-login-btn:disabled{opacity:.6;cursor:not-allowed}
+#google-login-btn svg{width:20px;height:20px}
+.login-chips{display:flex;gap:10px;margin-top:25px;width:100%;justify-content:center;flex-wrap:wrap}
+.login-chip{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px;font-size:11px;color:#a0aec0}
+.login-footer-info{margin-top:30px;font-size:11px;color:#a0aec0;line-height:1.6}
+.login-footer-info strong{color:#3385E6;letter-spacing:1px}
+.login-loading{display:none;align-items:center;gap:8px;color:#a0aec0;font-size:13px;margin-top:14px}
 .login-loading.show{display:flex}
-.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+.login-loading .spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.login-stats{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;justify-content:center}
-.stat-badge{padding:7px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:18px;font-size:11px;color:var(--text-secondary);backdrop-filter:blur(10px)}
-.stat-badge strong{color:var(--accent-light);font-weight:700}
-.login-security{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.sec-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:14px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);font-size:10px;color:var(--success);font-weight:600}
-.sec-chip svg{width:11px;height:11px}
-.login-footer{margin-top:16px;font-size:11px;color:var(--text-muted);line-height:1.5;max-width:280px}
-.login-version{margin-top:14px;font-size:10px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;font-weight:700;border:1px solid var(--border);padding:4px 12px;border-radius:12px}
 
 /* ============ MAIN ============ */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
@@ -199,32 +218,36 @@ svg{display:block}
 .full-tab{padding:6px 12px;border-radius:16px;font-size:11px;font-weight:600;color:var(--text-secondary);background:rgba(255,255,255,.04);transition:all .15s;cursor:pointer}
 .full-tab.active{background:var(--gradient-primary);color:#fff}
 .full-content{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
-.full-art-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.full-art-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;position:relative}
 .vinyl{width:min(60vw,280px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#1a1a1a 0%,#0a0a0a 60%,#000 100%);position:relative;box-shadow:0 20px 60px rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .vinyl.playing{animation:spin 18s linear infinite}
 .vinyl::before{content:'';position:absolute;inset:18px;border-radius:50%;background:repeating-radial-gradient(circle,#222 0,#222 2px,#111 2px,#111 4px)}
 .vinyl-cover{position:absolute;width:42%;height:42%;border-radius:50%;overflow:hidden;z-index:2;border:4px solid #0a0a0a}
 .vinyl-cover img{width:100%;height:100%;object-fit:cover}
 .vinyl-center{position:absolute;width:12%;height:12%;border-radius:50%;background:#0D1321;z-index:3;border:2px solid #222}
-.video-container{flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;min-height:0;gap:10px}
+
+.video-container{flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;min-height:0;gap:10px;padding:10px}
 .video-container.active{display:flex}
-.video-holder{width:100%;max-width:560px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.6);background:#000}
-.video-holder iframe,.video-holder div{width:100%;height:100%}
+.video-holder{width:100%;max-width:560px;aspect-ratio:16/9;border-radius:20px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.6);background:#000;position:relative}
+.video-holder iframe{width:100%;height:100%;border:0}
+.video-protective-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;border-radius:20px;box-shadow:inset 0 0 20px rgba(0,0,0,0.8)}
 .video-fallback{display:none;flex-direction:column;align-items:center;gap:10px;padding:20px;text-align:center}
 .video-fallback p{font-size:12px;color:var(--text-secondary);max-width:280px;line-height:1.5}
 .video-fallback a{padding:8px 16px;border-radius:10px;background:var(--gradient-primary);font-size:12px;font-weight:700;color:#fff;text-decoration:none}
+
 .lyrics-container{flex:1;display:none;overflow-y:auto;padding:12px;min-height:0;scrollbar-width:none}
 .lyrics-container.active{display:block}
 .lyrics-container::-webkit-scrollbar{width:0}
 .lyrics-line{font-size:14px;color:var(--text-muted);margin:8px 0;text-align:center;line-height:1.4;transition:all .2s}
 .lyrics-line.active{color:var(--text-primary);font-weight:700;font-size:15px}
 .lyrics-loading{text-align:center;color:var(--text-secondary);padding:30px 16px;font-size:12px}
+
 .full-info{text-align:center;margin:10px 0 6px;flex-shrink:0}
 .full-title{font-size:20px;font-weight:800;margin-bottom:4px;letter-spacing:-.5px}
 .full-artist{font-size:12px;color:var(--text-secondary)}
 .full-progress{margin-bottom:8px;flex-shrink:0}
 .progress-bar{width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:2px;position:relative;cursor:pointer;margin-bottom:6px}
-.progress-fill{height:100%;background:var(--gradient-primary);border-radius:2px;width:0%}
+.progress-bar-fill{height:100%;background:var(--gradient-primary);border-radius:2px;width:0%;transition:width .1s linear}
 .progress-times{display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary)}
 .full-controls{display:flex;align-items:center;justify-content:space-around;flex-shrink:0}
 .full-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .15s}
@@ -480,57 +503,52 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
 @media (min-width:1200px){
   .trend-grid{grid-template-columns:repeat(5,1fr)}
   .content{padding:28px 60px 210px}
-  .login-content{max-width:460px}
+  .login-content-wrap{max-width:440px}
 }
 @media (max-height:640px){
-  .login-content{padding:28px 24px}
-  .login-logo{width:80px;height:80px;margin-bottom:14px}
-  .login-logo svg{width:40px;height:40px}
-  .login-sub{margin-bottom:16px}
-  .login-stats{margin-top:16px}
+  .login-content-wrap{padding:20px 0}
+  .login-logo-box{width:70px;height:70px;margin-bottom:14px}
+  .login-logo-box svg{width:34px;height:34px}
+  .login-sub-text{margin-bottom:18px}
+  .login-chips{margin-top:16px}
+}
+@media (max-width:380px){
+  .login-title-text{font-size:24px}
+  .login-chip{font-size:10px;padding:5px 10px}
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<section id="layer-login" class="layer active">
-  <div class="login-scroll">
-    <div class="login-bg">
-      <div class="login-orb login-orb-1"></div>
-      <div class="login-orb login-orb-2"></div>
-      <div class="floating-cover fc1"><img src="https://i.ytimg.com/vi/kJQP7kiw5Fk/maxresdefault.jpg" alt="" /></div>
-      <div class="floating-cover fc2"><img src="https://i.ytimg.com/vi/JGwWNGJdvx8/maxresdefault.jpg" alt="" /></div>
-      <div class="floating-cover fc3"><img src="https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg" alt="" /></div>
-      <div class="floating-cover fc4"><img src="https://i.ytimg.com/vi/RgKAFK5djSk/maxresdefault.jpg" alt="" /></div>
-      <div class="floating-cover fc5"><img src="https://i.ytimg.com/vi/OPf0YbXqDm0/maxresdefault.jpg" alt="" /></div>
-      <div class="floating-cover fc6"><img src="https://i.ytimg.com/vi/CevxZvSJLk8/maxresdefault.jpg" alt="" /></div>
+<!-- LOGIN RESPONSIVE DEFINITIVO -->
+<div id="auth-login-screen">
+  <div class="login-grid-bg">
+    <div class="g1"></div><div class="g2"></div><div class="g3"></div>
+    <div class="g4"></div><div class="g5"></div><div class="g6"></div>
+  </div>
+  <div class="login-content-wrap">
+    <div class="login-logo-box">
+      <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
     </div>
-    <div class="login-content">
-      <div class="login-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>
-      </div>
-      <h1 class="login-title">Music <span>Horizon</span></h1>
-      <p class="login-sub">Plataforma de streaming musical de alta gama, sincronizada en tiempo real con Firebase Firestore.</p>
-      <button class="btn-google" id="btn-login-google">
-        <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Continuar con Google
-      </button>
-      <div class="login-loading" id="login-loading"><div class="spinner"></div><span>Autenticando con Firebase...</span></div>
-      <div class="login-stats">
-        <div class="stat-badge"><strong>2.8K+</strong> usuarios</div>
-        <div class="stat-badge"><strong>&#8734;</strong> musica</div>
-        <div class="stat-badge"><strong>0</strong> anuncios</div>
-      </div>
-      <div class="login-security">
-        <div class="sec-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Cifrado E2E</div>
-        <div class="sec-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Sin rastreo</div>
-      </div>
-      <div class="login-footer">Solo el administrador puede auditar el sistema. Experiencia libre de publicidad y ventanas emergentes.</div>
-      <div class="login-version">V1.0.2.3.BETA</div>
+    <div class="login-title-text">Music <span>Horizon</span></div>
+    <div class="login-sub-text">Plataforma de streaming musical de alta gama. Experiencia sonora sin límites ni interrupciones.</div>
+    <button id="google-login-btn">
+      <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.15C3.15 21.32 7.22 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.18C.43 8.13 0 9.83 0 12s.43 3.87 1.18 5.39l4.09-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.22 0 3.15 2.68 1.18 6.61l4.09 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+      Continuar con Google
+    </button>
+    <div class="login-loading" id="login-loading"><div class="spinner"></div><span>Autenticando con Firebase...</span></div>
+    <div class="login-chips">
+      <div class="login-chip">2.8K+ usuarios</div>
+      <div class="login-chip">∞ música</div>
+      <div class="login-chip">0 anuncios</div>
+    </div>
+    <div class="login-footer-info">
+      Cifrado E2E · Cero anuncios · Cero rastreo comercial<br>
+      Solo el administrador puede auditar el sistema<br>
+      <strong>V1.0.2.3.BETA</strong>
     </div>
   </div>
-</section>
+</div>
 
 <!-- SETUP -->
 <div class="modal-overlay center" id="profile-setup-modal">
@@ -538,7 +556,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
     <div class="modal-header"><h3 class="modal-title">Configurar perfil</h3></div>
     <div class="modal-body">
       <div style="text-align:center;margin-bottom:14px">
-        <div class="avatar-upload-trigger" id="avatar-upload" style="width:90px;height:90px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;position:relative;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer">
+        <div id="avatar-upload" style="width:90px;height:90px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;position:relative;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer">
           <span id="avatar-initial">?</span>
           <img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
           <div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
@@ -555,7 +573,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
       <label class="form-label">Instagram (opcional)</label>
       <input type="text" class="setup-input" id="setup-instagram" placeholder="@usuario" autocomplete="off" />
       <div style="font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:10px">Solo minusculas, numeros, puntos y guiones bajos · 3-20 caracteres</div>
-      <div class="setup-error" id="setup-error" style="color:var(--danger);font-size:11px;text-align:center;min-height:14px;margin-bottom:8px"></div>
+      <div id="setup-error" style="color:var(--danger);font-size:11px;text-align:center;min-height:14px;margin-bottom:8px"></div>
       <button class="modal-btn primary" id="setup-btn" style="width:100%">Crear perfil</button>
     </div>
   </div>
@@ -580,11 +598,11 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
     <div class="mini-cover"><img id="mini-cover-img" alt="" /></div>
     <div class="mini-info"><div class="mini-title" id="mini-title">—</div><div class="mini-artist" id="mini-artist">—</div></div>
     <div class="mini-controls">
-      <button class="mini-btn" id="mini-prev"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
-      <button class="mini-btn play" id="mini-play"><svg id="mini-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      <button class="mini-btn" id="mini-next"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+      <button class="mini-btn" id="mini-prev"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"></polygon><rect x="5" y="4" width="2" height="16"></rect></svg></button>
+      <button class="mini-btn play" id="mini-play"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
+      <button class="mini-btn" id="mini-next"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg></button>
     </div>
-    <div class="mini-progress"><div class="mini-progress-fill" id="mini-progress-fill"></div></div>
+    <div class="mini-progress"><div class="progress-bar-fill" id="mini-progress-fill"></div></div>
   </div>
   <nav class="bottom-nav">
     <div class="bottom-nav-item active" data-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Inicio</span></div>
@@ -625,17 +643,17 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
     </div>
     <div class="full-info"><div class="full-title" id="full-title">—</div><div class="full-artist" id="full-artist">—</div></div>
     <div class="full-progress">
-      <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-      <div class="progress-times"><span id="time-cur">0:00</span><span id="time-dur">0:00</span></div>
+      <div class="progress-bar" id="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+      <div class="progress-times"><span class="current-time" id="time-cur">0:00</span><span class="total-duration" id="time-dur">0:00</span></div>
     </div>
     <div class="full-controls">
-      <button class="full-btn" id="full-shuffle" title="Aleatorio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
-      <button class="full-btn" id="full-prev-10" title="Retroceder 10 segundos"><div class="skip-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/></svg><span>10</span></div></button>
-      <button class="full-btn" id="full-prev"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
-      <button class="full-btn play" id="full-play"><svg id="full-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-      <button class="full-btn" id="full-next"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
-      <button class="full-btn" id="full-next-10" title="Avanzar 10 segundos"><div class="skip-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/></svg><span>10</span></div></button>
-      <button class="full-btn" id="full-repeat" title="Repetir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
+      <button class="full-btn" id="full-shuffle" title="Aleatorio"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
+      <button class="full-btn" id="full-prev-10" title="Retroceder 10s"><div class="skip-btn"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/></svg><span>10</span></div></button>
+      <button class="full-btn" id="full-prev"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"></polygon><rect x="5" y="4" width="2" height="16"></rect></svg></button>
+      <button class="full-btn play" id="full-play"><svg class="play-icon-svg" id="full-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
+      <button class="full-btn" id="full-next"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg></button>
+      <button class="full-btn" id="full-next-10" title="Avanzar 10s"><div class="skip-btn"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5"/><path d="M6 17l5-5-5-5"/></svg><span>10</span></div></button>
+      <button class="full-btn" id="full-repeat" title="Repetir"><svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
     </div>
   </div>
 </section>
@@ -676,7 +694,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
         <div class="story-viewer-artist" id="story-viewer-artist">—</div>
         <div class="story-viewer-player-bar">
           <div class="story-viewer-player-info"><div class="story-viewer-player-title" id="story-viewer-player-title">—</div><div class="story-viewer-player-artist" id="story-viewer-player-artist">—</div></div>
-          <button class="story-viewer-play-btn" id="story-play-btn"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="story-viewer-play-btn" id="story-play-btn"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
         </div>
       </div>
     </div>
@@ -781,8 +799,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
 
 <div class="toast" id="toast"></div>
 
-<audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
-<audio id="login-audio" loop preload="auto"></audio>
+<audio id="main-audio-element" preload="metadata" crossorigin="anonymous"></audio>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
@@ -792,7 +809,6 @@ import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, a
 const API_BASE = 'https://music-horizon.onrender.com';
 const ADMIN_EMAIL = 'administradores830@gmail.com';
 const PLATFORM_VERSION = 'V1.0.2.3.BETA';
-const WELCOME_AUDIO_URL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYG4QAvUCYkXDC_anHjG9Lu8Zyt54yMGg",
@@ -817,17 +833,105 @@ const state = {
   wasPlayingBeforeVideo: false, activeTab: 'music'
 };
 
-const audio = document.getElementById('audio');
-const loginAudio = document.getElementById('login-audio');
-loginAudio.src = WELCOME_AUDIO_URL;
-loginAudio.loop = true;
-loginAudio.volume = 0.3;
+// ============================================================
+// BLOQUE MAESTRO DE SINCRONIZACION DEL REPRODUCTOR Y TIEMPOS
+// ============================================================
+const audio = document.getElementById('main-audio-element');
 
-// Musica de bienvenida en bucle solo en login
-function startLoginMusic() { loginAudio.play().catch(() => {}); }
-function stopLoginMusic() { loginAudio.pause(); loginAudio.currentTime = 0; }
-document.addEventListener('pointerdown', function once() { if (document.getElementById('layer-login').classList.contains('active')) startLoginMusic(); document.removeEventListener('pointerdown', once); });
-setTimeout(startLoginMusic, 800);
+if (audio) {
+  audio.addEventListener('loadedmetadata', () => {
+    const totalDurationEl = document.querySelector('.total-duration');
+    if (totalDurationEl && !isNaN(audio.duration)) {
+      totalDurationEl.innerText = formatTime(audio.duration);
+    }
+    updateTimeUI();
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration || isNaN(audio.duration)) return;
+    const progressPercent = (audio.currentTime / audio.duration) * 100;
+    const progressBar = document.querySelector('.progress-bar-fill');
+    if (progressBar) progressBar.style.width = `${progressPercent}%`;
+    const currentTimeEl = document.querySelector('.current-time');
+    if (currentTimeEl) currentTimeEl.innerText = formatTime(audio.currentTime);
+  });
+
+  audio.addEventListener('durationchange', () => {
+    const totalDurationEl = document.querySelector('.total-duration');
+    if (totalDurationEl && !isNaN(audio.duration)) {
+      totalDurationEl.innerText = formatTime(audio.duration);
+    }
+  });
+
+  audio.addEventListener('play', () => updatePlayStateUI(true));
+  audio.addEventListener('pause', () => updatePlayStateUI(false));
+  audio.addEventListener('ended', () => { if (state.repeatMode === 2) return; nextTrack(); });
+  audio.addEventListener('error', () => { console.warn('Audio error, intentando fallback'); });
+}
+
+function formatTime(seconds) {
+  if (!isFinite(seconds) || seconds < 0) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+function updatePlayStateUI(isPlaying) {
+  state.isPlaying = isPlaying;
+  const icons = document.querySelectorAll('.play-icon-svg');
+  icons.forEach(icon => {
+    icon.innerHTML = isPlaying
+      ? '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>'
+      : '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+  });
+  const vinyl = document.getElementById('vinyl');
+  if (vinyl) vinyl.classList.toggle('playing', isPlaying);
+}
+
+function updateTimeUI() {
+  if (!audio) return;
+  const cur = audio.currentTime || 0; const dur = audio.duration || 0;
+  const curEl = document.getElementById('time-cur'); const durEl = document.getElementById('time-dur');
+  if (curEl) curEl.innerText = formatTime(cur);
+  if (durEl && !isNaN(dur)) durEl.innerText = formatTime(dur);
+  const pct = dur > 0 ? (cur / dur) * 100 : 0;
+  const fill = document.getElementById('progress-fill');
+  const miniFill = document.getElementById('mini-progress-fill');
+  if (fill) fill.style.width = pct + '%';
+  if (miniFill) miniFill.style.width = pct + '%';
+}
+
+// ============================================================
+// BLOQUE MAESTRO DEL VISOR DE VIDEO BLINDADO (CERO MARCAS)
+// ============================================================
+function renderCleanVideoPlayer(track) {
+  const videoContainer = document.getElementById('video-container');
+  const holder = document.getElementById('video-holder');
+  const fallback = document.getElementById('video-fallback');
+  if (!videoContainer || !holder || !track) return;
+
+  holder.innerHTML = '';
+  fallback.style.display = 'none';
+
+  if (!track.youtubeId) {
+    fallback.style.display = 'flex';
+    return;
+  }
+
+  const cleanEmbedUrl = `https://www.youtube.com/embed/${track.youtubeId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&controls=1&disablekb=0&fs=1&playsinline=1&showinfo=0&autohide=1`;
+
+  holder.innerHTML = `
+    <iframe width="100%" height="100%" src="${cleanEmbedUrl}" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border-radius:20px; width:100%; height:100%;" allowfullscreen></iframe>
+    <div class="video-protective-layer"></div>
+  `;
+
+  const iframe = holder.querySelector('iframe');
+  iframe.onerror = () => {
+    holder.innerHTML = '';
+    fallback.style.display = 'flex';
+    document.getElementById('video-fallback-link').href = `https://www.youtube.com/watch?v=${track.youtubeId}`;
+  };
+}
 
 const TRACKS = [
   { id:1, title:'Videoclub ROI Instrumental', artist:'New Chava', youtubeId:'dQw4w9WgXcQ', cover:'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg', genre:'instrumental', audio:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', isWelcome:true },
@@ -881,15 +985,14 @@ function validateUsername(u){ if(!u) return 'Obligatorio'; if(u.length<3) return
 function updateNotifBadge(){ const unread=state.notifications.filter(n=>!n.read).length; const b=document.getElementById('notif-badge'); if(unread>0){ b.textContent=unread>99?'99+':unread; b.style.display='flex'; } else b.style.display='none'; }
 function markAllNotifsRead(){ state.notifications.forEach(n=>n.read=true); state.notifications.forEach(n=>{ if(n.id&&!String(n.id).startsWith('local_')) fs.markNotifRead(n.id); }); updateNotifBadge(); }
 function renderNotifications(){ const list=document.getElementById('notifications-list'); if(state.notifications.length===0){ list.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="empty-state-title">Sin notificaciones</div></div>'; return; }
-  list.innerHTML=state.notifications.map(n=>{ const ic=n.type==='like'?'like':n.type==='play'?'play':'comment'; const isvg=n.type==='like'?'<svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--danger)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>':n.type==='play'?'<svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--success)"><path d="M8 5v14l11-7z"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'; return `<div class="notification-item ${n.read?'':'unread'}"><div class="notification-icon ${ic}">${isvg}</div><div class="notification-content"><div class="notification-text">${n.message}</div><div class="notification-time">${getTimeAgo(n.createdAt)}</div></div></div>`; }).join(''); }
+  list.innerHTML=state.notifications.map(n=>{ const ic=n.type==='like'?'like':n.type==='play'?'play':'comment'; const isvg=n.type==='like'?'<svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--danger)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>':n.type==='play'?'<svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--success)"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'; return `<div class="notification-item ${n.read?'':'unread'}"><div class="notification-icon ${ic}">${isvg}</div><div class="notification-content"><div class="notification-text">${n.message}</div><div class="notification-time">${getTimeAgo(n.createdAt)}</div></div></div>`; }).join(''); }
 function getTimeAgo(ts){ if(!ts) return 'reciente'; const raw=typeof ts==='number'?ts:(ts.toMillis?ts.toMillis():Date.now()); const s=Math.floor((Date.now()-raw)/1000); if(s<60) return 'hace '+s+'s'; const m=Math.floor(s/60); if(m<60) return 'hace '+m+'m'; const h=Math.floor(m/60); if(h<24) return 'hace '+h+'h'; return 'hace '+Math.floor(h/24)+'d'; }
 function formatCouponCode(v){ const c=v.replace(/[^A-Z0-9]/gi,'').toUpperCase(); const g=c.match(/.{1,4}/g)||[]; return g.join('-'); }
 function generateCode16(){ const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let out=''; const arr=new Uint32Array(16); crypto.getRandomValues(arr); arr.forEach(n=>out+=chars[n%chars.length]); return out; }
 
 /* ============ AUTH ============ */
-document.getElementById('btn-login-google').addEventListener('click', async () => {
-  stopLoginMusic();
-  const btn=document.getElementById('btn-login-google'); const loading=document.getElementById('login-loading');
+document.getElementById('google-login-btn').addEventListener('click', async () => {
+  const btn=document.getElementById('google-login-btn'); const loading=document.getElementById('login-loading');
   btn.disabled=true; loading.classList.add('show');
   try{
     let firebaseUser=null;
@@ -906,7 +1009,7 @@ document.getElementById('btn-login-google').addEventListener('click', async () =
     document.getElementById('avatar-preview').style.display='none';
     document.getElementById('avatar-initial').style.display='block';
     document.getElementById('avatar-initial').textContent=(firebaseUser.displayName||'?')[0].toUpperCase();
-  }catch(e){ toast('Error: '+e.message,'error'); startLoginMusic(); }
+  }catch(e){ toast('Error: '+e.message,'error'); }
   finally{ btn.disabled=false; loading.classList.remove('show'); }
 });
 
@@ -943,6 +1046,7 @@ async function completeProfileSetup(){
 
 function onAuthSuccess(user){
   state.user=user; state.friends=DEFAULT_FRIENDS;
+  document.getElementById('auth-login-screen').style.display='none';
   loadAllUserData(state.firebaseUser.uid).then(async ()=>{
     showLayer('layer-main'); updateNavAvatar(); navigateTo('home');
     state.stories=await fs.getStories(); renderStoriesBar(); updateNotifBadge();
@@ -961,9 +1065,11 @@ async function logout(){
   if(!confirm('Cerrar sesion?')) return;
   if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} }
   state.user=null; state.firebaseUser=null; state.currentTrack=null; state.isPlaying=false;
-  audio.pause(); audio.src=''; destroyVideo();
+  if(audio){ audio.pause(); audio.src=''; }
   document.getElementById('mini-player').classList.add('hidden');
-  showLayer('layer-login'); startLoginMusic(); toast('Sesion cerrada','info');
+  document.getElementById('auth-login-screen').style.display='flex';
+  document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active'));
+  toast('Sesion cerrada','info');
 }
 
 if(firebaseAuth){ onAuthStateChanged(firebaseAuth,(fb)=>{ if(fb&&!state.user){ state.firebaseUser=fb; fs.getUserByUid(fb.uid).then(async (p)=>{ if(p){ state.user=p; await loadAllUserData(fb.uid); onAuthSuccess(p); } }); } }); }
@@ -980,25 +1086,17 @@ async function playTrack(track,fromStory=false){
   state.currentTrack=track; state.currentIndex=TRACKS.findIndex(t=>t.id===track.id);
   state.isPlaying=true;
   const streamUrl=track.streamUrl||track.audio||`${API_BASE}/api/stream/${track.id}`;
-  audio.src=streamUrl; audio.loop=state.repeatMode===2; audio.volume=0.8;
-  try{ await audio.play(); }catch(e){ console.warn('Stream:',e); }
+  if(audio){ audio.src=streamUrl; audio.loop=state.repeatMode===2; audio.volume=0.8; try{ await audio.play(); }catch(e){ console.warn('Stream:',e); } }
   updatePlayerUI(); document.getElementById('mini-player').classList.remove('hidden'); updateMediaSession(); saveHistory(track);
   if(state.user&&state.firebaseUser){ state.user.stats.plays=(state.user.stats.plays||0)+1; await fs.saveUser(state.firebaseUser.uid,{stats:state.user.stats}); }
   if(fromStory&&state.currentViewingStory&&state.currentViewingStory.username!==state.user.username){ toast('Notificacion enviada al creador','info'); }
-  if(state.activeTab==='video') startVideoPlayer();
+  if(state.activeTab==='video') renderCleanVideoPlayer(track);
   const wc=document.getElementById('welcome-track'); if(wc) wc.classList.toggle('playing',!!track.isWelcome);
 }
 
-function togglePlay(){ if(!state.currentTrack){ playTrack(TRACKS[0]); return; } if(state.isPlaying) audio.pause(); else audio.play().catch(()=>{}); }
+function togglePlay(){ if(!state.currentTrack){ playTrack(TRACKS[0]); return; } if(!audio) return; if(state.isPlaying) audio.pause(); else audio.play().catch(()=>{}); }
 function toggleShuffle(){ state.shuffleEnabled=!state.shuffleEnabled; const b=document.getElementById('full-shuffle'); b.classList.toggle('active-mode',state.shuffleEnabled); if(state.shuffleEnabled) buildShuffledQueue(); toast(state.shuffleEnabled?'Aleatorio activado':'Aleatorio desactivado','info'); }
-function toggleRepeat(){ state.repeatMode=(state.repeatMode+1)%3; const b=document.getElementById('full-repeat'); audio.loop=state.repeatMode===2; b.classList.toggle('active-mode',state.repeatMode>0); toast(state.repeatMode===0?'Repetir desactivado':state.repeatMode===1?'Repetir todo':'Repetir una','info'); }
-
-function setPlayIcons(playing){
-  const pi='<path d="M8 5v14l11-7z"/>'; const pa='<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
-  document.getElementById('mini-play-icon').innerHTML=playing?pa:pi;
-  document.getElementById('full-play-icon').innerHTML=playing?pa:pi;
-  const v=document.getElementById('vinyl'); v.classList.toggle('playing',playing);
-}
+function toggleRepeat(){ state.repeatMode=(state.repeatMode+1)%3; const b=document.getElementById('full-repeat'); if(audio) audio.loop=state.repeatMode===2; b.classList.toggle('active-mode',state.repeatMode>0); toast(state.repeatMode===0?'Repetir desactivado':state.repeatMode===1?'Repetir todo':'Repetir una','info'); }
 
 function updatePlayerUI(){
   if(!state.currentTrack) return;
@@ -1009,29 +1107,11 @@ function updatePlayerUI(){
   document.getElementById('full-title').textContent=t.title;
   document.getElementById('full-artist').textContent=t.artist;
   document.getElementById('full-cover-img').src=t.cover;
-  setPlayIcons(state.isPlaying);
+  updatePlayStateUI(state.isPlaying);
 }
 
 function updateMediaSession(){ if(!('mediaSession' in navigator)||!state.currentTrack) return; const t=state.currentTrack; navigator.mediaSession.metadata=new MediaMetadata({title:t.title,artist:t.artist,artwork:[{src:t.cover,sizes:'512x512'}]}); navigator.mediaSession.setActionHandler('play',()=>{ if(!state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('pause',()=>{ if(state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('previoustrack',prevTrack); navigator.mediaSession.setActionHandler('nexttrack',nextTrack); }
 function saveHistory(track){ const h=JSON.parse(localStorage.getItem('mh_history')||'[]'); h.unshift({...track,playedAt:Date.now()}); localStorage.setItem('mh_history',JSON.stringify(h.slice(0,50))); }
-
-/* Sincronizacion robusta de tiempo y progreso */
-function updateTimeUI(){
-  const cur=audio.currentTime||0; const dur=audio.duration||0;
-  document.getElementById('time-cur').textContent=fmtTime(cur);
-  document.getElementById('time-dur').textContent=fmtTime(dur);
-  const pct=dur>0?(cur/dur)*100:0;
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('mini-progress-fill').style.width=pct+'%';
-}
-audio.addEventListener('timeupdate',updateTimeUI);
-audio.addEventListener('loadedmetadata',updateTimeUI);
-audio.addEventListener('durationchange',updateTimeUI);
-audio.addEventListener('ended',()=>{ if(state.repeatMode===2) return; nextTrack(); });
-audio.addEventListener('play',()=>{ state.isPlaying=true; setPlayIcons(true); });
-audio.addEventListener('pause',()=>{ state.isPlaying=false; setPlayIcons(false); });
-audio.addEventListener('error',()=>{ console.warn('Audio error, intentando fallback'); });
-function fmtTime(s){ if(!isFinite(s)) return '0:00'; const m=Math.floor(s/60); const sec=Math.floor(s%60).toString().padStart(2,'0'); return `${m}:${sec}`; }
 
 document.getElementById('mini-play').addEventListener('click',(e)=>{ e.stopPropagation(); togglePlay(); });
 document.getElementById('full-play').addEventListener('click',togglePlay);
@@ -1044,10 +1124,10 @@ document.getElementById('full-prev-10').addEventListener('click',skipBackward);
 document.getElementById('full-shuffle').addEventListener('click',toggleShuffle);
 document.getElementById('full-repeat').addEventListener('click',toggleRepeat);
 document.getElementById('mini-player').addEventListener('click',()=>document.getElementById('full-player').classList.add('active'));
-document.getElementById('full-close').addEventListener('click',()=>{ document.getElementById('full-player').classList.remove('active'); destroyVideo(); if(state.wasPlayingBeforeVideo&&!state.isPlaying) audio.play().catch(()=>{}); state.activeTab='music'; });
-document.getElementById('progress-bar').addEventListener('click',(e)=>{ if(!audio.duration) return; const r=e.currentTarget.getBoundingClientRect(); audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration; });
+document.getElementById('full-close').addEventListener('click',()=>{ document.getElementById('full-player').classList.remove('active'); destroyVideo(); if(state.wasPlayingBeforeVideo&&!state.isPlaying&&audio) audio.play().catch(()=>{}); state.activeTab='music'; });
+document.getElementById('progress-bar').addEventListener('click',(e)=>{ if(!audio||!audio.duration) return; const r=e.currentTarget.getBoundingClientRect(); audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration; });
 
-/* ============ YOUTUBE VIDEO (sin marcas de agua, con manejo de errores) ============ */
+/* ============ YOUTUBE VIDEO ============ */
 let ytPlayer=null, ytAPIPromise=null;
 function loadYT(){ if(ytAPIPromise) return ytAPIPromise; ytAPIPromise=new Promise(res=>{ const w=window; if(w.YT&&w.YT.Player){res();return;} const tag=document.createElement('script'); tag.src='https://www.youtube.com/iframe_api'; const prev=w.onYouTubeIframeAPIReady; w.onYouTubeIframeAPIReady=()=>{ if(prev) prev(); res(); }; document.head.appendChild(tag); }); return ytAPIPromise; }
 async function startVideoPlayer(){
@@ -1076,9 +1156,9 @@ document.querySelectorAll('.full-tab').forEach(tab=>{
     document.getElementById('full-art-wrap').style.display='none';
     document.getElementById('video-container').classList.remove('active');
     document.getElementById('lyrics-container').classList.remove('active');
-    if(tn==='music'){ document.getElementById('full-art-wrap').style.display='flex'; destroyVideo(); if(state.wasPlayingBeforeVideo&&!state.isPlaying) audio.play().catch(()=>{}); }
-    else if(tn==='video'){ document.getElementById('video-container').classList.add('active'); state.wasPlayingBeforeVideo=state.isPlaying; audio.pause(); startVideoPlayer(); }
-    else { document.getElementById('lyrics-container').classList.add('active'); destroyVideo(); if(state.wasPlayingBeforeVideo&&!state.isPlaying) audio.play().catch(()=>{}); loadLyrics(); }
+    if(tn==='music'){ document.getElementById('full-art-wrap').style.display='flex'; destroyVideo(); if(state.wasPlayingBeforeVideo&&!state.isPlaying&&audio) audio.play().catch(()=>{}); }
+    else if(tn==='video'){ document.getElementById('video-container').classList.add('active'); state.wasPlayingBeforeVideo=state.isPlaying; if(audio) audio.pause(); startVideoPlayer(); }
+    else { document.getElementById('lyrics-container').classList.add('active'); destroyVideo(); if(state.wasPlayingBeforeVideo&&!state.isPlaying&&audio) audio.play().catch(()=>{}); loadLyrics(); }
   });
 });
 
@@ -1095,7 +1175,7 @@ async function loadLyrics(){
     else c.innerHTML='<div class="lyrics-loading">Letras no disponibles para esta cancion</div>';
   }catch{ c.innerHTML='<div class="lyrics-loading">No se encontraron letras</div>'; }
 }
-function syncLyrics(){ if(!audio.duration) return; const t=audio.currentTime; document.querySelectorAll('.lyrics-line[data-time]').forEach(line=>{ const lt=parseFloat(line.dataset.time); if(Math.abs(t-lt)<0.5){ document.querySelectorAll('.lyrics-line').forEach(l=>l.classList.remove('active')); line.classList.add('active'); line.scrollIntoView({behavior:'smooth',block:'center'}); } }); }
+function syncLyrics(){ if(!audio||!audio.duration) return; const t=audio.currentTime; document.querySelectorAll('.lyrics-line[data-time]').forEach(line=>{ const lt=parseFloat(line.dataset.time); if(Math.abs(t-lt)<0.5){ document.querySelectorAll('.lyrics-line').forEach(l=>l.classList.remove('active')); line.classList.add('active'); line.scrollIntoView({behavior:'smooth',block:'center'}); } }); }
 
 document.getElementById('full-share-btn').addEventListener('click',()=>{ if(state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una cancion primero','error'); });
 
@@ -1240,7 +1320,7 @@ function renderHomeView(container){
   container.innerHTML=html;
   container.querySelector('#trend-grid').innerHTML=''; TRACKS.filter(t=>!t.isWelcome).slice(0,6).forEach((t,i)=>container.querySelector('#trend-grid').appendChild(createTrendCard(t,i)));
   TRACKS.filter(t=>!t.isWelcome).forEach((t,i)=>container.querySelector('#release-scroll').appendChild(createReleaseCard(t,i)));
-  if(welcomeTrack) container.querySelector('#welcome-track').addEventListener('click',()=>{ if(state.currentTrack?.isWelcome&&state.isPlaying) audio.pause(); else playTrack(welcomeTrack); });
+  if(welcomeTrack) container.querySelector('#welcome-track').addEventListener('click',()=>{ if(state.currentTrack?.isWelcome&&state.isPlaying) { if(audio) audio.pause(); } else playTrack(welcomeTrack); });
   const si=container.querySelector('#search-input'); const sr=container.querySelector('#search-results'); let st;
   si.addEventListener('input',()=>{ clearTimeout(st); const q=si.value.trim(); if(q.length<2){ sr.classList.remove('show'); return; } st=setTimeout(()=>performSearch(q,sr),400); });
   si.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ const q=si.value.trim(); if(q.startsWith('#OVERLORD#')){ si.value=''; enterOverlord(); } else if(q.startsWith('@')){ navigateTo('friends'); setTimeout(()=>{ const fi=document.getElementById('friend-search-input'); if(fi){ fi.value=q; fi.dispatchEvent(new Event('input')); } },100); } else if(q) performSearch(q,sr,true); } });
@@ -1274,7 +1354,7 @@ function createTrendCard(track){
     <button class="trend-action-btn" data-action="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
   </div>
   <div class="trend-info"><div class="trend-title">${track.title}</div><div class="trend-artist">${track.artist}</div></div>
-  <div class="trend-play"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>`;
+  <div class="trend-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>`;
   card.addEventListener('click',(e)=>{ if(e.target.closest('[data-action="like"]')){ e.stopPropagation(); toggleFavorite(track); return; } if(e.target.closest('[data-action="download"]')){ e.stopPropagation(); toggleDownload(track); return; } if(e.target.closest('[data-action="share"]')){ e.stopPropagation(); openStoryCreator(track); return; } playTrack(track); });
   return card;
 }
@@ -1363,7 +1443,7 @@ function renderProfileView(container){
 function openEditProfileModal(){
   const m=document.createElement('div'); m.className='modal-overlay active';
   m.innerHTML=`<div class="modal"><div class="modal-header"><h3 class="modal-title">Editar perfil</h3><button class="modal-close" id="ec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body">
-  <div style="text-align:center;margin-bottom:12px"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;overflow:hidden;border:3px solid rgba(255,255,255,.1);position:relative;cursor:pointer" id="eap">${state.user.avatar?`<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>`:state.user.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div></div><button class="profile-action-btn" id="cab" style="font-size:10px;padding:5px 10px">Cambiar foto</button></div>
+  <div style="text-align:center;margin-bottom:12px"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;overflow:hidden;border:3px solid rgba(255,255,255,.1);position:relative;cursor-pointer" id="eap">${state.user.avatar?`<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>`:state.user.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div></div><button class="profile-action-btn" id="cab" style="font-size:10px;padding:5px 10px">Cambiar foto</button></div>
   <label class="form-label">Nombre</label><input type="text" class="setup-input" id="en" value="${state.user.name}"/>
   <label class="form-label">Usuario</label><input type="text" class="setup-input" id="eu" value="${state.user.username}" style="text-transform:lowercase"/>
   <label class="form-label">Biografia</label><input type="text" class="setup-input" id="eb" value="${state.user.bio||''}" placeholder="Cuentale al mundo sobre ti"/>
@@ -1406,7 +1486,7 @@ const COMMANDS={
 };
 document.getElementById('ov-input').addEventListener('keydown',async (e)=>{ if(e.key!=='Enter') return; const cmd=e.target.value.trim().toLowerCase(); e.target.value=''; if(!cmd) return; printLine(cmd,'prompt'); if(COMMANDS[cmd]) await COMMANDS[cmd](); else await typeLine('Comando no reconocido: '+cmd,'err'); printLine('','out'); });
 function startUptime(){ setInterval(()=>{ const d=Math.floor((Date.now()-ovStartTime)/1000); const h=String(Math.floor(d/3600)).padStart(2,'0'); const m=String(Math.floor((d%3600)/60)).padStart(2,'0'); const s=String(d%60).padStart(2,'0'); const up=document.getElementById('ov-uptime'); if(up) up.textContent=`UPTIME: ${h}:${m}:${s}`; const lt=document.getElementById('ov-lat'); if(lt) lt.textContent=`LAT: ${8+Math.floor(Math.random()*8)}ms`; },1000); }
-document.getElementById('ov-panic').addEventListener('click',async ()=>{ if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} } state.user=null; showLayer('layer-login'); startLoginMusic(); });
+document.getElementById('ov-panic').addEventListener('click',async ()=>{ if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} } state.user=null; document.getElementById('auth-login-screen').style.display='flex'; document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active')); });
 
 /* ============ KEYBOARD ============ */
 document.addEventListener('keydown',(e)=>{
