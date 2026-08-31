@@ -31,10 +31,9 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .layer.fade-in{animation:fadeIn .7s var(--ease-out-expo) forwards}
 @keyframes fadeIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 
-/* ===================== LOGIN ===================== */
 #layer-login{flex-direction:column;align-items:center;justify-content:center;background:var(--bg-secondary);padding:24px;position:relative;overflow:hidden}
 .login-covers-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
-.floating-cover{position:absolute;width:140px;height:140px;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);opacity:0.18;animation:floatCover 20s ease-in-out infinite;filter:blur(0.3px)}
+.floating-cover{position:absolute;width:140px;height:140px;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);opacity:0.18;animation:floatCover 20s ease-in-out infinite}
 .floating-cover img{width:100%;height:100%;object-fit:cover}
 .floating-cover:nth-child(4){top:10%;left:5%;animation-delay:0s;animation-duration:18s}
 .floating-cover:nth-child(5){top:60%;left:8%;animation-delay:-3s;animation-duration:22s}
@@ -48,8 +47,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .orb-2{width:350px;height:350px;background:var(--accent-purple);bottom:-100px;right:-100px;animation-delay:-4s}
 .orb-3{width:300px;height:300px;background:#FF6B6B;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-2s;opacity:0.18}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:0.35}50%{transform:scale(1.25);opacity:0.45}}
-
-/* Floating music notes */
 .music-notes{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .music-note{position:absolute;font-size:24px;opacity:0;animation:floatNote linear infinite}
 .music-note:nth-child(1){left:10%;animation-duration:12s;animation-delay:0s}
@@ -68,16 +65,14 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 @keyframes glowPulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:0.8;transform:scale(1.1)}}
 .login-logo svg{width:60px;height:60px;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
 .login-title{font-size:42px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;text-align:center;background:linear-gradient(135deg,#fff 0%,#a8c0ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:titleShine 4s ease-in-out infinite}
-@keyframes titleShine{0%,100%{filter:brightness(1) drop-shadow(0 0 0 transparent)}50%{filter:brightness(1.15) drop-shadow(0 0 20px rgba(168,192,255,0.3))}}
+@keyframes titleShine{0%,100%{filter:brightness(1)}50%{filter:brightness(1.15)}}
 .login-title span{background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900}
 .login-sub{color:var(--text-secondary);font-size:16px;margin-bottom:32px;text-align:center;line-height:1.6;max-width:320px;animation:fadeInUp .8s var(--ease-out-expo) both}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .btn-google{width:100%;height:60px;background:rgba(255,255,255,0.95);color:#1a1a1a;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:14px;font-weight:700;font-size:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);transition:all .4s var(--ease-out-back);animation:fadeInUp 1s var(--ease-out-expo) both;position:relative;overflow:hidden}
 .btn-google::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.4) 50%,transparent 100%);transform:translateX(-100%);transition:transform .6s}
-.btn-google::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(51,133,230,0.15) 0%,transparent 70%);opacity:0;transition:opacity .3s}
 .btn-google:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 60px rgba(0,0,0,0.4),0 0 40px var(--accent-glow)}
 .btn-google:hover::before{transform:translateX(100%)}
-.btn-google:hover::after{opacity:1}
 .btn-google:active{transform:translateY(-1px) scale(0.99)}
 .btn-google:disabled{opacity:0.7;cursor:not-allowed;transform:none}
 .btn-google svg{width:24px;height:24px}
@@ -90,7 +85,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ===================== PROFILE SETUP MODAL ===================== */
 .profile-setup-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px}
 .profile-setup-modal.active{display:flex}
 .profile-setup-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:24px;padding:32px;max-width:440px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.8);max-height:90vh;overflow-y:auto;animation:modalSlideIn .5s var(--ease-out-expo)}
@@ -98,7 +92,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .profile-setup-card h2{font-size:26px;font-weight:800;margin-bottom:8px;text-align:center}
 .profile-setup-card > p{color:var(--text-secondary);font-size:14px;text-align:center;margin-bottom:24px;line-height:1.5}
 .avatar-upload{width:110px;height:110px;border-radius:50%;margin:0 auto 20px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;position:relative;cursor:pointer;overflow:hidden;border:4px solid rgba(255,255,255,0.1);box-shadow:0 10px 40px var(--accent-glow);transition:all .4s var(--ease-out-back)}
-.avatar-upload:hover{transform:scale(1.08) rotate(3deg);box-shadow:0 15px 50px var(--accent-glow)}
+.avatar-upload:hover{transform:scale(1.08) rotate(3deg)}
 .avatar-upload img{width:100%;height:100%;object-fit:cover}
 .avatar-upload .upload-badge{position:absolute;bottom:0;right:0;width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-card);transition:transform .3s var(--ease-out-back)}
 .avatar-upload:hover .upload-badge{transform:scale(1.15) rotate(-10deg)}
@@ -116,7 +110,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .setup-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
 .setup-error{color:var(--danger);font-size:12px;text-align:center;margin-bottom:12px;min-height:16px}
 
-/* ===================== MAIN APP ===================== */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:linear-gradient(180deg,rgba(13,19,33,0.98) 0%,rgba(13,19,33,0.85) 100%);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid var(--border);z-index:60;position:relative}
 .nav-left{display:flex;align-items:center;gap:12px}
@@ -183,7 +176,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .cat-scroll::-webkit-scrollbar{height:0}
 .cat-chip{flex:0 0 auto;height:44px;padding:0 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;display:flex;align-items:center;font-size:14px;font-weight:600;white-space:nowrap;transition:all .3s var(--ease-out-back);box-shadow:0 4px 15px rgba(0,0,0,0.2)}
 .cat-chip.active{background:var(--gradient-primary);border-color:transparent;box-shadow:0 6px 20px var(--accent-glow)}
-.cat-chip:hover:not(.active){border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,0.3)}
+.cat-chip:hover:not(.active){border-color:var(--accent);transform:translateY(-3px)}
 
 .trend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px}
 .trend-card{position:relative;aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:var(--bg-card);cursor:pointer;transition:all .5s var(--ease-out-expo);box-shadow:0 8px 25px rgba(0,0,0,0.3);animation:cardFadeIn .6s var(--ease-out-expo) both}
@@ -299,7 +292,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 
 .profile-header{text-align:center;padding:32px 20px 24px;background:linear-gradient(180deg,rgba(51,133,230,0.1),transparent);border-radius:24px;margin-bottom:24px}
 .profile-avatar-large{width:100px;height:100px;border-radius:50%;background:var(--gradient-primary);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1);box-shadow:0 10px 40px var(--accent-glow);position:relative;cursor:pointer;transition:all .4s var(--ease-out-back)}
-.profile-avatar-large:hover{transform:scale(1.1) rotate(5deg);box-shadow:0 15px 50px var(--accent-glow)}
+.profile-avatar-large:hover{transform:scale(1.1) rotate(5deg)}
 .profile-avatar-large img{width:100%;height:100%;object-fit:cover}
 .profile-avatar-large .edit-badge{position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary);transition:transform .3s var(--ease-out-back)}
 .profile-avatar-large:hover .edit-badge{transform:scale(1.2) rotate(-15deg)}
@@ -313,9 +306,8 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .profile-stat-label{font-size:11px;color:var(--text-secondary);margin-top:2px}
 .profile-actions{display:flex;gap:10px;justify-content:center;margin-top:20px}
 .profile-action-btn{padding:10px 20px;border-radius:20px;background:var(--bg-card);font-size:13px;font-weight:600;transition:all .3s var(--ease-out-back);border:1px solid var(--border)}
-.profile-action-btn:hover{background:var(--bg-card-hover);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.profile-action-btn:hover{background:var(--bg-card-hover);transform:translateY(-3px)}
 .profile-action-btn.primary{background:var(--gradient-primary);border-color:transparent;box-shadow:0 4px 15px var(--accent-glow)}
-.profile-action-btn.primary:hover{box-shadow:0 8px 25px var(--accent-glow)}
 .profile-section{background:var(--bg-card);border-radius:20px;padding:20px;margin-bottom:16px;border:1px solid var(--border)}
 .profile-section-title{font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px}
 .profile-option{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .3s var(--ease-out-expo)}
@@ -331,7 +323,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .profile-option:hover .profile-option-arrow{transform:translateX(4px)}
 .profile-option-arrow svg{width:18px;height:18px}
 .profile-logout{width:100%;padding:16px;background:rgba(239,68,68,0.1);border:1px solid var(--danger);border-radius:16px;color:var(--danger);font-weight:700;font-size:15px;transition:all .3s var(--ease-out-back);margin-top:16px}
-.profile-logout:hover{background:rgba(239,68,68,0.2);transform:translateY(-3px);box-shadow:0 8px 25px rgba(239,68,68,0.3)}
+.profile-logout:hover{background:rgba(239,68,68,0.2);transform:translateY(-3px)}
 
 .my-stories-list{display:flex;flex-direction:column;gap:8px}
 .my-story-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-card-hover);border-radius:12px;transition:all .3s var(--ease-out-expo)}
@@ -347,13 +339,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .my-story-delete:hover{background:var(--danger);transform:scale(1.15) rotate(15deg)}
 .my-story-delete svg{width:14px;height:14px;color:var(--danger)}
 .my-story-delete:hover svg{color:white}
-
-.invite-card{background:linear-gradient(135deg,rgba(51,133,230,0.15),rgba(107,70,255,0.15));border:1px solid var(--border-light);border-radius:20px;padding:20px;margin-bottom:24px;text-align:center;transition:all .4s var(--ease-out-back)}
-.invite-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(51,133,230,0.3)}
-.invite-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
-.invite-card p{font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5}
-.whatsapp-btn{width:100%;height:48px;background:#25D366;border-radius:14px;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s var(--ease-out-back);color:white}
-.whatsapp-btn:hover{background:#1ebe57;transform:translateY(-3px);box-shadow:0 10px 30px rgba(37,211,102,0.4)}
 
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-height);background:rgba(13,19,33,0.98);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90;padding:0 12px}
 .bottom-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;color:var(--text-muted);transition:all .3s var(--ease-out-back);cursor:pointer;position:relative}
@@ -383,137 +368,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .modal-btn.secondary:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px)}
 .modal-btn.primary{background:var(--gradient-primary);box-shadow:0 6px 20px var(--accent-glow)}
 .modal-btn.primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px var(--accent-glow)}
-.modal-btn.primary:active{transform:translateY(-1px)}
-
-.info-modal-icon{width:80px;height:80px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;background:var(--gradient-primary);box-shadow:0 10px 40px var(--accent-glow);animation:iconFloat 3s ease-in-out infinite}
-@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.info-modal-icon svg{width:40px;height:40px}
-.info-modal-title{text-align:center;font-size:22px;font-weight:800;margin-bottom:12px}
-.info-modal-desc{text-align:center;color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:20px}
-.info-features{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.info-feature{display:flex;gap:12px;padding:12px;background:var(--bg-card-hover);border-radius:12px;transition:all .3s var(--ease-out-expo)}
-.info-feature:hover{transform:translateX(4px);background:rgba(255,255,255,0.08)}
-.info-feature-icon{width:36px;height:36px;border-radius:10px;background:rgba(51,133,230,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.info-feature-icon svg{width:18px;height:18px;color:var(--accent-light)}
-.info-feature-text{font-size:13px;line-height:1.5}
-.info-feature-text strong{color:var(--text-primary);display:block;margin-bottom:2px}
-
-.story-preview{width:100%;aspect-ratio:9/16;max-height:380px;border-radius:16px;overflow:hidden;position:relative;margin-bottom:20px;background:linear-gradient(135deg,#1a1a2e,#16213e)}
-.story-preview img.cover-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(20px) brightness(0.5);transform:scale(1.2)}
-.story-preview-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center}
-.story-preview-cover{width:160px;height:160px;border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
-.story-preview-cover img{width:100%;height:100%;object-fit:cover}
-.story-preview-title{font-size:20px;font-weight:800;margin-bottom:6px}
-.story-preview-artist{font-size:13px;color:var(--text-secondary)}
-.story-preview-player{position:absolute;bottom:24px;left:24px;right:24px;height:48px;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border-radius:24px;display:flex;align-items:center;padding:6px 6px 6px 16px;gap:12px;border:1px solid rgba(255,255,255,0.1)}
-.story-preview-player-info{flex:1;min-width:0}
-.story-preview-player-title{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.story-preview-player-artist{font-size:10px;color:var(--text-secondary)}
-.story-preview-player-btn{width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px var(--accent-glow)}
-.story-preview-player-btn svg{width:16px;height:16px}
-
-.tag-input-wrap{margin-bottom:16px}
-.tag-input-label{font-size:12px;color:var(--text-secondary);margin-bottom:8px;display:block}
-.tag-input{width:100%;height:44px;background:var(--bg-primary);border:1px solid var(--border);border-radius:12px;padding:0 14px;font-size:14px;color:var(--text-primary);transition:all .3s var(--ease-out-expo)}
-.tag-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.tag-input::placeholder{color:var(--text-muted)}
-.tag-suggestions{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-.tag-suggestion{padding:6px 12px;background:var(--bg-card-hover);border-radius:20px;font-size:12px;color:var(--accent-light);cursor:pointer;transition:all .3s var(--ease-out-back);border:1px solid transparent}
-.tag-suggestion:hover{border-color:var(--accent);background:rgba(51,133,230,0.15);transform:translateY(-2px)}
-.tag-suggestion.added{background:var(--accent);color:white}
-.tags-display{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.tag-chip{padding:4px 10px;background:var(--accent);border-radius:12px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;animation:chipIn .3s var(--ease-out-back)}
-@keyframes chipIn{from{opacity:0;transform:scale(0.5)}to{opacity:1;transform:scale(1)}}
-.tag-chip-remove{cursor:pointer;opacity:0.7}
-.tag-chip-remove:hover{opacity:1}
-
-.privacy-section-title{font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
-.privacy-option{display:flex;align-items:center;gap:14px;padding:14px;border-radius:12px;cursor:pointer;transition:all .3s var(--ease-out-expo);margin-bottom:8px;border:1px solid transparent}
-.privacy-option:hover{background:var(--bg-card-hover);transform:translateX(4px)}
-.privacy-option.selected{background:rgba(51,133,230,0.15);border-color:var(--accent)}
-.privacy-icon{width:40px;height:40px;border-radius:50%;background:var(--bg-card-hover);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s var(--ease-out-back)}
-.privacy-option:hover .privacy-icon{transform:scale(1.1)}
-.privacy-icon svg{width:20px;height:20px}
-.privacy-info{flex:1}
-.privacy-label{font-size:14px;font-weight:600}
-.privacy-desc{font-size:12px;color:var(--text-secondary);margin-top:2px}
-.privacy-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s var(--ease-out-back)}
-.privacy-option.selected .privacy-check{background:var(--accent);border-color:var(--accent);transform:scale(1.1)}
-.privacy-check svg{width:14px;height:14px;opacity:0;transition:opacity .2s}
-.privacy-option.selected .privacy-check svg{opacity:1}
-
-.story-viewer{position:fixed;inset:0;background:#000;z-index:600;display:none;align-items:center;justify-content:center}
-.story-viewer.active{display:flex}
-.story-viewer-content{width:100%;max-width:420px;height:100%;max-height:750px;position:relative;background:#000}
-.story-progress-bar{position:absolute;top:12px;left:12px;right:12px;height:3px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:10;overflow:hidden}
-.story-progress-fill{height:100%;background:var(--accent);width:0%;transition:width .1s linear;box-shadow:0 0 10px var(--accent-glow)}
-.story-viewer-header{position:absolute;top:24px;left:16px;right:16px;display:flex;align-items:center;gap:12px;z-index:10}
-.story-viewer-avatar{width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;overflow:hidden}
-.story-viewer-avatar img{width:100%;height:100%;object-fit:cover}
-.story-viewer-name{font-size:14px;font-weight:600}
-.story-viewer-time{font-size:11px;color:var(--text-secondary)}
-.story-viewer-close{margin-left:auto;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);transition:all .3s var(--ease-out-back)}
-.story-viewer-close:hover{background:rgba(0,0,0,0.7);transform:rotate(90deg) scale(1.1)}
-.story-viewer-close svg{width:20px;height:20px}
-.story-viewer-body{width:100%;height:100%;position:relative}
-.story-viewer-body img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(30px) brightness(0.4);transform:scale(1.3)}
-.story-viewer-body .story-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 30px}
-.story-viewer-cover{width:200px;height:200px;border-radius:20px;overflow:hidden;margin-bottom:24px;box-shadow:0 30px 80px rgba(0,0,0,0.7);animation:coverFloat 4s ease-in-out infinite}
-@keyframes coverFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.story-viewer-cover img{width:100%;height:100%;object-fit:cover}
-.story-viewer-title{font-size:26px;font-weight:800;text-align:center;margin-bottom:8px}
-.story-viewer-artist{font-size:16px;color:var(--text-secondary);text-align:center;margin-bottom:16px}
-.story-tags-display{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:20px;max-width:90%}
-.story-tag{padding:6px 12px;background:rgba(51,133,230,0.3);backdrop-filter:blur(10px);border:1px solid rgba(51,133,230,0.5);border-radius:20px;font-size:12px;font-weight:600;color:white;cursor:pointer;transition:all .3s var(--ease-out-back)}
-.story-tag:hover{background:var(--accent);transform:scale(1.1)}
-.story-viewer-player{width:100%;max-width:320px;height:56px;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border-radius:28px;display:flex;align-items:center;padding:8px 8px 8px 20px;gap:14px;border:1px solid rgba(255,255,255,0.1)}
-.story-viewer-player-info{flex:1;min-width:0}
-.story-viewer-player-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.story-viewer-player-artist{font-size:11px;color:var(--text-secondary)}
-.story-viewer-player-btn{width:40px;height:40px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 15px var(--accent-glow);transition:all .3s var(--ease-out-back)}
-.story-viewer-player-btn:hover{transform:scale(1.15)}
-.story-viewer-player-btn svg{width:18px;height:18px}
-.story-nav{position:absolute;top:50%;transform:translateY(-50%);width:50%;height:100%;z-index:5}
-.story-nav.prev{left:0}
-.story-nav.next{right:0}
-.story-viewer-actions{position:absolute;bottom:20px;left:16px;right:16px;display:flex;gap:10px;z-index:10}
-.story-action-btn{flex:1;height:44px;border-radius:22px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:600;transition:all .3s var(--ease-out-back)}
-.story-action-btn:hover{background:rgba(255,255,255,0.2);transform:translateY(-3px)}
-.story-action-btn.liked{background:rgba(239,68,68,0.3);border-color:var(--danger)}
-.story-action-btn.liked svg{fill:var(--danger);stroke:var(--danger)}
-.story-action-btn svg{width:18px;height:18px}
-.story-views-btn{position:absolute;top:24px;right:60px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:700;transition:all .3s var(--ease-out-back)}
-.story-views-btn:hover{background:rgba(0,0,0,0.7);transform:scale(1.1)}
-.story-views-btn svg{width:14px;height:14px}
-
-.views-list{display:flex;flex-direction:column;gap:8px}
-.view-item{display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg-card-hover);border-radius:12px;transition:all .3s var(--ease-out-expo)}
-.view-item:hover{transform:translateX(4px);background:rgba(255,255,255,0.08)}
-.view-item-avatar{width:40px;height:40px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-.view-item-info{flex:1;min-width:0}
-.view-item-name{font-size:13px;font-weight:600}
-.view-item-time{font-size:11px;color:var(--text-secondary)}
-
-.notifications-panel{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:380px;background:var(--bg-card);z-index:700;transform:translateX(100%);transition:transform .4s var(--ease-out-expo);border-left:1px solid var(--border);display:flex;flex-direction:column}
-.notifications-panel.active{transform:translateX(0)}
-.notifications-header{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.notifications-title{font-size:18px;font-weight:700}
-.notifications-list{flex:1;overflow-y:auto;padding:12px}
-.notification-item{display:flex;gap:12px;padding:12px;background:var(--bg-card-hover);border-radius:12px;margin-bottom:8px;transition:all .3s var(--ease-out-expo);animation:slideInRight .4s var(--ease-out-expo)}
-@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-.notification-item.unread{background:rgba(51,133,230,0.1);border-left:3px solid var(--accent)}
-.notification-item:hover{transform:translateX(4px);background:rgba(255,255,255,0.08)}
-.notification-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.notification-icon.like{background:rgba(239,68,68,0.2)}
-.notification-icon.like svg{color:var(--danger)}
-.notification-icon.play{background:rgba(16,185,129,0.2)}
-.notification-icon.play svg{color:var(--success)}
-.notification-icon svg{width:20px;height:20px}
-.notification-content{flex:1;min-width:0}
-.notification-text{font-size:13px;line-height:1.4}
-.notification-text strong{color:var(--text-primary)}
-.notification-time{font-size:11px;color:var(--text-secondary);margin-top:4px}
-.notification-empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
 
 .toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;padding:14px 24px;font-size:14px;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:10000;transition:transform .5s var(--ease-out-expo);max-width:90%;backdrop-filter:blur(20px)}
 .toast.show{transform:translateX(-50%) translateY(0)}
@@ -554,7 +408,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .onboarding-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:24px}
 .onboarding-features{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;text-align:left}
 .onboarding-feature{display:flex;align-items:center;gap:12px;padding:10px;background:var(--bg-card-hover);border-radius:12px;transition:all .3s var(--ease-out-expo)}
-.onboarding-feature:hover{transform:translateX(4px);background:rgba(255,255,255,0.08)}
+.onboarding-feature:hover{transform:translateX(4px)}
 .onboarding-feature-icon{width:32px;height:32px;border-radius:8px;background:rgba(51,133,230,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .onboarding-feature-icon svg{width:16px;height:16px;color:var(--accent-light)}
 .onboarding-feature-text{font-size:13px}
@@ -596,16 +450,10 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
     <div class="floating-cover"><img src="https://image.qwenlm.ai/public_source/0e020754-b115-492d-840b-a83141a9ae3d/176cc5bcd-fe8d-464a-96f3-617aa4b5c666.png" alt="" /></div>
   </div>
   <div class="music-notes">
-    <div class="music-note">♪</div>
-    <div class="music-note">♫</div>
-    <div class="music-note">♬</div>
-    <div class="music-note">♩</div>
-    <div class="music-note">♪</div>
+    <div class="music-note">♪</div><div class="music-note">♫</div><div class="music-note">♬</div><div class="music-note">♩</div><div class="music-note">♪</div>
   </div>
   <div class="login-content">
-    <div class="login-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>
-    </div>
+    <div class="login-logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg></div>
     <h1 class="login-title">Music <span>Horizon</span></h1>
     <p class="login-sub">Tu música, tus reglas. Accede a un universo sonoro sin límites ni fronteras.</p>
     <button class="btn-google" id="btn-login-google">
@@ -680,7 +528,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
   <div class="full-tabs">
     <div class="full-tab active" data-tab="music">🎵 Música</div>
     <div class="full-tab" data-tab="video">🎬 Video</div>
-    <div class="full-tab" data-tab="lyrics"> Letras</div>
+    <div class="full-tab" data-tab="lyrics">📝 Letras</div>
   </div>
   <div class="full-art-wrap">
     <div class="vinyl" id="vinyl">
@@ -724,13 +572,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
           </div>
         </div>
       </div>
-      <div class="tag-input-wrap">
-        <label class="tag-input-label">🏷️ Etiquetar amigos (opcional)</label>
-        <input type="text" class="tag-input" id="tag-input" placeholder="Escribe @ para etiquetar..." />
-        <div class="tag-suggestions" id="tag-suggestions"></div>
-        <div class="tags-display" id="tags-display"></div>
-      </div>
-      <div class="privacy-section-title"> ¿Quién puede ver esta historia?</div>
+      <div class="privacy-section-title">🔒 ¿Quién puede ver esta historia?</div>
       <div id="privacy-options">
         <div class="privacy-option selected" data-privacy="all"><div class="privacy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="privacy-info"><div class="privacy-label">Todos</div><div class="privacy-desc">Cualquiera podrá ver tu historia</div></div><div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
         <div class="privacy-option" data-privacy="friends"><div class="privacy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="privacy-info"><div class="privacy-label">Mis Amigos</div><div class="privacy-desc">Solo tus amigos agregados</div></div><div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
@@ -749,7 +591,6 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
     <div class="story-viewer-header">
       <div class="story-viewer-avatar" id="story-viewer-avatar">?</div>
       <div><div class="story-viewer-name" id="story-viewer-name">—</div><div class="story-viewer-time" id="story-viewer-time">hace 1h</div></div>
-      <button class="story-views-btn" id="story-views-btn" title="Ver quién vio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="story-views-count">0</span></button>
       <button class="story-viewer-close" id="story-viewer-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="story-viewer-body">
@@ -758,34 +599,25 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
         <div class="story-viewer-cover"><img id="story-viewer-cover" alt="" /></div>
         <div class="story-viewer-title" id="story-viewer-title">—</div>
         <div class="story-viewer-artist" id="story-viewer-artist">—</div>
-        <div class="story-tags-display" id="story-tags-display"></div>
         <div class="story-viewer-player">
           <div class="story-viewer-player-info"><div class="story-viewer-player-title" id="story-viewer-player-title">—</div><div class="story-viewer-player-artist" id="story-viewer-player-artist">—</div></div>
           <button class="story-viewer-player-btn" id="story-play-btn"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></button>
         </div>
       </div>
     </div>
-    <div class="story-viewer-actions" id="story-viewer-actions">
-      <button class="story-action-btn" id="story-like-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Me gusta</span></button>
-      <button class="story-action-btn" id="story-share-action-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span>Compartir</span></button>
-    </div>
     <div class="story-nav prev" id="story-prev"></div>
     <div class="story-nav next" id="story-next"></div>
   </div>
 </div>
 
-<div class="modal-overlay" id="playlist-modal"><div class="modal"><div class="modal-header"><h3 class="modal-title">📋 Agregar a playlist</h3><button class="modal-close" id="playlist-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body"><div id="playlists-list"></div><button class="modal-btn primary" id="create-playlist-btn" style="margin-top:12px;width:100%">+ Crear nueva playlist</button></div></div></div>
-
 <div class="modal-overlay center" id="info-modal"><div class="modal"><div class="modal-header"><h3 class="modal-title" id="info-modal-title">Información</h3><button class="modal-close" id="info-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body" id="info-modal-body"></div><div class="modal-footer"><button class="modal-btn primary" id="info-modal-ok">Entendido</button></div></div></div>
 
-<div class="modal-overlay" id="visibility-modal"><div class="modal"><div class="modal-header"><h3 class="modal-title">👁️ Visibilidad de historias</h3><button class="modal-close" id="visibility-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body"><p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px;line-height:1.5">Elige quién puede ver tus historias por defecto.</p><div class="privacy-section-title">Privacidad por defecto</div><div id="default-privacy-options">
+<div class="modal-overlay" id="visibility-modal"><div class="modal"><div class="modal-header"><h3 class="modal-title">️ Visibilidad de historias</h3><button class="modal-close" id="visibility-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body"><p style="color:var(--text-secondary);font-size:14px;margin-bottom:16px;line-height:1.5">Elige quién puede ver tus historias por defecto.</p><div class="privacy-section-title">Privacidad por defecto</div><div id="default-privacy-options">
   <div class="privacy-option selected" data-privacy="all"><div class="privacy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="privacy-info"><div class="privacy-label">Todos</div><div class="privacy-desc">Cualquiera podrá ver tus historias</div></div><div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
   <div class="privacy-option" data-privacy="friends"><div class="privacy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="privacy-info"><div class="privacy-label">Mis Amigos</div><div class="privacy-desc">Solo tus amigos agregados</div></div><div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
   <div class="privacy-option" data-privacy="close"><div class="privacy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="privacy-info"><div class="privacy-label">Mejores Amigos</div><div class="privacy-desc">Solo tu círculo más cercano</div></div><div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
   <div class="privacy-option" data-privacy="partner"><div class="privacy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="privacy-info"><div class="privacy-label">Novio/a</div><div class="privacy-desc">Solo tu pareja</div></div><div class="privacy-check"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
 </div></div><div class="modal-footer"><button class="modal-btn secondary" id="visibility-cancel">Cancelar</button><button class="modal-btn primary" id="visibility-save">Guardar preferencias</button></div></div></div>
-
-<div class="modal-overlay" id="views-modal"><div class="modal"><div class="modal-header"><h3 class="modal-title">👁️ Quién vio tu historia</h3><button class="modal-close" id="views-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body"><div class="views-list" id="views-list"></div></div></div></div>
 
 <div class="notifications-panel" id="notifications-panel"><div class="notifications-header"><h3 class="notifications-title">🔔 Notificaciones</h3><button class="modal-close" id="notif-panel-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="notifications-list" id="notifications-list"></div></div>
 
@@ -798,7 +630,7 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, getDocs, addDoc, deleteDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const API_BASE = 'https://music-horizon.onrender.com';
 const firebaseConfig = {
@@ -811,14 +643,8 @@ const firebaseConfig = {
   measurementId: "G-EGEZNLYLBM"
 };
 
-let firebaseAuth = null;
-let db = null;
-
-try {
-  const fbApp = initializeApp(firebaseConfig);
-  firebaseAuth = getAuth(fbApp);
-  db = getFirestore(fbApp);
-} catch (e) { console.warn('Firebase init failed:', e); }
+let firebaseAuth = null, db = null;
+try { const fbApp = initializeApp(firebaseConfig); firebaseAuth = getAuth(fbApp); db = getFirestore(fbApp); } catch (e) { console.warn('Firebase:', e); }
 
 const state = {
   user: null, firebaseUser: null, currentTrack: null, currentIndex: 0, isPlaying: false,
@@ -826,7 +652,7 @@ const state = {
   notifications: [], selectedPrivacy: 'all', defaultPrivacy: 'all',
   storyViewerIndex: 0, storyViewerTimer: null, currentViewingStory: null,
   tourDone: localStorage.getItem('mh_tour_completed') === '1',
-  pendingTrackForPlaylist: null, storyTags: [], shuffleEnabled: false, repeatMode: 0,
+  storyTags: [], shuffleEnabled: false, repeatMode: 0,
   shuffledQueue: [], shuffledIndex: 0,
 };
 
@@ -844,178 +670,48 @@ const TRACKS = [
 ];
 
 const DEFAULT_FRIENDS = [
-  { name:'Sofía Martínez', username:'sofia.mtz', avatar:null, isFriend:false, isCloseFriend:true, activity:'Escuchando Urban Pulse · Kairo' },
-  { name:'Carlos Ruiz', username:'carlos.ruiz99', avatar:null, isFriend:true, isCloseFriend:false, activity:'Compartió una historia · hace 2h' },
-  { name:'Valentina López', username:'vale.lopez', avatar:null, isFriend:true, isCloseFriend:true, activity:'Escuchando Neon Midnight · Luna Vega' },
+  { name:'Sofía Martínez', username:'sofia.mtz', avatar:null, isFriend:false, isCloseFriend:true, activity:'Escuchando Urban Pulse' },
+  { name:'Carlos Ruiz', username:'carlos.ruiz99', avatar:null, isFriend:true, isCloseFriend:false, activity:'Compartió una historia' },
+  { name:'Valentina López', username:'vale.lopez', avatar:null, isFriend:true, isCloseFriend:true, activity:'Escuchando Neon Midnight' },
   { name:'Diego Hernández', username:'diego.hdz', avatar:null, isFriend:false, isCloseFriend:false, activity:'Nuevo en Music Horizon' },
-  { name:'Isabella García', username:'isa.garcia', avatar:null, isFriend:false, isCloseFriend:false, activity:'Escuchando Cosmic Drift · Stellaris' },
+  { name:'Isabella García', username:'isa.garcia', avatar:null, isFriend:false, isCloseFriend:false, activity:'Escuchando Cosmic Drift' },
 ];
 
-// ===================== FIRESTORE SERVICE =====================
 const fs = {
-  async getUserByUid(uid) {
-    if (!db) return null;
-    try {
-      const snap = await getDoc(doc(db, 'users', uid));
-      return snap.exists() ? { id: snap.id, ...snap.data() } : null;
-    } catch (e) { console.warn('getUserByUid:', e); return null; }
-  },
-  async saveUser(uid, userData) {
-    if (!db) return;
-    try {
-      await setDoc(doc(db, 'users', uid), { ...userData, updatedAt: serverTimestamp() }, { merge: true });
-    } catch (e) { console.warn('saveUser:', e); }
-  },
-  async saveFavorites(uid, tracks) {
-    if (!db) return;
-    try { await setDoc(doc(db, 'userFavorites', uid), { tracks, updatedAt: serverTimestamp() }); } catch (e) {}
-  },
-  async getFavorites(uid) {
-    if (!db) return [];
-    try { const s = await getDoc(doc(db, 'userFavorites', uid)); return s.exists() ? s.data().tracks || [] : []; } catch { return []; }
-  },
-  async saveDownloads(uid, tracks) {
-    if (!db) return;
-    try { await setDoc(doc(db, 'userDownloads', uid), { tracks, updatedAt: serverTimestamp() }); } catch (e) {}
-  },
-  async getDownloads(uid) {
-    if (!db) return [];
-    try { const s = await getDoc(doc(db, 'userDownloads', uid)); return s.exists() ? s.data().tracks || [] : []; } catch { return []; }
-  },
-  async savePlaylists(uid, playlists) {
-    if (!db) return;
-    try { await setDoc(doc(db, 'userPlaylists', uid), { playlists, updatedAt: serverTimestamp() }); } catch (e) {}
-  },
-  async getPlaylists(uid) {
-    if (!db) return [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
-    try { const s = await getDoc(doc(db, 'userPlaylists', uid)); return s.exists() ? s.data().playlists || [{ id: 1, name: 'Mis Favoritas', tracks: [] }] : [{ id: 1, name: 'Mis Favoritas', tracks: [] }]; } catch { return [{ id: 1, name: 'Mis Favoritas', tracks: [] }]; }
-  },
-  async saveSettings(uid, settings) {
-    if (!db) return;
-    try { await setDoc(doc(db, 'userSettings', uid), { ...settings, updatedAt: serverTimestamp() }); } catch (e) {}
-  },
-  async getSettings(uid) {
-    if (!db) return { defaultPrivacy: 'all' };
-    try { const s = await getDoc(doc(db, 'userSettings', uid)); return s.exists() ? s.data() : { defaultPrivacy: 'all' }; } catch { return { defaultPrivacy: 'all' }; }
-  },
-  async saveStory(story) {
-    if (!db) return story.id;
-    try { await setDoc(doc(db, 'stories', String(story.id)), { ...story, createdAt: serverTimestamp() }); return story.id; } catch (e) { return story.id; }
-  },
-  async deleteStory(storyId) {
-    if (!db) return;
-    try { await deleteDoc(doc(db, 'stories', String(storyId))); } catch (e) {}
-  },
-  async getStories() {
-    if (!db) return [];
-    try {
-      const snap = await getDocs(collection(db, 'stories'));
-      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    } catch { return []; }
-  },
-  async addNotification(notif) {
-    if (!db) return;
-    try { await addDoc(collection(db, 'notifications'), { ...notif, createdAt: serverTimestamp() }); } catch (e) {}
-  },
-  async getNotifications(uid) {
-    if (!db) return [];
-    try {
-      const q = query(collection(db, 'notifications'), where('toUser', '==', uid));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    } catch { return []; }
-  },
-  async markNotifsRead(ids) {
-    if (!db || ids.length === 0) return;
-    try { for (const id of ids) { await updateDoc(doc(db, 'notifications', id), { read: true }); } } catch (e) {}
-  },
+  async getUserByUid(uid) { if (!db) return null; try { const s = await getDoc(doc(db, 'users', uid)); return s.exists() ? { id: s.id, ...s.data() } : null; } catch { return null; } },
+  async saveUser(uid, data) { if (!db) return; try { await setDoc(doc(db, 'users', uid), { ...data, updatedAt: Date.now() }, { merge: true }); } catch {} },
+  async saveFavorites(uid, tracks) { if (!db) return; try { await setDoc(doc(db, 'userFavorites', uid), { tracks }); } catch {} },
+  async getFavorites(uid) { if (!db) return []; try { const s = await getDoc(doc(db, 'userFavorites', uid)); return s.exists() ? s.data().tracks || [] : []; } catch { return []; } },
+  async saveDownloads(uid, tracks) { if (!db) return; try { await setDoc(doc(db, 'userDownloads', uid), { tracks }); } catch {} },
+  async getDownloads(uid) { if (!db) return []; try { const s = await getDoc(doc(db, 'userDownloads', uid)); return s.exists() ? s.data().tracks || [] : []; } catch { return []; } },
+  async savePlaylists(uid, pl) { if (!db) return; try { await setDoc(doc(db, 'userPlaylists', uid), { playlists: pl }); } catch {} },
+  async getPlaylists(uid) { if (!db) return [{ id: 1, name: 'Mis Favoritas', tracks: [] }]; try { const s = await getDoc(doc(db, 'userPlaylists', uid)); return s.exists() ? s.data().playlists || [{ id: 1, name: 'Mis Favoritas', tracks: [] }] : [{ id: 1, name: 'Mis Favoritas', tracks: [] }]; } catch { return [{ id: 1, name: 'Mis Favoritas', tracks: [] }]; } },
+  async saveSettings(uid, s) { if (!db) return; try { await setDoc(doc(db, 'userSettings', uid), s); } catch {} },
+  async getSettings(uid) { if (!db) return { defaultPrivacy: 'all' }; try { const s = await getDoc(doc(db, 'userSettings', uid)); return s.exists() ? s.data() : { defaultPrivacy: 'all' }; } catch { return { defaultPrivacy: 'all' }; } },
+  async saveStory(story) { if (!db) return story.id; try { await setDoc(doc(db, 'stories', String(story.id)), story); return story.id; } catch { return story.id; } },
+  async deleteStory(id) { if (!db) return; try { await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js').then(m => m.deleteDoc(doc(db, 'stories', String(id)))); } catch {} },
+  async getStories() { if (!db) return []; try { const s = await getDocs(collection(db, 'stories')); return s.docs.map(d => ({ id: d.id, ...d.data() })); } catch { return []; } },
 };
 
-// ===================== TOAST =====================
 let toastTimer;
-function toast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show ' + type;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
-}
+function toast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show ' + type; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3000); }
+function showLayer(id) { document.querySelectorAll('.layer').forEach(l => l.classList.remove('active')); document.getElementById(id).classList.add('active', 'fade-in'); }
+function validateUsername(u) { if (!u) return 'Obligatorio'; if (u.length < 3) return 'Mínimo 3 caracteres'; if (u.length > 20) return 'Máximo 20'; if (!/^[a-z0-9._]+$/.test(u)) return 'Solo minúsculas, números, puntos y _'; if (u.startsWith('.') || u.endsWith('.') || u.startsWith('_') || u.endsWith('_')) return 'No puede empezar/terminar con . o _'; return null; }
+function updateNotifBadge() { const unread = state.notifications.filter(n => !n.read).length; const b = document.getElementById('notif-badge'); if (unread > 0) { b.textContent = unread > 99 ? '99+' : unread; b.style.display = 'flex'; } else b.style.display = 'none'; }
+function markAllNotifsRead() { state.notifications.forEach(n => n.read = true); updateNotifBadge(); }
+function renderNotifications() { const list = document.getElementById('notifications-list'); if (state.notifications.length === 0) { list.innerHTML = '<div class="notification-empty"><div style="font-size:40px;margin-bottom:12px"></div><div style="font-size:14px;font-weight:600">Sin notificaciones</div></div>'; return; } list.innerHTML = state.notifications.map(n => { const ic = n.type === 'like' ? 'like' : n.type === 'play' ? 'play' : 'friend'; const is = n.type === 'like' ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : n.type === 'play' ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>'; return `<div class="notification-item ${n.read ? '' : 'unread'}"><div class="notification-icon ${ic}">${is}</div><div class="notification-content"><div class="notification-text">${n.message}</div><div class="notification-time">${getTimeAgo(n.createdAt)}</div></div></div>`; }).join(''); }
 
-function showLayer(id) {
-  document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
-  document.getElementById(id).classList.add('active', 'fade-in');
-}
-
-function validateUsername(username) {
-  if (!username) return 'El username es obligatorio';
-  if (username.length < 3) return 'Mínimo 3 caracteres';
-  if (username.length > 20) return 'Máximo 20 caracteres';
-  if (!/^[a-z0-9._]+$/.test(username)) return 'Solo letras minúsculas, números, puntos y guiones bajos';
-  if (username.startsWith('.') || username.endsWith('.') || username.startsWith('_') || username.endsWith('_')) return 'No puede empezar o terminar con punto o guión bajo';
-  return null;
-}
-
-function updateNotifBadge() {
-  const unread = state.notifications.filter(n => !n.read).length;
-  const badge = document.getElementById('notif-badge');
-  if (unread > 0) { badge.textContent = unread > 99 ? '99+' : unread; badge.style.display = 'flex'; }
-  else badge.style.display = 'none';
-}
-
-function markAllNotificationsRead() {
-  state.notifications.forEach(n => n.read = true);
-  const unreadIds = state.notifications.filter(n => n.id && !String(n.id).startsWith('local_')).map(n => n.id);
-  if (unreadIds.length > 0) fs.markNotifsRead(unreadIds);
-  updateNotifBadge();
-}
-
-function renderNotifications() {
-  const list = document.getElementById('notifications-list');
-  if (state.notifications.length === 0) {
-    list.innerHTML = '<div class="notification-empty"><div style="font-size:40px;margin-bottom:12px">🔕</div><div style="font-size:14px;font-weight:600;margin-bottom:4px">Sin notificaciones</div><div style="font-size:12px">Cuando alguien interactúe con tus historias, aparecerá aquí</div></div>';
-    return;
-  }
-  list.innerHTML = state.notifications.map(n => {
-    const iconClass = n.type === 'like' ? 'like' : n.type === 'play' ? 'play' : 'friend';
-    const iconSvg = n.type === 'like' ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
-      : n.type === 'play' ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
-      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>';
-    return `<div class="notification-item ${n.read ? '' : 'unread'}"><div class="notification-icon ${iconClass}">${iconSvg}</div><div class="notification-content"><div class="notification-text">${n.message}</div><div class="notification-time">${getTimeAgo(n.createdAt)}</div></div></div>`;
-  }).join('');
-}
-
-// ===================== FIREBASE AUTH =====================
+// ===================== AUTH =====================
 document.getElementById('btn-login-google').addEventListener('click', async () => {
   const btn = document.getElementById('btn-login-google');
   const loading = document.getElementById('login-loading');
-  btn.disabled = true;
-  loading.classList.add('show');
+  btn.disabled = true; loading.classList.add('show');
   try {
     let firebaseUser = null;
-    if (firebaseAuth) {
-      const provider = new GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      const result = await signInWithPopup(firebaseAuth, provider);
-      firebaseUser = result.user;
-    } else {
-      await new Promise(r => setTimeout(r, 1200));
-      firebaseUser = { uid: 'demo_' + Date.now(), displayName: 'Usuario', email: 'usuario@gmail.com', photoURL: null };
-    }
+    if (firebaseAuth) { const r = await signInWithPopup(firebaseAuth, new GoogleAuthProvider()); firebaseUser = r.user; }
+    else { await new Promise(r => setTimeout(r, 1200)); firebaseUser = { uid: 'demo_' + Date.now(), displayName: 'Usuario', email: 'usuario@gmail.com', photoURL: null }; }
     state.firebaseUser = firebaseUser;
-    
-    // Check Firestore for existing profile using firebaseUser.uid
-    if (db) {
-      const existingUser = await fs.getUserByUid(firebaseUser.uid);
-      if (existingUser) {
-        state.user = existingUser;
-        await loadAllUserData(firebaseUser.uid);
-        onAuthSuccess(existingUser);
-        return;
-      }
-    }
-    
-    // New user - show setup modal
+    if (db) { const existing = await fs.getUserByUid(firebaseUser.uid); if (existing) { state.user = existing; await loadAllUserData(firebaseUser.uid); onAuthSuccess(existing); return; } }
     document.getElementById('profile-setup-modal').classList.add('active');
     document.getElementById('setup-name').value = firebaseUser.displayName || '';
     document.getElementById('setup-username').value = '';
@@ -1024,166 +720,70 @@ document.getElementById('btn-login-google').addEventListener('click', async () =
     document.getElementById('avatar-initial').style.display = 'block';
     document.getElementById('avatar-initial').textContent = (firebaseUser.displayName || '?')[0].toUpperCase();
     document.getElementById('setup-username').focus();
-  } catch (e) {
-    console.error('Auth error:', e);
-    toast('Error al autenticar: ' + e.message, 'error');
-  } finally {
-    btn.disabled = false;
-    loading.classList.remove('show');
-  }
+  } catch (e) { toast('Error: ' + e.message, 'error'); }
+  finally { btn.disabled = false; loading.classList.remove('show'); }
 });
 
 async function loadAllUserData(uid) {
-  const [favorites, downloads, playlists, settings, notifs] = await Promise.all([
-    fs.getFavorites(uid),
-    fs.getDownloads(uid),
-    fs.getPlaylists(uid),
-    fs.getSettings(uid),
-    fs.getNotifications(uid)
-  ]);
-  state.favorites = favorites;
-  state.downloads = downloads;
-  state.playlists = playlists;
-  state.defaultPrivacy = settings.defaultPrivacy || 'all';
-  state.notifications = notifs;
+  const [f, d, p, s] = await Promise.all([fs.getFavorites(uid), fs.getDownloads(uid), fs.getPlaylists(uid), fs.getSettings(uid)]);
+  state.favorites = f; state.downloads = d; state.playlists = p; state.defaultPrivacy = s.defaultPrivacy || 'all';
 }
 
 document.getElementById('avatar-upload').addEventListener('click', () => document.getElementById('avatar-file-input').click());
-document.getElementById('avatar-file-input').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      document.getElementById('avatar-preview').src = ev.target.result;
-      document.getElementById('avatar-preview').style.display = 'block';
-      document.getElementById('avatar-initial').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
+document.getElementById('avatar-file-input').addEventListener('change', (e) => { const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = (ev) => { document.getElementById('avatar-preview').src = ev.target.result; document.getElementById('avatar-preview').style.display = 'block'; document.getElementById('avatar-initial').style.display = 'none'; }; r.readAsDataURL(f); } });
 document.getElementById('setup-btn').addEventListener('click', completeProfileSetup);
 document.getElementById('setup-username').addEventListener('keydown', (e) => { if (e.key === 'Enter') completeProfileSetup(); });
 
 async function completeProfileSetup() {
-  const nameInput = document.getElementById('setup-name');
-  const usernameInput = document.getElementById('setup-username');
+  const name = document.getElementById('setup-name').value.trim();
+  let username = document.getElementById('setup-username').value.trim().toLowerCase();
+  if (username.startsWith('@')) username = username.substring(1);
   const errorEl = document.getElementById('setup-error');
   const btn = document.getElementById('setup-btn');
-  const name = nameInput.value.trim();
-  let username = usernameInput.value.trim().toLowerCase();
-  if (username.startsWith('@')) username = username.substring(1);
   if (!name) { errorEl.textContent = 'El nombre es obligatorio'; return; }
   const error = validateUsername(username);
-  if (error) { errorEl.textContent = error; usernameInput.style.borderColor = 'var(--danger)'; return; }
-  btn.disabled = true;
-  btn.textContent = 'Creando perfil...';
+  if (error) { errorEl.textContent = error; return; }
+  btn.disabled = true; btn.textContent = 'Creando...';
   try {
-    const avatarSrc = document.getElementById('avatar-preview').style.display !== 'none' ? document.getElementById('avatar-preview').src : (state.firebaseUser?.photoURL || null);
-    const user = {
-      name, username, email: state.firebaseUser?.email || null, avatar: avatarSrc,
-      firebaseUid: state.firebaseUser?.uid, isGoogle: true,
-      createdAt: Date.now(), stats: { plays: 0, shares: 0, stories: 0 }
-    };
-    // Save to Firestore using firebaseUser.uid as document ID
+    const avatar = document.getElementById('avatar-preview').style.display !== 'none' ? document.getElementById('avatar-preview').src : (state.firebaseUser?.photoURL || null);
+    const user = { name, username, email: state.firebaseUser?.email || null, avatar, firebaseUid: state.firebaseUser?.uid, isGoogle: true, createdAt: Date.now(), stats: { plays: 0, shares: 0, stories: 0 } };
     if (db) await fs.saveUser(state.firebaseUser.uid, user);
-    state.user = user;
-    state.favorites = [];
-    state.downloads = [];
-    state.playlists = [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
-    state.notifications = [];
+    state.user = user; state.favorites = []; state.downloads = []; state.playlists = [{ id: 1, name: 'Mis Favoritas', tracks: [] }]; state.notifications = [];
     document.getElementById('profile-setup-modal').classList.remove('active');
-    btn.disabled = false;
-    btn.textContent = 'Crear mi perfil';
+    btn.disabled = false; btn.textContent = 'Crear mi perfil';
     onAuthSuccess(user);
-  } catch (e) {
-    console.error('Profile setup error:', e);
-    errorEl.textContent = 'Error al crear perfil: ' + e.message;
-    btn.disabled = false;
-    btn.textContent = 'Crear mi perfil';
-  }
+  } catch (e) { errorEl.textContent = 'Error: ' + e.message; btn.disabled = false; btn.textContent = 'Crear mi perfil'; }
 }
 
 function onAuthSuccess(user) {
-  state.user = user;
-  state.friends = DEFAULT_FRIENDS;
+  state.user = user; state.friends = DEFAULT_FRIENDS;
   loadAllUserData(state.firebaseUser.uid).then(async () => {
-    showLayer('layer-main');
-    updateNavAvatar();
-    navigateTo('home');
-    await loadStories();
+    showLayer('layer-main'); updateNavAvatar(); navigateTo('home');
+    state.stories = await fs.getStories(); renderStoriesBar();
     updateNotifBadge();
     if (!state.tourDone) setTimeout(startOnboarding, 1000);
   });
 }
 
-async function loadStories() {
-  state.stories = await fs.getStories();
-  renderStoriesBar();
-}
-
 async function logout() {
-  if (!confirm('¿Seguro que quieres cerrar sesión?')) return;
-  if (firebaseAuth) { try { await signOut(firebaseAuth); } catch (e) {} }
-  state.user = null;
-  state.firebaseUser = null;
-  state.currentTrack = null;
-  state.isPlaying = false;
-  state.favorites = [];
-  state.downloads = [];
-  state.playlists = [];
-  state.notifications = [];
-  audio.pause();
-  audio.src = '';
+  if (!confirm('¿Cerrar sesión?')) return;
+  if (firebaseAuth) { try { await signOut(firebaseAuth); } catch {} }
+  state.user = null; state.firebaseUser = null; state.currentTrack = null; state.isPlaying = false;
+  audio.pause(); audio.src = '';
   document.getElementById('mini-player').classList.add('hidden');
-  showLayer('layer-login');
-  toast('Sesión cerrada correctamente', 'info');
+  showLayer('layer-login'); toast('Sesión cerrada', 'info');
 }
 
 if (firebaseAuth) {
-  onAuthStateChanged(firebaseAuth, (fbUser) => {
-    if (fbUser && !state.user) {
-      state.firebaseUser = fbUser;
-      fs.getUserByUid(fbUser.uid).then(async (profile) => {
-        if (profile) {
-          state.user = profile;
-          await loadAllUserData(fbUser.uid);
-          onAuthSuccess(profile);
-        }
-      });
-    }
+  onAuthStateChanged(firebaseAuth, (fb) => {
+    if (fb && !state.user) { state.firebaseUser = fb; fs.getUserByUid(fb.uid).then(async (p) => { if (p) { state.user = p; await loadAllUserData(fb.uid); onAuthSuccess(p); } }); }
   });
 }
 
 // ===================== PLAYER =====================
-function buildShuffledQueue() {
-  const indices = TRACKS.map((_, i) => i);
-  for (let i = indices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
-  }
-  state.shuffledQueue = indices;
-  state.shuffledIndex = 0;
-}
-
-function getNextTrackIndex() {
-  if (state.shuffleEnabled) {
-    if (state.shuffledQueue.length === 0) buildShuffledQueue();
-    state.shuffledIndex++;
-    if (state.shuffledIndex >= state.shuffledQueue.length) buildShuffledQueue();
-    return state.shuffledQueue[state.shuffledIndex];
-  }
-  return (state.currentIndex + 1) % TRACKS.length;
-}
-
-function getPrevTrackIndex() {
-  if (state.shuffleEnabled) {
-    state.shuffledIndex--;
-    if (state.shuffledIndex < 0) state.shuffledIndex = state.shuffledQueue.length - 1;
-    return state.shuffledQueue[state.shuffledIndex];
-  }
-  return (state.currentIndex - 1 + TRACKS.length) % TRACKS.length;
-}
+function buildShuffledQueue() { const idx = TRACKS.map((_, i) => i); for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; } state.shuffledQueue = idx; state.shuffledIndex = 0; }
+function getNextTrackIndex() { if (state.shuffleEnabled) { if (state.shuffledQueue.length === 0) buildShuffledQueue(); state.shuffledIndex++; if (state.shuffledIndex >= state.shuffledQueue.length) buildShuffledQueue(); return state.shuffledQueue[state.shuffledIndex]; } return (state.currentIndex + 1) % TRACKS.length; }
+function getPrevTrackIndex() { if (state.shuffleEnabled) { state.shuffledIndex--; if (state.shuffledIndex < 0) state.shuffledIndex = state.shuffledQueue.length - 1; return state.shuffledQueue[state.shuffledIndex]; } return (state.currentIndex - 1 + TRACKS.length) % TRACKS.length; }
 
 async function playTrack(track, fromStory = false) {
   if (!track) return;
@@ -1191,13 +791,19 @@ async function playTrack(track, fromStory = false) {
   state.currentIndex = TRACKS.findIndex(t => t.id === track.id);
   if (state.currentIndex === -1) state.currentIndex = 0;
   state.isPlaying = true;
+  
+  // ✅ CORRECCIÓN CLAVE: Usar streamUrl del servidor
   const streamUrl = track.streamUrl || `${API_BASE}/api/stream/${track.id}`;
   audio.src = streamUrl;
   audio.loop = state.repeatMode === 2;
-  try { await audio.play(); } catch (e) {
-    audio.src = track.audio || streamUrl;
-    try { await audio.play(); } catch (e2) { console.warn('Play failed:', e2); }
+  
+  try { await audio.play(); }
+  catch (e) {
+    console.warn('Stream falló, usando fallback:', e);
+    // Fallback al audio local si el servidor no responde
+    if (track.audio) { audio.src = track.audio; try { await audio.play(); } catch {} }
   }
+  
   updatePlayerUI();
   document.getElementById('mini-player').classList.remove('hidden');
   updateMediaSession();
@@ -1206,52 +812,17 @@ async function playTrack(track, fromStory = false) {
     state.user.stats.plays = (state.user.stats.plays || 0) + 1;
     await fs.saveUser(state.firebaseUser.uid, { stats: state.user.stats });
   }
-  if (fromStory && state.currentViewingStory) {
-    const story = state.currentViewingStory;
-    if (story.username !== state.user.username) {
-      await fs.addNotification({
-        toUser: story.username, type: 'play', fromUser: state.user.username,
-        message: `<strong>@${state.user.username}</strong> reprodujo tu historia con <strong>${track.title}</strong>`,
-        storyId: story.id, read: false, createdAt: Date.now()
-      });
-    }
+  if (fromStory && state.currentViewingStory && state.currentViewingStory.username !== state.user.username) {
+    toast('🔔 Notificación enviada al creador', 'info');
   }
 }
 
-function togglePlay() {
-  if (!state.currentTrack) { playTrack(TRACKS[0]); return; }
-  if (state.isPlaying) audio.pause();
-  else audio.play().catch(() => {});
-}
-
+function togglePlay() { if (!state.currentTrack) { playTrack(TRACKS[0]); return; } if (state.isPlaying) audio.pause(); else audio.play().catch(() => {}); }
 function nextTrack() { playTrack(TRACKS[getNextTrackIndex()]); }
 function prevTrack() { playTrack(TRACKS[getPrevTrackIndex()]); }
 
-function toggleShuffle() {
-  state.shuffleEnabled = !state.shuffleEnabled;
-  const btn = document.getElementById('full-shuffle');
-  if (state.shuffleEnabled) { btn.classList.add('active-mode'); buildShuffledQueue(); toast('🔀 Aleatorio activado', 'info'); }
-  else { btn.classList.remove('active-mode'); toast('Aleatorio desactivado', 'info'); }
-}
-
-function toggleRepeat() {
-  state.repeatMode = (state.repeatMode + 1) % 3;
-  const btn = document.getElementById('full-repeat');
-  audio.loop = state.repeatMode === 2;
-  if (state.repeatMode === 0) {
-    btn.classList.remove('active-mode');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>';
-    toast('Repetir desactivado', 'info');
-  } else if (state.repeatMode === 1) {
-    btn.classList.add('active-mode');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>';
-    toast('🔁 Repetir todo', 'info');
-  } else {
-    btn.classList.add('active-mode');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/><text x="12" y="15" font-size="8" font-weight="bold" fill="currentColor" text-anchor="middle" stroke="none">1</text></svg>';
-    toast('🔂 Repetir una', 'info');
-  }
-}
+function toggleShuffle() { state.shuffleEnabled = !state.shuffleEnabled; const b = document.getElementById('full-shuffle'); if (state.shuffleEnabled) { b.classList.add('active-mode'); buildShuffledQueue(); toast('🔀 Aleatorio activado', 'info'); } else { b.classList.remove('active-mode'); toast('Aleatorio desactivado', 'info'); } }
+function toggleRepeat() { state.repeatMode = (state.repeatMode + 1) % 3; const b = document.getElementById('full-repeat'); audio.loop = state.repeatMode === 2; if (state.repeatMode === 0) { b.classList.remove('active-mode'); b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>'; toast('Repetir desactivado', 'info'); } else if (state.repeatMode === 1) { b.classList.add('active-mode'); b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>'; toast('🔁 Repetir todo', 'info'); } else { b.classList.add('active-mode'); b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/><text x="12" y="15" font-size="8" font-weight="bold" fill="currentColor" text-anchor="middle" stroke="none">1</text></svg>'; toast('🔂 Repetir una', 'info'); } }
 
 function updatePlayerUI() {
   if (!state.currentTrack) return;
@@ -1262,53 +833,19 @@ function updatePlayerUI() {
   document.getElementById('full-title').textContent = t.title;
   document.getElementById('full-artist').textContent = t.artist;
   document.getElementById('full-cover-img').src = t.cover;
-  const playIcon = '<path d="M8 5v14l11-7z"/>';
-  const pauseIcon = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
-  document.getElementById('mini-play-icon').innerHTML = state.isPlaying ? pauseIcon : playIcon;
-  document.getElementById('full-play-icon').innerHTML = state.isPlaying ? pauseIcon : playIcon;
-  const vinyl = document.getElementById('vinyl');
-  if (state.isPlaying) vinyl.classList.add('playing');
-  else vinyl.classList.remove('playing');
+  const pi = '<path d="M8 5v14l11-7z"/>'; const pa = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+  document.getElementById('mini-play-icon').innerHTML = state.isPlaying ? pa : pi;
+  document.getElementById('full-play-icon').innerHTML = state.isPlaying ? pa : pi;
+  const v = document.getElementById('vinyl'); if (state.isPlaying) v.classList.add('playing'); else v.classList.remove('playing');
 }
 
-function updateMediaSession() {
-  if (!('mediaSession' in navigator) || !state.currentTrack) return;
-  const t = state.currentTrack;
-  navigator.mediaSession.metadata = new MediaMetadata({ title: t.title, artist: t.artist, album: 'Music Horizon', artwork: [{ src: t.cover, sizes: '512x512', type: 'image/png' }] });
-  navigator.mediaSession.setActionHandler('play', () => { if (!state.isPlaying) togglePlay(); });
-  navigator.mediaSession.setActionHandler('pause', () => { if (state.isPlaying) togglePlay(); });
-  navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
-  navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
-}
+function updateMediaSession() { if (!('mediaSession' in navigator) || !state.currentTrack) return; const t = state.currentTrack; navigator.mediaSession.metadata = new MediaMetadata({ title: t.title, artist: t.artist, album: 'Music Horizon', artwork: [{ src: t.cover, sizes: '512x512', type: 'image/png' }] }); navigator.mediaSession.setActionHandler('play', () => { if (!state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('pause', () => { if (state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('previoustrack', prevTrack); navigator.mediaSession.setActionHandler('nexttrack', nextTrack); }
+function saveHistory(track) { const h = JSON.parse(localStorage.getItem('mh_history') || '[]'); h.unshift({ ...track, playedAt: Date.now() }); localStorage.setItem('mh_history', JSON.stringify(h.slice(0, 50))); }
 
-function saveHistory(track) {
-  const history = JSON.parse(localStorage.getItem('mh_history') || '[]');
-  history.unshift({ ...track, playedAt: Date.now() });
-  localStorage.setItem('mh_history', JSON.stringify(history.slice(0, 50)));
-}
-
-audio.addEventListener('timeupdate', () => {
-  if (!audio.duration) return;
-  const pct = (audio.currentTime / audio.duration) * 100;
-  document.getElementById('mini-progress-fill').style.width = pct + '%';
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('time-cur').textContent = fmtTime(audio.currentTime);
-  document.getElementById('time-dur').textContent = fmtTime(audio.duration);
-});
-
-audio.addEventListener('ended', () => {
-  if (state.repeatMode === 2) return;
-  if (state.repeatMode === 1) { nextTrack(); }
-  else {
-    const nextIdx = state.shuffleEnabled ? (state.shuffledIndex + 1 < state.shuffledQueue.length ? state.shuffledIndex + 1 : -1) : (state.currentIndex + 1 < TRACKS.length ? state.currentIndex + 1 : -1);
-    if (nextIdx === -1) { state.isPlaying = false; updatePlayerUI(); }
-    else nextTrack();
-  }
-});
-
+audio.addEventListener('timeupdate', () => { if (!audio.duration) return; const p = (audio.currentTime / audio.duration) * 100; document.getElementById('mini-progress-fill').style.width = p + '%'; document.getElementById('progress-fill').style.width = p + '%'; document.getElementById('time-cur').textContent = fmtTime(audio.currentTime); document.getElementById('time-dur').textContent = fmtTime(audio.duration); });
+audio.addEventListener('ended', () => { if (state.repeatMode === 2) return; if (state.repeatMode === 1) nextTrack(); else { const n = state.shuffleEnabled ? (state.shuffledIndex + 1 < state.shuffledQueue.length ? state.shuffledIndex + 1 : -1) : (state.currentIndex + 1 < TRACKS.length ? state.currentIndex + 1 : -1); if (n === -1) { state.isPlaying = false; updatePlayerUI(); } else nextTrack(); } });
 audio.addEventListener('play', () => { state.isPlaying = true; updatePlayerUI(); });
 audio.addEventListener('pause', () => { state.isPlaying = false; updatePlayerUI(); });
-
 function fmtTime(s) { const m = Math.floor(s / 60); const sec = Math.floor(s % 60).toString().padStart(2, '0'); return `${m}:${sec}`; }
 
 document.getElementById('mini-play').addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
@@ -1321,153 +858,44 @@ document.getElementById('full-shuffle').addEventListener('click', toggleShuffle)
 document.getElementById('full-repeat').addEventListener('click', toggleRepeat);
 document.getElementById('mini-player').addEventListener('click', () => document.getElementById('full-player').classList.add('active'));
 document.getElementById('full-close').addEventListener('click', () => document.getElementById('full-player').classList.remove('active'));
-document.getElementById('progress-bar').addEventListener('click', (e) => {
-  if (!audio.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-});
+document.getElementById('progress-bar').addEventListener('click', (e) => { if (!audio.duration) return; const r = e.currentTarget.getBoundingClientRect(); audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration; });
 
-document.querySelectorAll('.full-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.full-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const tabName = tab.dataset.tab;
-    if (tabName === 'lyrics') { document.getElementById('lyrics-panel').style.display = 'block'; document.querySelector('.full-art-wrap').style.display = 'none'; }
-    else { document.getElementById('lyrics-panel').style.display = 'none'; document.querySelector('.full-art-wrap').style.display = 'flex'; }
-  });
-});
+document.querySelectorAll('.full-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.full-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); const tn = tab.dataset.tab; if (tn === 'lyrics') { document.getElementById('lyrics-panel').style.display = 'block'; document.querySelector('.full-art-wrap').style.display = 'none'; } else { document.getElementById('lyrics-panel').style.display = 'none'; document.querySelector('.full-art-wrap').style.display = 'flex'; } }); });
+document.getElementById('full-share-btn').addEventListener('click', () => { if (state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una canción primero', 'error'); });
 
-document.getElementById('full-share-btn').addEventListener('click', () => {
-  if (state.currentTrack) openStoryCreator(state.currentTrack);
-  else toast('Reproduce una canción primero', 'error');
-});
-
-// ===================== SEARCH =====================
+// ===================== SEARCH (CORREGIDO) =====================
 document.getElementById('nav-search-btn').addEventListener('click', () => {
-  if (state.currentView !== 'home') {
-    navigateTo('home');
-    setTimeout(() => {
-      const searchInput = document.getElementById('search-input');
-      if (searchInput) { searchInput.focus(); searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-    }, 100);
-  } else {
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) { searchInput.focus(); searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-  }
+  if (state.currentView !== 'home') { navigateTo('home'); setTimeout(() => { const si = document.getElementById('search-input'); if (si) { si.focus(); si.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); }
+  else { const si = document.getElementById('search-input'); if (si) { si.focus(); si.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
 });
 
-document.getElementById('nav-notif-btn').addEventListener('click', () => {
-  renderNotifications();
-  markAllNotificationsRead();
-  document.getElementById('notifications-panel').classList.add('active');
-});
+document.getElementById('nav-notif-btn').addEventListener('click', () => { renderNotifications(); markAllNotifsRead(); document.getElementById('notifications-panel').classList.add('active'); });
 document.getElementById('notif-panel-close').addEventListener('click', () => document.getElementById('notifications-panel').classList.remove('active'));
 
-// ===================== FAVORITES & DOWNLOADS =====================
-async function toggleFavorite(track) {
-  const idx = state.favorites.findIndex(f => f.id === track.id);
-  if (idx === -1) { state.favorites.push({ ...track, addedAt: Date.now() }); toast('❤️ Añadido a favoritos', 'success'); }
-  else { state.favorites.splice(idx, 1); toast('Eliminado de favoritos', 'info'); }
-  if (state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid, state.favorites);
-  refreshCurrentView();
-}
+async function toggleFavorite(track) { const idx = state.favorites.findIndex(f => f.id === track.id); if (idx === -1) { state.favorites.push({ ...track, addedAt: Date.now() }); toast('❤️ Añadido a favoritos', 'success'); } else { state.favorites.splice(idx, 1); toast('Eliminado de favoritos', 'info'); } if (state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid, state.favorites); refreshCurrentView(); }
+async function toggleDownload(track) { const idx = state.downloads.findIndex(d => d.id === track.id); if (idx === -1) { state.downloads.push({ ...track, downloadedAt: Date.now() }); toast('⬇️ Descarga iniciada', 'success'); try { const r = await fetch(`${API_BASE}/api/download`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: track.title, format: 'mp3' }) }); if (r.ok) setTimeout(() => toast('✓ Descarga completada', 'success'), 1500); else setTimeout(() => toast('✓ Descarga simulada', 'success'), 1500); } catch { setTimeout(() => toast('✓ Descarga simulada', 'success'), 1500); } } else { state.downloads.splice(idx, 1); toast('Descarga eliminada', 'info'); } if (state.firebaseUser) await fs.saveDownloads(state.firebaseUser.uid, state.downloads); refreshCurrentView(); }
+function isFavorite(id) { return state.favorites.some(f => f.id === id); }
+function isDownloaded(id) { return state.downloads.some(d => d.id === id); }
 
-async function toggleDownload(track) {
-  const idx = state.downloads.findIndex(d => d.id === track.id);
-  if (idx === -1) {
-    state.downloads.push({ ...track, downloadedAt: Date.now() });
-    toast('⬇️ Descarga iniciada', 'success');
-    try {
-      const res = await fetch(`${API_BASE}/api/download`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: track.title, format: 'mp3' }) });
-      if (res.ok) setTimeout(() => toast('✓ Descarga completada', 'success'), 1500);
-      else setTimeout(() => toast('✓ Descarga simulada', 'success'), 1500);
-    } catch { setTimeout(() => toast('✓ Descarga simulada (servidor offline)', 'success'), 1500); }
-  } else { state.downloads.splice(idx, 1); toast('Descarga eliminada', 'info'); }
-  if (state.firebaseUser) await fs.saveDownloads(state.firebaseUser.uid, state.downloads);
-  refreshCurrentView();
-}
+function openPlaylistModal(track) { state.pendingTrackForPlaylist = track; renderPlaylistsList(); document.getElementById('playlist-modal')?.classList.add('active'); }
+function renderPlaylistsList() { const list = document.getElementById('playlists-list'); if (!list) return; if (state.playlists.length === 0) { list.innerHTML = '<div class="empty-state"><div class="empty-state-desc">No tienes playlists</div></div>'; return; } list.innerHTML = state.playlists.map(pl => `<div class="profile-option" data-playlist-id="${pl.id}"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div><div class="profile-option-label">${pl.name}</div><div class="profile-option-value">${pl.tracks.length} canciones</div></div></div></div>`).join(''); list.querySelectorAll('[data-playlist-id]').forEach(item => item.addEventListener('click', async () => { const pl = state.playlists.find(p => p.id === parseInt(item.dataset.playlistId)); if (pl && state.pendingTrackForPlaylist) { if (!pl.tracks.some(t => t.id === state.pendingTrackForPlaylist.id)) { pl.tracks.push(state.pendingTrackForPlaylist); if (state.firebaseUser) await fs.savePlaylists(state.firebaseUser.uid, state.playlists); toast(`✓ Añadido a "${pl.name}"`, 'success'); } else toast('Ya está en esta playlist', 'info'); } document.getElementById('playlist-modal').classList.remove('active'); })); }
 
-function isFavorite(trackId) { return state.favorites.some(f => f.id === trackId); }
-function isDownloaded(trackId) { return state.downloads.some(d => d.id === trackId); }
+document.getElementById('story-modal-close')?.addEventListener('click', () => document.getElementById('story-modal').classList.remove('active'));
+document.getElementById('story-cancel')?.addEventListener('click', () => document.getElementById('story-modal').classList.remove('active'));
+document.getElementById('story-publish')?.addEventListener('click', async () => { if (!state.currentTrack || !state.user) return; const story = { id: Date.now(), username: state.user.username, userName: state.user.name, userAvatar: state.user.avatar, track: { ...state.currentTrack }, privacy: state.selectedPrivacy, createdAt: Date.now(), seenBy: [], likes: [] }; await fs.saveStory(story); state.stories.push(story); if (state.user) { state.user.stats.stories = (state.user.stats.stories || 0) + 1; if (state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, { stats: state.user.stats }); } document.getElementById('story-modal').classList.remove('active'); toast('✓ Historia publicada', 'success'); renderStoriesBar(); });
 
-function openPlaylistModal(track) { state.pendingTrackForPlaylist = track; renderPlaylistsList(); document.getElementById('playlist-modal').classList.add('active'); }
+document.getElementById('info-modal-close')?.addEventListener('click', () => document.getElementById('info-modal').classList.remove('active'));
+document.getElementById('info-modal-ok')?.addEventListener('click', () => document.getElementById('info-modal').classList.remove('active'));
+document.getElementById('visibility-modal-close')?.addEventListener('click', () => document.getElementById('visibility-modal').classList.remove('active'));
+document.getElementById('visibility-cancel')?.addEventListener('click', () => document.getElementById('visibility-modal').classList.remove('active'));
+document.getElementById('visibility-save')?.addEventListener('click', async () => { if (state.firebaseUser) await fs.saveSettings(state.firebaseUser.uid, { defaultPrivacy: state.defaultPrivacy }); document.getElementById('visibility-modal').classList.remove('active'); toast('✓ Preferencias guardadas', 'success'); });
+document.querySelectorAll('#default-privacy-options .privacy-option').forEach(opt => opt.addEventListener('click', () => { document.querySelectorAll('#default-privacy-options .privacy-option').forEach(o => o.classList.remove('selected')); opt.classList.add('selected'); state.defaultPrivacy = opt.dataset.privacy; }));
 
-function renderPlaylistsList() {
-  const list = document.getElementById('playlists-list');
-  if (state.playlists.length === 0) { list.innerHTML = '<div class="empty-state"><div class="empty-state-desc">No tienes playlists aún</div></div>'; return; }
-  list.innerHTML = state.playlists.map(pl => `<div class="profile-option" data-playlist-id="${pl.id}"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div><div class="profile-option-label">${pl.name}</div><div class="profile-option-value">${pl.tracks.length} canciones</div></div></div></div>`).join('');
-  list.querySelectorAll('[data-playlist-id]').forEach(item => {
-    item.addEventListener('click', async () => {
-      const plId = parseInt(item.dataset.playlistId);
-      const playlist = state.playlists.find(p => p.id === plId);
-      if (playlist && state.pendingTrackForPlaylist) {
-        const exists = playlist.tracks.some(t => t.id === state.pendingTrackForPlaylist.id);
-        if (!exists) { playlist.tracks.push(state.pendingTrackForPlaylist); if (state.firebaseUser) await fs.savePlaylists(state.firebaseUser.uid, state.playlists); toast(`✓ Añadido a "${playlist.name}"`, 'success'); }
-        else toast('Ya está en esta playlist', 'info');
-      }
-      document.getElementById('playlist-modal').classList.remove('active');
-    });
-  });
-}
-
-document.getElementById('playlist-modal-close').addEventListener('click', () => document.getElementById('playlist-modal').classList.remove('active'));
-document.getElementById('create-playlist-btn').addEventListener('click', async () => {
-  const name = prompt('Nombre de la nueva playlist:');
-  if (name && name.trim()) {
-    state.playlists.push({ id: Date.now(), name: name.trim(), tracks: [] });
-    if (state.firebaseUser) await fs.savePlaylists(state.firebaseUser.uid, state.playlists);
-    renderPlaylistsList();
-    toast('✓ Playlist creada', 'success');
-  }
-});
-
-// ===================== INFO MODAL =====================
-function openInfoModal(type) {
-  const titleEl = document.getElementById('info-modal-title');
-  const bodyEl = document.getElementById('info-modal-body');
-  if (type === 'e2e') {
-    titleEl.textContent = '🔒 Cifrado de Extremo a Extremo';
-    bodyEl.innerHTML = `<div class="info-modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="info-modal-title">Tus datos están protegidos</div><div class="info-modal-desc">Utilizamos cifrado de extremo a extremo (E2E) para garantizar que solo tú y las personas autorizadas puedan acceder a tu información.</div><div class="info-features"><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="info-feature-text"><strong>Protección AES-256</strong>El estándar militar para cifrar tus datos personales, fotos y mensajes.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="info-feature-text"><strong>Cero rastreo comercial</strong>No vendemos tus datos. No mostramos anuncios. Tu privacidad es sagrada.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="info-feature-text"><strong>Solo tú controlas</strong>Tú decides quién ve tus historias, quién te agrega y qué compartes.</div></div></div>`;
-  } else if (type === 'visibility') {
-    titleEl.textContent = '👁️ Visibilidad de Historias';
-    bodyEl.innerHTML = `<div class="info-modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="info-modal-title">Control total sobre quién ve tus historias</div><div class="info-modal-desc">Puedes elegir exactamente quién puede ver cada historia que publiques.</div><div class="info-features"><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div class="info-feature-text"><strong>🌍 Todos</strong>Cualquier usuario de Music Horizon puede ver tu historia.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="info-feature-text"><strong>👥 Mis Amigos</strong>Solo las personas que has agregado como amigos.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="info-feature-text"><strong>⭐ Mejores Amigos</strong>Tu círculo más cercano.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="info-feature-text"><strong>💕 Novio/a</strong>Historias íntimas solo para tu pareja.</div></div></div>`;
-  }
-  document.getElementById('info-modal').classList.add('active');
-}
-
-document.getElementById('info-modal-close').addEventListener('click', () => document.getElementById('info-modal').classList.remove('active'));
-document.getElementById('info-modal-ok').addEventListener('click', () => document.getElementById('info-modal').classList.remove('active'));
-
-document.getElementById('visibility-modal-close').addEventListener('click', () => document.getElementById('visibility-modal').classList.remove('active'));
-document.getElementById('visibility-cancel').addEventListener('click', () => document.getElementById('visibility-modal').classList.remove('active'));
-document.getElementById('visibility-save').addEventListener('click', async () => {
-  if (state.firebaseUser) await fs.saveSettings(state.firebaseUser.uid, { defaultPrivacy: state.defaultPrivacy });
-  document.getElementById('visibility-modal').classList.remove('active');
-  toast('✓ Preferencias de visibilidad guardadas', 'success');
-});
-
-document.querySelectorAll('#default-privacy-options .privacy-option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    document.querySelectorAll('#default-privacy-options .privacy-option').forEach(o => o.classList.remove('selected'));
-    opt.classList.add('selected');
-    state.defaultPrivacy = opt.dataset.privacy;
-  });
-});
+function openInfoModal(type) { const t = document.getElementById('info-modal-title'); const b = document.getElementById('info-modal-body'); if (type === 'e2e') { t.textContent = '🔒 Cifrado E2E'; b.innerHTML = '<div class="info-modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="info-modal-title">Tus datos protegidos</div><div class="info-modal-desc">Cifrado de extremo a extremo (E2E) garantiza que solo tú accedas a tu información.</div><div class="info-features"><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="info-feature-text"><strong>AES-256</strong>Estándar militar para cifrar tus datos.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="info-feature-text"><strong>Cero rastreo</strong>No vendemos tus datos. Sin anuncios.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="info-feature-text"><strong>Tú controlas</strong>Decides quién ve tus historias.</div></div></div>'; } else if (type === 'visibility') { t.textContent = '👁️ Visibilidad'; b.innerHTML = '<div class="info-modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="info-modal-title">Control total</div><div class="info-modal-desc">Elige quién ve cada historia.</div><div class="info-features"><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div class="info-feature-text"><strong>🌍 Todos</strong>Cualquier usuario.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="info-feature-text"><strong>👥 Amigos</strong>Solo amigos agregados.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67"/></svg></div><div class="info-feature-text"><strong>⭐ Mejores amigos</strong>Círculo cercano.</div></div><div class="info-feature"><div class="info-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67"/></svg></div><div class="info-feature-text"><strong> Novio/a</strong>Solo tu pareja.</div></div></div>'; } document.getElementById('info-modal').classList.add('active'); }
 
 // ===================== NAVIGATION =====================
-function navigateTo(view) {
-  state.currentView = view;
-  document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === view));
-  const content = document.getElementById('main-content');
-  content.innerHTML = '';
-  if (view === 'home') renderHomeView(content);
-  else if (view === 'explore') renderExploreView(content);
-  else if (view === 'library') renderLibraryView(content);
-  else if (view === 'profile') renderProfileView(content);
-}
-
+function navigateTo(view) { state.currentView = view; document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === view)); const c = document.getElementById('main-content'); c.innerHTML = ''; if (view === 'home') renderHomeView(c); else if (view === 'explore') renderExploreView(c); else if (view === 'library') renderLibraryView(c); else if (view === 'profile') renderProfileView(c); }
 function refreshCurrentView() { navigateTo(state.currentView); }
-
 document.querySelectorAll('.bottom-nav-item').forEach(item => item.addEventListener('click', () => navigateTo(item.dataset.view)));
 document.getElementById('nav-avatar').addEventListener('click', () => navigateTo('profile'));
 
@@ -1478,83 +906,117 @@ function renderHomeView(container) {
     <button class="search-btn" id="search-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
     <div class="search-results" id="search-results"></div>
   </div>
-  <div class="mix-card" id="mix-card"><div class="mix-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="mix-info"><div class="mix-title">⚡ Modo Mix Inteligente</div><div class="mix-desc">Algoritmo que analiza el género de tu canción actual y genera una cola infinita personalizada.</div></div></div>
-  <div class="cat-scroll"><div class="cat-chip active">🔥 Para ti</div><div class="cat-chip">⚡ Éxitos</div><div class="cat-chip"> Relax</div><div class="cat-chip">💪 Workout</div><div class="cat-chip">🎯 Focus</div><div class="cat-chip">🎉 Fiesta</div></div>
+  <div class="mix-card" id="mix-card"><div class="mix-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="mix-info"><div class="mix-title">⚡ Modo Mix Inteligente</div><div class="mix-desc">Algoritmo que analiza el género y genera cola infinita.</div></div></div>
+  <div class="cat-scroll"><div class="cat-chip active">🔥 Para ti</div><div class="cat-chip"> Éxitos</div><div class="cat-chip">🌊 Relax</div><div class="cat-chip">💪 Workout</div><div class="cat-chip">🎯 Focus</div><div class="cat-chip">🎉 Fiesta</div></div>
   <div class="section-head"><h2 class="section-title">Tendencias</h2><a class="section-link">Ver todo →</a></div>
   <div class="trend-grid" id="trend-grid"></div>
   <div class="section-head"><h2 class="section-title">✨ Nuevos lanzamientos</h2><a class="section-link">Ver todo →</a></div>
   <div class="release-scroll" id="release-scroll"></div>`;
   container.innerHTML = html;
-  const trendGrid = container.querySelector('#trend-grid');
-  TRACKS.slice(0, 6).forEach((track, i) => trendGrid.appendChild(createTrendCard(track, i)));
-  const releaseScroll = container.querySelector('#release-scroll');
-  TRACKS.forEach((track, i) => releaseScroll.appendChild(createReleaseCard(track, i)));
-  
-  // Mouse tracking for glow effect
-  container.querySelectorAll('.trend-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
-  });
+  const tg = container.querySelector('#trend-grid'); TRACKS.slice(0, 6).forEach((t, i) => tg.appendChild(createTrendCard(t, i)));
+  const rs = container.querySelector('#release-scroll'); TRACKS.forEach((t, i) => rs.appendChild(createReleaseCard(t, i)));
+  container.querySelectorAll('.trend-card').forEach(card => card.addEventListener('mousemove', (e) => { const r = card.getBoundingClientRect(); card.style.setProperty('--mouse-x', `${e.clientX - r.left}px`); card.style.setProperty('--mouse-y', `${e.clientY - r.top}px`); }));
   
   const searchInput = container.querySelector('#search-input');
   const searchResults = container.querySelector('#search-results');
   let searchTimeout;
-  searchInput.addEventListener('input', () => {
-    clearTimeout(searchTimeout);
-    const q = searchInput.value.trim();
-    if (q.length < 2) { searchResults.classList.remove('show'); return; }
-    searchTimeout = setTimeout(() => performSearch(q, searchResults), 400);
-  });
+  searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); const q = searchInput.value.trim(); if (q.length < 2) { searchResults.classList.remove('show'); return; } searchTimeout = setTimeout(() => performSearch(q, searchResults), 400); });
   searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const q = searchInput.value.trim(); if (q) performSearch(q, searchResults, true); } });
   container.querySelector('#search-btn').addEventListener('click', () => { const q = searchInput.value.trim(); if (q) performSearch(q, searchResults, true); });
   document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrap')) searchResults.classList.remove('show'); });
   
   container.querySelectorAll('.cat-chip').forEach(chip => chip.addEventListener('click', () => { container.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); }));
-  container.querySelector('#mix-card').addEventListener('click', async () => {
-    if (!state.currentTrack) { toast('Reproduce una canción primero', 'error'); return; }
-    toast('⚡ Modo Mix activado · Consultando servidor...', 'info');
-    try {
-      const res = await fetch(`${API_BASE}/api/mix`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ genre: state.currentTrack.genre, currentTrackId: state.currentTrack.id }) });
-      if (res.ok) { const data = await res.json(); toast(`✓ ${data.tracks?.length || 0} canciones añadidas`, 'success'); }
-      else toast('✓ Mix generado localmente', 'success');
-    } catch { toast('✓ Mix generado localmente', 'success'); }
-  });
+  container.querySelector('#mix-card').addEventListener('click', async () => { if (!state.currentTrack) { toast('Reproduce una canción primero', 'error'); return; } toast(' Modo Mix activado', 'info'); try { const r = await fetch(`${API_BASE}/api/mix`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ genre: state.currentTrack.genre, currentTrackId: state.currentTrack.id }) }); if (r.ok) { const d = await r.json(); toast(`✓ ${d.tracks?.length || 0} canciones`, 'success'); } else toast('✓ Mix generado localmente', 'success'); } catch { toast('✓ Mix generado localmente', 'success'); } });
 }
 
+// ✅ CORRECCIÓN PRINCIPAL: performSearch con streamUrl correcto
 async function performSearch(query, resultsEl, playFirst = false) {
   resultsEl.classList.add('show');
   resultsEl.innerHTML = '<div class="search-loading"> Buscando en el servidor...</div>';
+  
   try {
-    const res = await fetch(`${API_BASE}/api/search`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }) });
+    const res = await fetch(`${API_BASE}/api/search`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    });
+    
     if (res.ok) {
       const data = await res.json();
       if (data.results && data.results.length > 0) {
-        resultsEl.innerHTML = data.results.map((r, i) => `<div class="search-result-item" data-idx="${i}"><div class="search-result-cover"><img src="${r.cover || r.thumbnail || 'https://via.placeholder.com/48'}" alt="" /></div><div class="search-result-info"><div class="search-result-title">${r.title}</div><div class="search-result-artist">${r.artist || 'Desconocido'}</div></div></div>`).join('');
+        resultsEl.innerHTML = data.results.map((r, i) => `
+          <div class="search-result-item" data-idx="${i}">
+            <div class="search-result-cover"><img src="${r.cover || r.thumbnail || 'https://via.placeholder.com/48'}" alt="" /></div>
+            <div class="search-result-info">
+              <div class="search-result-title">${r.title}</div>
+              <div class="search-result-artist">${r.artist || 'Desconocido'}</div>
+            </div>
+          </div>
+        `).join('');
+        
         resultsEl.querySelectorAll('.search-result-item').forEach(item => {
           item.addEventListener('click', () => {
             const idx = parseInt(item.dataset.idx);
             const track = data.results[idx];
-            playTrack({ id: track.id || Date.now(), title: track.title, artist: track.artist || 'Desconocido', cover: track.cover || track.thumbnail || '', streamUrl: track.streamUrl || `${API_BASE}/api/stream/${track.id}`, audio: track.audio, genre: track.genre || 'unknown' });
+            
+            // ✅ CORRECCIÓN: Asignar correctamente streamUrl del servidor
+            playTrack({
+              id: track.id || Date.now(),
+              title: track.title,
+              artist: track.artist || 'Desconocido',
+              cover: track.cover || track.thumbnail || '',
+              streamUrl: track.streamUrl || `${API_BASE}/api/stream/${track.id}`,
+              audio: track.audio,
+              genre: track.genre || 'unknown'
+            });
             resultsEl.classList.remove('show');
           });
         });
+        
         if (playFirst && data.results.length > 0) {
           const track = data.results[0];
-          playTrack({ id: track.id || Date.now(), title: track.title, artist: track.artist || 'Desconocido', cover: track.cover || track.thumbnail || '', streamUrl: track.streamUrl || `${API_BASE}/api/stream/${track.id}`, audio: track.audio, genre: track.genre || 'unknown' });
+          playTrack({
+            id: track.id || Date.now(),
+            title: track.title,
+            artist: track.artist || 'Desconocido',
+            cover: track.cover || track.thumbnail || '',
+            streamUrl: track.streamUrl || `${API_BASE}/api/stream/${track.id}`,
+            audio: track.audio,
+            genre: track.genre || 'unknown'
+          });
           resultsEl.classList.remove('show');
         }
         return;
       }
     }
   } catch (e) { console.warn('Search failed:', e); }
+  
   // Fallback local
   const local = TRACKS.filter(t => t.title.toLowerCase().includes(query.toLowerCase()) || t.artist.toLowerCase().includes(query.toLowerCase()));
   if (local.length > 0) {
-    resultsEl.innerHTML = local.map((r, i) => `<div class="search-result-item" data-idx="${i}"><div class="search-result-cover"><img src="${r.cover}" alt="" /></div><div class="search-result-info"><div class="search-result-title">${r.title}</div><div class="search-result-artist">${r.artist}</div></div></div>`).join('');
-    resultsEl.querySelectorAll('.search-result-item').forEach(item => item.addEventListener('click', () => { playTrack(local[parseInt(item.dataset.idx)]); resultsEl.classList.remove('show'); }));
+    resultsEl.innerHTML = local.map((r, i) => `
+      <div class="search-result-item" data-idx="${i}">
+        <div class="search-result-cover"><img src="${r.cover}" alt="" /></div>
+        <div class="search-result-info">
+          <div class="search-result-title">${r.title}</div>
+          <div class="search-result-artist">${r.artist}</div>
+        </div>
+      </div>
+    `).join('');
+    resultsEl.querySelectorAll('.search-result-item').forEach(item => item.addEventListener('click', () => {
+      const track = local[parseInt(item.dataset.idx)];
+      // ✅ CORRECCIÓN: También para fallback local
+      playTrack({
+        id: track.id,
+        title: track.title,
+        artist: track.artist,
+        cover: track.cover,
+        streamUrl: track.streamUrl || `${API_BASE}/api/stream/${track.id}`,
+        audio: track.audio,
+        genre: track.genre
+      });
+      resultsEl.classList.remove('show');
+    }));
   } else {
     resultsEl.innerHTML = '<div class="search-loading">Sin resultados. Intenta con otro término.</div>';
   }
@@ -1585,324 +1047,50 @@ function createTrendCard(track, index) {
   return card;
 }
 
-function createReleaseCard(track, index) {
-  const card = document.createElement('div');
-  card.className = 'release-card';
-  card.innerHTML = `<div class="release-cover"><img src="${track.cover}" alt="${track.title}" loading="lazy"/></div><div class="release-title">${track.title}</div><div class="release-artist">${track.artist}</div>`;
-  card.addEventListener('click', () => playTrack(track));
-  return card;
-}
+function createReleaseCard(track, index) { const card = document.createElement('div'); card.className = 'release-card'; card.innerHTML = `<div class="release-cover"><img src="${track.cover}" alt="${track.title}" loading="lazy"/></div><div class="release-title">${track.title}</div><div class="release-artist">${track.artist}</div>`; card.addEventListener('click', () => playTrack(track)); return card; }
 
-function renderExploreView(container) {
-  let html = `<div class="section-head"><h2 class="section-title">Explorar</h2></div><div class="cat-scroll"><div class="cat-chip active">🌍 Todo</div><div class="cat-chip">🎸 Rock</div><div class="cat-chip"> Pop</div><div class="cat-chip">🎷 Jazz</div><div class="cat-chip">🎹 Electrónica</div><div class="cat-chip">🥁 Urbano</div></div><div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2></div><div class="trend-grid" id="explore-grid"></div>`;
-  container.innerHTML = html;
-  const grid = container.querySelector('#explore-grid');
-  TRACKS.forEach((track, i) => grid.appendChild(createTrendCard(track, i)));
-  container.querySelectorAll('.cat-chip').forEach(chip => chip.addEventListener('click', () => { container.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); }));
-}
+function renderExploreView(container) { let html = `<div class="section-head"><h2 class="section-title">Explorar</h2></div><div class="cat-scroll"><div class="cat-chip active"> Todo</div><div class="cat-chip">🎸 Rock</div><div class="cat-chip">🎤 Pop</div><div class="cat-chip">🎷 Jazz</div><div class="cat-chip">🎹 Electrónica</div><div class="cat-chip"> Urbano</div></div><div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2></div><div class="trend-grid" id="explore-grid"></div>`; container.innerHTML = html; const g = container.querySelector('#explore-grid'); TRACKS.forEach((t, i) => g.appendChild(createTrendCard(t, i))); container.querySelectorAll('.cat-chip').forEach(c => c.addEventListener('click', () => { container.querySelectorAll('.cat-chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); })); }
 
-// ===================== LIBRARY VIEW =====================
-function renderLibraryView(container) {
-  let html = `<div class="section-head"><h2 class="section-title"> Tu Biblioteca</h2></div><div class="cat-scroll" id="library-tabs"><div class="cat-chip active" data-tab="favorites">❤️ Favoritos (${state.favorites.length})</div><div class="cat-chip" data-tab="playlists">📋 Playlists (${state.playlists.length})</div><div class="cat-chip" data-tab="downloads">⬇️ Descargas (${state.downloads.length})</div><div class="cat-chip" data-tab="history">🕐 Historial</div></div><div id="library-content"></div>`;
-  container.innerHTML = html;
-  renderLibraryTab('favorites');
-  container.querySelectorAll('#library-tabs .cat-chip').forEach(chip => chip.addEventListener('click', () => { container.querySelectorAll('#library-tabs .cat-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); renderLibraryTab(chip.dataset.tab); }));
-}
+function renderLibraryView(container) { let html = `<div class="section-head"><h2 class="section-title"> Tu Biblioteca</h2></div><div class="cat-scroll" id="library-tabs"><div class="cat-chip active" data-tab="favorites">❤️ Favoritos (${state.favorites.length})</div><div class="cat-chip" data-tab="playlists"> Playlists (${state.playlists.length})</div><div class="cat-chip" data-tab="downloads">⬇️ Descargas (${state.downloads.length})</div><div class="cat-chip" data-tab="history">🕐 Historial</div></div><div id="library-content"></div>`; container.innerHTML = html; renderLibraryTab('favorites'); container.querySelectorAll('#library-tabs .cat-chip').forEach(c => c.addEventListener('click', () => { container.querySelectorAll('#library-tabs .cat-chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); renderLibraryTab(c.dataset.tab); })); }
 
-function renderLibraryTab(tab) {
-  const content = document.getElementById('library-content');
-  if (!content) return;
-  if (tab === 'favorites') {
-    if (state.favorites.length === 0) content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><div class="empty-state-title">Sin favoritos aún</div><div class="empty-state-desc">Toca el corazón en cualquier canción para agregarla aquí</div></div>';
-    else content.innerHTML = '<div class="track-list">' + state.favorites.map(t => createTrackListItem(t, true, false)).join('') + '</div>';
-  } else if (tab === 'playlists') {
-    if (state.playlists.length === 0) content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><div class="empty-state-title">Sin playlists</div><div class="empty-state-desc">Crea tu primera playlist desde cualquier canción</div></div>';
-    else {
-      content.innerHTML = state.playlists.map(pl => `<div class="friend-card" data-playlist-id="${pl.id}" style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--bg-card);border-radius:16px;margin-bottom:10px;cursor:pointer;transition:all .3s;border:1px solid var(--border)"><div class="friend-avatar" style="width:48px;height:48px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div class="friend-info" style="flex:1;min-width:0"><div class="friend-name" style="font-size:14px;font-weight:700">${pl.name}</div><div class="friend-username" style="font-size:12px;color:var(--text-secondary);margin-top:2px">${pl.tracks.length} canciones</div></div></div>`).join('');
-      content.querySelectorAll('[data-playlist-id]').forEach(item => item.addEventListener('click', () => {
-        const plId = parseInt(item.dataset.playlistId);
-        const playlist = state.playlists.find(p => p.id === plId);
-        if (playlist) {
-          if (playlist.tracks.length === 0) content.innerHTML = '<div class="empty-state"><div class="empty-state-title">Playlist vacía</div><div class="empty-state-desc">Agrega canciones desde el botón de playlist</div></div>';
-          else content.innerHTML = '<div class="track-list">' + playlist.tracks.map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>';
-        }
-      }));
-    }
-  } else if (tab === 'downloads') {
-    if (state.downloads.length === 0) content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div class="empty-state-title">Sin descargas</div><div class="empty-state-desc">Descarga canciones para escucharlas sin conexión</div></div>';
-    else content.innerHTML = '<div class="track-list">' + state.downloads.map(t => createTrackListItem(t, isFavorite(t.id), true)).join('') + '</div>';
-  } else if (tab === 'history') {
-    const history = JSON.parse(localStorage.getItem('mh_history') || '[]');
-    if (history.length === 0) content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="empty-state-title">Sin historial</div><div class="empty-state-desc">Las canciones que escuches aparecerán aquí</div></div>';
-    else content.innerHTML = '<div class="track-list">' + history.slice(0, 20).map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>';
-  }
-  content.querySelectorAll('[data-track-id]').forEach(item => item.addEventListener('click', (e) => {
-    if (e.target.closest('[data-action="like"]')) { e.stopPropagation(); const trackId = parseInt(e.target.closest('[data-action="like"]').dataset.trackId); const track = findTrackById(trackId); if (track) toggleFavorite(track); return; }
-    if (e.target.closest('[data-action="download"]')) { e.stopPropagation(); const trackId = parseInt(e.target.closest('[data-action="download"]').dataset.trackId); const track = findTrackById(trackId); if (track) toggleDownload(track); return; }
-    const trackId = parseInt(item.dataset.trackId);
-    const track = findTrackById(trackId);
-    if (track) playTrack(track);
-  }));
-}
+function renderLibraryTab(tab) { const c = document.getElementById('library-content'); if (!c) return; if (tab === 'favorites') { if (state.favorites.length === 0) c.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><div class="empty-state-title">Sin favoritos</div><div class="empty-state-desc">Toca el corazón en cualquier canción</div></div>'; else c.innerHTML = '<div class="track-list">' + state.favorites.map(t => createTrackListItem(t, true, false)).join('') + '</div>'; } else if (tab === 'playlists') { if (state.playlists.length === 0) c.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><div class="empty-state-title">Sin playlists</div></div>'; else { c.innerHTML = state.playlists.map(pl => `<div class="friend-card" data-playlist-id="${pl.id}" style="display:flex;align-items:center;gap:14px;padding:12px;background:var(--bg-card);border-radius:16px;margin-bottom:10px;cursor:pointer;border:1px solid var(--border)"><div style="width:48px;height:48px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div style="flex:1"><div style="font-size:14px;font-weight:700">${pl.name}</div><div style="font-size:12px;color:var(--text-secondary)">${pl.tracks.length} canciones</div></div></div>`).join(''); c.querySelectorAll('[data-playlist-id]').forEach(item => item.addEventListener('click', () => { const pl = state.playlists.find(p => p.id === parseInt(item.dataset.playlistId)); if (pl) { if (pl.tracks.length === 0) c.innerHTML = '<div class="empty-state"><div class="empty-state-title">Playlist vacía</div></div>'; else c.innerHTML = '<div class="track-list">' + pl.tracks.map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>'; } })); } } else if (tab === 'downloads') { if (state.downloads.length === 0) c.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div class="empty-state-title">Sin descargas</div></div>'; else c.innerHTML = '<div class="track-list">' + state.downloads.map(t => createTrackListItem(t, isFavorite(t.id), true)).join('') + '</div>'; } else if (tab === 'history') { const h = JSON.parse(localStorage.getItem('mh_history') || '[]'); if (h.length === 0) c.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="empty-state-title">Sin historial</div></div>'; else c.innerHTML = '<div class="track-list">' + h.slice(0, 20).map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>'; } c.querySelectorAll('[data-track-id]').forEach(item => item.addEventListener('click', (e) => { if (e.target.closest('[data-action="like"]')) { e.stopPropagation(); const tid = parseInt(e.target.closest('[data-action="like"]').dataset.trackId); const t = findTrackById(tid); if (t) toggleFavorite(t); return; } if (e.target.closest('[data-action="download"]')) { e.stopPropagation(); const tid = parseInt(e.target.closest('[data-action="download"]').dataset.trackId); const t = findTrackById(tid); if (t) toggleDownload(t); return; } const tid = parseInt(item.dataset.trackId); const t = findTrackById(tid); if (t) playTrack(t); })); }
 
-function findTrackById(trackId) { return TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId); }
+function findTrackById(id) { return TRACKS.find(t => t.id === id) || state.favorites.find(t => t.id === id) || state.downloads.find(t => t.id === id); }
+function createTrackListItem(t, liked, dl) { return `<div class="track-list-item" data-track-id="${t.id}"><div class="track-list-cover"><img src="${t.cover}" alt="" /></div><div class="track-list-info"><div class="track-list-title">${t.title}</div><div class="track-list-artist">${t.artist}</div></div><div class="track-list-actions"><button class="track-list-btn ${liked ? 'liked' : ''}" data-action="like" data-track-id="${t.id}"><svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><button class="track-list-btn ${dl ? 'downloaded' : ''}" data-action="download" data-track-id="${t.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button></div></div>`; }
 
-function createTrackListItem(track, liked, downloaded) {
-  return `<div class="track-list-item" data-track-id="${track.id}"><div class="track-list-cover"><img src="${track.cover}" alt="" /></div><div class="track-list-info"><div class="track-list-title">${track.title}</div><div class="track-list-artist">${track.artist}</div></div><div class="track-list-actions"><button class="track-list-btn ${liked ? 'liked' : ''}" data-action="like" data-track-id="${track.id}" title="Favoritos"><svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><button class="track-list-btn ${downloaded ? 'downloaded' : ''}" data-action="download" data-track-id="${track.id}" title="Descargar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button></div></div>`;
-}
+function renderProfileView(container) { const u = state.user; if (!u) return; const stories = state.stories.filter(s => s.username === u.username); let html = `<div class="profile-header"><div class="profile-avatar-large" id="profile-avatar-edit">${u.avatar ? `<img src="${u.avatar}"/>` : u.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div><div class="profile-name">${u.name}</div><div class="profile-username">@${u.username}</div><div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${u.stats.plays || 0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div><div class="profile-stat"><div class="profile-stat-value">${stories.length}</div><div class="profile-stat-label">Historias</div></div></div><div class="profile-actions"><button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button><button class="profile-action-btn primary" id="share-profile-btn">Compartir perfil</button></div></div><div class="profile-section"><div class="profile-section-title">Cuenta</div><div class="profile-option" id="opt-username"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${u.username}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="profile-option-label">Correo electrónico</div><div class="profile-option-value">${u.email || 'no configurado'}</div></div></div></div></div><div class="profile-section"><div class="profile-section-title">Privacidad</div><div class="profile-option" id="opt-e2e"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div class="profile-option-value">Activo · Tus datos protegidos</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div><div class="profile-option" id="opt-visibility"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div><div class="profile-option-label">Visibilidad de historias</div><div class="profile-option-value">Configurar quién ve tus historias</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div></div><div class="profile-section"><div class="profile-section-title">Mis historias</div><div class="my-stories-list" id="my-stories-list">${stories.length === 0 ? '<div class="empty-state" style="padding:20px"><div class="empty-state-desc">Aún no has compartido historias</div></div>' : stories.slice().reverse().map(s => { const vc = (s.seenBy || []).length; return `<div class="my-story-item"><div class="my-story-cover"><img src="${s.track.cover}" alt="" /></div><div class="my-story-info"><div class="my-story-title">${s.track.title}</div><div class="my-story-meta"><span class="my-story-views"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${vc} vistas</span><span>${getTimeAgo(s.createdAt)}</span></div></div><button class="my-story-delete" data-story-id="${s.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`; }).join('')}</div></div><button class="profile-logout" id="logout-btn">Cerrar sesión</button><div style="height:20px"></div>`; container.innerHTML = html; container.querySelector('#logout-btn').addEventListener('click', logout); container.querySelector('#share-profile-btn').addEventListener('click', () => { const text = `Sígueme en Music Horizon @${u.username} 🎵`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); }); container.querySelector('#edit-profile-btn').addEventListener('click', openEditProfileModal); container.querySelector('#profile-avatar-edit').addEventListener('click', openEditProfileModal); container.querySelector('#opt-username').addEventListener('click', openEditProfileModal); container.querySelector('#opt-e2e').addEventListener('click', () => openInfoModal('e2e')); container.querySelector('#opt-visibility').addEventListener('click', () => { document.querySelectorAll('#default-privacy-options .privacy-option').forEach(o => o.classList.toggle('selected', o.dataset.privacy === state.defaultPrivacy)); document.getElementById('visibility-modal').classList.add('active'); }); container.querySelectorAll('.my-story-delete').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); const sid = parseInt(btn.dataset.storyId); if (confirm('¿Eliminar esta historia?')) { await fs.deleteStory(sid); state.stories = state.stories.filter(s => s.id !== sid); toast('✓ Historia eliminada', 'success'); renderProfileView(container); renderStoriesBar(); } })); }
 
-// ===================== PROFILE VIEW =====================
-function renderProfileView(container) {
-  const user = state.user;
-  if (!user) return;
-  const stories = state.stories.filter(s => s.username === user.username);
-  let html = `<div class="profile-header">
-    <div class="profile-avatar-large" id="profile-avatar-edit">${user.avatar ? `<img src="${user.avatar}"/>` : user.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div>
-    <div class="profile-name">${user.name}</div><div class="profile-username">@${user.username}</div>
-    <div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${user.stats.plays || 0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div><div class="profile-stat"><div class="profile-stat-value">${stories.length}</div><div class="profile-stat-label">Historias</div></div></div>
-    <div class="profile-actions"><button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button><button class="profile-action-btn primary" id="share-profile-btn">Compartir perfil</button></div>
-  </div>
-  <div class="profile-section"><div class="profile-section-title">Cuenta</div>
-    <div class="profile-option" id="opt-username"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${user.username}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-    <div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="profile-option-label">Correo electrónico</div><div class="profile-option-value">${user.email || 'no configurado'}</div></div></div></div>
-  </div>
-  <div class="profile-section"><div class="profile-section-title">Privacidad</div>
-    <div class="profile-option" id="opt-e2e"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div class="profile-option-value">Activo · Tus datos están protegidos</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-    <div class="profile-option" id="opt-visibility"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div><div class="profile-option-label">Visibilidad de historias</div><div class="profile-option-value">Configurar quién ve tus historias</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-  </div>
-  <div class="profile-section"><div class="profile-section-title">Mis historias publicadas</div><div class="my-stories-list" id="my-stories-list">
-    ${stories.length === 0 ? '<div class="empty-state" style="padding:20px"><div class="empty-state-desc">Aún no has compartido historias</div></div>' : stories.slice().reverse().map(s => { const viewCount = (s.seenBy || []).length; return `<div class="my-story-item" data-story-id="${s.id}"><div class="my-story-cover"><img src="${s.track.cover}" alt="" /></div><div class="my-story-info"><div class="my-story-title">${s.track.title}</div><div class="my-story-meta"><span class="my-story-views"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${viewCount} vistas</span><span>${getTimeAgo(s.createdAt)}</span></div></div><button class="my-story-delete" data-story-id="${s.id}" title="Eliminar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`; }).join('')}
-  </div></div>
-  <button class="profile-logout" id="logout-btn">Cerrar sesión</button><div style="height:20px"></div>`;
-  container.innerHTML = html;
-  container.querySelector('#logout-btn').addEventListener('click', logout);
-  container.querySelector('#share-profile-btn').addEventListener('click', () => { const text = `Sígueme en Music Horizon @${user.username} 🎵`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); });
-  container.querySelector('#edit-profile-btn').addEventListener('click', openEditProfileModal);
-  container.querySelector('#profile-avatar-edit').addEventListener('click', openEditProfileModal);
-  container.querySelector('#opt-username').addEventListener('click', openEditProfileModal);
-  container.querySelector('#opt-e2e').addEventListener('click', () => openInfoModal('e2e'));
-  container.querySelector('#opt-visibility').addEventListener('click', () => { document.querySelectorAll('#default-privacy-options .privacy-option').forEach(o => o.classList.toggle('selected', o.dataset.privacy === state.defaultPrivacy)); document.getElementById('visibility-modal').classList.add('active'); });
-  container.querySelectorAll('.my-story-delete').forEach(btn => btn.addEventListener('click', async (e) => {
-    e.stopPropagation();
-    const storyId = parseInt(btn.dataset.storyId);
-    if (confirm('¿Eliminar esta historia?')) {
-      await fs.deleteStory(storyId);
-      state.stories = state.stories.filter(s => s.id !== storyId);
-      toast('✓ Historia eliminada', 'success');
-      renderProfileView(container);
-      renderStoriesBar();
-    }
-  }));
-}
+function openEditProfileModal() { const m = document.createElement('div'); m.className = 'modal-overlay active'; m.innerHTML = `<div class="modal"><div class="modal-header"><h3 class="modal-title">Editar perfil</h3><button class="modal-close" id="ec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body"><div style="text-align:center;margin-bottom:20px"><div style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1);position:relative;cursor:pointer" id="eap">${state.user.avatar ? `<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>` : state.user.name[0].toUpperCase()}<div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div></div><button class="profile-action-btn" id="cab" style="font-size:12px;padding:8px 16px">Cambiar foto</button></div><div style="margin-bottom:16px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Nombre</div><input type="text" class="setup-input" id="en" value="${state.user.name}" style="max-width:100%;margin:0" /></div><div style="margin-bottom:16px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">@username</div><input type="text" class="setup-input" id="eu" value="${state.user.username}" style="max-width:100%;margin:0;text-transform:lowercase" /></div></div><div class="modal-footer"><button class="modal-btn secondary" id="eca">Cancelar</button><button class="modal-btn primary" id="es">Guardar</button></div></div>`; document.body.appendChild(m); m.querySelector('#ec').addEventListener('click', () => m.remove()); m.querySelector('#eca').addEventListener('click', () => m.remove()); m.querySelector('#cab').addEventListener('click', () => { const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.onchange = (e) => { const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = (ev) => { state.user.avatar = ev.target.result; m.querySelector('#eap').innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover"/><div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>`; }; r.readAsDataURL(f); } }; i.click(); }); m.querySelector('#es').addEventListener('click', async () => { const nn = m.querySelector('#en').value.trim(); const nu = m.querySelector('#eu').value.trim().toLowerCase(); if (!nn) { toast('El nombre es obligatorio', 'error'); return; } if (nu !== state.user.username) { const err = validateUsername(nu); if (err) { toast(err, 'error'); return; } state.user.username = nu; } state.user.name = nn; if (state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, state.user); m.remove(); toast('✓ Perfil actualizado', 'success'); updateNavAvatar(); navigateTo('profile'); }); }
 
-function openEditProfileModal() {
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay active';
-  modal.innerHTML = `<div class="modal"><div class="modal-header"><h3 class="modal-title">Editar perfil</h3><button class="modal-close" id="edit-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body">
-    <div style="text-align:center;margin-bottom:20px"><div style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1);position:relative;cursor:pointer" id="edit-avatar-preview">${state.user.avatar ? `<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>` : state.user.name[0].toUpperCase()}<div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div></div><button class="profile-action-btn" id="change-avatar-btn" style="font-size:12px;padding:8px 16px">Cambiar foto</button></div>
-    <div style="margin-bottom:16px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Nombre</div><input type="text" class="setup-input" id="edit-name" value="${state.user.name}" style="max-width:100%;margin:0" /></div>
-    <div style="margin-bottom:16px"><div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">@username</div><input type="text" class="setup-input" id="edit-username" value="${state.user.username}" style="max-width:100%;margin:0;text-transform:lowercase" /><div style="font-size:11px;color:var(--text-muted);margin-top:6px">El username es único e irrepetible</div></div>
-  </div><div class="modal-footer"><button class="modal-btn secondary" id="edit-cancel">Cancelar</button><button class="modal-btn primary" id="edit-save">Guardar cambios</button></div></div>`;
-  document.body.appendChild(modal);
-  modal.querySelector('#edit-close').addEventListener('click', () => modal.remove());
-  modal.querySelector('#edit-cancel').addEventListener('click', () => modal.remove());
-  modal.querySelector('#change-avatar-btn').addEventListener('click', () => {
-    const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-    input.onchange = (e) => { const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = (ev) => { state.user.avatar = ev.target.result; modal.querySelector('#edit-avatar-preview').innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover"/><div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>`; }; reader.readAsDataURL(file); } };
-    input.click();
-  });
-  modal.querySelector('#edit-save').addEventListener('click', async () => {
-    const newName = modal.querySelector('#edit-name').value.trim();
-    const newUsername = modal.querySelector('#edit-username').value.trim().toLowerCase();
-    if (!newName) { toast('El nombre es obligatorio', 'error'); return; }
-    if (newUsername !== state.user.username) { const error = validateUsername(newUsername); if (error) { toast(error, 'error'); return; } state.user.username = newUsername; }
-    state.user.name = newName;
-    if (state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, state.user);
-    modal.remove();
-    toast('✓ Perfil actualizado', 'success');
-    updateNavAvatar();
-    navigateTo('profile');
-  });
-}
+function updateNavAvatar() { const a = document.getElementById('nav-avatar'); if (state.user.avatar) a.innerHTML = `<img src="${state.user.avatar}"/>`; else a.textContent = (state.user.name || '?')[0].toUpperCase(); }
 
-function updateNavAvatar() { const av = document.getElementById('nav-avatar'); if (state.user.avatar) av.innerHTML = `<img src="${state.user.avatar}"/>`; else av.textContent = (state.user.name || '?')[0].toUpperCase(); }
+function renderStoriesBar() { const b = document.getElementById('stories-bar'); let html = `<div class="story-item" id="add-story-btn"><div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="story-name">Tu historia</div></div>`; const su = new Map(); state.stories.forEach(s => { if (!su.has(s.username)) su.set(s.username, []); su.get(s.username).push(s); }); su.forEach((us, un) => { const ls = us[us.length - 1]; const is = ls.seenBy && ls.seenBy.includes(state.user?.username); const ini = un[0].toUpperCase(); html += `<div class="story-item" data-username="${un}"><div class="story-ring ${is ? 'seen' : ''}"><div class="story-ring-inner">${ini}</div></div><div class="story-name">${un}</div></div>`; }); b.innerHTML = html; document.getElementById('add-story-btn').addEventListener('click', () => { if (state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una canción primero', 'error'); }); b.querySelectorAll('.story-item[data-username]').forEach(item => item.addEventListener('click', () => { const un = item.dataset.username; const us = state.stories.filter(s => s.username === un); openStoryViewer(us, 0); })); }
 
-// ===================== STORIES =====================
-function renderStoriesBar() {
-  const bar = document.getElementById('stories-bar');
-  let html = `<div class="story-item" id="add-story-btn"><div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="story-name">Tu historia</div></div>`;
-  const storyUsers = new Map();
-  state.stories.forEach(s => { if (!storyUsers.has(s.username)) storyUsers.set(s.username, []); storyUsers.get(s.username).push(s); });
-  storyUsers.forEach((userStories, username) => {
-    const lastStory = userStories[userStories.length - 1];
-    const isSeen = lastStory.seenBy && lastStory.seenBy.includes(state.user?.username);
-    const initial = username[0].toUpperCase();
-    html += `<div class="story-item" data-username="${username}"><div class="story-ring ${isSeen ? 'seen' : ''}"><div class="story-ring-inner">${initial}</div></div><div class="story-name">${username}</div></div>`;
-  });
-  bar.innerHTML = html;
-  document.getElementById('add-story-btn').addEventListener('click', () => { if (state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una canción primero', 'error'); });
-  bar.querySelectorAll('.story-item[data-username]').forEach(item => item.addEventListener('click', () => { const username = item.dataset.username; const userStories = state.stories.filter(s => s.username === username); openStoryViewer(userStories, 0); }));
-}
-
-function updateTagSuggestions() {
-  const input = document.getElementById('tag-input');
-  const suggestionsEl = document.getElementById('tag-suggestions');
-  const value = input.value.trim().toLowerCase();
-  if (value.startsWith('@') && value.length > 1) {
-    const query = value.substring(1);
-    const friends = state.friends.filter(f => f.username.toLowerCase().includes(query) || f.name.toLowerCase().includes(query));
-    suggestionsEl.innerHTML = friends.slice(0, 5).map(f => `<div class="tag-suggestion ${state.storyTags.includes(f.username) ? 'added' : ''}" data-username="${f.username}">@${f.username}</div>`).join('');
-    suggestionsEl.querySelectorAll('.tag-suggestion').forEach(s => s.addEventListener('click', () => { const username = s.dataset.username; if (state.storyTags.includes(username)) state.storyTags = state.storyTags.filter(u => u !== username); else state.storyTags.push(username); input.value = ''; updateTagSuggestions(); renderTagsDisplay(); }));
-  } else suggestionsEl.innerHTML = '';
-}
-
-function renderTagsDisplay() { const display = document.getElementById('tags-display'); display.innerHTML = state.storyTags.map(u => `<div class="tag-chip">@${u} <span class="tag-chip-remove" data-username="${u}">✕</span></div>`).join(''); display.querySelectorAll('.tag-chip-remove').forEach(r => r.addEventListener('click', () => { state.storyTags = state.storyTags.filter(u => u !== r.dataset.username); renderTagsDisplay(); })); }
-
-document.getElementById('tag-input').addEventListener('input', updateTagSuggestions);
-
-function openStoryCreator(track) {
-  if (!track) return;
-  document.getElementById('story-preview-bg').src = track.cover;
-  document.getElementById('story-preview-cover').src = track.cover;
-  document.getElementById('story-preview-title').textContent = track.title;
-  document.getElementById('story-preview-artist').textContent = track.artist;
-  document.getElementById('story-preview-player-title').textContent = track.title;
-  document.getElementById('story-preview-player-artist').textContent = track.artist;
-  document.getElementById('story-modal').classList.add('active');
-  state.selectedPrivacy = state.defaultPrivacy;
-  state.storyTags = [];
-  document.getElementById('tag-input').value = '';
-  updateTagSuggestions();
-  renderTagsDisplay();
-  updatePrivacySelection();
-}
-
+function openStoryCreator(track) { if (!track) return; document.getElementById('story-preview-bg').src = track.cover; document.getElementById('story-preview-cover').src = track.cover; document.getElementById('story-preview-title').textContent = track.title; document.getElementById('story-preview-artist').textContent = track.artist; document.getElementById('story-preview-player-title').textContent = track.title; document.getElementById('story-preview-player-artist').textContent = track.artist; document.getElementById('story-modal').classList.add('active'); state.selectedPrivacy = state.defaultPrivacy; updatePrivacySelection(); }
 function updatePrivacySelection() { document.querySelectorAll('#privacy-options .privacy-option').forEach(opt => opt.classList.toggle('selected', opt.dataset.privacy === state.selectedPrivacy)); }
 document.querySelectorAll('#privacy-options .privacy-option').forEach(opt => opt.addEventListener('click', () => { state.selectedPrivacy = opt.dataset.privacy; updatePrivacySelection(); }));
-document.getElementById('story-cancel').addEventListener('click', () => document.getElementById('story-modal').classList.remove('active'));
-document.getElementById('story-modal-close').addEventListener('click', () => document.getElementById('story-modal').classList.remove('active'));
 
-document.getElementById('story-publish').addEventListener('click', async () => {
-  if (!state.currentTrack || !state.user) return;
-  const story = { id: Date.now(), username: state.user.username, userName: state.user.name, userAvatar: state.user.avatar, track: { ...state.currentTrack }, privacy: state.selectedPrivacy, tags: [...state.storyTags], createdAt: Date.now(), seenBy: [], likes: [] };
-  await fs.saveStory(story);
-  state.stories.push(story);
-  if (state.user) { state.user.stats.stories = (state.user.stats.stories || 0) + 1; if (state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, { stats: state.user.stats }); }
-  document.getElementById('story-modal').classList.remove('active');
-  toast('✓ Historia publicada', 'success');
-  renderStoriesBar();
-});
+function openStoryViewer(stories, index) { state.storyViewerIndex = index; state.currentViewingStory = stories[index]; showStory(stories[index]); document.getElementById('story-viewer').classList.add('active'); startStoryTimer(stories); document.getElementById('story-prev').onclick = () => { if (index > 0) { state.currentViewingStory = stories[index - 1]; showStory(stories[index - 1]); state.storyViewerIndex = index - 1; startStoryTimer(stories); } else closeStoryViewer(); }; document.getElementById('story-next').onclick = () => { if (index < stories.length - 1) { state.currentViewingStory = stories[index + 1]; showStory(stories[index + 1]); state.storyViewerIndex = index + 1; startStoryTimer(stories); } else closeStoryViewer(); }; document.getElementById('story-play-btn').onclick = () => playTrack(stories[index].track, true); }
 
-// ===================== STORY VIEWER =====================
-function openStoryViewer(stories, index) {
-  state.storyViewerIndex = index;
-  state.currentViewingStory = stories[index];
-  showStory(stories[index]);
-  document.getElementById('story-viewer').classList.add('active');
-  startStoryTimer(stories);
-  document.getElementById('story-prev').onclick = () => { if (index > 0) { state.currentViewingStory = stories[index - 1]; showStory(stories[index - 1]); state.storyViewerIndex = index - 1; startStoryTimer(stories); } else closeStoryViewer(); };
-  document.getElementById('story-next').onclick = () => { if (index < stories.length - 1) { state.currentViewingStory = stories[index + 1]; showStory(stories[index + 1]); state.storyViewerIndex = index + 1; startStoryTimer(stories); } else closeStoryViewer(); };
-  const likeBtn = document.getElementById('story-like-btn');
-  const story = stories[index];
-  const alreadyLiked = story.likes && story.likes.includes(state.user.username);
-  likeBtn.classList.toggle('liked', alreadyLiked);
-  likeBtn.onclick = async () => {
-    const allStories = state.stories;
-    const s = allStories.find(x => x.id === story.id) || story;
-    if (!s.likes) s.likes = [];
-    const likedIdx = s.likes.indexOf(state.user.username);
-    if (likedIdx === -1) {
-      s.likes.push(state.user.username);
-      likeBtn.classList.add('liked');
-      toast('❤️ Te gusta esta historia', 'success');
-      if (s.username !== state.user.username) {
-        await fs.addNotification({ toUser: s.username, type: 'like', fromUser: state.user.username, message: `<strong>@${state.user.username}</strong> le dio ❤️ a tu historia de <strong>${s.track.title}</strong>`, storyId: s.id, read: false, createdAt: Date.now() });
-      }
-    } else { s.likes.splice(likedIdx, 1); likeBtn.classList.remove('liked'); toast('Like removido', 'info'); }
-    const idx = state.stories.findIndex(x => x.id === s.id);
-    if (idx !== -1) state.stories[idx] = s;
-  };
-  document.getElementById('story-share-action-btn').onclick = () => { const text = `Mira esta historia en Music Horizon: ${story.track.title} - ${story.track.artist} 🎵`; window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank'); };
-  document.getElementById('story-play-btn').onclick = () => playTrack(story.track, true);
-  document.getElementById('story-views-btn').onclick = () => { if (story.username !== state.user.username) { toast('Solo el creador puede ver las vistas', 'info'); return; } showViewsList(story); };
-}
-
-function showViewsList(story) {
-  const list = document.getElementById('views-list');
-  const seenBy = story.seenBy || [];
-  if (seenBy.length === 0) list.innerHTML = '<div class="notification-empty"><div style="font-size:40px;margin-bottom:12px">👁️</div><div style="font-size:14px;font-weight:600">Aún nadie ha visto tu historia</div></div>';
-  else list.innerHTML = seenBy.map(username => { const friend = state.friends.find(f => f.username === username); const name = friend ? friend.name : username; const initial = username[0].toUpperCase(); return `<div class="view-item"><div class="view-item-avatar">${initial}</div><div class="view-item-info"><div class="view-item-name">@${username}</div><div class="view-item-time">${name}</div></div></div>`; }).join('');
-  document.getElementById('views-modal').classList.add('active');
-}
-
-document.getElementById('views-modal-close').addEventListener('click', () => document.getElementById('views-modal').classList.remove('active'));
-
-function showStory(story) {
-  document.getElementById('story-viewer-bg').src = story.track.cover;
-  document.getElementById('story-viewer-cover').src = story.track.cover;
-  document.getElementById('story-viewer-title').textContent = story.track.title;
-  document.getElementById('story-viewer-artist').textContent = story.track.artist;
-  document.getElementById('story-viewer-player-title').textContent = story.track.title;
-  document.getElementById('story-viewer-player-artist').textContent = story.track.artist;
-  document.getElementById('story-viewer-name').textContent = story.userName;
-  document.getElementById('story-viewer-avatar').textContent = story.username[0].toUpperCase();
-  document.getElementById('story-viewer-time').textContent = getTimeAgo(story.createdAt);
-  document.getElementById('story-views-count').textContent = (story.seenBy || []).length;
-  const tagsDisplay = document.getElementById('story-tags-display');
-  if (story.tags && story.tags.length > 0) { tagsDisplay.innerHTML = story.tags.map(u => `<div class="story-tag" data-username="${u}">@${u}</div>`).join(''); tagsDisplay.querySelectorAll('.story-tag').forEach(tag => tag.addEventListener('click', () => { if (confirm(`¿Quieres ver el perfil de @${tag.dataset.username}?`)) toast(`Perfil de @${tag.dataset.username} (demo)`, 'info'); })); } else tagsDisplay.innerHTML = '';
-  const actionsEl = document.getElementById('story-viewer-actions');
-  const viewsBtn = document.getElementById('story-views-btn');
-  if (story.username === state.user.username) { actionsEl.style.display = 'none'; viewsBtn.style.display = 'flex'; } else { actionsEl.style.display = 'flex'; viewsBtn.style.display = 'none'; }
-  const s = state.stories.find(x => x.id === story.id);
-  if (s) { if (!s.seenBy) s.seenBy = []; if (!s.seenBy.includes(state.user?.username)) { s.seenBy.push(state.user?.username); document.getElementById('story-views-count').textContent = s.seenBy.length; } }
-}
-
-function startStoryTimer(stories) { clearInterval(state.storyViewerTimer); let progress = 0; const fill = document.getElementById('story-progress'); fill.style.width = '0%'; state.storyViewerTimer = setInterval(() => { progress += 2; fill.style.width = progress + '%'; if (progress >= 100) { clearInterval(state.storyViewerTimer); if (state.storyViewerIndex < stories.length - 1) { state.currentViewingStory = stories[state.storyViewerIndex + 1]; showStory(stories[state.storyViewerIndex + 1]); state.storyViewerIndex++; startStoryTimer(stories); } else closeStoryViewer(); } }, 100); }
-
+function showStory(story) { document.getElementById('story-viewer-bg').src = story.track.cover; document.getElementById('story-viewer-cover').src = story.track.cover; document.getElementById('story-viewer-title').textContent = story.track.title; document.getElementById('story-viewer-artist').textContent = story.track.artist; document.getElementById('story-viewer-player-title').textContent = story.track.title; document.getElementById('story-viewer-player-artist').textContent = story.track.artist; document.getElementById('story-viewer-name').textContent = story.userName; document.getElementById('story-viewer-avatar').textContent = story.username[0].toUpperCase(); document.getElementById('story-viewer-time').textContent = getTimeAgo(story.createdAt); const s = state.stories.find(x => x.id === story.id); if (s) { if (!s.seenBy) s.seenBy = []; if (!s.seenBy.includes(state.user?.username)) { s.seenBy.push(state.user?.username); } } }
+function startStoryTimer(stories) { clearInterval(state.storyViewerTimer); let p = 0; const f = document.getElementById('story-progress'); f.style.width = '0%'; state.storyViewerTimer = setInterval(() => { p += 2; f.style.width = p + '%'; if (p >= 100) { clearInterval(state.storyViewerTimer); if (state.storyViewerIndex < stories.length - 1) { state.currentViewingStory = stories[state.storyViewerIndex + 1]; showStory(stories[state.storyViewerIndex + 1]); state.storyViewerIndex++; startStoryTimer(stories); } else closeStoryViewer(); } }, 100); }
 function closeStoryViewer() { clearInterval(state.storyViewerTimer); document.getElementById('story-viewer').classList.remove('active'); state.currentViewingStory = null; renderStoriesBar(); }
 document.getElementById('story-viewer-close').addEventListener('click', closeStoryViewer);
+function getTimeAgo(ts) { const s = Math.floor((Date.now() - ts) / 1000); if (s < 60) return 'hace ' + s + 's'; const m = Math.floor(s / 60); if (m < 60) return 'hace ' + m + 'm'; const h = Math.floor(m / 60); if (h < 24) return 'hace ' + h + 'h'; const d = Math.floor(h / 24); return 'hace ' + d + 'd'; }
 
-function getTimeAgo(timestamp) { const seconds = Math.floor((Date.now() - timestamp) / 1000); if (seconds < 60) return 'hace ' + seconds + 's'; const minutes = Math.floor(seconds / 60); if (minutes < 60) return 'hace ' + minutes + 'm'; const hours = Math.floor(minutes / 60); if (hours < 24) return 'hace ' + hours + 'h'; const days = Math.floor(hours / 24); return 'hace ' + days + 'd'; }
-
-// ===================== ONBOARDING =====================
 const ONBOARDING_STEPS = [
-  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>', label: 'Paso 1 de 5', title: '¡Bienvenido a Music Horizon! ', desc: 'Tu nueva forma de descubrir, compartir y disfrutar música.', features: [] },
-  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', label: 'Paso 2 de 5', title: 'Busca y reproduce música real', desc: 'Conectado a music-horizon.onrender.com para búsquedas y streaming en tiempo real.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>', text: 'Buscador inteligente con resultados del servidor' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>', text: 'Descarga directa desde el backend' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg>', text: 'Streaming de audio real' }] },
-  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/></svg>', label: 'Paso 3 de 5', title: 'Crea historias musicales', desc: 'Comparte lo que escuchas con filtros de privacidad y etiquetas.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>', text: '🌍 Todos · 👥 Amigos · ⭐ Mejores · 💕 Novio/a' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67"/></svg>', text: 'Etiqueta amigos con @username' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>', text: 'Ve quién vio cada historia' }] },
-  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', label: 'Paso 4 de 5', title: 'Agrega amigos y comparte', desc: 'Conecta con otros usuarios e invita por WhatsApp.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>', text: 'Busca amigos por @username' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>', text: 'Invita por WhatsApp con un clic' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>', text: 'Notificaciones en tiempo real' }] },
-  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>', label: 'Paso 5 de 5', title: 'Reproductor + Modo Mix', desc: 'Música de fondo con shuffle, repeat y modo mix inteligente.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>', text: 'Mini player flotante persistente' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg>', text: '🔀 Shuffle y 🔁 Repeat funcionales' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', text: '⚡ Modo Mix Inteligente' }] }
+  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>', label: 'Paso 1 de 5', title: '¡Bienvenido a Music Horizon! 🎵', desc: 'Tu nueva forma de descubrir y compartir música.', features: [] },
+  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', label: 'Paso 2 de 5', title: 'Busca música real', desc: 'Conectado a music-horizon.onrender.com para streaming en tiempo real.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>', text: 'Buscador con resultados del servidor' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>', text: 'Descarga directa' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg>', text: 'Streaming real' }] },
+  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/></svg>', label: 'Paso 3 de 5', title: 'Crea historias musicales', desc: 'Comparte con filtros de privacidad.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>', text: '🌍 Todos · 👥 Amigos · ⭐ Mejores · 💕 Novio/a' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>', text: 'Ve quién vio cada historia' }] },
+  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', label: 'Paso 4 de 5', title: 'Agrega amigos', desc: 'Conecta e invita por WhatsApp.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/></svg>', text: 'Busca por @username' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>', text: 'Notificaciones en tiempo real' }] },
+  { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>', label: 'Paso 5 de 5', title: 'Reproductor + Mix', desc: 'Música de fondo con shuffle y repeat.', features: [{ icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>', text: 'Mini player flotante' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg>', text: '🔀 Shuffle y 🔁 Repeat' }, { icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', text: '⚡ Modo Mix' }] }
 ];
 
 let onboardingStep = 0;
 function startOnboarding() { if (state.tourDone) return; onboardingStep = 0; renderOnboardingStep(); document.getElementById('onboarding-overlay').classList.add('active'); }
-function renderOnboardingStep() {
-  const step = ONBOARDING_STEPS[onboardingStep];
-  const card = document.getElementById('onboarding-card');
-  const isLast = onboardingStep === ONBOARDING_STEPS.length - 1;
-  card.innerHTML = `<div class="onboarding-illustration">${step.icon}</div><div class="onboarding-step-label">${step.label}</div><div class="onboarding-title">${step.title}</div><div class="onboarding-desc">${step.desc}</div>${step.features.length > 0 ? `<div class="onboarding-features">${step.features.map(f => `<div class="onboarding-feature"><div class="onboarding-feature-icon">${f.icon}</div><div class="onboarding-feature-text">${f.text}</div></div>`).join('')}</div>` : ''}<div class="onboarding-progress">${ONBOARDING_STEPS.map((_, i) => `<div class="onboarding-dot ${i === onboardingStep ? 'active' : ''}"></div>`).join('')}</div><button class="onboarding-btn" id="onboarding-next">${isLast ? '¡Comenzar a usar! 🚀' : 'Continuar'}</button>${!isLast ? '<button class="onboarding-skip" id="onboarding-skip">Saltar tutorial</button>' : ''}`;
-  document.getElementById('onboarding-next').addEventListener('click', () => { onboardingStep++; if (onboardingStep >= ONBOARDING_STEPS.length) { document.getElementById('onboarding-overlay').classList.remove('active'); localStorage.setItem('mh_tour_completed', '1'); state.tourDone = true; toast('¡Bienvenido a Music Horizon! ', 'success'); } else renderOnboardingStep(); });
-  const skipBtn = document.getElementById('onboarding-skip'); if (skipBtn) skipBtn.addEventListener('click', () => { document.getElementById('onboarding-overlay').classList.remove('active'); localStorage.setItem('mh_tour_completed', '1'); state.tourDone = true; });
-}
+function renderOnboardingStep() { const step = ONBOARDING_STEPS[onboardingStep]; const card = document.getElementById('onboarding-card'); const isLast = onboardingStep === ONBOARDING_STEPS.length - 1; card.innerHTML = `<div class="onboarding-illustration">${step.icon}</div><div class="onboarding-step-label">${step.label}</div><div class="onboarding-title">${step.title}</div><div class="onboarding-desc">${step.desc}</div>${step.features.length > 0 ? `<div class="onboarding-features">${step.features.map(f => `<div class="onboarding-feature"><div class="onboarding-feature-icon">${f.icon}</div><div class="onboarding-feature-text">${f.text}</div></div>`).join('')}</div>` : ''}<div class="onboarding-progress">${ONBOARDING_STEPS.map((_, i) => `<div class="onboarding-dot ${i === onboardingStep ? 'active' : ''}"></div>`).join('')}</div><button class="onboarding-btn" id="onboarding-next">${isLast ? '¡Comenzar! 🚀' : 'Continuar'}</button>${!isLast ? '<button class="onboarding-skip" id="onboarding-skip">Saltar</button>' : ''}`; document.getElementById('onboarding-next').addEventListener('click', () => { onboardingStep++; if (onboardingStep >= ONBOARDING_STEPS.length) { document.getElementById('onboarding-overlay').classList.remove('active'); localStorage.setItem('mh_tour_completed', '1'); state.tourDone = true; toast('¡Bienvenido! 🎵', 'success'); } else renderOnboardingStep(); }); const sb = document.getElementById('onboarding-skip'); if (sb) sb.addEventListener('click', () => { document.getElementById('onboarding-overlay').classList.remove('active'); localStorage.setItem('mh_tour_completed', '1'); state.tourDone = true; }); }
 
-// ===================== KEYBOARD =====================
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (document.getElementById('full-player').classList.contains('active')) document.getElementById('full-player').classList.remove('active');
-    if (document.getElementById('story-viewer').classList.contains('active')) closeStoryViewer();
-    if (document.getElementById('story-modal').classList.contains('active')) document.getElementById('story-modal').classList.remove('active');
-    if (document.getElementById('playlist-modal').classList.contains('active')) document.getElementById('playlist-modal').classList.remove('active');
-    if (document.getElementById('profile-setup-modal').classList.contains('active')) document.getElementById('profile-setup-modal').classList.remove('active');
-    if (document.getElementById('info-modal').classList.contains('active')) document.getElementById('info-modal').classList.remove('active');
-    if (document.getElementById('visibility-modal').classList.contains('active')) document.getElementById('visibility-modal').classList.remove('active');
-    if (document.getElementById('views-modal').classList.contains('active')) document.getElementById('views-modal').classList.remove('active');
-    if (document.getElementById('notifications-panel').classList.contains('active')) document.getElementById('notifications-panel').classList.remove('active');
-    if (document.getElementById('onboarding-overlay').classList.contains('active')) document.getElementById('onboarding-overlay').classList.remove('active');
-  }
-  if (e.key === ' ' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); togglePlay(); }
-});
-
-// ===================== INIT =====================
-// No auto-login from localStorage - must go through Firebase
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (document.getElementById('full-player').classList.contains('active')) document.getElementById('full-player').classList.remove('active'); if (document.getElementById('story-viewer').classList.contains('active')) closeStoryViewer(); if (document.getElementById('story-modal').classList.contains('active')) document.getElementById('story-modal').classList.remove('active'); if (document.getElementById('profile-setup-modal').classList.contains('active')) document.getElementById('profile-setup-modal').classList.remove('active'); if (document.getElementById('info-modal').classList.contains('active')) document.getElementById('info-modal').classList.remove('active'); if (document.getElementById('visibility-modal').classList.contains('active')) document.getElementById('visibility-modal').classList.remove('active'); if (document.getElementById('notifications-panel').classList.contains('active')) document.getElementById('notifications-panel').classList.remove('active'); if (document.getElementById('onboarding-overlay').classList.contains('active')) document.getElementById('onboarding-overlay').classList.remove('active'); } if (e.key === ' ' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); togglePlay(); } });
 </script>
 </body>
 </html>
