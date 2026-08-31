@@ -77,8 +77,10 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .login-title span{background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900}
 .login-sub{color:var(--text-secondary);font-size:16px;margin-bottom:32px;text-align:center;line-height:1.6;max-width:320px;animation:fadeInUp .8s ease-out}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.btn-google{width:100%;height:60px;background:rgba(255,255,255,0.95);color:#1a1a1a;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:14px;font-weight:700;font-size:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);transition:all .3s cubic-bezier(.4,0,.2,1);animation:fadeInUp 1s ease-out}
+.btn-google{width:100%;height:60px;background:rgba(255,255,255,0.95);color:#1a1a1a;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:14px;font-weight:700;font-size:16px;box-shadow:0 10px 40px rgba(0,0,0,0.3);transition:all .3s cubic-bezier(.4,0,.2,1);animation:fadeInUp 1s ease-out;position:relative;overflow:hidden}
+.btn-google::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.3) 50%,transparent 100%);transform:translateX(-100%);transition:transform .5s}
 .btn-google:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 50px rgba(0,0,0,0.4)}
+.btn-google:hover::before{transform:translateX(100%)}
 .btn-google svg{width:24px;height:24px}
 .login-stats{display:flex;gap:16px;margin-top:40px;animation:fadeInUp 1.4s ease-out}
 .stat-badge{padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--text-secondary);backdrop-filter:blur(10px)}
@@ -86,21 +88,27 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .privacy-note{margin-top:36px;max-width:340px;text-align:center;font-size:12px;color:var(--text-muted);line-height:1.7;opacity:0.8;animation:fadeInUp 1.2s ease-out}
 .privacy-note strong{color:var(--text-secondary);font-weight:600}
 
-/* Username setup modal */
-.username-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.9);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px}
-.username-modal.active{display:flex}
-.username-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:24px;padding:32px;max-width:420px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.8)}
-.username-card h2{font-size:24px;font-weight:800;margin-bottom:8px;text-align:center}
-.username-card p{color:var(--text-secondary);font-size:14px;text-align:center;margin-bottom:24px;line-height:1.5}
-.username-input{width:100%;height:52px;background:var(--bg-primary);border:1px solid var(--border);border-radius:14px;padding:0 18px;font-size:15px;color:var(--text-primary);margin-bottom:12px;transition:all .3s}
-.username-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow)}
-.username-input::placeholder{color:var(--text-muted)}
-.username-hint{font-size:12px;color:var(--text-muted);margin-bottom:20px;text-align:center}
-.username-hint strong{color:var(--accent-light)}
-.username-btn{width:100%;height:52px;background:var(--gradient-primary);border-radius:14px;font-weight:700;font-size:15px;transition:all .3s;box-shadow:0 6px 20px var(--accent-glow)}
-.username-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow)}
-.username-btn:disabled{opacity:0.5;cursor:not-allowed}
-.username-error{color:var(--danger);font-size:12px;text-align:center;margin-bottom:12px;min-height:16px}
+/* ===================== PROFILE SETUP MODAL ===================== */
+.profile-setup-modal{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.95);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:24px}
+.profile-setup-modal.active{display:flex}
+.profile-setup-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:24px;padding:32px;max-width:440px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.8);max-height:90vh;overflow-y:auto}
+.profile-setup-card h2{font-size:26px;font-weight:800;margin-bottom:8px;text-align:center}
+.profile-setup-card > p{color:var(--text-secondary);font-size:14px;text-align:center;margin-bottom:24px;line-height:1.5}
+.avatar-upload{width:110px;height:110px;border-radius:50%;margin:0 auto 20px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;position:relative;cursor:pointer;overflow:hidden;border:4px solid rgba(255,255,255,0.1);box-shadow:0 10px 40px var(--accent-glow);transition:transform .3s}
+.avatar-upload:hover{transform:scale(1.05)}
+.avatar-upload img{width:100%;height:100%;object-fit:cover}
+.avatar-upload .upload-badge{position:absolute;bottom:0;right:0;width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-card)}
+.avatar-upload .upload-badge svg{width:16px;height:16px}
+.setup-input{width:100%;height:52px;background:var(--bg-primary);border:1px solid var(--border);border-radius:14px;padding:0 18px;font-size:15px;color:var(--text-primary);margin-bottom:12px;transition:all .3s}
+.setup-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow)}
+.setup-input::placeholder{color:var(--text-muted)}
+.setup-hint{font-size:12px;color:var(--text-muted);margin-bottom:20px;text-align:center;line-height:1.5}
+.setup-hint strong{color:var(--accent-light)}
+.setup-btn{width:100%;height:52px;background:var(--gradient-primary);border-radius:14px;font-weight:700;font-size:15px;transition:all .3s;box-shadow:0 6px 20px var(--accent-glow)}
+.setup-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px var(--accent-glow)}
+.setup-btn:disabled{opacity:0.5;cursor:not-allowed}
+.setup-error{color:var(--danger);font-size:12px;text-align:center;margin-bottom:12px;min-height:16px}
+.setup-skip{display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--text-secondary);text-decoration:underline}
 
 /* ===================== MAIN APP ===================== */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
@@ -169,10 +177,11 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .trend-artist{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .trend-actions{position:absolute;top:12px;right:12px;z-index:2;display:flex;gap:8px;opacity:0;transform:translateY(-10px);transition:all .3s}
 .trend-card:hover .trend-actions{opacity:1;transform:translateY(0)}
-.trend-action-btn{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all .2s}
-.trend-action-btn:hover{background:var(--accent);transform:scale(1.1)}
+.trend-action-btn{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;transition:all .2s;border:1px solid rgba(255,255,255,0.1)}
+.trend-action-btn:hover{background:var(--accent);transform:scale(1.1);border-color:var(--accent)}
 .trend-action-btn svg{width:16px;height:16px}
-.trend-action-btn.liked{background:var(--danger)}
+.trend-action-btn.liked{background:var(--danger);border-color:var(--danger)}
+.trend-action-btn.downloaded{background:var(--success);border-color:var(--success)}
 .trend-play{position:absolute;right:12px;bottom:12px;z-index:2;width:40px;height:40px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px var(--accent-glow);opacity:0;transform:translateY(10px) scale(0.8);transition:all .3s}
 .trend-card:hover .trend-play{opacity:1;transform:translateY(0) scale(1)}
 .trend-play svg{width:16px;height:16px}
@@ -402,12 +411,29 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.success{border-left:4px solid var(--success)}
 .toast.error{border-left:4px solid var(--danger)}
+.toast.info{border-left:4px solid var(--accent)}
 
 /* Empty state */
 .empty-state{text-align:center;padding:40px 20px;color:var(--text-muted)}
 .empty-state svg{width:60px;height:60px;margin-bottom:16px;opacity:0.3}
 .empty-state-title{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text-primary)}
 .empty-state-desc{font-size:13px}
+
+/* Track list for library */
+.track-list{display:flex;flex-direction:column;gap:4px}
+.track-list-item{display:flex;align-items:center;gap:14px;padding:10px 8px;border-radius:10px;transition:background .2s;cursor:pointer}
+.track-list-item:hover{background:var(--bg-card-hover)}
+.track-list-cover{width:48px;height:48px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg-card)}
+.track-list-cover img{width:100%;height:100%;object-fit:cover}
+.track-list-info{flex:1;min-width:0}
+.track-list-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-list-artist{font-size:12px;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-list-actions{display:flex;gap:6px}
+.track-list-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.track-list-btn:hover{background:rgba(255,255,255,0.1)}
+.track-list-btn svg{width:18px;height:18px}
+.track-list-btn.liked{color:var(--danger)}
+.track-list-btn.downloaded{color:var(--success)}
 
 /* Responsive */
 @media (min-width:768px){
@@ -462,20 +488,31 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
       <div class="stat-badge"><strong>0</strong> anuncios</div>
     </div>
     <p class="privacy-note">
-      <strong> Privacidad total.</strong> Tus datos están protegidos bajo cifrado de extremo a extremo. Cero anuncios. Cero rastreo comercial.
+      <strong>🔒 Privacidad total.</strong> Tus datos están protegidos bajo cifrado de extremo a extremo. Cero anuncios. Cero rastreo comercial.
     </p>
   </div>
 </section>
 
-<!-- USERNAME SETUP MODAL -->
-<div class="username-modal" id="username-modal">
-  <div class="username-card">
+<!-- PROFILE SETUP MODAL -->
+<div class="profile-setup-modal" id="profile-setup-modal">
+  <div class="profile-setup-card">
     <h2>¡Bienvenido! 🎵</h2>
-    <p>Elige tu <strong>@username</strong> único. Será tu identificador en Music Horizon y tus amigos podrán encontrarte con él.</p>
-    <input type="text" class="username-input" id="username-input" placeholder="@tu.nombre" autocomplete="off" style="text-transform:lowercase" />
-    <div class="username-hint">Solo letras minúsculas, números, puntos y guiones bajos · 3-20 caracteres</div>
-    <div class="username-error" id="username-error"></div>
-    <button class="username-btn" id="username-btn">Crear mi cuenta</button>
+    <p>Configura tu perfil para comenzar. Elige un <strong>@username</strong> único que será tu identificador.</p>
+    
+    <div class="avatar-upload" id="avatar-upload">
+      <span id="avatar-initial">?</span>
+      <img id="avatar-preview" style="display:none" alt="" />
+      <div class="upload-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+    </div>
+    <input type="file" id="avatar-file-input" accept="image/*" style="display:none" />
+    
+    <input type="text" class="setup-input" id="setup-name" placeholder="Tu nombre" autocomplete="off" />
+    <input type="text" class="setup-input" id="setup-username" placeholder="@username (único)" autocomplete="off" style="text-transform:lowercase" />
+    <div class="setup-hint">Solo letras minúsculas, números, puntos y guiones bajos · 3-20 caracteres · <strong>La foto es opcional</strong></div>
+    <div class="setup-error" id="setup-error"></div>
+    <button class="setup-btn" id="setup-btn">Crear mi perfil</button>
   </div>
 </div>
 
@@ -530,19 +567,19 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
   <!-- Bottom Nav -->
   <nav class="bottom-nav">
     <div class="bottom-nav-item active" data-view="home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <span>Principal</span>
     </div>
     <div class="bottom-nav-item" data-view="explore">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
       <span>Explorar</span>
     </div>
-    <div class="bottom-nav-item" data-view="friends">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>Amigos</span>
+    <div class="bottom-nav-item" data-view="library">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>Biblioteca</span>
     </div>
     <div class="bottom-nav-item" data-view="profile">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span>Cuenta</span>
     </div>
   </nav>
@@ -727,6 +764,22 @@ input{font-family:inherit;border:none;outline:none;color:inherit}
   </div>
 </div>
 
+<!-- PLAYLIST MODAL -->
+<div class="modal-overlay" id="playlist-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title"> Agregar a playlist</h3>
+      <button class="modal-close" id="playlist-modal-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="playlists-list"></div>
+      <button class="modal-btn primary" id="create-playlist-btn" style="margin-top:12px;width:100%">+ Crear nueva playlist</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -764,10 +817,14 @@ const state = {
   currentView: 'home',
   stories: [],
   friends: [],
+  favorites: [],
+  downloads: [],
+  playlists: [],
   selectedPrivacy: 'all',
   storyViewerIndex: 0,
   storyViewerTimer: null,
   tourDone: localStorage.getItem('mh_tour_completed') === '1',
+  pendingTrackForPlaylist: null,
 };
 
 const audio = document.getElementById('audio');
@@ -807,34 +864,66 @@ function validateUsername(username) {
   return null;
 }
 
-// ===================== AUTH =====================
+// ===================== AUTH FLOW =====================
 document.getElementById('btn-login-google').addEventListener('click', () => {
-  // Simulación de login con Google - guarda datos temporales
+  // Simulación de autenticación con Google
   const tempUser = {
     name: 'Usuario',
     email: 'usuario@gmail.com',
     photoURL: null,
-    isGoogle: true,
-    tempId: Date.now()
+    isGoogle: true
   };
   state.pendingGoogleUser = tempUser;
-  document.getElementById('username-modal').classList.add('active');
-  document.getElementById('username-input').focus();
-});
-
-document.getElementById('username-btn').addEventListener('click', completeRegistration);
-document.getElementById('username-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') completeRegistration();
-});
-
-function completeRegistration() {
-  const usernameInput = document.getElementById('username-input');
-  const errorEl = document.getElementById('username-error');
-  const btn = document.getElementById('username-btn');
-  let username = usernameInput.value.trim().toLowerCase();
   
-  // Limpiar @ si lo puso
+  // Mostrar modal de configuración de perfil
+  document.getElementById('profile-setup-modal').classList.add('active');
+  document.getElementById('setup-name').value = '';
+  document.getElementById('setup-username').value = '';
+  document.getElementById('setup-error').textContent = '';
+  document.getElementById('avatar-preview').style.display = 'none';
+  document.getElementById('avatar-initial').style.display = 'block';
+  document.getElementById('avatar-initial').textContent = '?';
+  document.getElementById('setup-name').focus();
+});
+
+// Avatar upload
+document.getElementById('avatar-upload').addEventListener('click', () => {
+  document.getElementById('avatar-file-input').click();
+});
+
+document.getElementById('avatar-file-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      document.getElementById('avatar-preview').src = ev.target.result;
+      document.getElementById('avatar-preview').style.display = 'block';
+      document.getElementById('avatar-initial').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Profile setup
+document.getElementById('setup-btn').addEventListener('click', completeProfileSetup);
+document.getElementById('setup-username').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') completeProfileSetup();
+});
+
+function completeProfileSetup() {
+  const nameInput = document.getElementById('setup-name');
+  const usernameInput = document.getElementById('setup-username');
+  const errorEl = document.getElementById('setup-error');
+  const btn = document.getElementById('setup-btn');
+  
+  const name = nameInput.value.trim();
+  let username = usernameInput.value.trim().toLowerCase();
   if (username.startsWith('@')) username = username.substring(1);
+  
+  if (!name) {
+    errorEl.textContent = 'El nombre es obligatorio';
+    return;
+  }
   
   const error = validateUsername(username);
   if (error) {
@@ -844,14 +933,18 @@ function completeRegistration() {
   }
   
   btn.disabled = true;
-  btn.textContent = 'Creando cuenta...';
+  btn.textContent = 'Creando perfil...';
   
   setTimeout(() => {
+    const avatarSrc = document.getElementById('avatar-preview').style.display !== 'none' 
+      ? document.getElementById('avatar-preview').src 
+      : null;
+    
     const user = {
-      name: state.pendingGoogleUser?.name || 'Usuario',
+      name: name,
       username: username,
       email: state.pendingGoogleUser?.email || null,
-      avatar: state.pendingGoogleUser?.photoURL || null,
+      avatar: avatarSrc,
       isGoogle: state.pendingGoogleUser?.isGoogle || false,
       createdAt: Date.now(),
       stats: { plays: 0, shares: 0, stories: 0 }
@@ -864,12 +957,13 @@ function completeRegistration() {
     
     state.user = user;
     state.pendingGoogleUser = null;
+    state.favorites = Storage.load('favorites') || [];
+    state.downloads = Storage.load('downloads') || [];
+    state.playlists = Storage.load('playlists') || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
     
-    document.getElementById('username-modal').classList.remove('active');
-    usernameInput.value = '';
-    errorEl.textContent = '';
+    document.getElementById('profile-setup-modal').classList.remove('active');
     btn.disabled = false;
-    btn.textContent = 'Crear mi cuenta';
+    btn.textContent = 'Crear mi perfil';
     
     onAuthSuccess(user);
   }, 800);
@@ -883,7 +977,9 @@ function onAuthSuccess(user) {
   updateNavAvatar();
   navigateTo('home');
   renderStoriesBar();
-  setTimeout(startTour, 800);
+  if (!state.tourDone) {
+    setTimeout(startTour, 1000);
+  }
 }
 
 function logout() {
@@ -892,6 +988,9 @@ function logout() {
   state.user = null;
   state.currentTrack = null;
   state.isPlaying = false;
+  state.favorites = [];
+  state.downloads = [];
+  state.playlists = [];
   audio.pause();
   audio.src = '';
   document.getElementById('mini-player').classList.add('hidden');
@@ -1027,6 +1126,104 @@ document.getElementById('full-share-btn').addEventListener('click', () => {
   else toast('Reproduce una canción primero', 'error');
 });
 
+// ===================== FAVORITES & DOWNLOADS =====================
+function toggleFavorite(track) {
+  const idx = state.favorites.findIndex(f => f.id === track.id);
+  if (idx === -1) {
+    state.favorites.push({ ...track, addedAt: Date.now() });
+    toast('❤️ Añadido a favoritos', 'success');
+  } else {
+    state.favorites.splice(idx, 1);
+    toast('Eliminado de favoritos', 'info');
+  }
+  Storage.save('favorites', state.favorites);
+  refreshCurrentView();
+}
+
+function toggleDownload(track) {
+  const idx = state.downloads.findIndex(d => d.id === track.id);
+  if (idx === -1) {
+    state.downloads.push({ ...track, downloadedAt: Date.now() });
+    toast('️ Descarga iniciada', 'success');
+    // Simular descarga
+    setTimeout(() => {
+      toast('✓ Descarga completada', 'success');
+    }, 1500);
+  } else {
+    state.downloads.splice(idx, 1);
+    toast('Descarga eliminada', 'info');
+  }
+  Storage.save('downloads', state.downloads);
+  refreshCurrentView();
+}
+
+function isFavorite(trackId) {
+  return state.favorites.some(f => f.id === trackId);
+}
+
+function isDownloaded(trackId) {
+  return state.downloads.some(d => d.id === trackId);
+}
+
+function openPlaylistModal(track) {
+  state.pendingTrackForPlaylist = track;
+  renderPlaylistsList();
+  document.getElementById('playlist-modal').classList.add('active');
+}
+
+function renderPlaylistsList() {
+  const list = document.getElementById('playlists-list');
+  if (state.playlists.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-state-desc">No tienes playlists aún</div></div>';
+    return;
+  }
+  list.innerHTML = state.playlists.map(pl => `
+    <div class="profile-option" data-playlist-id="${pl.id}">
+      <div class="profile-option-left">
+        <div class="profile-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div>
+          <div class="profile-option-label">${pl.name}</div>
+          <div class="profile-option-value">${pl.tracks.length} canciones</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  list.querySelectorAll('[data-playlist-id]').forEach(item => {
+    item.addEventListener('click', () => {
+      const plId = parseInt(item.dataset.playlistId);
+      const playlist = state.playlists.find(p => p.id === plId);
+      if (playlist && state.pendingTrackForPlaylist) {
+        const exists = playlist.tracks.some(t => t.id === state.pendingTrackForPlaylist.id);
+        if (!exists) {
+          playlist.tracks.push(state.pendingTrackForPlaylist);
+          Storage.save('playlists', state.playlists);
+          toast(`✓ Añadido a "${playlist.name}"`, 'success');
+        } else {
+          toast('Ya está en esta playlist', 'info');
+        }
+      }
+      document.getElementById('playlist-modal').classList.remove('active');
+    });
+  });
+}
+
+document.getElementById('playlist-modal-close').addEventListener('click', () => {
+  document.getElementById('playlist-modal').classList.remove('active');
+});
+
+document.getElementById('create-playlist-btn').addEventListener('click', () => {
+  const name = prompt('Nombre de la nueva playlist:');
+  if (name && name.trim()) {
+    state.playlists.push({ id: Date.now(), name: name.trim(), tracks: [] });
+    Storage.save('playlists', state.playlists);
+    renderPlaylistsList();
+    toast('✓ Playlist creada', 'success');
+  }
+});
+
 // ===================== NAVIGATION =====================
 function navigateTo(view) {
   state.currentView = view;
@@ -1036,8 +1233,12 @@ function navigateTo(view) {
   
   if (view === 'home') renderHomeView(content);
   else if (view === 'explore') renderExploreView(content);
-  else if (view === 'friends') renderFriendsView(content);
+  else if (view === 'library') renderLibraryView(content);
   else if (view === 'profile') renderProfileView(content);
+}
+
+function refreshCurrentView() {
+  navigateTo(state.currentView);
 }
 
 document.querySelectorAll('.bottom-nav-item').forEach(item => {
@@ -1076,7 +1277,7 @@ function renderHomeView(container) {
       <div class="cat-chip">🌊 Relax</div>
       <div class="cat-chip">💪 Workout</div>
       <div class="cat-chip">🎯 Focus</div>
-      <div class="cat-chip"> Fiesta</div>
+      <div class="cat-chip">🎉 Fiesta</div>
     </div>
 
     <div class="section-head">
@@ -1093,7 +1294,6 @@ function renderHomeView(container) {
   `;
   container.innerHTML = html;
   
-  // Render tracks
   const trendGrid = container.querySelector('#trend-grid');
   TRACKS.slice(0, 6).forEach((track, i) => {
     trendGrid.appendChild(createTrendCard(track, i));
@@ -1104,7 +1304,6 @@ function renderHomeView(container) {
     releaseScroll.appendChild(createReleaseCard(track, i));
   });
   
-  // Search
   const searchInput = container.querySelector('#search-input');
   const handleSearch = () => {
     const q = searchInput.value.trim();
@@ -1120,7 +1319,6 @@ function renderHomeView(container) {
   searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSearch(); });
   container.querySelector('#search-btn').addEventListener('click', handleSearch);
   
-  // Categories
   container.querySelectorAll('.cat-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       container.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
@@ -1128,7 +1326,6 @@ function renderHomeView(container) {
     });
   });
   
-  // Mix
   container.querySelector('#mix-card').addEventListener('click', () => {
     if (!state.currentTrack) { toast('Reproduce una canción primero', 'error'); return; }
     toast('⚡ Modo Mix activado · Generando cola...', 'success');
@@ -1139,16 +1336,36 @@ function createTrendCard(track, index) {
   const card = document.createElement('div');
   card.className = 'trend-card';
   card.style.animationDelay = `${index * 0.05}s`;
+  const liked = isFavorite(track.id);
+  const downloaded = isDownloaded(track.id);
   card.innerHTML = `
     <img src="${track.cover}" alt="${track.title}" loading="lazy"/>
     <div class="trend-actions">
-      <button class="trend-action-btn" data-action="like" title="Me gusta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button class="trend-action-btn ${liked ? 'liked' : ''}" data-action="like" title="Favoritos">
+        <svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
       </button>
+      <button class="trend-action-btn" data-action="playlist" title="Agregar a playlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+          <line x1="12" y1="12" x2="12" y2="18" stroke-width="2.5"/>
+          <line x1="9" y1="15" x2="15" y2="15" stroke-width="2.5"/>
+        </svg>
+      </button>
+      <button class="trend-action-btn ${downloaded ? 'downloaded' : ''}" data-action="download" title="Descargar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </button>
       <button class="trend-action-btn" data-action="share" title="Compartir historia">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+          <polyline points="16 6 12 2 8 6"/>
+          <line x1="12" y1="2" x2="12" y2="15"/>
+        </svg>
       </button>
     </div>
     <div class="trend-info">
@@ -1161,12 +1378,22 @@ function createTrendCard(track, index) {
   `;
   card.addEventListener('click', (e) => {
     if (e.target.closest('[data-action="like"]')) {
-      const btn = e.target.closest('[data-action="like"]');
-      btn.classList.toggle('liked');
-      toast(btn.classList.contains('liked') ? '❤️ Añadido a favoritos' : 'Eliminado de favoritos', 'success');
+      e.stopPropagation();
+      toggleFavorite(track);
+      return;
+    }
+    if (e.target.closest('[data-action="playlist"]')) {
+      e.stopPropagation();
+      openPlaylistModal(track);
+      return;
+    }
+    if (e.target.closest('[data-action="download"]')) {
+      e.stopPropagation();
+      toggleDownload(track);
       return;
     }
     if (e.target.closest('[data-action="share"]')) {
+      e.stopPropagation();
       openStoryCreator(track);
       return;
     }
@@ -1193,10 +1420,10 @@ function renderExploreView(container) {
       <h2 class="section-title">Explorar</h2>
     </div>
     <div class="cat-scroll">
-      <div class="cat-chip active">🌍 Todo</div>
+      <div class="cat-chip active"> Todo</div>
       <div class="cat-chip">🎸 Rock</div>
       <div class="cat-chip">🎤 Pop</div>
-      <div class="cat-chip"> Jazz</div>
+      <div class="cat-chip">🎷 Jazz</div>
       <div class="cat-chip">🎹 Electrónica</div>
       <div class="cat-chip">🥁 Urbano</div>
     </div>
@@ -1216,102 +1443,133 @@ function renderExploreView(container) {
   });
 }
 
-// ===================== FRIENDS VIEW =====================
-function renderFriendsView(container) {
-  const friends = state.friends;
+// ===================== LIBRARY VIEW =====================
+function renderLibraryView(container) {
   let html = `
-    <div class="invite-card">
-      <h3>🎵 Invita a tus amigos</h3>
-      <p>Comparte Music Horizon con tus amigos por WhatsApp y escuchen música juntos</p>
-      <button class="whatsapp-btn" id="whatsapp-invite">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        Invitar por WhatsApp
-      </button>
+    <div class="section-head">
+      <h2 class="section-title">📚 Tu Biblioteca</h2>
     </div>
-    
-    <div class="search-box">
-      <input type="text" class="friend-search-input" id="friend-search-input" placeholder="Buscar por @username" />
-      <div class="search-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </div>
+    <div class="cat-scroll" id="library-tabs">
+      <div class="cat-chip active" data-tab="favorites">❤️ Favoritos (${state.favorites.length})</div>
+      <div class="cat-chip" data-tab="playlists">📋 Playlists (${state.playlists.length})</div>
+      <div class="cat-chip" data-tab="downloads">⬇️ Descargas (${state.downloads.length})</div>
+      <div class="cat-chip" data-tab="history">🕐 Historial</div>
     </div>
-    
-    <div id="friends-list"></div>
+    <div id="library-content"></div>
   `;
   container.innerHTML = html;
-  renderFriendsList(container);
   
-  container.querySelector('#whatsapp-invite').addEventListener('click', () => {
-    const text = `¡Escucha música conmigo en Music Horizon! Búscame como @${state.user.username} 🎵`;
-    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
-    state.user.stats.shares = (state.user.stats.shares || 0) + 1;
-    Storage.save('currentUser', state.user);
-    toast('Enlace de invitación generado', 'success');
-  });
+  renderLibraryTab('favorites');
   
-  const searchInput = container.querySelector('#friend-search-input');
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
-    renderFriendsList(container, query);
-  });
-}
-
-function renderFriendsList(container, query = '') {
-  const list = container.querySelector('#friends-list');
-  const friends = state.friends;
-  const filtered = query ? friends.filter(f => 
-    f.username.toLowerCase().includes(query) || f.name.toLowerCase().includes(query)
-  ) : friends;
-  
-  const myFriends = filtered.filter(f => f.isFriend);
-  const suggestions = filtered.filter(f => !f.isFriend);
-  
-  let html = '';
-  if (myFriends.length > 0) {
-    html += '<div class="section-title" style="margin-bottom:12px">Mis amigos (' + myFriends.length + ')</div>';
-    myFriends.forEach(f => { html += renderFriendCard(f, true); });
-  }
-  if (suggestions.length > 0) {
-    html += '<div class="section-title" style="margin:20px 0 12px 0">Sugerencias</div>';
-    suggestions.forEach(f => { html += renderFriendCard(f, false); });
-  }
-  if (filtered.length === 0) {
-    html = '<div class="empty-state"><div class="empty-state-title">Sin resultados</div><div class="empty-state-desc">Intenta con otro @username</div></div>';
-  }
-  list.innerHTML = html;
-  
-  list.querySelectorAll('[data-add-username]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const username = btn.dataset.addUsername;
-      const friend = friends.find(f => f.username === username);
-      if (friend) {
-        friend.isFriend = true;
-        Storage.save('friends', friends);
-        btn.textContent = '✓ Amigos';
-        btn.classList.add('added');
-        toast('✓ ' + friend.name + ' agregado', 'success');
-        renderStoriesBar();
-      }
+  container.querySelectorAll('#library-tabs .cat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      container.querySelectorAll('#library-tabs .cat-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      renderLibraryTab(chip.dataset.tab);
     });
   });
 }
 
-function renderFriendCard(friend, isFriend) {
-  const initial = friend.name[0].toUpperCase();
-  return `
-    <div class="friend-card">
-      <div class="friend-avatar">${friend.avatar ? `<img src="${friend.avatar}"/>` : initial}</div>
-      <div class="friend-info">
-        <div class="friend-name">${friend.name}</div>
-        <div class="friend-username">@${friend.username}</div>
-        <div class="friend-activity">${friend.activity || 'Sin actividad reciente'}</div>
-      </div>
-      ${isFriend 
-        ? '<button class="friend-add-btn added">✓ Amigos</button>'
-        : '<button class="friend-add-btn" data-add-username="' + friend.username + '">Agregar</button>'
+function renderLibraryTab(tab) {
+  const content = document.getElementById('library-content');
+  if (!content) return;
+  
+  if (tab === 'favorites') {
+    if (state.favorites.length === 0) {
+      content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><div class="empty-state-title">Sin favoritos aún</div><div class="empty-state-desc">Toca el corazón en cualquier canción para agregarla aquí</div></div>';
+    } else {
+      content.innerHTML = '<div class="track-list">' + state.favorites.map(t => createTrackListItem(t, true, false)).join('') + '</div>';
+    }
+  } else if (tab === 'playlists') {
+    if (state.playlists.length === 0) {
+      content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><div class="empty-state-title">Sin playlists</div><div class="empty-state-desc">Crea tu primera playlist desde cualquier canción</div></div>';
+    } else {
+      content.innerHTML = state.playlists.map(pl => `
+        <div class="friend-card" data-playlist-id="${pl.id}">
+          <div class="friend-avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <div class="friend-info">
+            <div class="friend-name">${pl.name}</div>
+            <div class="friend-username">${pl.tracks.length} canciones</div>
+          </div>
+        </div>
+      `).join('');
+      content.querySelectorAll('[data-playlist-id]').forEach(item => {
+        item.addEventListener('click', () => {
+          const plId = parseInt(item.dataset.playlistId);
+          const playlist = state.playlists.find(p => p.id === plId);
+          if (playlist) {
+            if (playlist.tracks.length === 0) {
+              content.innerHTML = '<div class="empty-state"><div class="empty-state-title">Playlist vacía</div><div class="empty-state-desc">Agrega canciones desde el botón de playlist</div></div>';
+            } else {
+              content.innerHTML = '<div class="track-list">' + playlist.tracks.map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>';
+            }
+          }
+        });
+      });
+    }
+  } else if (tab === 'downloads') {
+    if (state.downloads.length === 0) {
+      content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div class="empty-state-title">Sin descargas</div><div class="empty-state-desc">Descarga canciones para escucharlas sin conexión</div></div>';
+    } else {
+      content.innerHTML = '<div class="track-list">' + state.downloads.map(t => createTrackListItem(t, isFavorite(t.id), true)).join('') + '</div>';
+    }
+  } else if (tab === 'history') {
+    const history = Storage.load('history') || [];
+    if (history.length === 0) {
+      content.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div class="empty-state-title">Sin historial</div><div class="empty-state-desc">Las canciones que escuches aparecerán aquí</div></div>';
+    } else {
+      content.innerHTML = '<div class="track-list">' + history.slice(0, 20).map(t => createTrackListItem(t, isFavorite(t.id), isDownloaded(t.id))).join('') + '</div>';
+    }
+  }
+  
+  // Attach listeners
+  content.querySelectorAll('[data-track-id]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('[data-action="like"]')) {
+        e.stopPropagation();
+        const trackId = parseInt(e.target.closest('[data-action="like"]').dataset.trackId);
+        const track = TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
+        if (track) toggleFavorite(track);
+        return;
       }
+      if (e.target.closest('[data-action="download"]')) {
+        e.stopPropagation();
+        const trackId = parseInt(e.target.closest('[data-action="download"]').dataset.trackId);
+        const track = TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
+        if (track) toggleDownload(track);
+        return;
+      }
+      const trackId = parseInt(item.dataset.trackId);
+      const track = TRACKS.find(t => t.id === trackId) || state.favorites.find(t => t.id === trackId) || state.downloads.find(t => t.id === trackId);
+      if (track) playTrack(track);
+    });
+  });
+}
+
+function createTrackListItem(track, liked, downloaded) {
+  return `
+    <div class="track-list-item" data-track-id="${track.id}">
+      <div class="track-list-cover"><img src="${track.cover}" alt="" /></div>
+      <div class="track-list-info">
+        <div class="track-list-title">${track.title}</div>
+        <div class="track-list-artist">${track.artist}</div>
+      </div>
+      <div class="track-list-actions">
+        <button class="track-list-btn ${liked ? 'liked' : ''}" data-action="like" data-track-id="${track.id}" title="Favoritos">
+          <svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+        <button class="track-list-btn ${downloaded ? 'downloaded' : ''}" data-action="download" data-track-id="${track.id}" title="Descargar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </button>
+      </div>
     </div>
   `;
 }
@@ -1339,12 +1597,12 @@ function renderProfileView(container) {
           <div class="profile-stat-label">Plays</div>
         </div>
         <div class="profile-stat">
-          <div class="profile-stat-value">${stories.length}</div>
-          <div class="profile-stat-label">Historias</div>
+          <div class="profile-stat-value">${state.favorites.length}</div>
+          <div class="profile-stat-label">Favoritos</div>
         </div>
         <div class="profile-stat">
-          <div class="profile-stat-value">${user.stats.shares || 0}</div>
-          <div class="profile-stat-label">Compartidas</div>
+          <div class="profile-stat-value">${stories.length}</div>
+          <div class="profile-stat-label">Historias</div>
         </div>
       </div>
       <div class="profile-actions">
@@ -1436,7 +1694,7 @@ function renderProfileView(container) {
   container.querySelector('#logout-btn').addEventListener('click', logout);
   
   container.querySelector('#share-profile-btn').addEventListener('click', () => {
-    const text = `Sígueme en Music Horizon @${user.username} `;
+    const text = `Sígueme en Music Horizon @${user.username} 🎵`;
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   });
@@ -1459,18 +1717,21 @@ function openEditProfileModal() {
       </div>
       <div class="modal-body">
         <div style="text-align:center;margin-bottom:20px">
-          <div style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1)" id="edit-avatar-preview">
+          <div style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;overflow:hidden;border:4px solid rgba(255,255,255,0.1);position:relative;cursor:pointer" id="edit-avatar-preview">
             ${state.user.avatar ? `<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>` : state.user.name[0].toUpperCase()}
+            <div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
           </div>
           <button class="profile-action-btn" id="change-avatar-btn" style="font-size:12px;padding:8px 16px">Cambiar foto</button>
         </div>
         <div style="margin-bottom:16px">
           <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">Nombre</div>
-          <input type="text" class="username-input" id="edit-name" value="${state.user.name}" style="max-width:100%;margin:0" />
+          <input type="text" class="setup-input" id="edit-name" value="${state.user.name}" style="max-width:100%;margin:0" />
         </div>
         <div style="margin-bottom:16px">
           <div style="font-size:12px;color:var(--text-secondary);margin-bottom:6px">@username</div>
-          <input type="text" class="username-input" id="edit-username" value="${state.user.username}" style="max-width:100%;margin:0;text-transform:lowercase" />
+          <input type="text" class="setup-input" id="edit-username" value="${state.user.username}" style="max-width:100%;margin:0;text-transform:lowercase" />
           <div style="font-size:11px;color:var(--text-muted);margin-top:6px">El username es único e irrepetible</div>
         </div>
       </div>
@@ -1494,7 +1755,7 @@ function openEditProfileModal() {
         const reader = new FileReader();
         reader.onload = (ev) => {
           state.user.avatar = ev.target.result;
-          modal.querySelector('#edit-avatar-preview').innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover"/>`;
+          modal.querySelector('#edit-avatar-preview').innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover"/><div style="position:absolute;bottom:0;right:0;width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;border:3px solid var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:14px;height:14px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>`;
         };
         reader.readAsDataURL(file);
       }
@@ -1719,9 +1980,10 @@ function getTimeAgo(timestamp) {
 // ===================== TOUR =====================
 const TOUR_STEPS = [
   { target:'#search-wrap', text:'Pega aquí tus links de YouTube, TikTok o IG para descargar audio/video limpio.' },
-  { target:'#mini-player', text:'Controla tu música desde aquí, sin interrupciones. Toca para expandir.' },
+  { target:'#mini-player', text:'Controla tu música desde aquí, sin interrupciones. Toca para expandir el reproductor completo.' },
+  { target:null, text:'❤️ Favoritos, ⬇️ Descargas y 📋 Playlists. Organiza tu música como quieras. Todo se guarda localmente.', center:true },
   { target:null, text:'Música Non-Stop y Privacidad Total. Minimiza la app o bloquea tu pantalla y la música seguirá sonando.', center:true },
-  { target:null, text:'Bienvenido a Horizon. Tu música, tus reglas.', center:true, final:true },
+  { target:null, text:'Bienvenido a Horizon. Tu música, tus reglas. ¡Disfruta!', center:true, final:true },
 ];
 let tourStep = 0;
 
@@ -1734,7 +1996,7 @@ function startTour() {
   overlay.innerHTML = `
     <div class="tour-spotlight" id="tour-spotlight" style="position:fixed;pointer-events:none;transition:all .6s;border-radius:20px;border:3px solid var(--accent);box-shadow:0 0 0 9999px rgba(0,0,0,0.9),0 0 40px var(--accent-glow)"></div>
     <div class="tour-card" id="tour-card" style="position:relative;z-index:10000;background:var(--bg-card);border:1px solid var(--border-light);border-radius:20px;padding:24px;max-width:340px;box-shadow:0 24px 80px rgba(0,0,0,0.8)">
-      <div class="tour-step" id="tour-step" style="font-size:12px;color:var(--accent-light);font-weight:700;letter-spacing:1.5px;margin-bottom:10px">PASO 1 / 4</div>
+      <div class="tour-step" id="tour-step" style="font-size:12px;color:var(--accent-light);font-weight:700;letter-spacing:1.5px;margin-bottom:10px">PASO 1 / ${TOUR_STEPS.length}</div>
       <div class="tour-text" id="tour-text" style="font-size:15px;line-height:1.6;margin-bottom:20px;color:var(--text-primary)"></div>
       <button class="tour-btn" id="tour-btn" style="width:100%;height:48px;background:var(--gradient-primary);border-radius:12px;font-weight:700;font-size:15px;box-shadow:0 6px 20px var(--accent-glow)">Continuar</button>
       <div class="tour-dots" id="tour-dots" style="display:flex;justify-content:center;gap:8px;margin-top:16px"></div>
@@ -1759,8 +2021,8 @@ function renderTourStep() {
   const spot = document.getElementById('tour-spotlight');
   document.getElementById('tour-step').textContent = `PASO ${tourStep + 1} / ${TOUR_STEPS.length}`;
   document.getElementById('tour-text').textContent = step.text;
-  document.getElementById('tour-btn').textContent = step.final ? 'Comenzar' : 'Continuar';
-  document.getElementById('tour-dots').innerHTML = TOUR_STEPS.map((_, i) => `<div style="width:8px;height:8px;border-radius:50%;background:${i === tourStep ? 'var(--accent)' : 'rgba(255,255,255,0.2)'};box-shadow:${i === tourStep ? '0 0 10px var(--accent-glow)' : 'none'}"></div>`).join('');
+  document.getElementById('tour-btn').textContent = step.final ? '¡Comenzar!' : 'Continuar';
+  document.getElementById('tour-dots').innerHTML = TOUR_STEPS.map((_, i) => `<div style="width:8px;height:8px;border-radius:50%;background:${i === tourStep ? 'var(--accent)' : 'rgba(255,255,255,0.2)'};box-shadow:${i === tourStep ? '0 0 10px var(--accent-glow)' : 'none'};transition:all .3s"></div>`).join('');
   if (step.center) {
     spot.style.display = 'none';
   } else {
@@ -1782,6 +2044,8 @@ document.addEventListener('keydown', (e) => {
     if (document.getElementById('full-player').classList.contains('active')) document.getElementById('full-player').classList.remove('active');
     if (document.getElementById('story-viewer').classList.contains('active')) closeStoryViewer();
     if (document.getElementById('story-modal').classList.contains('active')) document.getElementById('story-modal').classList.remove('active');
+    if (document.getElementById('playlist-modal').classList.contains('active')) document.getElementById('playlist-modal').classList.remove('active');
+    if (document.getElementById('profile-setup-modal').classList.contains('active')) document.getElementById('profile-setup-modal').classList.remove('active');
   }
   if (e.key === ' ' && document.activeElement.tagName !== 'INPUT') {
     e.preventDefault();
@@ -1794,6 +2058,9 @@ const savedUser = Storage.load('currentUser');
 if (savedUser) {
   state.user = savedUser;
   state.friends = Storage.load('friends') || DEMO_USERS;
+  state.favorites = Storage.load('favorites') || [];
+  state.downloads = Storage.load('downloads') || [];
+  state.playlists = Storage.load('playlists') || [{ id: 1, name: 'Mis Favoritas', tracks: [] }];
   showLayer('layer-main');
   updateNavAvatar();
   navigateTo('home');
