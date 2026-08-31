@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
 from flask_cors import CORS
 import yt_dlp
 
@@ -26,12 +26,8 @@ def search_youtube():
     if not query:
         return jsonify({"results": []})
 
-    if "youtube.com" in query or "youtu.be" in query:
-        search_query = query
-    else:
-        search_query = f"ytsearch10:{query}"
+    search_query = query if ("youtube.com" in query or "youtu.be" in query) else f"ytsearch10:{query}"
 
-    # Opciones avanzadas con User-Agent para evitar bloqueos de IP en Render
     ydl_opts = {
         'format': 'bestaudio/best',
         'extract_flat': False,
@@ -52,19 +48,22 @@ def search_youtube():
             for entry in entries:
                 if not entry:
                     continue
+                video_id = entry.get('id')
                 results.append({
-                    "id": entry.get('id'),
+                    "id": video_id,
                     "title": entry.get('title'),
                     "artist": entry.get('uploader') or entry.get('channel') or 'Desconocido',
                     "cover": entry.get('thumbnail') or 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500',
-                    "streamUrl": entry.get('url'),
+                    # Apuntamos directamente a la ruta de streaming del backend
+                    "streamUrl": f"{request.host_url.rstrip('/')}/api/stream/{video_id}",
                     "duration": entry.get('duration', 0)
                 })
     except Exception as e:
-        print(f"Error crítico en yt-dlp: {e}")
+        print(f"Error en yt-dlp: {e}")
 
     return jsonify({"results": results})
 
+# Endpoint clave: Extrae el enlace en vivo de YouTube y redirige el audio al navegador
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def get_stream(video_id):
     try:
@@ -79,7 +78,11 @@ def get_stream(video_id):
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
-            return jsonify({"streamUrl": info.get('url')})
+            audio_url = info.get('url')
+            if not audio_url:
+                return jsonify({"error": "No se pudo obtener el stream"}), 404
+            # Redirección oficial para que el reproductor HTML5 lea el audio real
+            return redirect(audio_url)
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
