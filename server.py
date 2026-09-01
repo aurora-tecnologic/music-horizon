@@ -1,9 +1,10 @@
 from flask import Flask, jsonify, request, redirect
+from flask_cors import CORS
 import yt_dlp
 
 app = Flask(__name__)
+CORS(app)  # Habilitar CORS para permitir peticiones desde Netlify
 
-# Configuración robusta de yt-dlp para extracción de audio limpia
 YDL_OPTIONS_AUDIO = {
     'format': 'bestaudio/best',
     'noplaylist': True,
@@ -16,12 +17,19 @@ YDL_OPTIONS_SEARCH = {
     'format': 'best',
     'noplaylist': True,
     'quiet': True,
-    'default_search': 'ytsearch5',
+    'default_search': 'ytsearch10',
 }
 
-@app.route('/api/search', methods=['GET'])
+@app.route('/api/search', methods=['GET', 'POST'])
 def search_tracks():
-    query = request.args.get('q', '')
+    # Soportar tanto parámetros GET (?q=...) como POST (JSON {query: ...})
+    query = ''
+    if request.method == 'POST':
+        data = request.get_json(silent=True) or {}
+        query = data.get('query', '') or data.get('q', '')
+    else:
+        query = request.args.get('q', '')
+
     if not query:
         return jsonify({'results': []}), 400
     
@@ -33,12 +41,14 @@ def search_tracks():
             
             for entry in entries:
                 if entry:
+                    vid_id = entry.get('id')
                     results.append({
-                        'id': entry.get('id'),
+                        'id': vid_id,
+                        'youtubeId': vid_id,
                         'title': entry.get('title'),
-                        'uploader': entry.get('uploader') or entry.get('channel'),
+                        'artist': entry.get('uploader') or entry.get('channel') or 'Desconocido',
                         'duration': entry.get('duration', 0),
-                        'thumbnail': entry.get('thumbnail')
+                        'cover': entry.get('thumbnail') or f"https://i.ytimg.com/vi/{vid_id}/maxresdefault.jpg"
                     })
             return jsonify({'results': results})
     except Exception as e:
