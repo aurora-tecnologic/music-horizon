@@ -826,7 +826,6 @@ function onMainPlayerStateChange(e) {
   }
 }
 
-// Bucle principal de tiempo que alimenta la barra de progreso y la letra sincronizada
 function startTimeUpdateLoop() {
   if (timeUpdateInterval) clearInterval(timeUpdateInterval);
   timeUpdateInterval = setInterval(() => {
@@ -842,7 +841,6 @@ function startTimeUpdateLoop() {
       const pct = dur > 0 ? (cur / dur) * 100 : 0;
       if (fill) fill.style.width = pct + '%';
       if (miniFill) miniFill.style.width = pct + '%';
-      // Sincronizar el desplazamiento y resaltado de la letra en curso
       updateLyricsSync(cur);
     }
   }, 250);
@@ -1244,7 +1242,7 @@ document.getElementById('info-modal-ok').addEventListener('click',()=>document.g
 function openInfoModal(type){ const t=document.getElementById('info-modal-title'); const b=document.getElementById('info-modal-body');
   if(type==='e2e'){ t.textContent='Cifrado de extremo a extremo'; b.innerHTML='<div style="text-align:center;padding:14px"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" style="width:46px;height:46px;margin:0 auto 10px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div style="font-size:15px;font-weight:700;margin-bottom:8px">Tus datos protegidos</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.6">Cifrado AES-256 de extremo a extremo. Cero rastreo comercial. Sin anuncios ni ventanas emergentes. Solo el administrador puede auditar el sistema.</div></div>'; }
   else if(type==='visibility'){ t.textContent='Visibilidad de historias'; b.innerHTML='<div style="text-align:center;padding:14px"><div style="font-size:15px;font-weight:700;margin-bottom:8px">Control total</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.6">Publica (todos), Amigos (solo agregados) o Privada (archivada solo para ti).</div></div>'; }
-  else if(type==='version'){ t.textContent='Version de la plataforma'; b.innerHTML=`<div style="text-align:center;padding:14px"><div style="font-size:22px;font-weight:800;color:var(--accent-light);margin-bottom:8px">${PLATFORM_VERSION}</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.7">Music Horizon<br/>Backend: Flask + yt-dlp (Render)<br/>Autenticacion: Google Auth</div></div>`; }
+  else if(type==='version'){ t.textContent='Version de la plataforma'; b.innerHTML=`<div style="text-align:center;padding:14px"><div style="font-size:22px;font-weight:800;color:var(--accent-light);margin-bottom:8px">${PLATFORM_VERSION}</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.7">Music Horizon<br/>Plataforma de streaming musical de alta gama<br/>Experiencia sonora sin limites ni interrupciones</div></div>`; }
   else if(type==='diagnostics'){ t.textContent='Diagnostico del sistema'; b.innerHTML=`<div style="padding:12px;font-size:11px;line-height:1.8;color:var(--text-secondary)"><div><strong style="color:var(--text-primary)">Plataforma:</strong> ${navigator.platform}</div><div><strong style="color:var(--text-primary)">Idioma:</strong> ${navigator.language}</div><div><strong style="color:var(--text-primary)">Conexion:</strong> ${navigator.onLine?'Activa':'Sin conexion'}</div><div><strong style="color:var(--text-primary)">YouTube API:</strong> ${state.ytReady?'Conectada':'Cargando'}</div><div><strong style="color:var(--text-primary)">Media Session:</strong> ${'mediaSession' in navigator?'Soportado':'No soportado'}</div><div><strong style="color:var(--text-primary)">Viewport:</strong> ${window.innerWidth}x${window.innerHeight}</div></div>`; }
   document.getElementById('info-modal').classList.add('active'); }
 document.getElementById('visibility-modal-close').addEventListener('click',()=>document.getElementById('visibility-modal').classList.remove('active'));
@@ -1276,16 +1274,47 @@ function renderHomeView(container){
   container.querySelectorAll('.cat-chip').forEach(ch=>ch.addEventListener('click',()=>{ container.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); }));
 }
 
-async function performSearch(q,resultsEl,playFirst=false){
-  resultsEl.classList.add('show'); resultsEl.innerHTML='<div class="search-loading">Buscando en el servidor...</div>';
-  try{
-    const res=await fetch(`${API_BASE}/api/search`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query:q})});
-    if(res.ok){ const data=await res.json(); if(data.results&&data.results.length){ renderSearchResults(data.results,resultsEl,playFirst); return; } }
-  }catch(e){ console.warn('Search:',e); }
-  const local=TRACKS.filter(t=>t.title.toLowerCase().includes(q.toLowerCase())||t.artist.toLowerCase().includes(q.toLowerCase()));
-  if(local.length){ resultsEl.innerHTML=local.map((r,i)=>`<div class="search-result-item" data-idx="${i}"><div class="search-result-cover"><img src="${r.cover}" alt=""/></div><div class="search-result-info"><div class="search-result-title">${r.title}</div><div class="search-result-artist">${r.artist}</div></div></div>`).join(''); resultsEl.querySelectorAll('.search-result-item').forEach(item=>item.addEventListener('click',()=>{ playTrack(local[parseInt(item.dataset.idx)]); resultsEl.classList.remove('show'); })); }
-  else resultsEl.innerHTML='<div class="search-loading">Sin resultados</div>';
+// ============================================================
+// BUSCADOR DIRECTO BLINDADO Y REAL (Sin bloqueos de Render)
+// ============================================================
+async function performSearch(q, resultsEl, playFirst = false) {
+  resultsEl.classList.add('show');
+  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones...</div>';
+  
+  let results = [];
+  
+  try {
+    const res = await fetch(`https://invidious.jing.rocks/api/v1/search?q=${encodeURIComponent(q)}&type=video`, {
+      method: 'GET'
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      results = data.slice(0, 10).map(item => ({
+        id: item.videoId,
+        youtubeId: item.videoId,
+        title: item.title,
+        artist: item.author || 'Desconocido',
+        cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`,
+        genre: 'search'
+      }));
+    }
+  } catch (e) {
+    console.warn('Red externa ocupada, utilizando respaldo local inteligente', e);
+  }
+  
+  if (results.length === 0) {
+    const queryLower = q.toLowerCase();
+    results = TRACKS.filter(t => !t.isWelcome && (t.title.toLowerCase().includes(queryLower) || t.artist.toLowerCase().includes(queryLower)));
+  }
+  
+  if (results.length > 0) {
+    renderSearchResults(results, resultsEl, playFirst);
+  } else {
+    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados para esta búsqueda</div>';
+  }
 }
+
 function renderSearchResults(results,resultsEl,playFirst){
   resultsEl.innerHTML=results.map((r,i)=>`<div class="search-result-item" data-idx="${i}"><div class="search-result-cover"><img src="${r.cover||r.thumbnail||'https://via.placeholder.com/40'}" alt=""/></div><div class="search-result-info"><div class="search-result-title">${r.title}</div><div class="search-result-artist">${r.artist||'Desconocido'}</div></div></div>`).join('');
   resultsEl.querySelectorAll('.search-result-item').forEach(item=>item.addEventListener('click',()=>{ const t=results[parseInt(item.dataset.idx)]; playTrack({id:t.id||Date.now(),title:t.title,artist:t.artist||'Desconocido',cover:t.cover||t.thumbnail||'',youtubeId:t.youtubeId,genre:t.genre||'unknown'}); resultsEl.classList.remove('show'); }));
