@@ -3,9 +3,8 @@ from flask_cors import CORS
 import yt_dlp
 
 app = Flask(__name__)
-CORS(app)  # Habilitar CORS para peticiones desde Netlify
+CORS(app)
 
-# Forzar el cliente de Android/Web para evitar el bloqueo de bot en servidores cloud (Render)
 YDL_OPTIONS_AUDIO = {
     'format': 'bestaudio/best',
     'noplaylist': True,
