@@ -3,14 +3,16 @@ from flask_cors import CORS
 import yt_dlp
 
 app = Flask(__name__)
-CORS(app)  # Habilitar CORS para permitir peticiones desde Netlify
+CORS(app)  # Habilitar CORS para peticiones desde Netlify
 
+# Forzar el cliente de Android/Web para evitar el bloqueo de bot en servidores cloud (Render)
 YDL_OPTIONS_AUDIO = {
     'format': 'bestaudio/best',
     'noplaylist': True,
     'quiet': True,
     'skip_download': True,
     'extractaudio': True,
+    'extractor_args': {'youtube': {'player_client': ['android', 'web']}},
 }
 
 YDL_OPTIONS_SEARCH = {
@@ -18,11 +20,11 @@ YDL_OPTIONS_SEARCH = {
     'noplaylist': True,
     'quiet': True,
     'default_search': 'ytsearch10',
+    'extractor_args': {'youtube': {'player_client': ['android', 'web']}},
 }
 
 @app.route('/api/search', methods=['GET', 'POST'])
 def search_tracks():
-    # Soportar tanto parámetros GET (?q=...) como POST (JSON {query: ...})
     query = ''
     if request.method == 'POST':
         data = request.get_json(silent=True) or {}
@@ -42,14 +44,15 @@ def search_tracks():
             for entry in entries:
                 if entry:
                     vid_id = entry.get('id')
-                    results.append({
-                        'id': vid_id,
-                        'youtubeId': vid_id,
-                        'title': entry.get('title'),
-                        'artist': entry.get('uploader') or entry.get('channel') or 'Desconocido',
-                        'duration': entry.get('duration', 0),
-                        'cover': entry.get('thumbnail') or f"https://i.ytimg.com/vi/{vid_id}/maxresdefault.jpg"
-                    })
+                    if vid_id:
+                        results.append({
+                            'id': vid_id,
+                            'youtubeId': vid_id,
+                            'title': entry.get('title'),
+                            'artist': entry.get('uploader') or entry.get('channel') or 'Desconocido',
+                            'duration': entry.get('duration', 0),
+                            'cover': entry.get('thumbnail') or f"https://i.ytimg.com/vi/{vid_id}/maxresdefault.jpg"
+                        })
             return jsonify({'results': results})
     except Exception as e:
         print(f"Error en búsqueda: {e}")
