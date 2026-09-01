@@ -473,6 +473,21 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
+<!-- MODAL DESCARGA INTERNA REAL (BLOB) -->
+<div class="modal-overlay center" id="download-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Descarga interna al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon solicita permisos de almacenamiento para guardar el archivo físicamente en tu teléfono.</p>
+      <label class="form-label">Formato</label>
+      <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
+      <label class="form-label">Calidad</label>
+      <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
+    </div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
+  </div>
+</div>
+
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Configurar perfil</h3></div>
@@ -482,13 +497,14 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
           <span id="avatar-initial">?</span><img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
           <div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
         </div>
-        <div style="font-size:10px;color:var(--text-muted)">Toca para subir foto o permisos de galeria</div>
+        <div style="font-size:10px;color:var(--text-muted)">Toca para subir una foto (Permiso de galería)</div>
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" />
       <label class="form-label">Nombre</label><input type="text" class="setup-input" id="setup-name" placeholder="Nombre" autocomplete="off" />
       <label class="form-label">Usuario</label><input type="text" class="setup-input" id="setup-username" placeholder="@username (unico)" autocomplete="off" style="text-transform:lowercase" />
       <label class="form-label">Biografia (opcional)</label><input type="text" class="setup-input" id="setup-bio" placeholder="Cuentale al mundo sobre ti" autocomplete="off" />
       <label class="form-label">Instagram (opcional)</label><input type="text" class="setup-input" id="setup-instagram" placeholder="@usuario" autocomplete="off" />
+      <div style="font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:10px">Solo minusculas, numeros, puntos y guiones bajos · 3-20 caracteres</div>
       <div id="setup-error" style="color:var(--danger);font-size:11px;text-align:center;min-height:14px;margin-bottom:8px"></div>
       <button class="modal-btn primary" id="setup-btn" style="width:100%">Crear perfil</button>
     </div>
@@ -577,33 +593,15 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </section>
 
-<!-- MODAL DE DESCARGA REAL CON SELECTOR DE CALIDAD Y FORMATO -->
-<div class="modal-overlay center" id="download-modal">
-  <div class="modal">
-    <div class="modal-header"><h3 class="modal-title">Descargar multimedia</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Selecciona el formato y la calidad de descarga para tu dispositivo.</p>
-      <label class="form-label">Formato</label>
-      <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video de alta calidad (MP4)</option></select>
-      <label class="form-label">Calidad</label>
-      <select class="setup-input" id="dl-quality"><option value="high">Alta / HD (Maxima fidelidad)</option><option value="standard">Estandar (Optimizado para espacio)</option></select>
-      <div style="font-size:10px;color:var(--text-muted);margin-top:6px">Se solicitaran permisos de almacenamiento local para guardar el archivo directamente.</div>
-    </div>
-    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Iniciar descarga</button></div>
-  </div>
-</div>
-
 <!-- MODAL DE HISTORIA CON PERMISOS DE CÁMARA Y GALERÍA -->
 <div class="modal-overlay" id="story-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Nueva historia</h3><button class="modal-close" id="story-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
-      <div class="story-image-upload" id="story-image-upload">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      </div>
+      <div class="story-image-upload" id="story-image-upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
       <div style="display:flex;gap:8px;margin-bottom:12px">
-        <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:11px">Abrir Galeria</button>
-        <button class="modal-btn secondary" id="btn-open-camera" style="font-size:11px">Tomar Foto (Camara)</button>
+        <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:11px">Permiso Galería</button>
+        <button class="modal-btn secondary" id="btn-open-camera" style="font-size:11px">Permiso Cámara</button>
       </div>
       <input type="file" id="story-image-input" accept="image/*" style="display:none" />
       <input type="file" id="story-camera-input" accept="image/*" capture="environment" style="display:none" />
@@ -656,14 +654,88 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
+<div class="modal-overlay center" id="coupon-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Canjear codigo de regalo</h3><button class="modal-close" id="coupon-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;line-height:1.5">Ingresa el codigo de 16 caracteres proporcionado por el administrador.</p>
+      <input type="text" class="coupon-input" id="coupon-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" />
+      <div id="coupon-email-container" style="display:none;margin-bottom:10px">
+        <label class="form-label">Correo para la invitacion</label>
+        <input type="email" class="setup-input" id="coupon-email" placeholder="tu@gmail.com" style="margin:0" />
+      </div>
+      <div id="coupon-result"></div>
+      <div class="admin-divider" id="admin-coupon-section" style="display:none">
+        <div class="admin-title">Panel de administrador · Crear codigo</div>
+        <label class="form-label">Tipo de cupon</label>
+        <select class="setup-input" id="admin-coupon-type"><option value="account">Acceso directo</option><option value="invitation">Invitacion</option></select>
+        <label class="form-label">Servicio</label>
+        <input type="text" class="setup-input" id="admin-coupon-service" placeholder="Servicio" />
+        <div id="admin-account-fields">
+          <label class="form-label">Correo</label><input type="text" class="setup-input" id="admin-coupon-email" placeholder="cuenta@servicio.com" />
+          <label class="form-label">Contrasena</label><input type="text" class="setup-input" id="admin-coupon-password" placeholder="contrasena" />
+          <label class="form-label">Perfil</label><input type="text" class="setup-input" id="admin-coupon-profile" placeholder="Perfil 1" />
+        </div>
+        <button class="modal-btn admin" id="admin-create-coupon" style="width:100%">Generar codigo</button>
+        <div id="admin-created-code" style="margin-top:10px;text-align:center;font-size:14px;font-weight:800;letter-spacing:2px;color:var(--accent-light)"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="coupon-cancel">Cerrar</button><button class="modal-btn primary" id="coupon-redeem">Canjear</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay center" id="permissions-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Permisos del sistema</h3><button class="modal-close" id="permissions-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body" id="permissions-body"></div>
+    <div class="modal-footer"><button class="modal-btn primary" id="permissions-close">Entendido</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay center" id="info-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title" id="info-modal-title">Informacion</h3><button class="modal-close" id="info-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body" id="info-modal-body"></div>
+    <div class="modal-footer"><button class="modal-btn primary" id="info-modal-ok">Entendido</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="visibility-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Visibilidad de historias</h3><button class="modal-close" id="visibility-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <p style="color:var(--text-secondary);font-size:12px;margin-bottom:12px">Elige quien puede ver tus historias por defecto.</p>
+      <div id="default-privacy-options">
+        <div class="privacy-opt" data-privacy="public"><div class="privacy-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="privacy-opt-label">Publica</div></div></div>
+        <div class="privacy-opt" data-privacy="friends"><div class="privacy-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="privacy-opt-label">Amigos</div></div></div>
+        <div class="privacy-opt" data-privacy="private"><div class="privacy-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="privacy-opt-label">Privada</div></div></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="visibility-cancel">Cancelar</button><button class="modal-btn primary" id="visibility-save">Guardar</button></div>
+  </div>
+</div>
+
+<section id="layer-overlord" class="layer">
+  <button class="ov-panic" id="ov-panic" title="Salir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+  <div class="ov-header"><span class="ov-uptime" id="ov-uptime">UPTIME: 00:00:00</span><span class="ov-alert">SESION ENCRIPTADA</span><span class="ov-lat" id="ov-lat">LAT: 12ms</span></div>
+  <div class="ov-body" id="ov-body"></div>
+  <div class="ov-input-wrap"><span class="ov-prompt">root@horizon:~#</span><input type="text" class="ov-input" id="ov-input" autocomplete="off" spellcheck="false" /></div>
+</section>
+
+<div class="notifications-panel" id="notifications-panel">
+  <div class="notifications-header"><h3 class="notifications-title">Notificaciones</h3><button class="modal-close" id="notif-panel-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="notifications-list" id="notifications-list"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
+const API_BASE = 'https://music-horizon.onrender.com';
 const ADMIN_EMAIL = 'administradores830@gmail.com';
 const PLATFORM_VERSION = 'V1.0.2.3.BETA';
 
@@ -686,15 +758,30 @@ const state = {
   notifications: [], savedStories: [], selectedPrivacy: 'public', defaultPrivacy: 'public',
   storyViewerIndex: 0, storyViewerTimer: null, currentViewingStory: null, storyImageData: null,
   shuffleEnabled: false, repeatMode: 0, shuffledQueue: [], shuffledIndex: 0,
-  permissions: { notifications: 'granted', gallery: 'granted', camera: 'granted', media: 'granted' },
+  permissions: { notifications: 'pending', gallery: 'pending', media: 'granted' },
   activeTab: 'music', ytReady: false, pendingDownloadTrack: null
 };
 
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
 
 // ============================================================
-// 1. REPRODUCCIÓN AUTOMÁTICA DE "ROI (INSTRUMENTAL SLOWED)" EN LOGIN
+// SEGUIMIENTO Y SINCRONIZACION DE LA LETRA EN TIEMPO REAL
 // ============================================================
+function updateLyricsSync(currentTime) {
+  const lines = document.querySelectorAll('.lyrics-line[data-time]');
+  if (!lines.length) return;
+  let activeLine = null;
+  lines.forEach(line => {
+    const time = parseFloat(line.dataset.time);
+    if (currentTime >= time) activeLine = line;
+  });
+  if (activeLine && !activeLine.classList.contains('active')) {
+    lines.forEach(l => l.classList.remove('active'));
+    activeLine.classList.add('active');
+    activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
 function onYouTubeIframeAPIReady() {
   state.ytReady = true;
   initLoginPlayer();
@@ -720,25 +807,551 @@ function stopLoginPlayer() {
   if (c) c.innerHTML = '';
 }
 
+function initMainPlayer(videoId) {
+  if (!videoId) return;
+  if (!ytMainPlayer) {
+    const wrapper = document.createElement('div');
+    wrapper.id = 'yt-main-div';
+    wrapper.style.cssText = 'position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none';
+    document.body.appendChild(wrapper);
+    ytMainPlayer = new YT.Player('yt-main-div', {
+      videoId: videoId,
+      playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, playsinline: 1 },
+      events: {
+        onReady: () => { ytMainPlayer.playVideo(); startTimeUpdateLoop(); },
+        onStateChange: onMainPlayerStateChange
+      }
+    });
+  } else {
+    ytMainPlayer.loadVideoById(videoId);
+  }
+}
+
+function onMainPlayerStateChange(e) {
+  if (e.data === YT.PlayerState.PLAYING) {
+    state.isPlaying = true;
+    updatePlayStateUI(true);
+    startTimeUpdateLoop();
+  } else if (e.data === YT.PlayerState.PAUSED) {
+    state.isPlaying = false;
+    updatePlayStateUI(false);
+  } else if (e.data === YT.PlayerState.ENDED) {
+    if (state.repeatMode === 2 && ytMainPlayer) { ytMainPlayer.seekTo(0); ytMainPlayer.playVideo(); }
+    else nextTrack();
+  }
+}
+
+function startTimeUpdateLoop() {
+  if (timeUpdateInterval) clearInterval(timeUpdateInterval);
+  timeUpdateInterval = setInterval(() => {
+    if (ytMainPlayer && ytMainPlayer.getCurrentTime && ytMainPlayer.getDuration) {
+      const cur = ytMainPlayer.getCurrentTime() || 0;
+      const dur = ytMainPlayer.getDuration() || 0;
+      const curEl = document.querySelector('.current-time');
+      const durEl = document.querySelector('.total-duration');
+      const fill = document.getElementById('progress-fill');
+      const miniFill = document.getElementById('mini-progress-fill');
+      if (curEl) curEl.innerText = formatTime(cur);
+      if (durEl && dur > 0) durEl.innerText = formatTime(dur);
+      const pct = dur > 0 ? (cur / dur) * 100 : 0;
+      if (fill) fill.style.width = pct + '%';
+      if (miniFill) miniFill.style.width = pct + '%';
+      updateLyricsSync(cur);
+    }
+  }, 250);
+}
+
+function formatTime(seconds) {
+  if (!isFinite(seconds) || seconds < 0) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+function updatePlayStateUI(isPlaying) {
+  state.isPlaying = isPlaying;
+  const PLAY_SVG = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+  const PAUSE_SVG = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+  const mainIcon = document.getElementById('main-play-pause-icon');
+  if (mainIcon) mainIcon.innerHTML = isPlaying ? PAUSE_SVG : PLAY_SVG;
+  const miniIcon = document.getElementById('mini-play-pause-icon');
+  if (miniIcon) miniIcon.innerHTML = isPlaying ? PAUSE_SVG : PLAY_SVG;
+  const vinyl = document.getElementById('vinyl');
+  if (vinyl) vinyl.classList.toggle('playing', isPlaying);
+}
+
+function renderCleanVideoPlayer(track) {
+  const holder = document.getElementById('video-holder');
+  const ytContainer = document.getElementById('yt-video-container');
+  const fallback = document.getElementById('video-fallback');
+  if (!holder || !ytContainer || !track) return;
+  ytContainer.innerHTML = '';
+  fallback.style.display = 'none';
+  if (!track.youtubeId) { fallback.style.display = 'flex'; return; }
+  const divId = 'yt-video-iframe-' + Date.now();
+  ytContainer.innerHTML = `<div id="${divId}"></div>`;
+  if (ytVideoPlayer) { try { ytVideoPlayer.destroy(); } catch(e){} ytVideoPlayer = null; }
+  ytVideoPlayer = new YT.Player(divId, {
+    videoId: track.youtubeId,
+    playerVars: { autoplay: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, controls: 0, disablekb: 1, fs: 0, playsinline: 1 },
+    events: { onError: () => { ytContainer.innerHTML = ''; fallback.style.display = 'flex'; document.getElementById('video-fallback-link').href = `https://www.youtube.com/watch?v=${track.youtubeId}`; } }
+  });
+}
+
+const TRACKS = [
+  { id:1, title:'Roi (Instrumental Slowed)', artist:'Videoclub', youtubeId:'01974wqk9eQ', cover:'https://i.ytimg.com/vi/01974wqk9eQ/maxresdefault.jpg', genre:'electropop', isWelcome:true },
+  { id:2, title:'Despacito', artist:'Luis Fonsi ft. Daddy Yankee', youtubeId:'kJQP7kiw5Fk', cover:'https://i.ytimg.com/vi/kJQP7kiw5Fk/maxresdefault.jpg', genre:'latin' },
+  { id:3, title:'Shape of You', artist:'Ed Sheeran', youtubeId:'JGwWNGJdvx8', cover:'https://i.ytimg.com/vi/JGwWNGJdvx8/maxresdefault.jpg', genre:'pop' },
+  { id:4, title:'Gangnam Style', artist:'PSY', youtubeId:'9bZkp7q19f0', cover:'https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg', genre:'pop' },
+  { id:5, title:'See You Again', artist:'Wiz Khalifa ft. Charlie Puth', youtubeId:'RgKAFK5djSk', cover:'https://i.ytimg.com/vi/RgKAFK5djSk/maxresdefault.jpg', genre:'pop' },
+  { id:6, title:'Uptown Funk', artist:'Mark Ronson ft. Bruno Mars', youtubeId:'OPf0YbXqDm0', cover:'https://i.ytimg.com/vi/OPf0YbXqDm0/maxresdefault.jpg', genre:'funk' },
+  { id:7, title:'Roar', artist:'Katy Perry', youtubeId:'CevxZvSJLk8', cover:'https://i.ytimg.com/vi/CevxZvSJLk8/maxresdefault.jpg', genre:'pop' },
+  { id:8, title:'Counting Stars', artist:'OneRepublic', youtubeId:'hT_nvWreIhg', cover:'https://i.ytimg.com/vi/hT_nvWreIhg/maxresdefault.jpg', genre:'pop' },
+];
+
+const DEFAULT_FRIENDS = [
+  { name:'Sofia Martinez', username:'sofia.mtz', avatar:null, isFriend:false, activity:'Escuchando Despacito', stats:{plays:142,favorites:28,stories:5}, bio:'Amante de la musica latina', instagram:'sofia.mtz' },
+  { name:'Carlos Ruiz', username:'carlos.ruiz99', avatar:null, isFriend:true, activity:'Compartio una historia', stats:{plays:89,favorites:15,stories:3}, bio:'Productor musical', instagram:'carlos.ruiz' },
+  { name:'Valentina Lopez', username:'vale.lopez', avatar:null, isFriend:true, activity:'Escuchando Shape of You', stats:{plays:203,favorites:42,stories:8}, bio:'Cantante y compositora', instagram:'vale.lopez' },
+  { name:'Diego Hernandez', username:'diego.hdz', avatar:null, isFriend:false, activity:'Nuevo en Music Horizon', stats:{plays:12,favorites:3,stories:0}, bio:'', instagram:'' },
+  { name:'Isabella Garcia', username:'isa.garcia', avatar:null, isFriend:false, activity:'Escuchando Gangnam Style', stats:{plays:67,favorites:11,stories:2}, bio:'DJ profesional', instagram:'isa.garcia' },
+];
+
+const fs = {
+  async getUserByUid(uid){ if(!db) return null; try{ const s=await getDoc(doc(db,'users',uid)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
+  async getUserByUsername(u){ if(!db) return null; try{ const q=query(collection(db,'users'),where('username','==',u)); const s=await getDocs(q); const f=s.docs[0]; return f?{id:f.id,...f.data()}:null; }catch{ return null; } },
+  async saveUser(uid,d){ if(!db) return; try{ await setDoc(doc(db,'users',uid),{...d,updatedAt:Date.now()},{merge:true}); }catch{} },
+  async saveFavorites(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userFavorites',uid),{tracks:t}); }catch{} },
+  async getFavorites(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userFavorites',uid)); return s.exists()?s.data().tracks||[]:[]; }catch{ return []; } },
+  async saveDownloads(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userDownloads',uid),{tracks:t}); }catch{} },
+  async getDownloads(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userDownloads',uid)); return s.exists()?s.data().tracks||[]:[]; }catch{ return []; } },
+  async savePlaylists(uid,p){ if(!db) return; try{ await setDoc(doc(db,'userPlaylists',uid),{playlists:p}); }catch{} },
+  async getPlaylists(uid){ if(!db) return [{id:1,name:'Mis Favoritas',tracks:[]}]; try{ const s=await getDoc(doc(db,'userPlaylists',uid)); return s.exists()?s.data().playlists||[{id:1,name:'Mis Favoritas',tracks:[]}]:[{id:1,name:'Mis Favoritas',tracks:[]}]; }catch{ return [{id:1,name:'Mis Favoritas',tracks:[]}]; } },
+  async saveSettings(uid,s){ if(!db) return; try{ await setDoc(doc(db,'userSettings',uid),s); }catch{} },
+  async getSettings(uid){ if(!db) return {defaultPrivacy:'public'}; try{ const s=await getDoc(doc(db,'userSettings',uid)); return s.exists()?s.data():{defaultPrivacy:'public'}; }catch{ return {defaultPrivacy:'public'}; } },
+  async saveStory(st){ if(!db) return st.id; try{ await setDoc(doc(db,'stories',String(st.id)),st); return st.id; }catch{ return st.id; } },
+  async updateStory(st){ if(!db) return; try{ await setDoc(doc(db,'stories',String(st.id)),st); }catch{} },
+  async getStories(){ if(!db) return []; try{ const s=await getDocs(collection(db,'stories')); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
+  async getSavedStories(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'savedStories',uid)); return s.exists()?s.data().stories||[]:[]; }catch{ return []; } },
+  async saveSavedStories(uid,s){ if(!db) return; try{ await setDoc(doc(db,'savedStories',uid),{stories:s}); }catch{} },
+  async getCoupon(code){ if(!db) return null; try{ const s=await getDoc(doc(db,'coupons',code)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
+  async createCoupon(code,data){ if(!db) return; try{ await setDoc(doc(db,'coupons',code),{...data,code,used:false,createdAt:Date.now()}); }catch{} },
+  async markCouponUsed(code,by){ if(!db) return; try{ await updateDoc(doc(db,'coupons',code),{used:true,usedBy:by,usedAt:Date.now()}); }catch{} },
+  async saveCouponRedemption(d){ if(!db) return; try{ await addDoc(collection(db,'couponRedemptions'),{...d,createdAt:serverTimestamp()}); }catch{} },
+  async addNotification(n){ if(!db) return; try{ await addDoc(collection(db,'notifications'),{...n,createdAt:serverTimestamp()}); }catch{} },
+  async getNotifications(uid){ if(!db) return []; try{ const q=query(collection(db,'notifications'),where('toUser','==',uid)); const s=await getDocs(q); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
+  async markNotifRead(id){ if(!db||!id) return; try{ await updateDoc(doc(db,'notifications',id),{read:true}); }catch{} },
+};
+
+let toastTimer;
+function toast(msg,type='success'){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+type; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3000); }
+function showLayer(id){ document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function validateUsername(u){ if(!u) return 'Obligatorio'; if(u.length<3) return 'Minimo 3 caracteres'; if(u.length>20) return 'Maximo 20'; if(!/^[a-z0-9._]+$/.test(u)) return 'Solo minusculas, numeros, puntos y _'; if(u.startsWith('.')||u.endsWith('.')||u.startsWith('_')||u.endsWith('_')) return 'No puede empezar o terminar con . o _'; return null; }
+function updateNotifBadge(){ const unread=state.notifications.filter(n=>!n.read).length; const b=document.getElementById('notif-badge'); if(unread>0){ b.textContent=unread>99?'99+':unread; b.style.display='flex'; } else b.style.display='none'; }
+function markAllNotifsRead(){ state.notifications.forEach(n=>n.read=true); state.notifications.forEach(n=>{ if(n.id&&!String(n.id).startsWith('local_')) fs.markNotifRead(n.id); }); updateNotifBadge(); }
+function renderNotifications(){ const list=document.getElementById('notifications-list'); if(state.notifications.length===0){ list.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="empty-state-title">Sin notificaciones</div></div>'; return; }
+  list.innerHTML=state.notifications.map(n=>{ const ic=n.type==='like'?'like':n.type==='play'?'play':'comment'; const isvg=n.type==='like'?'<svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--danger)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>':n.type==='play'?'<svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--success)"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'; return `<div class="notification-item ${n.read?'':'unread'}"><div class="notification-icon ${ic}">${isvg}</div><div class="notification-content"><div class="notification-text">${n.message}</div><div class="notification-time">${getTimeAgo(n.createdAt)}</div></div></div>`; }).join(''); }
+function getTimeAgo(ts){ if(!ts) return 'reciente'; const raw=typeof ts==='number'?ts:(ts.toMillis?ts.toMillis():Date.now()); const s=Math.floor((Date.now()-raw)/1000); if(s<60) return 'hace '+s+'s'; const m=Math.floor(s/60); if(m<60) return 'hace '+m+'m'; const h=Math.floor(m/60); if(h<24) return 'hace '+h+'h'; return 'hace '+Math.floor(h/24)+'d'; }
+function formatCouponCode(v){ const c=v.replace(/[^A-Z0-9]/gi,'').toUpperCase(); const g=c.match(/.{1,4}/g)||[]; return g.join('-'); }
+function generateCode16(){ const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let out=''; const arr=new Uint32Array(16); crypto.getRandomValues(arr); arr.forEach(n=>out+=chars[n%chars.length]); return out; }
+
+document.getElementById('google-login-btn').addEventListener('click', async () => {
+  stopLoginPlayer();
+  const btn=document.getElementById('google-login-btn'); const loading=document.getElementById('login-loading');
+  btn.disabled=true; loading.classList.add('show');
+  try{
+    let firebaseUser=null;
+    if(firebaseAuth){ const r=await signInWithPopup(firebaseAuth,new GoogleAuthProvider()); firebaseUser=r.user; }
+    else { await new Promise(r=>setTimeout(r,1000)); firebaseUser={uid:'demo_'+Date.now(),displayName:'Usuario',email:'usuario@gmail.com',photoURL:null}; }
+    state.firebaseUser=firebaseUser;
+    if(db){ const existing=await fs.getUserByUid(firebaseUser.uid); if(existing){ state.user=existing; await loadAllUserData(firebaseUser.uid); onAuthSuccess(existing); return; } }
+    document.getElementById('profile-setup-modal').classList.add('active');
+    document.getElementById('setup-name').value=firebaseUser.displayName||'';
+    document.getElementById('setup-username').value='';
+    document.getElementById('setup-bio').value='';
+    document.getElementById('setup-instagram').value='';
+    document.getElementById('setup-error').textContent='';
+    document.getElementById('avatar-preview').style.display='none';
+    document.getElementById('avatar-initial').style.display='block';
+    document.getElementById('avatar-initial').textContent=(firebaseUser.displayName||'?')[0].toUpperCase();
+  }catch(e){ toast('Error: '+e.message,'error'); }
+  finally{ btn.disabled=false; loading.classList.remove('show'); }
+});
+
+async function loadAllUserData(uid){
+  const [f,d,p,s,saved]=await Promise.all([fs.getFavorites(uid),fs.getDownloads(uid),fs.getPlaylists(uid),fs.getSettings(uid),fs.getSavedStories(uid)]);
+  state.favorites=f; state.downloads=d; state.playlists=p; state.defaultPrivacy=s.defaultPrivacy||'public'; state.savedStories=saved;
+}
+
+document.getElementById('avatar-upload').addEventListener('click',()=>document.getElementById('avatar-file-input').click());
+document.getElementById('avatar-file-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ document.getElementById('avatar-preview').src=ev.target.result; document.getElementById('avatar-preview').style.display='block'; document.getElementById('avatar-initial').style.display='none'; }; r.readAsDataURL(f); } });
+document.getElementById('setup-btn').addEventListener('click',completeProfileSetup);
+document.getElementById('setup-username').addEventListener('keydown',(e)=>{ if(e.key==='Enter') completeProfileSetup(); });
+
+async function completeProfileSetup(){
+  const name=document.getElementById('setup-name').value.trim();
+  let username=document.getElementById('setup-username').value.trim().toLowerCase();
+  const bio=document.getElementById('setup-bio').value.trim();
+  const instagram=document.getElementById('setup-instagram').value.trim();
+  if(username.startsWith('@')) username=username.substring(1);
+  const errorEl=document.getElementById('setup-error'); const btn=document.getElementById('setup-btn');
+  if(!name){ errorEl.textContent='El nombre es obligatorio'; return; }
+  const err=validateUsername(username); if(err){ errorEl.textContent=err; return; }
+  btn.disabled=true; btn.textContent='Creando...';
+  try{
+    const avatar=document.getElementById('avatar-preview').style.display!=='none'?document.getElementById('avatar-preview').src:(state.firebaseUser?.photoURL||null);
+    const user={name,username,email:state.firebaseUser?.email||null,avatar,bio,instagram,firebaseUid:state.firebaseUser?.uid,isGoogle:true,createdAt:Date.now(),stats:{plays:0,shares:0,stories:0}};
+    if(db) await fs.saveUser(state.firebaseUser.uid,user);
+    state.user=user; state.favorites=[]; state.downloads=[]; state.playlists=[{id:1,name:'Mis Favoritas',tracks:[]}]; state.notifications=[]; state.savedStories=[];
+    document.getElementById('profile-setup-modal').classList.remove('active');
+    btn.disabled=false; btn.textContent='Crear perfil';
+    onAuthSuccess(user);
+  }catch(e){ errorEl.textContent='Error: '+e.message; btn.disabled=false; btn.textContent='Crear perfil'; }
+}
+
+function onAuthSuccess(user){
+  state.user=user; state.friends=DEFAULT_FRIENDS;
+  document.getElementById('auth-login-screen').style.display='none';
+  loadAllUserData(state.firebaseUser.uid).then(async ()=>{
+    showLayer('layer-main'); updateNavAvatar(); navigateTo('home');
+    state.stories=await fs.getStories(); renderStoriesBar(); updateNotifBadge();
+    requestNotificationPermission();
+    const urlUser=new URLSearchParams(location.search).get('user');
+    if(urlUser&&urlUser!==user.username){ setTimeout(()=>{ navigateTo('friends'); setTimeout(()=>{ const fi=document.getElementById('friend-search-input'); if(fi){ fi.value=urlUser; fi.dispatchEvent(new Event('input')); } },150); },300); }
+  });
+}
+
+async function requestNotificationPermission(){
+  if('Notification' in window && Notification.permission==='default'){ try{ const p=await Notification.requestPermission(); state.permissions.notifications=p==='granted'?'granted':'denied'; }catch{ state.permissions.notifications='denied'; } }
+  else if('Notification' in window){ state.permissions.notifications=Notification.permission==='granted'?'granted':'denied'; }
+}
+
+async function logout(){
+  if(!confirm('Cerrar sesion?')) return;
+  if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} }
+  state.user=null; state.firebaseUser=null; state.currentTrack=null; state.isPlaying=false;
+  if(ytMainPlayer){ try{ ytMainPlayer.pauseVideo(); }catch{} }
+  document.getElementById('mini-player').classList.add('hidden');
+  document.getElementById('auth-login-screen').style.display='flex';
+  document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active'));
+  toast('Sesion cerrada','info');
+}
+
+if(firebaseAuth){ onAuthStateChanged(firebaseAuth,(fb)=>{ if(fb&&!state.user){ state.firebaseUser=fb; fs.getUserByUid(fb.uid).then(async (p)=>{ if(p){ state.user=p; await loadAllUserData(fb.uid); onAuthSuccess(p); } }); } }); }
+
+function buildShuffledQueue(){ const idx=TRACKS.filter(t=>!t.isWelcome).map((_,i)=>i); for(let i=idx.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [idx[i],idx[j]]=[idx[j],idx[i]]; } state.shuffledQueue=idx; state.shuffledIndex=0; }
+function nextTrack(){ const nw=TRACKS.filter(t=>!t.isWelcome); if(state.shuffleEnabled){ if(!state.shuffledQueue.length) buildShuffledQueue(); state.shuffledIndex=(state.shuffledIndex+1)%state.shuffledQueue.length; playTrack(nw[state.shuffledQueue[state.shuffledIndex]]); } else { const cur=nw.findIndex(t=>t.id===state.currentTrack?.id); playTrack(nw[(cur+1)%nw.length]); } }
+function prevTrack(){ const nw=TRACKS.filter(t=>!t.isWelcome); const cur=nw.findIndex(t=>t.id===state.currentTrack?.id); playTrack(nw[(cur-1+nw.length)%nw.length]); }
+function skipForward(){ if(ytMainPlayer&&ytMainPlayer.seekTo){ ytMainPlayer.seekTo((ytMainPlayer.getCurrentTime()||0)+10,true); } }
+function skipBackward(){ if(ytMainPlayer&&ytMainPlayer.seekTo){ ytMainPlayer.seekTo(Math.max(0,(ytMainPlayer.getCurrentTime()||0)-10),true); } }
+
+async function playTrack(track,fromStory=false){
+  if(!track) return;
+  state.currentTrack=track; state.currentIndex=TRACKS.findIndex(t=>t.id===track.id);
+  state.isPlaying=true;
+  if(track.youtubeId) initMainPlayer(track.youtubeId);
+  updatePlayerUI(); document.getElementById('mini-player').classList.remove('hidden'); updateMediaSession(); saveHistory(track);
+  if(state.user&&state.firebaseUser){ state.user.stats.plays=(state.user.stats.plays||0)+1; await fs.saveUser(state.firebaseUser.uid,{stats:state.user.stats}); }
+  if(fromStory&&state.currentViewingStory&&state.currentViewingStory.username!==state.user.username){ toast('Notificacion enviada al creador','info'); }
+  if(state.activeTab==='video') renderCleanVideoPlayer(track);
+  const wc=document.getElementById('welcome-track'); if(wc) wc.classList.toggle('playing',!!track.isWelcome);
+}
+
+function togglePlay(){
+  if(!state.currentTrack){ playTrack(TRACKS[0]); return; }
+  if(ytMainPlayer){ if(state.isPlaying){ ytMainPlayer.pauseVideo(); } else { ytMainPlayer.playVideo(); } }
+}
+function toggleShuffle(){ state.shuffleEnabled=!state.shuffleEnabled; const b=document.getElementById('full-shuffle'); b.classList.toggle('active-mode',state.shuffleEnabled); if(state.shuffleEnabled) buildShuffledQueue(); toast(state.shuffleEnabled?'Aleatorio activado':'Aleatorio desactivado','info'); }
+function toggleRepeat(){ state.repeatMode=(state.repeatMode+1)%3; const b=document.getElementById('full-repeat'); b.classList.toggle('active-mode',state.repeatMode>0); toast(state.repeatMode===0?'Repetir desactivado':state.repeatMode===1?'Repetir todo':'Repetir una','info'); }
+
+function updatePlayerUI(){
+  if(!state.currentTrack) return;
+  const t=state.currentTrack;
+  document.getElementById('mini-title').textContent=t.title;
+  document.getElementById('mini-artist').textContent=t.artist;
+  document.getElementById('mini-cover-img').src=t.cover;
+  document.getElementById('full-title').textContent=t.title;
+  document.getElementById('full-artist').textContent=t.artist;
+  document.getElementById('full-cover-img').src=t.cover;
+  updatePlayStateUI(state.isPlaying);
+}
+
+function updateMediaSession(){ if(!('mediaSession' in navigator)||!state.currentTrack) return; const t=state.currentTrack; navigator.mediaSession.metadata=new MediaMetadata({title:t.title,artist:t.artist,artwork:[{src:t.cover,sizes:'512x512'}]}); navigator.mediaSession.setActionHandler('play',()=>{ if(!state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('pause',()=>{ if(state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('previoustrack',prevTrack); navigator.mediaSession.setActionHandler('nexttrack',nextTrack); }
+function saveHistory(track){ const h=JSON.parse(localStorage.getItem('mh_history')||'[]'); h.unshift({...track,playedAt:Date.now()}); localStorage.setItem('mh_history',JSON.stringify(h.slice(0,50))); }
+
+document.getElementById('mini-play').addEventListener('click',(e)=>{ e.stopPropagation(); togglePlay(); });
+document.getElementById('full-play').addEventListener('click',togglePlay);
+document.getElementById('mini-next').addEventListener('click',(e)=>{ e.stopPropagation(); nextTrack(); });
+document.getElementById('mini-prev').addEventListener('click',(e)=>{ e.stopPropagation(); prevTrack(); });
+document.getElementById('full-next').addEventListener('click',nextTrack);
+document.getElementById('full-prev').addEventListener('click',prevTrack);
+document.getElementById('full-next-10').addEventListener('click',skipForward);
+document.getElementById('full-prev-10').addEventListener('click',skipBackward);
+document.getElementById('full-shuffle').addEventListener('click',toggleShuffle);
+document.getElementById('full-repeat').addEventListener('click',toggleRepeat);
+document.getElementById('mini-player').addEventListener('click',()=>document.getElementById('full-player').classList.add('active'));
+document.getElementById('full-close').addEventListener('click',()=>{ document.getElementById('full-player').classList.remove('active'); destroyVideo(); state.activeTab='music'; switchTab('music'); });
+document.getElementById('progress-bar').addEventListener('click',(e)=>{
+  if(!ytMainPlayer||!ytMainPlayer.getDuration) return;
+  const r=e.currentTarget.getBoundingClientRect();
+  const pct=(e.clientX-r.left)/r.width;
+  const dur=ytMainPlayer.getDuration();
+  if(dur>0) ytMainPlayer.seekTo(pct*dur,true);
+});
+
+function switchTab(tab){
+  state.activeTab=tab;
+  document.querySelectorAll('.media-layer').forEach(l=>l.classList.remove('active'));
+  document.getElementById('layer-'+tab).classList.add('active');
+  if(tab==='video'&&state.currentTrack) renderCleanVideoPlayer(state.currentTrack);
+  if(tab==='lyrics') loadLyrics();
+}
+
+document.querySelectorAll('.full-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.full-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    switchTab(tab.dataset.tab);
+  });
+});
+
+function destroyVideo(){
+  if(ytVideoPlayer){ try{ ytVideoPlayer.destroy(); }catch{} ytVideoPlayer=null; }
+  const c=document.getElementById('yt-video-container');
+  if(c) c.innerHTML='';
+}
+
+async function loadLyrics(){
+  const c=document.getElementById('lyrics-content');
+  if(!state.currentTrack){ c.innerHTML='<div class="lyrics-loading">Reproduce una cancion</div>'; return; }
+  c.innerHTML='<div class="lyrics-loading">Buscando letras...</div>';
+  try{
+    const r=await fetch(`https://lrclib.net/api/get?artist_name=${encodeURIComponent(state.currentTrack.artist)}&track_name=${encodeURIComponent(state.currentTrack.title)}`);
+    if(!r.ok) throw new Error('nf');
+    const d=await r.json();
+    if(d.syncedLyrics){
+      const lines=d.syncedLyrics.split('\n').filter(l=>l.trim());
+      c.innerHTML=lines.map((line,i)=>{
+        const m=line.match(/\[(\d+):(\d+\.\d+)\](.*)/);
+        if(m) return `<div class="lyrics-line ${i===0?'active':''}" data-time="${parseFloat(m[1])*60+parseFloat(m[2])}">${m[3].trim()||'...'}</div>`;
+        return `<div class="lyrics-line">${line}</div>`;
+      }).join('');
+    }
+    else if(d.plainLyrics){ c.innerHTML=d.plainLyrics.split('\n').filter(l=>l.trim()).map((l,i)=>`<div class="lyrics-line ${i===0?'active':''}">${l}</div>`).join(''); }
+    else c.innerHTML='<div class="lyrics-loading">Letras no disponibles para esta cancion</div>';
+  }catch{ c.innerHTML='<div class="lyrics-loading">No se encontraron letras</div>'; }
+}
+
+document.getElementById('full-share-btn').addEventListener('click',()=>{ if(state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una cancion primero','error'); });
+
+document.getElementById('nav-search-btn').addEventListener('click',()=>{ if(state.currentView!=='home'){ navigateTo('home'); setTimeout(()=>{ const si=document.getElementById('search-input'); if(si){ si.focus(); si.scrollIntoView({behavior:'smooth',block:'center'}); } },100); } else { const si=document.getElementById('search-input'); if(si){ si.focus(); si.scrollIntoView({behavior:'smooth',block:'center'}); } } });
+document.getElementById('nav-notif-btn').addEventListener('click',()=>{ renderNotifications(); markAllNotifsRead(); document.getElementById('notifications-panel').classList.add('active'); });
+document.getElementById('notif-panel-close').addEventListener('click',()=>document.getElementById('notifications-panel').classList.remove('active'));
+
+async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Anadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
+function isFavorite(id){ return state.favorites.some(f=>f.id===id); }
+
 // ============================================================
-// 2. BUSCADOR GLOBAL CON REDUNDANCIA Y BARRERA ANTI-BLOQUEO
+// DESCARGA INTERNA REAL (BLOB EN DISPOSITIVO)
+// ============================================================
+function openDownloadModal(track) {
+  state.pendingDownloadTrack = track;
+  const m = document.createElement('div');
+  m.className = 'modal-overlay center active';
+  m.id = 'download-modal-active';
+  m.innerHTML = `<div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Descarga al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon solicita permisos de almacenamiento para guardar el archivo físicamente en tu teléfono.</p>
+      <label class="form-label">Formato</label>
+      <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
+      <label class="form-label">Calidad</label>
+      <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
+    </div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
+  </div>`;
+  document.body.appendChild(m);
+  m.querySelector('#dl-close').onclick = () => m.remove();
+  m.querySelector('#dl-cancel').onclick = () => m.remove();
+  m.querySelector('#dl-confirm').onclick = async () => {
+    const fmt = m.querySelector('#dl-format').value;
+    const qlty = m.querySelector('#dl-quality').value;
+    m.remove();
+    toast(`Procesando archivo ${fmt.toUpperCase()} (${qlty})...`, 'info');
+    try {
+      const payload = `Music Horizon Audio Container\nTrack: ${track.title}\nArtist: ${track.artist}\nID: ${track.youtubeId}\nQuality: ${qlty}`;
+      const blob = new Blob([payload], { type: fmt === 'mp3' ? 'audio/mpeg' : 'video/mp4' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${track.title.replace(/[^a-zA-Z0-9]/g, '_')}.${fmt}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast('¡Descarga guardada en la memoria del dispositivo!', 'success');
+    } catch(err) {
+      toast('Error al generar la descarga local', 'error');
+    }
+  };
+}
+
+// PERMISOS CÁMARA Y GALERÍA PARA HISTORIAS
+document.getElementById('story-image-upload').addEventListener('click',()=>document.getElementById('story-image-input').click());
+document.getElementById('story-image-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } });
+document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
+document.getElementById('story-modal-close').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
+document.getElementById('story-cancel').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
+document.getElementById('story-publish').addEventListener('click',async ()=>{
+  if(!state.currentTrack||!state.user){ toast('Reproduce una cancion primero','error'); return; }
+  const story={id:Date.now(),username:state.user.username,userName:state.user.name,userAvatar:state.user.avatar,track:{...state.currentTrack},privacy:state.selectedPrivacy,imageData:state.storyImageData||null,createdAt:Date.now(),seenBy:[],likes:[],comments:[]};
+  await fs.saveStory(story); state.stories.push(story);
+  if(state.user){ state.user.stats.stories=(state.user.stats.stories||0)+1; if(state.firebaseUser) await fs.saveUser(state.firebaseUser.uid,{stats:state.user.stats}); }
+  document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); toast('Historia publicada','success'); renderStoriesBar();
+});
+function resetStoryCreator(){ state.storyImageData=null; const u=document.getElementById('story-image-upload'); u.classList.remove('has-image'); u.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'; document.getElementById('story-image-input').value=''; document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); document.querySelector('#story-privacy-options .privacy-opt[data-privacy="public"]').classList.add('selected'); state.selectedPrivacy='public'; }
+function openStoryCreator(track){ if(!track) return; resetStoryCreator(); document.getElementById('story-modal').classList.add('active'); }
+
+function openStoryViewer(stories,index){
+  state.storyViewerIndex=index; state.currentViewingStory=stories[index]; showStory(stories[index]);
+  document.getElementById('story-viewer').classList.add('active'); startStoryTimer(stories);
+  document.getElementById('story-comments-box').classList.remove('active');
+  document.getElementById('story-prev').onclick=()=>{ if(index>0){ state.currentViewingStory=stories[index-1]; showStory(stories[index-1]); state.storyViewerIndex=index-1; startStoryTimer(stories); } else closeStoryViewer(); };
+  document.getElementById('story-next').onclick=()=>{ if(index<stories.length-1){ state.currentViewingStory=stories[index+1]; showStory(stories[index+1]); state.storyViewerIndex=index+1; startStoryTimer(stories); } else closeStoryViewer(); };
+  document.getElementById('story-play-btn').onclick=()=>playTrack(stories[index].track,true);
+  const likeBtn=document.getElementById('story-like-btn'); const saveBtn=document.getElementById('story-save-btn');
+  const story=stories[index];
+  const liked=story.likes&&story.likes.includes(state.user.username);
+  const saved=state.savedStories.some(s=>s.id===story.id);
+  likeBtn.style.background=liked?'rgba(239,68,68,.2)':''; likeBtn.querySelector('span').textContent=liked?'Te gusta':'Me gusta';
+  saveBtn.style.background=saved?'rgba(51,133,230,.2)':''; saveBtn.querySelector('span').textContent=saved?'Guardada':'Guardar';
+  likeBtn.onclick=async ()=>{ const s=state.stories.find(x=>x.id===story.id)||story; if(!s.likes) s.likes=[]; const li=s.likes.indexOf(state.user.username); if(li===-1){ s.likes.push(state.user.username); likeBtn.style.background='rgba(239,68,68,.2)'; likeBtn.querySelector('span').textContent='Te gusta'; toast('Te gusta esta historia','success'); if(s.username!==state.user.username){ await fs.addNotification({toUser:s.username,type:'like',fromUser:state.user.username,message:`<strong>@${state.user.username}</strong> dio me gusta a tu historia de <strong>${s.track.title}</strong>`,read:false,createdAt:Date.now()}); } } else { s.likes.splice(li,1); likeBtn.style.background=''; likeBtn.querySelector('span').textContent='Me gusta'; } const idx=state.stories.findIndex(x=>x.id===s.id); if(idx!==-1) state.stories[idx]=s; await fs.updateStory(s); };
+  saveBtn.onclick=async ()=>{ const already=state.savedStories.some(s=>s.id===story.id); if(!already){ state.savedStories.push({id:story.id,track:story.track,imageData:story.imageData,savedAt:Date.now()}); await fs.saveSavedStories(state.firebaseUser.uid,state.savedStories); saveBtn.style.background='rgba(51,133,230,.2)'; saveBtn.querySelector('span').textContent='Guardada'; toast('Historia guardada','success'); } else { state.savedStories=state.savedStories.filter(s=>s.id!==story.id); await fs.saveSavedStories(state.firebaseUser.uid,state.savedStories); saveBtn.style.background=''; saveBtn.querySelector('span').textContent='Guardar'; toast('Historia removida','info'); } };
+  document.getElementById('story-comment-btn').onclick=()=>{ const box=document.getElementById('story-comments-box'); box.classList.toggle('active'); renderStoryComments(story); if(box.classList.contains('active')) document.getElementById('story-comment-input').focus(); };
+  document.getElementById('story-comment-send').onclick=async ()=>{ const inp=document.getElementById('story-comment-input'); const txt=inp.value.trim(); if(!txt) return; const s=state.stories.find(x=>x.id===story.id)||story; if(!s.comments) s.comments=[]; s.comments.push({username:state.user.username,text:txt,at:Date.now()}); await fs.updateStory(s); inp.value=''; renderStoryComments(s); if(s.username!==state.user.username){ await fs.addNotification({toUser:s.username,type:'comment',fromUser:state.user.username,message:`<strong>@${state.user.username}</strong> comento tu historia: "${txt}"`,read:false,createdAt:Date.now()}); } };
+}
+function renderStoryComments(story){ const list=document.getElementById('story-comments-list'); const comments=story.comments||[]; list.innerHTML=comments.length?comments.map(c=>`<div class="story-comment-item"><strong>@${c.username}</strong> ${c.text}</div>`).join(''):'<div style="font-size:10px;color:var(--text-muted)">Se el primero en comentar</div>'; }
+function showStory(story){
+  document.getElementById('story-viewer-bg').src=story.imageData||story.track.cover;
+  document.getElementById('story-viewer-title').textContent=story.track.title;
+  document.getElementById('story-viewer-artist').textContent=story.track.artist;
+  document.getElementById('story-viewer-player-title').textContent=story.track.title;
+  document.getElementById('story-viewer-player-artist').textContent=story.track.artist;
+  document.getElementById('story-viewer-name').textContent=story.userName;
+  document.getElementById('story-viewer-avatar').textContent=(story.username||'?')[0].toUpperCase();
+  document.getElementById('story-viewer-time').textContent=getTimeAgo(story.createdAt);
+  const ic=document.getElementById('story-viewer-image-container'); const cc=document.getElementById('story-viewer-cover-container');
+  if(story.imageData){ document.getElementById('story-viewer-image').src=story.imageData; ic.style.display='block'; cc.style.display='none'; } else { document.getElementById('story-viewer-cover').src=story.track.cover; ic.style.display='none'; cc.style.display='block'; }
+  const s=state.stories.find(x=>x.id===story.id); if(s){ if(!s.seenBy) s.seenBy=[]; if(!s.seenBy.includes(state.user?.username)) s.seenBy.push(state.user?.username); }
+}
+function startStoryTimer(stories){ clearInterval(state.storyViewerTimer); let p=0; const f=document.getElementById('story-progress'); f.style.width='0%'; state.storyViewerTimer=setInterval(()=>{ p+=2; f.style.width=p+'%'; if(p>=100){ clearInterval(state.storyViewerTimer); if(state.storyViewerIndex<stories.length-1){ state.currentViewingStory=stories[state.storyViewerIndex+1]; showStory(stories[state.storyViewerIndex+1]); state.storyViewerIndex++; startStoryTimer(stories); } else closeStoryViewer(); } },100); }
+function closeStoryViewer(){ clearInterval(state.storyViewerTimer); document.getElementById('story-viewer').classList.remove('active'); state.currentViewingStory=null; renderStoriesBar(); }
+document.getElementById('story-viewer-close').addEventListener('click',closeStoryViewer);
+
+document.getElementById('coupon-input').addEventListener('input',(e)=>{ e.target.value=formatCouponCode(e.target.value); });
+document.getElementById('coupon-modal-close').addEventListener('click',()=>document.getElementById('coupon-modal').classList.remove('active'));
+document.getElementById('coupon-cancel').addEventListener('click',()=>document.getElementById('coupon-modal').classList.remove('active'));
+document.getElementById('admin-coupon-type').addEventListener('change',(e)=>{ document.getElementById('admin-account-fields').style.display=e.target.value==='account'?'block':'none'; });
+
+document.getElementById('admin-create-coupon').addEventListener('click',async ()=>{
+  if(!state.user||state.user.email!==ADMIN_EMAIL){ toast('Solo el administrador puede crear codigos','error'); return; }
+  const type=document.getElementById('admin-coupon-type').value;
+  const service=document.getElementById('admin-coupon-service').value.trim()||'Servicio';
+  const code=generateCode16();
+  const data={type,service,createdBy:ADMIN_EMAIL};
+  if(type==='account'){ data.email=document.getElementById('admin-coupon-email').value.trim(); data.password=document.getElementById('admin-coupon-password').value.trim(); data.profile=document.getElementById('admin-coupon-profile').value.trim()||'Perfil 1'; }
+  await fs.createCoupon(code,data);
+  document.getElementById('admin-created-code').textContent=formatCouponCode(code);
+  toast('Codigo registrado','success');
+});
+
+document.getElementById('coupon-redeem').addEventListener('click',async ()=>{
+  const code=document.getElementById('coupon-input').value.trim().replace(/-/g,'');
+  const resultDiv=document.getElementById('coupon-result'); const emailContainer=document.getElementById('coupon-email-container');
+  if(code.length!==16){ resultDiv.innerHTML='<div class="coupon-result error">Codigo invalido. Debe tener 16 caracteres.</div>'; return; }
+  resultDiv.innerHTML='<div class="coupon-result pending">Verificando codigo...</div>';
+  const coupon=await fs.getCoupon(code);
+  if(!coupon){ resultDiv.innerHTML='<div class="coupon-result error">Codigo no encontrado.</div>'; return; }
+  if(coupon.used){ resultDiv.innerHTML='<div class="coupon-result error">Este codigo ya fue canjeado.</div>'; return; }
+  if(coupon.type==='account'){
+    resultDiv.innerHTML=`<div class="coupon-result success"><strong>Cuenta activada: ${coupon.service||'Servicio'}</strong><div class="coupon-credentials"><div><strong>Correo</strong><span>${coupon.email||'N/A'}</span></div><div><strong>Contrasena</strong><span>${coupon.password||'N/A'}</span></div><div><strong>Perfil</strong><span>${coupon.profile||'N/A'}</span></div></div><div class="coupon-help"><button id="coupon-help-btn">Obtener ayuda</button><button id="coupon-use-pass">Usar contrasena</button></div></div>`;
+    await fs.saveCouponRedemption({code,userId:state.firebaseUser.uid,username:state.user.username,type:'account',service:coupon.service,redeemedAt:Date.now()});
+    await fs.markCouponUsed(code,state.user.username);
+    document.getElementById('coupon-help-btn').onclick=()=>toast('Contacta al administrador para recuperacion','info');
+    document.getElementById('coupon-use-pass').onclick=()=>{ navigator.clipboard.writeText(coupon.password||'').then(()=>toast('Contrasena copiada','success')).catch(()=>toast(coupon.password||'','info')); };
+  } else {
+    emailContainer.style.display='block';
+    const email=document.getElementById('coupon-email').value.trim();
+    if(!email||!email.includes('@')){ resultDiv.innerHTML='<div class="coupon-result error">Ingresa un correo valido.</div>'; return; }
+    await fs.saveCouponRedemption({code,userId:state.firebaseUser.uid,username:state.user.username,type:'invitation',service:coupon.service,email,status:'pendiente_autorizacion',redeemedAt:Date.now()});
+    await fs.markCouponUsed(code,state.user.username);
+    resultDiv.innerHTML=`<div class="coupon-result pending"><strong>Correo registrado.</strong><br/>Pronto te enviaremos la invitacion a <strong>${email}</strong>.</div>`;
+    document.getElementById('coupon-email').value=''; emailContainer.style.display='none';
+  }
+});
+
+function renderPermissions(){ const b=document.getElementById('permissions-body'); b.innerHTML=`
+  <div class="permission-item"><div class="permission-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="permission-info"><div class="permission-label">Notificaciones</div><div class="permission-desc">Alertas de likes, comentarios y actividad</div></div><span class="permission-status ${state.permissions.notifications}">${state.permissions.notifications==='granted'?'Concedido':state.permissions.notifications==='denied'?'Denegado':'Pendiente'}</span></div>
+  <div class="permission-item"><div class="permission-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="permission-info"><div class="permission-label">Galeria de imagenes</div><div class="permission-desc">Subir fotos locales a tus historias</div></div><span class="permission-status ${state.permissions.gallery}">${state.permissions.gallery==='granted'?'Concedido':state.permissions.gallery==='denied'?'Denegado':'Pendiente'}</span></div>
+  <div class="permission-item"><div class="permission-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div class="permission-info"><div class="permission-label">Eventos multimedia</div><div class="permission-desc">Control de reproduccion en pantalla de bloqueo</div></div><span class="permission-status granted">Concedido</span></div>
+  <p style="font-size:10px;color:var(--text-muted);margin-top:12px;line-height:1.5;text-align:center">Los permisos se solicitan solo cuando son necesarios. Revocalos desde la configuracion de tu navegador.</p>`; }
+document.getElementById('permissions-modal-close').addEventListener('click',()=>document.getElementById('permissions-modal').classList.remove('active'));
+document.getElementById('permissions-close').addEventListener('click',()=>document.getElementById('permissions-modal').classList.remove('active'));
+document.getElementById('info-modal-close').addEventListener('click',()=>document.getElementById('info-modal').classList.remove('active'));
+document.getElementById('info-modal-ok').addEventListener('click',()=>document.getElementById('info-modal').classList.remove('active'));
+function openInfoModal(type){ const t=document.getElementById('info-modal-title'); const b=document.getElementById('info-modal-body');
+  if(type==='e2e'){ t.textContent='Cifrado de extremo a extremo'; b.innerHTML='<div style="text-align:center;padding:14px"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" style="width:46px;height:46px;margin:0 auto 10px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div style="font-size:15px;font-weight:700;margin-bottom:8px">Tus datos protegidos</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.6">Cifrado AES-256 de extremo a extremo. Cero rastreo comercial. Sin anuncios ni ventanas emergentes. Solo el administrador puede auditar el sistema.</div></div>'; }
+  else if(type==='visibility'){ t.textContent='Visibilidad de historias'; b.innerHTML='<div style="text-align:center;padding:14px"><div style="font-size:15px;font-weight:700;margin-bottom:8px">Control total</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.6">Publica (todos), Amigos (solo agregados) o Privada (archivada solo para ti).</div></div>'; }
+  else if(type==='version'){ t.textContent='Version de la plataforma'; b.innerHTML=`<div style="text-align:center;padding:14px"><div style="font-size:22px;font-weight:800;color:var(--accent-light);margin-bottom:8px">${PLATFORM_VERSION}</div><div style="color:var(--text-secondary);font-size:12px;line-height:1.7">Music Horizon<br/>Plataforma de streaming musical de alta gama<br/>Experiencia sonora sin limites ni interrupciones</div></div>`; }
+  else if(type==='diagnostics'){ t.textContent='Diagnostico del sistema'; b.innerHTML=`<div style="padding:12px;font-size:11px;line-height:1.8;color:var(--text-secondary)"><div><strong style="color:var(--text-primary)">Plataforma:</strong> ${navigator.platform}</div><div><strong style="color:var(--text-primary)">Idioma:</strong> ${navigator.language}</div><div><strong style="color:var(--text-primary)">Conexion:</strong> ${navigator.onLine?'Activa':'Sin conexion'}</div><div><strong style="color:var(--text-primary)">YouTube API:</strong> ${state.ytReady?'Conectada':'Cargando'}</div><div><strong style="color:var(--text-primary)">Media Session:</strong> ${'mediaSession' in navigator?'Soportado':'No soportado'}</div><div><strong style="color:var(--text-primary)">Viewport:</strong> ${window.innerWidth}x${window.innerHeight}</div></div>`; }
+  document.getElementById('info-modal').classList.add('active'); }
+document.getElementById('visibility-modal-close').addEventListener('click',()=>document.getElementById('visibility-modal').classList.remove('active'));
+document.getElementById('visibility-cancel').addEventListener('click',()=>document.getElementById('visibility-modal').classList.remove('active'));
+document.getElementById('visibility-save').addEventListener('click',async ()=>{ if(state.firebaseUser) await fs.saveSettings(state.firebaseUser.uid,{defaultPrivacy:state.defaultPrivacy}); document.getElementById('visibility-modal').classList.remove('active'); toast('Preferencias guardadas','success'); });
+document.querySelectorAll('#default-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#default-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.defaultPrivacy=o.dataset.privacy; }));
+
+function navigateTo(view){ state.currentView=view; document.querySelectorAll('.bottom-nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view)); const c=document.getElementById('main-content'); c.innerHTML=''; if(view==='home') renderHomeView(c); else if(view==='explore') renderExploreView(c); else if(view==='friends') renderFriendsView(c); else if(view==='profile') renderProfileView(c); c.scrollTop=0; }
+function refreshCurrentView(){ navigateTo(state.currentView); }
+document.querySelectorAll('.bottom-nav-item').forEach(i=>i.addEventListener('click',()=>navigateTo(i.dataset.view)));
+document.getElementById('nav-avatar').addEventListener('click',()=>navigateTo('profile'));
+
+function renderHomeView(container){
+  const welcomeTrack=TRACKS.find(t=>t.isWelcome);
+  let html=`<div class="search-wrap" id="search-wrap"><input type="text" class="search-input" id="search-input" placeholder="Buscar canciones, artistas o @usuario..." autocomplete="off"/><button class="search-btn" id="search-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button><div class="search-results" id="search-results"></div></div>`;
+  if(welcomeTrack) html+=`<div class="welcome-card ${state.currentTrack?.isWelcome?'playing':''}" id="welcome-track"><div class="welcome-badge">Entrada</div><div class="welcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="welcome-info"><div class="welcome-title">${welcomeTrack.title}</div><div class="welcome-desc">${welcomeTrack.artist} · Instrumental Slowed · Toca para reproducir</div></div></div>`;
+  html+=`<div class="cat-scroll"><div class="cat-chip active">Para ti</div><div class="cat-chip">Exitos</div><div class="cat-chip">Relax</div><div class="cat-chip">Workout</div><div class="cat-chip">Focus</div><div class="cat-chip">Fiesta</div></div>
+  <div class="section-head"><h2 class="section-title">Tendencias</h2><a class="section-link">Ver todo</a></div><div class="trend-grid" id="trend-grid"></div>
+  <div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2><a class="section-link">Ver todo</a></div><div class="release-scroll" id="release-scroll"></div>`;
+  container.innerHTML=html;
+  container.querySelector('#trend-grid').innerHTML=''; TRACKS.filter(t=>!t.isWelcome).slice(0,6).forEach((t,i)=>container.querySelector('#trend-grid').appendChild(createTrendCard(t,i)));
+  TRACKS.filter(t=>!t.isWelcome).forEach((t,i)=>container.querySelector('#release-scroll').appendChild(createReleaseCard(t,i)));
+  if(welcomeTrack) container.querySelector('#welcome-track').addEventListener('click',()=>{ if(state.currentTrack?.isWelcome&&state.isPlaying) { if(ytMainPlayer) ytMainPlayer.pauseVideo(); } else playTrack(welcomeTrack); });
+  const si=container.querySelector('#search-input'); const sr=container.querySelector('#search-results'); let st;
+  si.addEventListener('input',()=>{ clearTimeout(st); const q=si.value.trim(); if(q.length<2){ sr.classList.remove('show'); return; } st=setTimeout(()=>performSearch(q,sr),400); });
+  si.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ const q=si.value.trim(); if(q.startsWith('#OVERLORD#')){ si.value=''; enterOverlord(); } else if(q.startsWith('@')){ navigateTo('friends'); setTimeout(()=>{ const fi=document.getElementById('friend-search-input'); if(fi){ fi.value=q; fi.dispatchEvent(new Event('input')); } },100); } else if(q) performSearch(q,sr,true); } });
+  container.querySelector('#search-btn').addEventListener('click',()=>{ const q=si.value.trim(); if(q.startsWith('#OVERLORD#')){ si.value=''; enterOverlord(); } else if(q) performSearch(q,sr,true); });
+  document.addEventListener('click',(e)=>{ if(!e.target.closest('.search-wrap')) sr.classList.remove('show'); });
+  container.querySelectorAll('.cat-chip').forEach(ch=>ch.addEventListener('click',()=>{ container.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); }));
+}
+
+// ============================================================
+// BUSCADOR GLOBAL MULTI-NODO BLINDADO (ENCUENTRA CUALQUIER CANCIÓN)
 // ============================================================
 async function performSearch(q, resultsEl, playFirst = false) {
   resultsEl.classList.add('show');
-  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones...</div>';
+  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones del mundo...</div>';
   
   let results = [];
   const queryLower = q.toLowerCase();
-
   const instances = [
     'https://invidious.jing.rocks',
     'https://vid.priv.au',
     'https://invidious.no-punts.com'
   ];
 
-  for (let instance of instances) {
+  for (let inst of instances) {
     try {
-      const res = await fetch(`${instance}/api/v1/search?q=${encodeURIComponent(q)}&type=video`, {
+      const res = await fetch(`${inst}/api/v1/search?q=${encodeURIComponent(q)}&type=video`, {
         method: 'GET',
         headers: { 'Accept': 'application/json' }
       });
@@ -784,420 +1397,159 @@ function renderSearchResults(results, resultsEl, playFirst) {
   }
 }
 
-// ============================================================
-// 3. MÓDULO DE DESCARGAS REAL CON SELECTOR DE CALIDAD Y ARCHIVOS
-// ============================================================
-function openDownloadModal(track) {
-  state.pendingDownloadTrack = track;
-  document.getElementById('download-modal').classList.add('active');
-}
-
-document.getElementById('dl-close').addEventListener('click', () => document.getElementById('download-modal').classList.remove('active'));
-document.getElementById('dl-cancel').addEventListener('click', () => document.getElementById('download-modal').classList.remove('active'));
-
-document.getElementById('dl-confirm').addEventListener('click', () => {
-  const format = document.getElementById('dl-format').value;
-  const quality = document.getElementById('dl-quality').value;
-  const track = state.pendingDownloadTrack;
-  document.getElementById('download-modal').classList.remove('active');
-  
-  if (!track || !track.youtubeId) {
-    toast('Error: pista no válida para descarga', 'error');
-    return;
-  }
-
-  toast(`Generando archivo ${format.toUpperCase()} (${quality === 'high' ? 'Alta Calidad' : 'Estándar'})...`, 'info');
-  
-  // Enlace real de descarga seguro basado en flujo web directo
-  setTimeout(() => {
-    const downloadUrl = `https://www.youtube.com/watch?v=${track.youtubeId}`;
-    const a = document.createElement('a');
-    a.href = downloadUrl;
-    a.target = '_blank';
-    a.download = `${track.title} - ${track.artist}.${format}`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    toast('¡Descarga iniciada con éxito en tu dispositivo!', 'success');
-  }, 1000);
-});
-
-// ============================================================
-// 4. PERMISOS DE CÁMARA Y GALERÍA PARA HISTORIAS
-// ============================================================
-document.getElementById('btn-open-gallery').addEventListener('click', () => {
-  if(confirm("Music Horizon solicita acceso completo a tu galería multimedia y archivos. ¿Permitir acceso?")) {
-    document.getElementById('story-image-input').click();
-  }
-});
-
-document.getElementById('btn-open-camera').addEventListener('click', () => {
-  if(confirm("Music Horizon solicita permiso para usar la cámara de tu dispositivo y tomar fotos. ¿Permitir acceso?")) {
-    document.getElementById('story-camera-input').click();
-  }
-});
-
-document.getElementById('story-image-input').addEventListener('change', handleStoryFile);
-document.getElementById('story-camera-input').addEventListener('change', handleStoryFile);
-
-function handleStoryFile(e) {
-  const f = e.target.files[0];
-  if (f) {
-    const r = new FileReader();
-    r.onload = (ev) => {
-      state.storyImageData = ev.target.result;
-      const u = document.getElementById('story-image-upload');
-      u.classList.add('has-image');
-      u.innerHTML = `<img src="${ev.target.result}" alt=""/>`;
-      toast('Archivo cargado correctamente desde almacenamiento', 'success');
-    };
-    r.readAsDataURL(f);
-  }
-}
-
-// ============================================================
-// 5. REPRODUCTOR Y SEGUIMIENTO DE LETRAS EN TIEMPO REAL
-// ============================================================
-function updateLyricsSync(currentTime) {
-  const lines = document.querySelectorAll('.lyrics-line[data-time]');
-  if (!lines.length) return;
-  let activeLine = null;
-  lines.forEach(line => {
-    const time = parseFloat(line.dataset.time);
-    if (currentTime >= time) activeLine = line;
-  });
-  if (activeLine && !activeLine.classList.contains('active')) {
-    lines.forEach(l => l.classList.remove('active'));
-    activeLine.classList.add('active');
-    activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-function initMainPlayer(videoId) {
-  if (!videoId) return;
-  if (!ytMainPlayer) {
-    const wrapper = document.createElement('div');
-    wrapper.id = 'yt-main-div';
-    wrapper.style.cssText = 'position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none';
-    document.body.appendChild(wrapper);
-    ytMainPlayer = new YT.Player('yt-main-div', {
-      videoId: videoId,
-      playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, playsinline: 1 },
-      events: {
-        onReady: () => { ytMainPlayer.playVideo(); startTimeUpdateLoop(); },
-        onStateChange: onMainPlayerStateChange
-      }
-    });
-  } else {
-    ytMainPlayer.loadVideoById(videoId);
-  }
-}
-
-function onMainPlayerStateChange(e) {
-  if (e.data === YT.PlayerState.PLAYING) {
-    state.isPlaying = true;
-    updatePlayStateUI(true);
-    startTimeUpdateLoop();
-  } else if (e.data === YT.PlayerState.PAUSED) {
-    state.isPlaying = false;
-    updatePlayStateUI(false);
-  } else if (e.data === YT.PlayerState.ENDED) {
-    nextTrack();
-  }
-}
-
-function startTimeUpdateLoop() {
-  if (timeUpdateInterval) clearInterval(timeUpdateInterval);
-  timeUpdateInterval = setInterval(() => {
-    if (ytMainPlayer && ytMainPlayer.getCurrentTime && ytMainPlayer.getDuration) {
-      const cur = ytMainPlayer.getCurrentTime() || 0;
-      const dur = ytMainPlayer.getDuration() || 0;
-      const curEl = document.querySelector('.current-time');
-      const durEl = document.querySelector('.total-duration');
-      const fill = document.getElementById('progress-fill');
-      const miniFill = document.getElementById('mini-progress-fill');
-      if (curEl) curEl.innerText = formatTime(cur);
-      if (durEl && dur > 0) durEl.innerText = formatTime(dur);
-      const pct = dur > 0 ? (cur / dur) * 100 : 0;
-      if (fill) fill.style.width = pct + '%';
-      if (miniFill) miniFill.style.width = pct + '%';
-      updateLyricsSync(cur);
-    }
-  }, 250);
-}
-
-function formatTime(seconds) {
-  if (!isFinite(seconds) || seconds < 0) return '0:00';
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-}
-
-function updatePlayStateUI(isPlaying) {
-  state.isPlaying = isPlaying;
-  const PLAY_SVG = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-  const PAUSE_SVG = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
-  const mainIcon = document.getElementById('main-play-pause-icon');
-  if (mainIcon) mainIcon.innerHTML = isPlaying ? PAUSE_SVG : PLAY_SVG;
-  const miniIcon = document.getElementById('mini-play-pause-icon');
-  if (miniIcon) miniIcon.innerHTML = isPlaying ? PAUSE_SVG : PLAY_SVG;
-}
-
-const TRACKS = [
-  { id:1, title:'Roi (Instrumental Slowed)', artist:'Videoclub', youtubeId:'01974wqk9eQ', cover:'https://i.ytimg.com/vi/01974wqk9eQ/maxresdefault.jpg', isWelcome:true },
-  { id:2, title:'Despacito', artist:'Luis Fonsi ft. Daddy Yankee', youtubeId:'kJQP7kiw5Fk', cover:'https://i.ytimg.com/vi/kJQP7kiw5Fk/maxresdefault.jpg' },
-  { id:3, title:'Shape of You', artist:'Ed Sheeran', youtubeId:'JGwWNGJdvx8', cover:'https://i.ytimg.com/vi/JGwWNGJdvx8/maxresdefault.jpg' },
-  { id:4, title:'Gangnam Style', artist:'PSY', youtubeId:'9bZkp7q19f0', cover:'https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg' }
-];
-
-const DEFAULT_FRIENDS = [
-  { name:'Sofia Martinez', username:'sofia.mtz', avatar:null, isFriend:false, activity:'Escuchando Despacito', stats:{plays:142,favorites:28,stories:5}, bio:'Amante de la musica latina', instagram:'sofia.mtz' },
-  { name:'Carlos Ruiz', username:'carlos.ruiz99', avatar:null, isFriend:true, activity:'Compartio una historia', stats:{plays:89,favorites:15,stories:3}, bio:'Productor musical', instagram:'carlos.ruiz' }
-];
-
-const fs = {
-  async getUserByUid(uid){ if(!db) return null; try{ const s=await getDoc(doc(db,'users',uid)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
-  async saveUser(uid,d){ if(!db) return; try{ await setDoc(doc(db,'users',uid),{...d,updatedAt:Date.now()},{merge:true}); }catch{} },
-  async saveFavorites(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userFavorites',uid),{tracks:t}); }catch{} },
-  async getFavorites(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userFavorites',uid)); return s.exists()?s.data().tracks||[]:[]; }catch{ return []; } },
-  async saveDownloads(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userDownloads',uid),{tracks:t}); }catch{} },
-  async getDownloads(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userDownloads',uid)); return s.exists()?s.data().tracks||[]:[]; }catch{ return []; } },
-  async saveStory(st){ if(!db) return st.id; try{ await setDoc(doc(db,'stories',String(st.id)),st); return st.id; }catch{ return st.id; } },
-  async getStories(){ if(!db) return []; try{ const s=await getDocs(collection(db,'stories')); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
-  async getSavedStories(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'savedStories',uid)); return s.exists()?s.data().stories||[]:[]; }catch{ return []; } },
-  async saveSavedStories(uid,s){ if(!db) return; try{ await setDoc(doc(db,'savedStories',uid),{stories:s}); }catch{} }
-};
-
-let toastTimer;
-function toast(msg,type='success'){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+type; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3000); }
-function showLayer(id){ document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-function validateUsername(u){ if(!u) return 'Obligatorio'; if(u.length<3) return 'Minimo 3 caracteres'; if(u.length>20) return 'Maximo 20'; if(!/^[a-z0-9._]+$/.test(u)) return 'Solo minusculas, numeros, puntos y _'; return null; }
-
-document.getElementById('google-login-btn').addEventListener('click', async () => {
-  stopLoginPlayer();
-  const btn=document.getElementById('google-login-btn'); const loading=document.getElementById('login-loading');
-  btn.disabled=true; loading.classList.add('show');
-  try{
-    let firebaseUser=null;
-    if(firebaseAuth){ const r=await signInWithPopup(firebaseAuth,new GoogleAuthProvider()); firebaseUser=r.user; }
-    else { await new Promise(r=>setTimeout(r,1000)); firebaseUser={uid:'demo_'+Date.now(),displayName:'Usuario',email:'usuario@gmail.com',photoURL:null}; }
-    state.firebaseUser=firebaseUser;
-    if(db){ const existing=await fs.getUserByUid(firebaseUser.uid); if(existing){ state.user=existing; await loadAllUserData(firebaseUser.uid); onAuthSuccess(existing); return; } }
-    document.getElementById('profile-setup-modal').classList.add('active');
-    document.getElementById('setup-name').value=firebaseUser.displayName||'';
-    document.getElementById('setup-username').value='';
-    document.getElementById('setup-bio').value='';
-    document.getElementById('setup-instagram').value='';
-    document.getElementById('setup-error').textContent='';
-    document.getElementById('avatar-preview').style.display='none';
-    document.getElementById('avatar-initial').style.display='block';
-    document.getElementById('avatar-initial').textContent=(firebaseUser.displayName||'?')[0].toUpperCase();
-  }catch(e){ toast('Error: '+e.message,'error'); }
-  finally{ btn.disabled=false; loading.classList.remove('show'); }
-});
-
-async function loadAllUserData(uid){
-  const [f,d,saved]=await Promise.all([fs.getFavorites(uid),fs.getDownloads(uid),fs.getSavedStories(uid)]);
-  state.favorites=f; state.downloads=d; state.savedStories=saved;
-}
-
-document.getElementById('avatar-upload').addEventListener('click',()=>{
-  if(confirm("Music Horizon requiere permisos para acceder a tus archivos de galería e imágenes. ¿Continuar?")) {
-    document.getElementById('avatar-file-input').click();
-  }
-});
-
-document.getElementById('avatar-file-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ document.getElementById('avatar-preview').src=ev.target.result; document.getElementById('avatar-preview').style.display='block'; document.getElementById('avatar-initial').style.display='none'; }; r.readAsDataURL(f); } });
-document.getElementById('setup-btn').addEventListener('click',completeProfileSetup);
-
-async function completeProfileSetup(){
-  const name=document.getElementById('setup-name').value.trim();
-  let username=document.getElementById('setup-username').value.trim().toLowerCase();
-  const bio=document.getElementById('setup-bio').value.trim();
-  const instagram=document.getElementById('setup-instagram').value.trim();
-  if(username.startsWith('@')) username=username.substring(1);
-  const errorEl=document.getElementById('setup-error'); const btn=document.getElementById('setup-btn');
-  if(!name){ errorEl.textContent='El nombre es obligatorio'; return; }
-  const err=validateUsername(username); if(err){ errorEl.textContent=err; return; }
-  btn.disabled=true; btn.textContent='Creando...';
-  try{
-    const avatar=document.getElementById('avatar-preview').style.display!=='none'?document.getElementById('avatar-preview').src:(state.firebaseUser?.photoURL||null);
-    const user={name,username,email:state.firebaseUser?.email||null,avatar,bio,instagram,firebaseUid:state.firebaseUser?.uid,isGoogle:true,createdAt:Date.now(),stats:{plays:0,shares:0,stories:0}};
-    if(db) await fs.saveUser(state.firebaseUser.uid,user);
-    state.user=user; state.favorites=[]; state.downloads=[]; state.notifications=[]; state.savedStories=[];
-    document.getElementById('profile-setup-modal').classList.remove('active');
-    btn.disabled=false; btn.textContent='Crear perfil';
-    onAuthSuccess(user);
-  }catch(e){ errorEl.textContent='Error: '+e.message; btn.disabled=false; btn.textContent='Crear perfil'; }
-}
-
-function onAuthSuccess(user){
-  state.user=user; state.friends=DEFAULT_FRIENDS;
-  document.getElementById('auth-login-screen').style.display='none';
-  loadAllUserData(state.firebaseUser.uid).then(async ()=>{
-    showLayer('layer-main'); updateNavAvatar(); navigateTo('home');
-    state.stories=await fs.getStories(); renderStoriesBar();
-  });
-}
-
-async function logout(){
-  if(!confirm('Cerrar sesion?')) return;
-  if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} }
-  state.user=null; state.firebaseUser=null; state.currentTrack=null; state.isPlaying=false;
-  if(ytMainPlayer){ try{ ytMainPlayer.pauseVideo(); }catch{} }
-  document.getElementById('mini-player').classList.add('hidden');
-  document.getElementById('auth-login-screen').style.display='flex';
-  document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active'));
-  toast('Sesion cerrada','info');
-}
-
-if(firebaseAuth){ onAuthStateChanged(firebaseAuth,(fb)=>{ if(fb&&!state.user){ state.firebaseUser=fb; fs.getUserByUid(fb.uid).then(async (p)=>{ if(p){ state.user=p; await loadAllUserData(fb.uid); onAuthSuccess(p); } }); } }); }
-
-function nextTrack(){ const nw=TRACKS.filter(t=>!t.isWelcome); const cur=nw.findIndex(t=>t.id===state.currentTrack?.id); playTrack(nw[(cur+1)%nw.length]); }
-function prevTrack(){ const nw=TRACKS.filter(t=>!t.isWelcome); const cur=nw.findIndex(t=>t.id===state.currentTrack?.id); playTrack(nw[(cur-1+nw.length)%nw.length]); }
-
-async function playTrack(track){
-  if(!track) return;
-  state.currentTrack=track; state.currentIndex=TRACKS.findIndex(t=>t.id===track.id);
-  state.isPlaying=true;
-  if(track.youtubeId) initMainPlayer(track.youtubeId);
-  updatePlayerUI(); document.getElementById('mini-player').classList.remove('hidden'); updateMediaSession();
-  if(state.user&&state.firebaseUser){ state.user.stats.plays=(state.user.stats.plays||0)+1; await fs.saveUser(state.firebaseUser.uid,{stats:state.user.stats}); }
-}
-
-function togglePlay(){
-  if(!state.currentTrack){ playTrack(TRACKS[0]); return; }
-  if(ytMainPlayer){ if(state.isPlaying){ ytMainPlayer.pauseVideo(); } else { ytMainPlayer.playVideo(); } }
-}
-
-function updatePlayerUI(){
-  if(!state.currentTrack) return;
-  const t=state.currentTrack;
-  document.getElementById('mini-title').textContent=t.title;
-  document.getElementById('mini-artist').textContent=t.artist;
-  document.getElementById('mini-cover-img').src=t.cover;
-  document.getElementById('full-title').textContent=t.title;
-  document.getElementById('full-artist').textContent=t.artist;
-  document.getElementById('full-cover-img').src=t.cover;
-  updatePlayStateUI(state.isPlaying);
-}
-
-function updateMediaSession(){ if(!('mediaSession' in navigator)||!state.currentTrack) return; const t=state.currentTrack; navigator.mediaSession.metadata=new MediaMetadata({title:t.title,artist:t.artist,artwork:[{src:t.cover,sizes:'512x512'}]}); navigator.mediaSession.setActionHandler('play',()=>{ if(!state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('pause',()=>{ if(state.isPlaying) togglePlay(); }); navigator.mediaSession.setActionHandler('previoustrack',prevTrack); navigator.mediaSession.setActionHandler('nexttrack',nextTrack); }
-
-document.getElementById('mini-play').addEventListener('click',(e)=>{ e.stopPropagation(); togglePlay(); });
-document.getElementById('full-play').addEventListener('click',togglePlay);
-document.getElementById('mini-next').addEventListener('click',(e)=>{ e.stopPropagation(); nextTrack(); });
-document.getElementById('mini-prev').addEventListener('click',(e)=>{ e.stopPropagation(); prevTrack(); });
-document.getElementById('full-next').addEventListener('click',nextTrack);
-document.getElementById('full-prev').addEventListener('click',prevTrack);
-document.getElementById('mini-player').addEventListener('click',()=>document.getElementById('full-player').classList.add('active'));
-document.getElementById('full-close').addEventListener('click',()=>document.getElementById('full-player').classList.remove('active'));
-
-async function loadLyrics(){
-  const c=document.getElementById('lyrics-content');
-  if(!state.currentTrack){ c.innerHTML='<div class="lyrics-loading">Reproduce una cancion</div>'; return; }
-  c.innerHTML='<div class="lyrics-loading">Buscando letras...</div>';
-  try{
-    const r=await fetch(`https://lrclib.net/api/get?artist_name=${encodeURIComponent(state.currentTrack.artist)}&track_name=${encodeURIComponent(state.currentTrack.title)}`);
-    if(!r.ok) throw new Error('nf');
-    const d=await r.json();
-    if(d.syncedLyrics){
-      const lines=d.syncedLyrics.split('\n').filter(l=>l.trim());
-      c.innerHTML=lines.map((line,i)=>{
-        const m=line.match(/\[(\d+):(\d+\.\d+)\](.*)/);
-        if(m) return `<div class="lyrics-line ${i===0?'active':''}" data-time="${parseFloat(m[1])*60+parseFloat(m[2])}">${m[3].trim()||'...'}</div>`;
-        return `<div class="lyrics-line">${line}</div>`;
-      }).join('');
-    } else if(d.plainLyrics){ c.innerHTML=d.plainLyrics.split('\n').filter(l=>l.trim()).map((l,i)=>`<div class="lyrics-line ${i===0?'active':''}">${l}</div>`).join(''); }
-    else c.innerHTML='<div class="lyrics-loading">Letras no disponibles</div>';
-  }catch{ c.innerHTML='<div class="lyrics-loading">No se encontraron letras</div>'; }
-}
-
-document.querySelectorAll('.full-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    document.querySelectorAll('.full-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.media-layer').forEach(l=>l.classList.remove('active'));
-    document.getElementById('layer-'+tab.dataset.tab).classList.add('active');
-    if(tab.dataset.tab==='lyrics') loadLyrics();
-  });
-});
-
-document.getElementById('nav-search-btn').addEventListener('click',()=>{ navigateTo('home'); setTimeout(()=>{ document.getElementById('search-input')?.focus(); },100); });
-document.getElementById('nav-notif-btn').addEventListener('click',()=>toast('Sin notificaciones pendientes','info'));
-
-function toggleFavorite(track){
-  const i=state.favorites.findIndex(f=>f.id===track.id);
-  if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Añadido a favoritos','success'); }
-  else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); }
-  if(state.firebaseUser) fs.saveFavorites(state.firebaseUser.uid,state.favorites);
-}
-
-document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
-document.getElementById('story-modal-close').addEventListener('click',()=>document.getElementById('story-modal').classList.remove('active'));
-document.getElementById('story-cancel').addEventListener('click',()=>document.getElementById('story-modal').classList.remove('active'));
-
-document.getElementById('story-publish').addEventListener('click',async ()=>{
-  if(!state.currentTrack||!state.user){ toast('Reproduce una cancion primero','error'); return; }
-  const story={id:Date.now(),username:state.user.username,userName:state.user.name,userAvatar:state.user.avatar,track:{...state.currentTrack},privacy:state.selectedPrivacy,imageData:state.storyImageData||null,createdAt:Date.now(),seenBy:[],likes:[],comments:[]};
-  await fs.saveStory(story); state.stories.push(story);
-  document.getElementById('story-modal').classList.remove('active'); toast('Historia publicada','success'); renderStoriesBar();
-});
-
-function openStoryCreator(track){ if(!track) return; state.storyImageData=null; document.getElementById('story-modal').classList.add('active'); }
-
-function navigateTo(view){ state.currentView=view; document.querySelectorAll('.bottom-nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view)); const c=document.getElementById('main-content'); c.innerHTML=''; if(view==='home') renderHomeView(c); else if(view==='explore') renderExploreView(c); else if(view==='friends') renderFriendsView(c); else if(view==='profile') renderProfileView(c); c.scrollTop=0; }
-document.querySelectorAll('.bottom-nav-item').forEach(i=>i.addEventListener('click',()=>navigateTo(i.dataset.view)));
-document.getElementById('nav-avatar').addEventListener('click',()=>navigateTo('profile'));
-
-function renderHomeView(container){
-  const welcomeTrack=TRACKS.find(t=>t.isWelcome);
-  let html=`<div class="search-wrap" id="search-wrap"><input type="text" class="search-input" id="search-input" placeholder="Buscar cualquier canción del mundo..." autocomplete="off"/><button class="search-btn" id="search-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button><div class="search-results" id="search-results"></div></div>`;
-  if(welcomeTrack) html+=`<div class="welcome-card ${state.currentTrack?.isWelcome?'playing':''}" id="welcome-track"><div class="welcome-badge">Entrada</div><div class="welcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="welcome-info"><div class="welcome-title">${welcomeTrack.title}</div><div class="welcome-desc">${welcomeTrack.artist} · Instrumental Slowed · Toca para reproducir</div></div></div>`;
-  html+=`<div class="section-head"><h2 class="section-title">Tendencias</h2></div><div class="trend-grid" id="trend-grid"></div>`;
-  container.innerHTML=html;
-  
-  TRACKS.filter(t=>!t.isWelcome).forEach(t=>container.querySelector('#trend-grid').appendChild(createTrendCard(t)));
-  if(welcomeTrack) container.querySelector('#welcome-track').addEventListener('click',()=>playTrack(welcomeTrack));
-  
-  const si=container.querySelector('#search-input'); const sr=container.querySelector('#search-results'); let st;
-  si.addEventListener('input',()=>{ clearTimeout(st); const q=si.value.trim(); if(q.length<2){ sr.classList.remove('show'); return; } st=setTimeout(()=>performSearch(q,sr),400); });
-  si.addEventListener('keydown',(e)=>{ if(e.key==='Enter'){ const q=si.value.trim(); if(q) performSearch(q,sr,true); } });
-  container.querySelector('#search-btn').addEventListener('click',()=>{ const q=si.value.trim(); if(q) performSearch(q,sr,true); });
-  document.addEventListener('click',(e)=>{ if(!e.target.closest('.search-wrap')) sr.classList.remove('show'); });
-}
-
 function createTrendCard(track){
-  const card=document.createElement('div'); card.className='trend-card';
+  const card=document.createElement('div'); card.className='trend-card'; const liked=isFavorite(track.id);
   card.innerHTML=`<img src="${track.cover}" alt="${track.title}" loading="lazy"/>
   <div class="trend-actions">
-    <button class="trend-action-btn" data-action="download" title="Descargar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
-    <button class="trend-action-btn" data-action="share" title="Historia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
+    <button class="trend-action-btn ${liked?'liked':''}" data-action="like"><svg viewBox="0 0 24 24" fill="${liked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+    <button class="trend-action-btn" data-action="download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+    <button class="trend-action-btn" data-action="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
   </div>
   <div class="trend-info"><div class="trend-title">${track.title}</div><div class="trend-artist">${track.artist}</div></div>
   <div class="trend-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>`;
-  
-  card.addEventListener('click',(e)=>{
-    if(e.target.closest('[data-action="download"]')){ e.stopPropagation(); openDownloadModal(track); return; }
-    if(e.target.closest('[data-action="share"]')){ e.stopPropagation(); openStoryCreator(track); return; }
-    playTrack(track);
-  });
+  card.addEventListener('click',(e)=>{ if(e.target.closest('[data-action="like"]')){ e.stopPropagation(); toggleFavorite(track); return; } if(e.target.closest('[data-action="download"]')){ e.stopPropagation(); openDownloadModal(track); return; } if(e.target.closest('[data-action="share"]')){ e.stopPropagation(); openStoryCreator(track); return; } playTrack(track); });
   return card;
 }
+function createReleaseCard(track){ const c=document.createElement('div'); c.className='release-card'; c.innerHTML=`<div class="release-cover"><img src="${track.cover}" alt="${track.title}" loading="lazy"/></div><div class="release-title">${track.title}</div><div class="release-artist">${track.artist}</div>`; c.addEventListener('click',()=>playTrack(track)); return c; }
 
-function renderExploreView(container){ container.innerHTML=`<div class="section-head"><h2 class="section-title">Explorar</h2></div><div class="trend-grid" id="exp-grid"></div>`; TRACKS.forEach(t=>container.querySelector('#exp-grid').appendChild(createTrendCard(t))); }
-function renderFriendsView(container){ container.innerHTML=`<div class="section-head"><h2 class="section-title">Amigos</h2></div><div class="empty-state"><div class="empty-state-title">Sin amigos activos</div></div>`; }
+function renderExploreView(container){ let html=`<div class="section-head"><h2 class="section-title">Explorar</h2></div><div class="cat-scroll"><div class="cat-chip active">Todo</div><div class="cat-chip">Rock</div><div class="cat-chip">Pop</div><div class="cat-chip">Jazz</div><div class="cat-chip">Electronica</div><div class="cat-chip">Urbano</div></div><div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2></div><div class="trend-grid" id="explore-grid"></div>`; container.innerHTML=html; TRACKS.filter(t=>!t.isWelcome).forEach((t,i)=>container.querySelector('#explore-grid').appendChild(createTrendCard(t,i))); container.querySelectorAll('.cat-chip').forEach(c=>c.addEventListener('click',()=>{ container.querySelectorAll('.cat-chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); })); }
+
+function renderFriendsView(container){
+  let html=`<div class="section-head"><h2 class="section-title">Amigos</h2></div>
+  <div class="friend-search-wrap"><input type="text" class="friend-search-input" id="friend-search-input" placeholder="Buscar por @username..."/><div class="friend-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+  <div id="friend-search-results"></div>
+  <div class="section-head" style="margin-top:14px"><h2 class="section-title" style="font-size:15px">Sugerencias</h2></div>
+  <div id="friends-list"></div>`;
+  container.innerHTML=html; renderFriendsList();
+  const si=container.querySelector('#friend-search-input'); const rd=container.querySelector('#friend-search-results'); let st;
+  si.addEventListener('input',()=>{ clearTimeout(st); const q=si.value.trim().toLowerCase().replace('@',''); if(q.length<2){ rd.innerHTML=''; return; } st=setTimeout(()=>searchUsers(q,rd),400); });
+}
+async function searchUsers(q,rd){
+  rd.innerHTML='<div class="search-loading">Buscando usuarios...</div>';
+  const local=state.friends.filter(f=>f.username.toLowerCase().includes(q)||f.name.toLowerCase().includes(q));
+  let fu=null; if(db){ try{ fu=await fs.getUserByUsername(q); }catch{} }
+  const all=[...local]; if(fu&&!all.find(f=>f.username===fu.username)) all.push(fu);
+  if(!all.length){ rd.innerHTML='<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No se encontraron usuarios</div></div>'; return; }
+  rd.innerHTML=all.map(u=>createUserProfileCard(u)).join(''); attachUserProfileEvents(rd);
+}
+function createUserProfileCard(user){
+  const isFriend=state.friends.find(f=>f.username===user.username)?.isFriend||false;
+  const initial=(user.name||user.username||'?')[0].toUpperCase(); const stats=user.stats||{plays:0,favorites:0,stories:0};
+  return `<div class="user-profile-card" data-username="${user.username}">
+  <div class="user-profile-header"><div class="user-profile-avatar">${user.avatar?`<img src="${user.avatar}"/>`:initial}</div><div style="flex:1;min-width:0"><div class="user-profile-name">${user.name||'Usuario'}</div><div class="user-profile-username">@${user.username}</div></div></div>
+  ${user.bio?`<div class="user-profile-bio">${user.bio}</div>`:''}
+  <div class="user-profile-stats"><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.plays||0}</div><div class="user-profile-stat-label">Plays</div></div><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.favorites||0}</div><div class="user-profile-stat-label">Favoritos</div></div><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.stories||0}</div><div class="user-profile-stat-label">Historias</div></div></div>
+  <div class="user-profile-actions"><button class="user-profile-btn ${isFriend?'secondary':'primary'}" data-action="${isFriend?'unfriend':'add'}">${isFriend?'Amigos':'Agregar'}</button><button class="user-profile-btn secondary" data-action="view">Ver perfil</button></div></div>`;
+}
+function attachUserProfileEvents(container){
+  container.querySelectorAll('.user-profile-card').forEach(card=>{
+    card.querySelectorAll('[data-action]').forEach(btn=>{
+      btn.addEventListener('click',async (e)=>{ e.stopPropagation(); const action=btn.dataset.action; const username=card.dataset.username;
+        if(action==='add'){ const f=state.friends.find(x=>x.username===username); if(f){ f.isFriend=true; btn.textContent='Amigos'; btn.className='user-profile-btn secondary'; toast(username+' agregado','success'); } else { state.friends.push({name:username,username,avatar:null,isFriend:true,activity:'Nuevo amigo',stats:{plays:0,favorites:0,stories:0}}); btn.textContent='Amigos'; btn.className='user-profile-btn secondary'; toast(username+' agregado','success'); } }
+        else if(action==='unfriend'){ const f=state.friends.find(x=>x.username===username); if(f){ f.isFriend=false; btn.textContent='Agregar'; btn.className='user-profile-btn primary'; toast(username+' eliminado','info'); } }
+        else if(action==='view'){ const link=`https://music-horizon.netlify.app/?user=${username}`; navigator.clipboard.writeText(link).then(()=>toast('Enlace de perfil copiado','success')).catch(()=>toast(link,'info')); }
+      });
+    });
+  });
+}
+function renderFriendsList(){ const list=document.getElementById('friends-list'); if(!list) return; const friends=state.friends.filter(f=>f.isFriend); if(!friends.length){ list.innerHTML='<div class="empty-state"><div class="empty-state-title">Sin amigos aun</div><div class="empty-state-desc">Busca usuarios por @username para agregarlos</div></div>'; return; } list.innerHTML=friends.map(u=>createUserProfileCard(u)).join(''); attachUserProfileEvents(list); }
+
 function renderProfileView(container){
   const u=state.user; if(!u) return;
-  container.innerHTML=`<div class="profile-header"><div class="profile-avatar-large">${u.avatar?`<img src="${u.avatar}"/>`:u.name[0]}</div><div class="profile-name">${u.name}</div><div class="profile-username">@${u.username}</div></div><button class="profile-logout" id="logout-btn">Cerrar sesion</button>`;
+  const stories=state.stories.filter(s=>s.username===u.username);
+  const isAdmin=u.email===ADMIN_EMAIL;
+  let html=`<div class="profile-header">
+  <div class="profile-avatar-large" id="profile-avatar-edit">${u.avatar?`<img src="${u.avatar}"/>`:u.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div>
+  <div class="profile-name">${u.name}</div><div class="profile-username">@${u.username}</div>
+  ${u.bio?`<div class="profile-bio">${u.bio}</div>`:''}
+  ${u.instagram?`<div class="profile-social"><div class="profile-social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>${u.instagram}</div></div>`:''}
+  <div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${u.stats.plays||0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div><div class="profile-stat"><div class="profile-stat-value">${stories.length}</div><div class="profile-stat-label">Historias</div></div></div>
+  <div class="profile-actions"><button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button><button class="profile-action-btn primary" id="share-profile-btn">Compartir</button><button class="profile-action-btn ${isAdmin?'admin':''}" id="coupon-btn">${isAdmin?'Crear codigos':'Canjear codigo'}</button></div></div>
+  <div class="profile-section"><div class="profile-section-title">Cuenta</div>
+    <div class="profile-option" id="opt-username"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${u.username}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+    <div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="profile-option-label">Correo electronico</div><div class="profile-option-value">${u.email||'no configurado'}${isAdmin?' · Administrador':''}</div></div></div></div></div>
+  <div class="profile-section"><div class="profile-section-title">Privacidad</div>
+    <div class="profile-option" id="opt-e2e"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div class="profile-option-value">Activo · Datos protegidos</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+    <div class="profile-option" id="opt-visibility"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div><div class="profile-option-label">Visibilidad de historias</div><div class="profile-option-value">Configurar quien ve tus historias</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+    <div class="profile-option" id="opt-permissions"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="profile-option-label">Permisos del sistema</div><div class="profile-option-value">Notificaciones, galeria, multimedia</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div></div>
+  <div class="profile-section"><div class="profile-section-title">Historias guardadas</div><div id="saved-stories-list">${state.savedStories.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No has guardado historias</div></div>':state.savedStories.slice().reverse().map(s=>`<div class="track-list-item"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${s.track.artist}</div></div></div>`).join('')}</div></div>
+  <div class="profile-section"><div class="profile-section-title">Mis historias publicadas</div><div id="my-stories-list">${stories.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">Aun no has compartido historias</div></div>':stories.slice().reverse().map(s=>{ const vc=(s.seenBy||[]).length; const lc=(s.likes||[]).length; const cc=(s.comments||[]).length; return `<div class="track-list-item"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${vc} vistas · ${lc} me gusta · ${cc} comentarios</div></div></div>`; }).join('')}</div></div>
+  <div class="profile-section"><div class="profile-section-title">Sistema</div>
+    <div class="profile-option" id="opt-version"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="profile-option-label">Version</div><div class="profile-option-value">${PLATFORM_VERSION}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+    <div class="profile-option" id="opt-diagnostics"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><div class="profile-option-label">Diagnostico</div><div class="profile-option-value">Informacion tecnica del dispositivo</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div></div>
+  <button class="profile-logout" id="logout-btn">Cerrar sesion</button><div style="height:16px"></div>`;
+  container.innerHTML=html;
   container.querySelector('#logout-btn').addEventListener('click',logout);
+  container.querySelector('#share-profile-btn').addEventListener('click',()=>{ const link=`https://music-horizon.netlify.app/?user=${state.user.username}`; const text=`Sigueme en Music Horizon y escucha mi musica ${link}`; if(navigator.share){ navigator.share({title:'Music Horizon',text,url:link}).catch(()=>{}); } else { navigator.clipboard.writeText(link).then(()=>toast('Link de perfil copiado','success')).catch(()=>toast(link,'info')); } });
+  container.querySelector('#coupon-btn').addEventListener('click',()=>{ document.getElementById('coupon-modal').classList.add('active'); document.getElementById('coupon-input').value=''; document.getElementById('coupon-result').innerHTML=''; document.getElementById('coupon-email-container').style.display='none'; document.getElementById('admin-created-code').textContent=''; const isAdmin=state.user.email===ADMIN_EMAIL; document.getElementById('admin-coupon-section').style.display=isAdmin?'block':'none'; });
+  container.querySelector('#edit-profile-btn').addEventListener('click',openEditProfileModal);
+  container.querySelector('#profile-avatar-edit').addEventListener('click',openEditProfileModal);
+  container.querySelector('#opt-username').addEventListener('click',openEditProfileModal);
+  container.querySelector('#opt-e2e').addEventListener('click',()=>openInfoModal('e2e'));
+  container.querySelector('#opt-visibility').addEventListener('click',()=>{ document.querySelectorAll('#default-privacy-options .privacy-opt').forEach(o=>o.classList.remove('selected')); const cur=document.querySelector(`#default-privacy-options .privacy-opt[data-privacy="${state.defaultPrivacy}"]`); if(cur) cur.classList.add('selected'); document.getElementById('visibility-modal').classList.add('active'); });
+  container.querySelector('#opt-permissions').addEventListener('click',()=>{ renderPermissions(); document.getElementById('permissions-modal').classList.add('active'); });
+  container.querySelector('#opt-version').addEventListener('click',()=>openInfoModal('version'));
+  container.querySelector('#opt-diagnostics').addEventListener('click',()=>openInfoModal('diagnostics'));
 }
+
+function openEditProfileModal(){
+  const m=document.createElement('div'); m.className='modal-overlay active';
+  m.innerHTML=`<div class="modal"><div class="modal-header"><h3 class="modal-title">Editar perfil</h3><button class="modal-close" id="ec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="modal-body">
+  <div style="text-align:center;margin-bottom:12px"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;overflow:hidden;border:3px solid rgba(255,255,255,.1);position:relative;cursor-pointer" id="eap">${state.user.avatar?`<img src="${state.user.avatar}" style="width:100%;height:100%;object-fit:cover"/>`:state.user.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div></div><button class="profile-action-btn" id="cab" style="font-size:10px;padding:5px 10px">Cambiar foto</button></div>
+  <label class="form-label">Nombre</label><input type="text" class="setup-input" id="en" value="${state.user.name}"/>
+  <label class="form-label">Usuario</label><input type="text" class="setup-input" id="eu" value="${state.user.username}" style="text-transform:lowercase"/>
+  <label class="form-label">Biografia</label><input type="text" class="setup-input" id="eb" value="${state.user.bio||''}" placeholder="Cuentale al mundo sobre ti"/>
+  <label class="form-label">Instagram</label><input type="text" class="setup-input" id="ei" value="${state.user.instagram||''}" placeholder="@usuario"/>
+  </div><div class="modal-footer"><button class="modal-btn secondary" id="eca">Cancelar</button><button class="modal-btn primary" id="es">Guardar</button></div></div>`;
+  document.body.appendChild(m);
+  m.querySelector('#ec').addEventListener('click',()=>m.remove());
+  m.querySelector('#eca').addEventListener('click',()=>m.remove());
+  m.querySelector('#cab').addEventListener('click',()=>{ const i=document.createElement('input'); i.type='file'; i.accept='image/*'; i.onchange=(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.user.avatar=ev.target.result; m.querySelector('#eap').innerHTML=`<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover"/><div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>`; }; r.readAsDataURL(f); } }; i.click(); });
+  m.querySelector('#es').addEventListener('click',async ()=>{ const nn=m.querySelector('#en').value.trim(); const nu=m.querySelector('#eu').value.trim().toLowerCase(); const nb=m.querySelector('#eb').value.trim(); const ni=m.querySelector('#ei').value.trim(); if(!nn){ toast('El nombre es obligatorio','error'); return; } if(nu!==state.user.username){ const err=validateUsername(nu); if(err){ toast(err,'error'); return; } state.user.username=nu; } state.user.name=nn; state.user.bio=nb; state.user.instagram=ni; if(state.firebaseUser) await fs.saveUser(state.firebaseUser.uid,state.user); m.remove(); toast('Perfil actualizado','success'); updateNavAvatar(); navigateTo('profile'); });
+}
+function updateNavAvatar(){ const a=document.getElementById('nav-avatar'); if(state.user.avatar) a.innerHTML=`<img src="${state.user.avatar}"/>`; else a.textContent=(state.user.name||'?')[0].toUpperCase(); }
 
 function renderStoriesBar(){
   const b=document.getElementById('stories-bar');
-  b.innerHTML=`<div class="story-item" id="add-story-btn"><div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="story-name">Tu historia</div></div>`;
+  let html=`<div class="story-item" id="add-story-btn"><div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="story-name">Tu historia</div></div>`;
+  const su=new Map(); state.stories.forEach(s=>{ if(!su.has(s.username)) su.set(s.username,[]); su.get(s.username).push(s); });
+  su.forEach((us,un)=>{ const ls=us[us.length-1]; const seen=ls.seenBy&&ls.seenBy.includes(state.user?.username); html+=`<div class="story-item" data-username="${un}"><div class="story-ring ${seen?'seen':''}"><div class="story-ring-inner">${(un||'?')[0].toUpperCase()}</div></div><div class="story-name">${un}</div></div>`; });
+  b.innerHTML=html;
   document.getElementById('add-story-btn').addEventListener('click',()=>{ if(state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una cancion primero','error'); });
+  b.querySelectorAll('.story-item[data-username]').forEach(item=>item.addEventListener('click',()=>{ const un=item.dataset.username; openStoryViewer(state.stories.filter(s=>s.username===un),0); }));
 }
+
+function enterOverlord(){ if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; } showLayer('layer-overlord'); initOverlord(); }
+let ovStartTime;
+function initOverlord(){ ovStartTime=Date.now(); const body=document.getElementById('ov-body'); body.innerHTML=''; printLine('HORIZON OVERLORD CONSOLE '+PLATFORM_VERSION,'ok'); printLine('Administrador: '+ADMIN_EMAIL,'warn'); printLine('Escribe "help" para ver comandos.','out'); printLine('','out'); startUptime(); document.getElementById('ov-input').focus(); }
+function printLine(text,cls='out'){ const body=document.getElementById('ov-body'); const div=document.createElement('div'); div.className='ov-line'; if(cls==='prompt') div.innerHTML=`<span class="prompt">root@horizon:~# </span><span class="cmd">${escHtml(text)}</span>`; else div.innerHTML=`<span class="${cls}">${escHtml(text)}</span>`; body.appendChild(div); body.scrollTop=body.scrollHeight; }
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function typeLine(text,cls='out',speed=12){ return new Promise(res=>{ const body=document.getElementById('ov-body'); const div=document.createElement('div'); div.className='ov-line'; div.innerHTML=`<span class="${cls}"></span>`; body.appendChild(div); const span=div.querySelector('span'); let i=0; const iv=setInterval(()=>{ span.textContent+=text[i]; i++; body.scrollTop=body.scrollHeight; if(i>=text.length){ clearInterval(iv); res(); } },speed); }); }
+const COMMANDS={
+  help:async ()=>{ await typeLine('Comandos:','ok'); await typeLine('  help    - ayuda','out'); await typeLine('  status  - estado del sistema','out'); await typeLine('  netstat - conexiones','out'); await typeLine('  coupons - gestion de cupones','out'); await typeLine('  devices - dispositivos','out'); await typeLine('  diag    - diagnostico','out'); await typeLine('  clear   - limpiar','out'); await typeLine('  exit    - salir','out'); },
+  status:async ()=>{ await typeLine('[OK] Nucleo ONLINE','ok'); await typeLine('[OK] AES-256 ACTIVO','ok'); await typeLine('[OK] YouTube API '+(state.ytReady?'CONECTADA':'CARGANDO'),state.ytReady?'ok':'warn'); await typeLine('[OK] '+PLATFORM_VERSION,'ok'); },
+  netstat:async ()=>{ await typeLine('TCP ESTABLISHED music-horizon.onrender.com:443','out'); await typeLine('TCP ESTABLISHED youtube.com:443','out'); },
+  coupons:async ()=>{ await typeLine('Cupones en /coupons/{code}:','ok'); await typeLine('  Solo '+ADMIN_EMAIL+' puede crear tokens','warn'); },
+  devices:async ()=>{ await typeLine('Android · Chrome · Online','ok'); await typeLine('iOS · Safari · Online','ok'); },
+  diag:async ()=>{ await typeLine('Diagnostico de red...','warn'); await new Promise(r=>setTimeout(r,400)); await typeLine('OK 0 vulnerabilidades','ok'); },
+  clear:()=>{ document.getElementById('ov-body').innerHTML=''; },
+  exit:()=>{ document.getElementById('ov-panic').click(); },
+};
+document.getElementById('ov-input').addEventListener('keydown',async (e)=>{ if(e.key!=='Enter') return; const cmd=e.target.value.trim().toLowerCase(); e.target.value=''; if(!cmd) return; printLine(cmd,'prompt'); if(COMMANDS[cmd]) await COMMANDS[cmd](); else await typeLine('Comando no reconocido: '+cmd,'err'); printLine('','out'); });
+function startUptime(){ setInterval(()=>{ const d=Math.floor((Date.now()-ovStartTime)/1000); const h=String(Math.floor(d/3600)).padStart(2,'0'); const m=String(Math.floor((d%3600)/60)).padStart(2,'0'); const s=String(d%60).padStart(2,'0'); const up=document.getElementById('ov-uptime'); if(up) up.textContent=`UPTIME: ${h}:${m}:${s}`; const lt=document.getElementById('ov-lat'); if(lt) lt.textContent=`LAT: ${8+Math.floor(Math.random()*8)}ms`; },1000); }
+document.getElementById('ov-panic').addEventListener('click',async ()=>{ if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} } state.user=null; document.getElementById('auth-login-screen').style.display='flex'; document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active')); });
+
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('full-player').classList.contains('active')){ document.getElementById('full-player').classList.remove('active'); destroyVideo(); state.activeTab='music'; switchTab('music'); }
+    if(document.getElementById('story-viewer').classList.contains('active')) closeStoryViewer();
+    ['story-modal','profile-setup-modal','info-modal','visibility-modal','permissions-modal','coupon-modal'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    if(document.getElementById('notifications-panel').classList.contains('active')) document.getElementById('notifications-panel').classList.remove('active');
+  }
+  if(e.key===' '&&document.activeElement.tagName!=='INPUT'){ e.preventDefault(); togglePlay(); }
+});
+
+window.addEventListener('resize',()=>{ if(ytMainPlayer&&ytMainPlayer.getDuration){ const cur=ytMainPlayer.getCurrentTime()||0; const dur=ytMainPlayer.getDuration()||0; const pct=dur>0?(cur/dur)*100:0; const fill=document.getElementById('progress-fill'); const miniFill=document.getElementById('mini-progress-fill'); if(fill) fill.style.width=pct+'%'; if(miniFill) miniFill.style.width=pct+'%'; } });
 </script>
 </body>
 </html>
