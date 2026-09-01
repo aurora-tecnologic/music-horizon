@@ -473,21 +473,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- MODAL DESCARGA INTERNA REAL (BLOB) -->
-<div class="modal-overlay center" id="download-modal">
-  <div class="modal">
-    <div class="modal-header"><h3 class="modal-title">Descarga interna al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon solicita permisos de almacenamiento para guardar el archivo físicamente en tu teléfono.</p>
-      <label class="form-label">Formato</label>
-      <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
-      <label class="form-label">Calidad</label>
-      <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
-    </div>
-    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
-  </div>
-</div>
-
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Configurar perfil</h3></div>
@@ -497,7 +482,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
           <span id="avatar-initial">?</span><img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
           <div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
         </div>
-        <div style="font-size:10px;color:var(--text-muted)">Toca para subir una foto (Permiso de galería)</div>
+        <div style="font-size:10px;color:var(--text-muted)">Toca para subir una foto (opcional)</div>
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" />
       <label class="form-label">Nombre</label><input type="text" class="setup-input" id="setup-name" placeholder="Nombre" autocomplete="off" />
@@ -593,18 +578,12 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </section>
 
-<!-- MODAL DE HISTORIA CON PERMISOS DE CÁMARA Y GALERÍA -->
 <div class="modal-overlay" id="story-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Nueva historia</h3><button class="modal-close" id="story-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="story-image-upload" id="story-image-upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-      <div style="display:flex;gap:8px;margin-bottom:12px">
-        <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:11px">Permiso Galería</button>
-        <button class="modal-btn secondary" id="btn-open-camera" style="font-size:11px">Permiso Cámara</button>
-      </div>
       <input type="file" id="story-image-input" accept="image/*" style="display:none" />
-      <input type="file" id="story-camera-input" accept="image/*" capture="environment" style="display:none" />
       <label class="form-label">Visibilidad</label>
       <div id="story-privacy-options">
         <div class="privacy-opt selected" data-privacy="public"><div class="privacy-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="privacy-opt-label">Publica</div><div class="privacy-opt-value">Todos pueden ver</div></div></div>
@@ -733,9 +712,8 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-const API_BASE = 'https://music-horizon.onrender.com';
 const ADMIN_EMAIL = 'administradores830@gmail.com';
 const PLATFORM_VERSION = 'V1.0.2.3.BETA';
 
@@ -764,9 +742,6 @@ const state = {
 
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
 
-// ============================================================
-// SEGUIMIENTO Y SINCRONIZACION DE LA LETRA EN TIEMPO REAL
-// ============================================================
 function updateLyricsSync(currentTime) {
   const lines = document.querySelectorAll('.lyrics-line[data-time]');
   if (!lines.length) return;
@@ -1152,6 +1127,77 @@ async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id=
 function isFavorite(id){ return state.favorites.some(f=>f.id===id); }
 
 // ============================================================
+// BUSCADOR GLOBAL ROBUSTO (LECTURA SEGURA DE SOLICITUDES)
+// ============================================================
+async function performSearch(q, resultsEl, playFirst = false) {
+  if (!q || typeof q !== 'string') return;
+  const cleanQuery = q.trim();
+  if (cleanQuery.length < 2) {
+    resultsEl.classList.remove('show');
+    return;
+  }
+
+  resultsEl.classList.add('show');
+  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones del mundo...</div>';
+  
+  let results = [];
+  const queryLower = cleanQuery.toLowerCase();
+  const instances = [
+    'https://invidious.jing.rocks',
+    'https://vid.priv.au',
+    'https://invidious.no-punts.com'
+  ];
+
+  for (let inst of instances) {
+    try {
+      const encodedQuery = encodeURIComponent(cleanQuery);
+      const res = await fetch(`${inst}/api/v1/search?q=${encodedQuery}&type=video`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && Array.isArray(data) && data.length > 0) {
+          results = data.slice(0, 10).map(item => ({
+            id: item.videoId,
+            youtubeId: item.videoId,
+            title: item.title || 'Sin título',
+            artist: item.author || 'Desconocido',
+            cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
+          }));
+          break;
+        }
+      }
+    } catch(e) { continue; }
+  }
+
+  if (results.length === 0) {
+    const localMatches = TRACKS.filter(t => !t.isWelcome && (t.title.toLowerCase().includes(queryLower) || t.artist.toLowerCase().includes(queryLower)));
+    results = localMatches.map(t => ({ id: t.id, youtubeId: t.youtubeId, title: t.title, artist: t.artist, cover: t.cover }));
+  }
+
+  if (results.length > 0) {
+    renderSearchResults(results, resultsEl, playFirst);
+  } else {
+    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados para esta búsqueda</div>';
+  }
+}
+
+function renderSearchResults(results, resultsEl, playFirst) {
+  resultsEl.innerHTML = results.map((r, i) => `<div class="search-result-item" data-idx="${i}"><div class="search-result-cover"><img src="${r.cover||''}" alt=""/></div><div class="search-result-info"><div class="search-result-title">${r.title}</div><div class="search-result-artist">${r.artist||'Desconocido'}</div></div></div>`).join('');
+  resultsEl.querySelectorAll('.search-result-item').forEach(item => item.addEventListener('click', () => {
+    const t = results[parseInt(item.dataset.idx)];
+    playTrack({ id: t.id || Date.now(), title: t.title, artist: t.artist || 'Desconocido', cover: t.cover || '', youtubeId: t.youtubeId });
+    resultsEl.classList.remove('show');
+  }));
+  if (playFirst && results.length) {
+    const t = results[0];
+    playTrack({ id: t.id || Date.now(), title: t.title, artist: t.artist || 'Desconocido', cover: t.cover || '', youtubeId: t.youtubeId });
+    resultsEl.classList.remove('show');
+  }
+}
+
+// ============================================================
 // DESCARGA INTERNA REAL (BLOB EN DISPOSITIVO)
 // ============================================================
 function openDownloadModal(track) {
@@ -1196,7 +1242,6 @@ function openDownloadModal(track) {
   };
 }
 
-// PERMISOS CÁMARA Y GALERÍA PARA HISTORIAS
 document.getElementById('story-image-upload').addEventListener('click',()=>document.getElementById('story-image-input').click());
 document.getElementById('story-image-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } });
 document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
@@ -1334,69 +1379,6 @@ function renderHomeView(container){
   container.querySelectorAll('.cat-chip').forEach(ch=>ch.addEventListener('click',()=>{ container.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); }));
 }
 
-// ============================================================
-// BUSCADOR GLOBAL MULTI-NODO BLINDADO (ENCUENTRA CUALQUIER CANCIÓN)
-// ============================================================
-async function performSearch(q, resultsEl, playFirst = false) {
-  resultsEl.classList.add('show');
-  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones del mundo...</div>';
-  
-  let results = [];
-  const queryLower = q.toLowerCase();
-  const instances = [
-    'https://invidious.jing.rocks',
-    'https://vid.priv.au',
-    'https://invidious.no-punts.com'
-  ];
-
-  for (let inst of instances) {
-    try {
-      const res = await fetch(`${inst}/api/v1/search?q=${encodeURIComponent(q)}&type=video`, {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.length > 0) {
-          results = data.slice(0, 10).map(item => ({
-            id: item.videoId,
-            youtubeId: item.videoId,
-            title: item.title,
-            artist: item.author || 'Desconocido',
-            cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
-          }));
-          break;
-        }
-      }
-    } catch(e) { continue; }
-  }
-
-  if (results.length === 0) {
-    const localMatches = TRACKS.filter(t => !t.isWelcome && (t.title.toLowerCase().includes(queryLower) || t.artist.toLowerCase().includes(queryLower)));
-    results = localMatches.map(t => ({ id: t.id, youtubeId: t.youtubeId, title: t.title, artist: t.artist, cover: t.cover }));
-  }
-
-  if (results.length > 0) {
-    renderSearchResults(results, resultsEl, playFirst);
-  } else {
-    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados para esta búsqueda</div>';
-  }
-}
-
-function renderSearchResults(results, resultsEl, playFirst) {
-  resultsEl.innerHTML = results.map((r, i) => `<div class="search-result-item" data-idx="${i}"><div class="search-result-cover"><img src="${r.cover||''}" alt=""/></div><div class="search-result-info"><div class="search-result-title">${r.title}</div><div class="search-result-artist">${r.artist||'Desconocido'}</div></div></div>`).join('');
-  resultsEl.querySelectorAll('.search-result-item').forEach(item => item.addEventListener('click', () => {
-    const t = results[parseInt(item.dataset.idx)];
-    playTrack({ id: t.id || Date.now(), title: t.title, artist: t.artist || 'Desconocido', cover: t.cover || '', youtubeId: t.youtubeId });
-    resultsEl.classList.remove('show');
-  }));
-  if (playFirst && results.length) {
-    const t = results[0];
-    playTrack({ id: t.id || Date.now(), title: t.title, artist: t.artist || 'Desconocido', cover: t.cover || '', youtubeId: t.youtubeId });
-    resultsEl.classList.remove('show');
-  }
-}
-
 function createTrendCard(track){
   const card=document.createElement('div'); card.className='trend-card'; const liked=isFavorite(track.id);
   card.innerHTML=`<img src="${track.cover}" alt="${track.title}" loading="lazy"/>
@@ -1466,7 +1448,7 @@ function renderProfileView(container){
   <div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${u.stats.plays||0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div><div class="profile-stat"><div class="profile-stat-value">${stories.length}</div><div class="profile-stat-label">Historias</div></div></div>
   <div class="profile-actions"><button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button><button class="profile-action-btn primary" id="share-profile-btn">Compartir</button><button class="profile-action-btn ${isAdmin?'admin':''}" id="coupon-btn">${isAdmin?'Crear codigos':'Canjear codigo'}</button></div></div>
   <div class="profile-section"><div class="profile-section-title">Cuenta</div>
-    <div class="profile-option" id="opt-username"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${u.username}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+    <div class="profile-option" id="opt-username"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${u.username}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
     <div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="profile-option-label">Correo electronico</div><div class="profile-option-value">${u.email||'no configurado'}${isAdmin?' · Administrador':''}</div></div></div></div></div>
   <div class="profile-section"><div class="profile-section-title">Privacidad</div>
     <div class="profile-option" id="opt-e2e"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div class="profile-option-value">Activo · Datos protegidos</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
