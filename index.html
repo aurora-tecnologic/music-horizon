@@ -29,24 +29,8 @@ svg{display:block}
 .layer{position:fixed;inset:0;display:none;opacity:0;transition:opacity .45s var(--ease-out-expo);overflow:hidden}
 .layer.active{display:flex;opacity:1}
 
-/* ============ LOGIN ============ */
-#auth-login-screen{
-  position:fixed;top:0;left:0;
-  width:100vw;height:100vh;min-height:100vh;
-  background:#0D1321;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;
-  overflow-y:auto;
-  padding:20px;
-  box-sizing:border-box;
-}
-.login-grid-bg{
-  position:absolute;width:100%;height:100%;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
-  opacity:0.15;pointer-events:none;
-  transform:scale(1.1);filter:blur(2px);
-  z-index:0;
-}
+#auth-login-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;min-height:100vh;background:#0D1321;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;overflow-y:auto;padding:20px;box-sizing:border-box}
+.login-grid-bg{position:absolute;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;opacity:0.15;pointer-events:none;transform:scale(1.1);filter:blur(2px);z-index:0}
 .login-grid-bg div{border-radius:20px;height:180px}
 .login-grid-bg .g1{background:linear-gradient(135deg,#3385E6,#1D2A44)}
 .login-grid-bg .g2{background:linear-gradient(135deg,#1D2A44,#0D1321);margin-top:40px}
@@ -54,33 +38,14 @@ svg{display:block}
 .login-grid-bg .g4{background:linear-gradient(135deg,#6B46FF,#0D1321);margin-top:-20px}
 .login-grid-bg .g5{background:linear-gradient(135deg,#1D2A44,#3385E6)}
 .login-grid-bg .g6{background:linear-gradient(135deg,#0D1321,#6B46FF);margin-top:30px}
-.login-content-wrap{
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;align-items:center;
-  max-width:400px;width:100%;text-align:center;
-  margin:auto;
-}
-.login-logo-box{
-  width:80px;height:80px;border-radius:24px;
-  background:linear-gradient(135deg,#3385E6,#1D2A44);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:20px;
-  box-shadow:0 10px 30px rgba(51,133,230,0.3);
-  animation:logoFloat 4s ease-in-out infinite;
-}
+.login-content-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;max-width:400px;width:100%;text-align:center;margin:auto}
+.login-logo-box{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#3385E6,#1D2A44);display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 10px 30px rgba(51,133,230,0.3);animation:logoFloat 4s ease-in-out infinite}
 @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .login-logo-box svg{width:40px;height:40px}
 .login-title-text{font-size:28px;font-weight:bold;color:#fff;margin-bottom:8px}
 .login-title-text span{color:#3385E6}
 .login-sub-text{font-size:14px;color:#a0aec0;margin-bottom:30px;line-height:1.5}
-#google-login-btn{
-  background:#fff;color:#1a1a1a;
-  padding:14px 24px;border-radius:14px;
-  font-weight:bold;font-size:15px;
-  width:100%;display:flex;align-items:center;justify-content:center;gap:12px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-  transition:all .3s var(--ease-out-back);
-}
+#google-login-btn{background:#fff;color:#1a1a1a;padding:14px 24px;border-radius:14px;font-weight:bold;font-size:15px;width:100%;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:all .3s var(--ease-out-back)}
 #google-login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
 #google-login-btn:disabled{opacity:.6;cursor:not-allowed}
 #google-login-btn svg{width:20px;height:20px}
@@ -94,7 +59,6 @@ svg{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 #login-audio-container{position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
 
-/* ============ MAIN ============ */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(180deg,rgba(13,19,33,.98),rgba(13,19,33,.85));backdrop-filter:blur(30px);border-bottom:1px solid var(--border);z-index:60;flex-shrink:0}
 .nav-left{display:flex;align-items:center;gap:10px;min-width:0}
@@ -219,7 +183,6 @@ svg{display:block}
 .full-tab{padding:6px 12px;border-radius:16px;font-size:11px;font-weight:600;color:var(--text-secondary);background:rgba(255,255,255,.04);transition:all .15s;cursor:pointer}
 .full-tab.active{background:var(--gradient-primary);color:#fff}
 
-/* CAPAS SUPERPUESTAS NO DESTRUCTIVAS */
 .media-stack{flex:1;position:relative;min-height:0;overflow:hidden}
 .media-layer{position:absolute;inset:0;display:none;align-items:center;justify-content:center}
 .media-layer.active{display:flex}
@@ -242,8 +205,8 @@ svg{display:block}
 .video-fallback a{padding:8px 16px;border-radius:10px;background:var(--gradient-primary);font-size:12px;font-weight:700;color:#fff;text-decoration:none}
 
 .layer-lyrics{padding:20px;overflow-y:auto}
-.lyrics-line{font-size:14px;color:var(--text-muted);margin:8px 0;text-align:center;line-height:1.4;transition:all .2s}
-.lyrics-line.active{color:var(--text-primary);font-weight:700;font-size:15px}
+.lyrics-line{font-size:14px;color:var(--text-muted);margin:10px 0;text-align:center;line-height:1.5;transition:all .3s ease;padding:6px 12px;border-radius:8px}
+.lyrics-line.active{color:var(--text-primary);font-weight:700;font-size:17px;background:rgba(51,133,230,0.1);transform:scale(1.05)}
 .lyrics-loading{text-align:center;color:var(--text-secondary);font-size:12px}
 
 .full-info{text-align:center;margin:10px 0 6px;flex-shrink:0}
@@ -490,51 +453,20 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
 .story-nav-zone.prev{left:0}
 .story-nav-zone.next{right:0}
 
-/* ============ RESPONSIVE ============ */
-@media (min-width:640px){
-  .trend-grid{grid-template-columns:repeat(3,1fr)}
-  .content{padding:20px 24px 210px}
-}
-@media (min-width:900px){
-  .trend-grid{grid-template-columns:repeat(4,1fr)}
-  .content{padding:24px 40px 210px}
-  .stories-bar{justify-content:center}
-  .full-player{padding:20px 40px 32px}
-  .vinyl{width:min(40vw,320px)}
-  .bottom-nav{max-width:720px;left:50%;transform:translateX(-50%);border-radius:18px 18px 0 0;border:1px solid var(--border);border-bottom:none}
-  .mini-player{bottom:calc(var(--nav-height) + 18px)}
-}
-@media (min-width:1200px){
-  .trend-grid{grid-template-columns:repeat(5,1fr)}
-  .content{padding:28px 60px 210px}
-  .login-content-wrap{max-width:440px}
-}
-@media (max-height:640px){
-  .login-content-wrap{padding:20px 0}
-  .login-logo-box{width:70px;height:70px;margin-bottom:14px}
-  .login-logo-box svg{width:34px;height:34px}
-  .login-sub-text{margin-bottom:18px}
-  .login-chips{margin-top:16px}
-}
-@media (max-width:380px){
-  .login-title-text{font-size:24px}
-  .login-chip{font-size:10px;padding:5px 10px}
-}
+@media (min-width:640px){.trend-grid{grid-template-columns:repeat(3,1fr)}.content{padding:20px 24px 210px}}
+@media (min-width:900px){.trend-grid{grid-template-columns:repeat(4,1fr)}.content{padding:24px 40px 210px}.stories-bar{justify-content:center}.full-player{padding:20px 40px 32px}.vinyl{width:min(40vw,320px)}.bottom-nav{max-width:720px;left:50%;transform:translateX(-50%);border-radius:18px 18px 0 0;border:1px solid var(--border);border-bottom:none}.mini-player{bottom:calc(var(--nav-height) + 18px)}}
+@media (min-width:1200px){.trend-grid{grid-template-columns:repeat(5,1fr)}.content{padding:28px 60px 210px}.login-content-wrap{max-width:440px}}
+@media (max-height:640px){.login-content-wrap{padding:20px 0}.login-logo-box{width:70px;height:70px;margin-bottom:14px}.login-logo-box svg{width:34px;height:34px}.login-sub-text{margin-bottom:18px}.login-chips{margin-top:16px}}
+@media (max-width:380px){.login-title-text{font-size:24px}.login-chip{font-size:10px;padding:5px 10px}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN RESPONSIVE DEFINITIVO -->
 <div id="auth-login-screen">
-  <div class="login-grid-bg">
-    <div class="g1"></div><div class="g2"></div><div class="g3"></div>
-    <div class="g4"></div><div class="g5"></div><div class="g6"></div>
-  </div>
+  <div class="login-grid-bg"><div class="g1"></div><div class="g2"></div><div class="g3"></div><div class="g4"></div><div class="g5"></div><div class="g6"></div></div>
   <div id="login-audio-container"></div>
   <div class="login-content-wrap">
-    <div class="login-logo-box">
-      <svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-    </div>
+    <div class="login-logo-box"><svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
     <div class="login-title-text">Music <span>Horizon</span></div>
     <div class="login-sub-text">Plataforma de streaming musical de alta gama. Experiencia sonora sin limites ni interrupciones.</div>
     <button id="google-login-btn">
@@ -542,41 +474,27 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
       Continuar con Google
     </button>
     <div class="login-loading" id="login-loading"><div class="spinner"></div><span>Autenticando...</span></div>
-    <div class="login-chips">
-      <div class="login-chip">2.8K+ usuarios</div>
-      <div class="login-chip">musica ilimitada</div>
-      <div class="login-chip">0 anuncios</div>
-    </div>
-    <div class="login-footer-info">
-      Cifrado E2E · Cero anuncios · Cero rastreo comercial<br>
-      Solo el administrador puede auditar el sistema<br>
-      <strong>V1.0.2.3.BETA</strong>
-    </div>
+    <div class="login-chips"><div class="login-chip">2.8K+ usuarios</div><div class="login-chip">musica ilimitada</div><div class="login-chip">0 anuncios</div></div>
+    <div class="login-footer-info">Cifrado E2E · Cero anuncios · Cero rastreo comercial<br>Solo el administrador puede auditar el sistema<br><strong>V1.0.2.3.BETA</strong></div>
   </div>
 </div>
 
-<!-- SETUP -->
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Configurar perfil</h3></div>
     <div class="modal-body">
       <div style="text-align:center;margin-bottom:14px">
         <div id="avatar-upload" style="width:90px;height:90px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;position:relative;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer">
-          <span id="avatar-initial">?</span>
-          <img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
+          <span id="avatar-initial">?</span><img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
           <div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
         </div>
         <div style="font-size:10px;color:var(--text-muted)">Toca para subir una foto (opcional)</div>
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" />
-      <label class="form-label">Nombre</label>
-      <input type="text" class="setup-input" id="setup-name" placeholder="Nombre" autocomplete="off" />
-      <label class="form-label">Usuario</label>
-      <input type="text" class="setup-input" id="setup-username" placeholder="@username (unico)" autocomplete="off" style="text-transform:lowercase" />
-      <label class="form-label">Biografia (opcional)</label>
-      <input type="text" class="setup-input" id="setup-bio" placeholder="Cuentale al mundo sobre ti" autocomplete="off" />
-      <label class="form-label">Instagram (opcional)</label>
-      <input type="text" class="setup-input" id="setup-instagram" placeholder="@usuario" autocomplete="off" />
+      <label class="form-label">Nombre</label><input type="text" class="setup-input" id="setup-name" placeholder="Nombre" autocomplete="off" />
+      <label class="form-label">Usuario</label><input type="text" class="setup-input" id="setup-username" placeholder="@username (unico)" autocomplete="off" style="text-transform:lowercase" />
+      <label class="form-label">Biografia (opcional)</label><input type="text" class="setup-input" id="setup-bio" placeholder="Cuentale al mundo sobre ti" autocomplete="off" />
+      <label class="form-label">Instagram (opcional)</label><input type="text" class="setup-input" id="setup-instagram" placeholder="@usuario" autocomplete="off" />
       <div style="font-size:10px;color:var(--text-muted);text-align:center;margin-bottom:10px">Solo minusculas, numeros, puntos y guiones bajos · 3-20 caracteres</div>
       <div id="setup-error" style="color:var(--danger);font-size:11px;text-align:center;min-height:14px;margin-bottom:8px"></div>
       <button class="modal-btn primary" id="setup-btn" style="width:100%">Crear perfil</button>
@@ -584,7 +502,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- MAIN -->
 <section id="layer-main" class="layer">
   <header class="topbar">
     <div class="nav-left">
@@ -617,7 +534,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </nav>
 </section>
 
-<!-- FULL PLAYER -->
 <section class="full-player" id="full-player">
   <div class="full-inner">
     <div class="full-top">
@@ -668,7 +584,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </section>
 
-<!-- STORY CREATOR -->
 <div class="modal-overlay" id="story-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Nueva historia</h3><button class="modal-close" id="story-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -686,7 +601,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- STORY VIEWER -->
 <div id="story-viewer">
   <div class="story-viewer-inner">
     <div class="story-progress-bar"><div class="story-progress-fill" id="story-progress"></div></div>
@@ -725,7 +639,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- COUPON -->
 <div class="modal-overlay center" id="coupon-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Canjear codigo de regalo</h3><button class="modal-close" id="coupon-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -744,12 +657,9 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
         <label class="form-label">Servicio</label>
         <input type="text" class="setup-input" id="admin-coupon-service" placeholder="Servicio" />
         <div id="admin-account-fields">
-          <label class="form-label">Correo</label>
-          <input type="text" class="setup-input" id="admin-coupon-email" placeholder="cuenta@servicio.com" />
-          <label class="form-label">Contrasena</label>
-          <input type="text" class="setup-input" id="admin-coupon-password" placeholder="contrasena" />
-          <label class="form-label">Perfil</label>
-          <input type="text" class="setup-input" id="admin-coupon-profile" placeholder="Perfil 1" />
+          <label class="form-label">Correo</label><input type="text" class="setup-input" id="admin-coupon-email" placeholder="cuenta@servicio.com" />
+          <label class="form-label">Contrasena</label><input type="text" class="setup-input" id="admin-coupon-password" placeholder="contrasena" />
+          <label class="form-label">Perfil</label><input type="text" class="setup-input" id="admin-coupon-profile" placeholder="Perfil 1" />
         </div>
         <button class="modal-btn admin" id="admin-create-coupon" style="width:100%">Generar codigo</button>
         <div id="admin-created-code" style="margin-top:10px;text-align:center;font-size:14px;font-weight:800;letter-spacing:2px;color:var(--accent-light)"></div>
@@ -759,7 +669,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- PERMISSIONS -->
 <div class="modal-overlay center" id="permissions-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Permisos del sistema</h3><button class="modal-close" id="permissions-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -768,7 +677,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- INFO -->
 <div class="modal-overlay center" id="info-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title" id="info-modal-title">Informacion</h3><button class="modal-close" id="info-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -777,7 +685,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- VISIBILITY -->
 <div class="modal-overlay" id="visibility-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Visibilidad de historias</h3><button class="modal-close" id="visibility-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -793,7 +700,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
-<!-- OVERLORD -->
 <section id="layer-overlord" class="layer">
   <button class="ov-panic" id="ov-panic" title="Salir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
   <div class="ov-header"><span class="ov-uptime" id="ov-uptime">UPTIME: 00:00:00</span><span class="ov-alert">SESION ENCRIPTADA</span><span class="ov-lat" id="ov-lat">LAT: 12ms</span></div>
@@ -801,7 +707,6 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   <div class="ov-input-wrap"><span class="ov-prompt">root@horizon:~#</span><input type="text" class="ov-input" id="ov-input" autocomplete="off" spellcheck="false" /></div>
 </section>
 
-<!-- NOTIFICATIONS -->
 <div class="notifications-panel" id="notifications-panel">
   <div class="notifications-header"><h3 class="notifications-title">Notificaciones</h3><button class="modal-close" id="notif-panel-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="notifications-list" id="notifications-list"></div>
@@ -842,13 +747,25 @@ const state = {
   activeTab: 'music', ytReady: false
 };
 
+let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
+
 // ============================================================
-// MOTOR YOUTUBE IFRAME API - SIN ELEMENTO <audio>
+// SEGUIMIENTO Y SINCRONIZACION DE LA LETRA EN TIEMPO REAL
 // ============================================================
-let ytMainPlayer = null;
-let ytVideoPlayer = null;
-let timeUpdateInterval = null;
-let loginPlayer = null;
+function updateLyricsSync(currentTime) {
+  const lines = document.querySelectorAll('.lyrics-line[data-time]');
+  if (!lines.length) return;
+  let activeLine = null;
+  lines.forEach(line => {
+    const time = parseFloat(line.dataset.time);
+    if (currentTime >= time) activeLine = line;
+  });
+  if (activeLine && !activeLine.classList.contains('active')) {
+    lines.forEach(l => l.classList.remove('active'));
+    activeLine.classList.add('active');
+    activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
 
 function onYouTubeIframeAPIReady() {
   state.ytReady = true;
@@ -860,20 +777,17 @@ function initLoginPlayer() {
   if (!container || loginPlayer) return;
   container.innerHTML = '<div id="yt-login-div"></div>';
   loginPlayer = new YT.Player('yt-login-div', {
-    videoId: 'dQw4w9WgXcQ',
-    playerVars: { autoplay: 1, loop: 1, playlist: 'dQw4w9WgXcQ', controls: 0, modestbranding: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, playsinline: 1 },
+    videoId: '01974wqk9eQ',
+    playerVars: { autoplay: 1, loop: 1, playlist: '01974wqk9eQ', controls: 0, modestbranding: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, playsinline: 1 },
     events: {
-      onReady: () => { loginPlayer.setVolume(30); loginPlayer.playVideo(); },
+      onReady: () => { loginPlayer.setVolume(25); loginPlayer.playVideo(); },
       onStateChange: (e) => { if (e.data === YT.PlayerState.ENDED) loginPlayer.playVideo(); }
     }
   });
 }
 
 function stopLoginPlayer() {
-  if (loginPlayer) {
-    try { loginPlayer.stopVideo(); loginPlayer.destroy(); } catch(e){}
-    loginPlayer = null;
-  }
+  if (loginPlayer) { try { loginPlayer.stopVideo(); loginPlayer.destroy(); } catch(e){} loginPlayer = null; }
   const c = document.getElementById('login-audio-container');
   if (c) c.innerHTML = '';
 }
@@ -907,15 +821,12 @@ function onMainPlayerStateChange(e) {
     state.isPlaying = false;
     updatePlayStateUI(false);
   } else if (e.data === YT.PlayerState.ENDED) {
-    if (state.repeatMode === 2 && ytMainPlayer) {
-      ytMainPlayer.seekTo(0);
-      ytMainPlayer.playVideo();
-    } else {
-      nextTrack();
-    }
+    if (state.repeatMode === 2 && ytMainPlayer) { ytMainPlayer.seekTo(0); ytMainPlayer.playVideo(); }
+    else nextTrack();
   }
 }
 
+// Bucle principal de tiempo que alimenta la barra de progreso y la letra sincronizada
 function startTimeUpdateLoop() {
   if (timeUpdateInterval) clearInterval(timeUpdateInterval);
   timeUpdateInterval = setInterval(() => {
@@ -931,6 +842,8 @@ function startTimeUpdateLoop() {
       const pct = dur > 0 ? (cur / dur) * 100 : 0;
       if (fill) fill.style.width = pct + '%';
       if (miniFill) miniFill.style.width = pct + '%';
+      // Sincronizar el desplazamiento y resaltado de la letra en curso
+      updateLyricsSync(cur);
     }
   }, 250);
 }
@@ -942,74 +855,38 @@ function formatTime(seconds) {
   return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// ============================================================
-// AISLAMIENTO DEL ICONO PLAY/PAUSE - SOLO #main-play-pause-icon
-// ============================================================
 function updatePlayStateUI(isPlaying) {
   state.isPlaying = isPlaying;
   const PLAY_SVG = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
   const PAUSE_SVG = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
-  
-  // SOLO actualizar el icono aislado por ID
   const mainIcon = document.getElementById('main-play-pause-icon');
   if (mainIcon) mainIcon.innerHTML = isPlaying ? PAUSE_SVG : PLAY_SVG;
-  
   const miniIcon = document.getElementById('mini-play-pause-icon');
   if (miniIcon) miniIcon.innerHTML = isPlaying ? PAUSE_SVG : PLAY_SVG;
-  
   const vinyl = document.getElementById('vinyl');
   if (vinyl) vinyl.classList.toggle('playing', isPlaying);
 }
 
-// ============================================================
-// VISOR DE VIDEO BLINDADO CON CAPA PROTECTORA
-// ============================================================
 function renderCleanVideoPlayer(track) {
   const holder = document.getElementById('video-holder');
   const ytContainer = document.getElementById('yt-video-container');
   const fallback = document.getElementById('video-fallback');
   if (!holder || !ytContainer || !track) return;
-
   ytContainer.innerHTML = '';
   fallback.style.display = 'none';
-
-  if (!track.youtubeId) {
-    fallback.style.display = 'flex';
-    return;
-  }
-
+  if (!track.youtubeId) { fallback.style.display = 'flex'; return; }
   const divId = 'yt-video-iframe-' + Date.now();
   ytContainer.innerHTML = `<div id="${divId}"></div>`;
-
-  if (ytVideoPlayer) {
-    try { ytVideoPlayer.destroy(); } catch(e){}
-    ytVideoPlayer = null;
-  }
-
+  if (ytVideoPlayer) { try { ytVideoPlayer.destroy(); } catch(e){} ytVideoPlayer = null; }
   ytVideoPlayer = new YT.Player(divId, {
     videoId: track.youtubeId,
-    playerVars: {
-      autoplay: 1,
-      modestbranding: 1,
-      rel: 0,
-      iv_load_policy: 3,
-      controls: 0,
-      disablekb: 1,
-      fs: 0,
-      playsinline: 1
-    },
-    events: {
-      onError: () => {
-        ytContainer.innerHTML = '';
-        fallback.style.display = 'flex';
-        document.getElementById('video-fallback-link').href = `https://www.youtube.com/watch?v=${track.youtubeId}`;
-      }
-    }
+    playerVars: { autoplay: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, controls: 0, disablekb: 1, fs: 0, playsinline: 1 },
+    events: { onError: () => { ytContainer.innerHTML = ''; fallback.style.display = 'flex'; document.getElementById('video-fallback-link').href = `https://www.youtube.com/watch?v=${track.youtubeId}`; } }
   });
 }
 
 const TRACKS = [
-  { id:1, title:'Videoclub ROI Instrumental', artist:'New Chava', youtubeId:'dQw4w9WgXcQ', cover:'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg', genre:'instrumental', isWelcome:true },
+  { id:1, title:'Roi (Instrumental Slowed)', artist:'Videoclub', youtubeId:'01974wqk9eQ', cover:'https://i.ytimg.com/vi/01974wqk9eQ/maxresdefault.jpg', genre:'electropop', isWelcome:true },
   { id:2, title:'Despacito', artist:'Luis Fonsi ft. Daddy Yankee', youtubeId:'kJQP7kiw5Fk', cover:'https://i.ytimg.com/vi/kJQP7kiw5Fk/maxresdefault.jpg', genre:'latin' },
   { id:3, title:'Shape of You', artist:'Ed Sheeran', youtubeId:'JGwWNGJdvx8', cover:'https://i.ytimg.com/vi/JGwWNGJdvx8/maxresdefault.jpg', genre:'pop' },
   { id:4, title:'Gangnam Style', artist:'PSY', youtubeId:'9bZkp7q19f0', cover:'https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg', genre:'pop' },
@@ -1065,7 +942,6 @@ function getTimeAgo(ts){ if(!ts) return 'reciente'; const raw=typeof ts==='numbe
 function formatCouponCode(v){ const c=v.replace(/[^A-Z0-9]/gi,'').toUpperCase(); const g=c.match(/.{1,4}/g)||[]; return g.join('-'); }
 function generateCode16(){ const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let out=''; const arr=new Uint32Array(16); crypto.getRandomValues(arr); arr.forEach(n=>out+=chars[n%chars.length]); return out; }
 
-/* ============ AUTH ============ */
 document.getElementById('google-login-btn').addEventListener('click', async () => {
   stopLoginPlayer();
   const btn=document.getElementById('google-login-btn'); const loading=document.getElementById('login-loading');
@@ -1150,7 +1026,6 @@ async function logout(){
 
 if(firebaseAuth){ onAuthStateChanged(firebaseAuth,(fb)=>{ if(fb&&!state.user){ state.firebaseUser=fb; fs.getUserByUid(fb.uid).then(async (p)=>{ if(p){ state.user=p; await loadAllUserData(fb.uid); onAuthSuccess(p); } }); } }); }
 
-/* ============ PLAYER ============ */
 function buildShuffledQueue(){ const idx=TRACKS.filter(t=>!t.isWelcome).map((_,i)=>i); for(let i=idx.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [idx[i],idx[j]]=[idx[j],idx[i]]; } state.shuffledQueue=idx; state.shuffledIndex=0; }
 function nextTrack(){ const nw=TRACKS.filter(t=>!t.isWelcome); if(state.shuffleEnabled){ if(!state.shuffledQueue.length) buildShuffledQueue(); state.shuffledIndex=(state.shuffledIndex+1)%state.shuffledQueue.length; playTrack(nw[state.shuffledQueue[state.shuffledIndex]]); } else { const cur=nw.findIndex(t=>t.id===state.currentTrack?.id); playTrack(nw[(cur+1)%nw.length]); } }
 function prevTrack(){ const nw=TRACKS.filter(t=>!t.isWelcome); const cur=nw.findIndex(t=>t.id===state.currentTrack?.id); playTrack(nw[(cur-1+nw.length)%nw.length]); }
@@ -1161,9 +1036,7 @@ async function playTrack(track,fromStory=false){
   if(!track) return;
   state.currentTrack=track; state.currentIndex=TRACKS.findIndex(t=>t.id===track.id);
   state.isPlaying=true;
-  if(track.youtubeId){
-    initMainPlayer(track.youtubeId);
-  }
+  if(track.youtubeId) initMainPlayer(track.youtubeId);
   updatePlayerUI(); document.getElementById('mini-player').classList.remove('hidden'); updateMediaSession(); saveHistory(track);
   if(state.user&&state.firebaseUser){ state.user.stats.plays=(state.user.stats.plays||0)+1; await fs.saveUser(state.firebaseUser.uid,{stats:state.user.stats}); }
   if(fromStory&&state.currentViewingStory&&state.currentViewingStory.username!==state.user.username){ toast('Notificacion enviada al creador','info'); }
@@ -1173,10 +1046,7 @@ async function playTrack(track,fromStory=false){
 
 function togglePlay(){
   if(!state.currentTrack){ playTrack(TRACKS[0]); return; }
-  if(ytMainPlayer){
-    if(state.isPlaying){ ytMainPlayer.pauseVideo(); }
-    else { ytMainPlayer.playVideo(); }
-  }
+  if(ytMainPlayer){ if(state.isPlaying){ ytMainPlayer.pauseVideo(); } else { ytMainPlayer.playVideo(); } }
 }
 function toggleShuffle(){ state.shuffleEnabled=!state.shuffleEnabled; const b=document.getElementById('full-shuffle'); b.classList.toggle('active-mode',state.shuffleEnabled); if(state.shuffleEnabled) buildShuffledQueue(); toast(state.shuffleEnabled?'Aleatorio activado':'Aleatorio desactivado','info'); }
 function toggleRepeat(){ state.repeatMode=(state.repeatMode+1)%3; const b=document.getElementById('full-repeat'); b.classList.toggle('active-mode',state.repeatMode>0); toast(state.repeatMode===0?'Repetir desactivado':state.repeatMode===1?'Repetir todo':'Repetir una','info'); }
@@ -1216,7 +1086,6 @@ document.getElementById('progress-bar').addEventListener('click',(e)=>{
   if(dur>0) ytMainPlayer.seekTo(pct*dur,true);
 });
 
-/* ============ PESTANAS NO DESTRUCTIVAS ============ */
 function switchTab(tab){
   state.activeTab=tab;
   document.querySelectorAll('.media-layer').forEach(l=>l.classList.remove('active'));
@@ -1247,7 +1116,14 @@ async function loadLyrics(){
     const r=await fetch(`https://lrclib.net/api/get?artist_name=${encodeURIComponent(state.currentTrack.artist)}&track_name=${encodeURIComponent(state.currentTrack.title)}`);
     if(!r.ok) throw new Error('nf');
     const d=await r.json();
-    if(d.syncedLyrics){ const lines=d.syncedLyrics.split('\n').filter(l=>l.trim()); c.innerHTML=lines.map((line,i)=>{ const m=line.match(/\[(\d+):(\d+\.\d+)\](.*)/); if(m) return `<div class="lyrics-line ${i===0?'active':''}" data-time="${parseFloat(m[1])*60+parseFloat(m[2])}">${m[3].trim()||'...'}</div>`; return `<div class="lyrics-line">${line}</div>`; }).join(''); }
+    if(d.syncedLyrics){
+      const lines=d.syncedLyrics.split('\n').filter(l=>l.trim());
+      c.innerHTML=lines.map((line,i)=>{
+        const m=line.match(/\[(\d+):(\d+\.\d+)\](.*)/);
+        if(m) return `<div class="lyrics-line ${i===0?'active':''}" data-time="${parseFloat(m[1])*60+parseFloat(m[2])}">${m[3].trim()||'...'}</div>`;
+        return `<div class="lyrics-line">${line}</div>`;
+      }).join('');
+    }
     else if(d.plainLyrics){ c.innerHTML=d.plainLyrics.split('\n').filter(l=>l.trim()).map((l,i)=>`<div class="lyrics-line ${i===0?'active':''}">${l}</div>`).join(''); }
     else c.innerHTML='<div class="lyrics-loading">Letras no disponibles para esta cancion</div>';
   }catch{ c.innerHTML='<div class="lyrics-loading">No se encontraron letras</div>'; }
@@ -1255,7 +1131,6 @@ async function loadLyrics(){
 
 document.getElementById('full-share-btn').addEventListener('click',()=>{ if(state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una cancion primero','error'); });
 
-/* ============ SEARCH ============ */
 document.getElementById('nav-search-btn').addEventListener('click',()=>{ if(state.currentView!=='home'){ navigateTo('home'); setTimeout(()=>{ const si=document.getElementById('search-input'); if(si){ si.focus(); si.scrollIntoView({behavior:'smooth',block:'center'}); } },100); } else { const si=document.getElementById('search-input'); if(si){ si.focus(); si.scrollIntoView({behavior:'smooth',block:'center'}); } } });
 document.getElementById('nav-notif-btn').addEventListener('click',()=>{ renderNotifications(); markAllNotifsRead(); document.getElementById('notifications-panel').classList.add('active'); });
 document.getElementById('notif-panel-close').addEventListener('click',()=>document.getElementById('notifications-panel').classList.remove('active'));
@@ -1264,7 +1139,6 @@ async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id=
 async function toggleDownload(track){ const i=state.downloads.findIndex(d=>d.id===track.id); if(i===-1){ state.downloads.push({...track,downloadedAt:Date.now()}); toast('Descarga iniciada','success'); } else { state.downloads.splice(i,1); toast('Descarga eliminada','info'); } if(state.firebaseUser) await fs.saveDownloads(state.firebaseUser.uid,state.downloads); refreshCurrentView(); }
 function isFavorite(id){ return state.favorites.some(f=>f.id===id); }
 
-/* ============ STORIES ============ */
 document.getElementById('story-image-upload').addEventListener('click',()=>document.getElementById('story-image-input').click());
 document.getElementById('story-image-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } });
 document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
@@ -1316,7 +1190,6 @@ function startStoryTimer(stories){ clearInterval(state.storyViewerTimer); let p=
 function closeStoryViewer(){ clearInterval(state.storyViewerTimer); document.getElementById('story-viewer').classList.remove('active'); state.currentViewingStory=null; renderStoriesBar(); }
 document.getElementById('story-viewer-close').addEventListener('click',closeStoryViewer);
 
-/* ============ COUPONS ============ */
 document.getElementById('coupon-input').addEventListener('input',(e)=>{ e.target.value=formatCouponCode(e.target.value); });
 document.getElementById('coupon-modal-close').addEventListener('click',()=>document.getElementById('coupon-modal').classList.remove('active'));
 document.getElementById('coupon-cancel').addEventListener('click',()=>document.getElementById('coupon-modal').classList.remove('active'));
@@ -1359,7 +1232,6 @@ document.getElementById('coupon-redeem').addEventListener('click',async ()=>{
   }
 });
 
-/* ============ PERMISSIONS / INFO / VISIBILITY ============ */
 function renderPermissions(){ const b=document.getElementById('permissions-body'); b.innerHTML=`
   <div class="permission-item"><div class="permission-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="permission-info"><div class="permission-label">Notificaciones</div><div class="permission-desc">Alertas de likes, comentarios y actividad</div></div><span class="permission-status ${state.permissions.notifications}">${state.permissions.notifications==='granted'?'Concedido':state.permissions.notifications==='denied'?'Denegado':'Pendiente'}</span></div>
   <div class="permission-item"><div class="permission-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="permission-info"><div class="permission-label">Galeria de imagenes</div><div class="permission-desc">Subir fotos locales a tus historias</div></div><span class="permission-status ${state.permissions.gallery}">${state.permissions.gallery==='granted'?'Concedido':state.permissions.gallery==='denied'?'Denegado':'Pendiente'}</span></div>
@@ -1380,7 +1252,6 @@ document.getElementById('visibility-cancel').addEventListener('click',()=>docume
 document.getElementById('visibility-save').addEventListener('click',async ()=>{ if(state.firebaseUser) await fs.saveSettings(state.firebaseUser.uid,{defaultPrivacy:state.defaultPrivacy}); document.getElementById('visibility-modal').classList.remove('active'); toast('Preferencias guardadas','success'); });
 document.querySelectorAll('#default-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#default-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.defaultPrivacy=o.dataset.privacy; }));
 
-/* ============ NAVIGATION / VIEWS ============ */
 function navigateTo(view){ state.currentView=view; document.querySelectorAll('.bottom-nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view)); const c=document.getElementById('main-content'); c.innerHTML=''; if(view==='home') renderHomeView(c); else if(view==='explore') renderExploreView(c); else if(view==='friends') renderFriendsView(c); else if(view==='profile') renderProfileView(c); c.scrollTop=0; }
 function refreshCurrentView(){ navigateTo(state.currentView); }
 document.querySelectorAll('.bottom-nav-item').forEach(i=>i.addEventListener('click',()=>navigateTo(i.dataset.view)));
@@ -1389,7 +1260,7 @@ document.getElementById('nav-avatar').addEventListener('click',()=>navigateTo('p
 function renderHomeView(container){
   const welcomeTrack=TRACKS.find(t=>t.isWelcome);
   let html=`<div class="search-wrap" id="search-wrap"><input type="text" class="search-input" id="search-input" placeholder="Buscar canciones, artistas o @usuario..." autocomplete="off"/><button class="search-btn" id="search-btn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button><div class="search-results" id="search-results"></div></div>`;
-  if(welcomeTrack) html+=`<div class="welcome-card ${state.currentTrack?.isWelcome?'playing':''}" id="welcome-track"><div class="welcome-badge">Entrada</div><div class="welcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="welcome-info"><div class="welcome-title">${welcomeTrack.title}</div><div class="welcome-desc">${welcomeTrack.artist} · Instrumental de bienvenida · Toca para reproducir</div></div></div>`;
+  if(welcomeTrack) html+=`<div class="welcome-card ${state.currentTrack?.isWelcome?'playing':''}" id="welcome-track"><div class="welcome-badge">Entrada</div><div class="welcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><div class="welcome-info"><div class="welcome-title">${welcomeTrack.title}</div><div class="welcome-desc">${welcomeTrack.artist} · Instrumental Slowed · Toca para reproducir</div></div></div>`;
   html+=`<div class="cat-scroll"><div class="cat-chip active">Para ti</div><div class="cat-chip">Exitos</div><div class="cat-chip">Relax</div><div class="cat-chip">Workout</div><div class="cat-chip">Focus</div><div class="cat-chip">Fiesta</div></div>
   <div class="section-head"><h2 class="section-title">Tendencias</h2><a class="section-link">Ver todo</a></div><div class="trend-grid" id="trend-grid"></div>
   <div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2><a class="section-link">Ver todo</a></div><div class="release-scroll" id="release-scroll"></div>`;
@@ -1543,7 +1414,6 @@ function renderStoriesBar(){
   b.querySelectorAll('.story-item[data-username]').forEach(item=>item.addEventListener('click',()=>{ const un=item.dataset.username; openStoryViewer(state.stories.filter(s=>s.username===un),0); }));
 }
 
-/* ============ OVERLORD ============ */
 function enterOverlord(){ if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; } showLayer('layer-overlord'); initOverlord(); }
 let ovStartTime;
 function initOverlord(){ ovStartTime=Date.now(); const body=document.getElementById('ov-body'); body.innerHTML=''; printLine('HORIZON OVERLORD CONSOLE '+PLATFORM_VERSION,'ok'); printLine('Administrador: '+ADMIN_EMAIL,'warn'); printLine('Escribe "help" para ver comandos.','out'); printLine('','out'); startUptime(); document.getElementById('ov-input').focus(); }
@@ -1564,7 +1434,6 @@ document.getElementById('ov-input').addEventListener('keydown',async (e)=>{ if(e
 function startUptime(){ setInterval(()=>{ const d=Math.floor((Date.now()-ovStartTime)/1000); const h=String(Math.floor(d/3600)).padStart(2,'0'); const m=String(Math.floor((d%3600)/60)).padStart(2,'0'); const s=String(d%60).padStart(2,'0'); const up=document.getElementById('ov-uptime'); if(up) up.textContent=`UPTIME: ${h}:${m}:${s}`; const lt=document.getElementById('ov-lat'); if(lt) lt.textContent=`LAT: ${8+Math.floor(Math.random()*8)}ms`; },1000); }
 document.getElementById('ov-panic').addEventListener('click',async ()=>{ if(firebaseAuth){ try{ await signOut(firebaseAuth); }catch{} } state.user=null; document.getElementById('auth-login-screen').style.display='flex'; document.querySelectorAll('.layer').forEach(l=>l.classList.remove('active')); });
 
-/* ============ KEYBOARD ============ */
 document.addEventListener('keydown',(e)=>{
   if(e.key==='Escape'){
     if(document.getElementById('full-player').classList.contains('active')){ document.getElementById('full-player').classList.remove('active'); destroyVideo(); state.activeTab='music'; switchTab('music'); }
@@ -1575,7 +1444,6 @@ document.addEventListener('keydown',(e)=>{
   if(e.key===' '&&document.activeElement.tagName!=='INPUT'){ e.preventDefault(); togglePlay(); }
 });
 
-/* ============ INIT ============ */
 window.addEventListener('resize',()=>{ if(ytMainPlayer&&ytMainPlayer.getDuration){ const cur=ytMainPlayer.getCurrentTime()||0; const dur=ytMainPlayer.getDuration()||0; const pct=dur>0?(cur/dur)*100:0; const fill=document.getElementById('progress-fill'); const miniFill=document.getElementById('mini-progress-fill'); if(fill) fill.style.width=pct+'%'; if(miniFill) miniFill.style.width=pct+'%'; } });
 </script>
 </body>
