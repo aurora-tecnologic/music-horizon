@@ -473,6 +473,20 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
+<div class="modal-overlay center" id="download-modal">
+  <div class="modal">
+    <div class="modal-header"><h3 class="modal-title">Descarga al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon guardará el archivo físicamente en la memoria de tu dispositivo usando conexión en segundo plano.</p>
+      <label class="form-label">Formato</label>
+      <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
+      <label class="form-label">Calidad</label>
+      <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
+    </div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
+  </div>
+</div>
+
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Configurar perfil</h3></div>
@@ -482,7 +496,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
           <span id="avatar-initial">?</span><img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
           <div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
         </div>
-        <div style="font-size:10px;color:var(--text-muted)">Toca para subir foto (Permiso de galería requerido)</div>
+        <div style="font-size:10px;color:var(--text-muted)">Toca para subir una foto (opcional)</div>
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" />
       <label class="form-label">Nombre</label><input type="text" class="setup-input" id="setup-name" placeholder="Nombre" autocomplete="off" />
@@ -578,32 +592,12 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </section>
 
-<!-- MODAL DESCARGA INTERNA REAL (BLOB) -->
-<div class="modal-overlay center" id="download-modal">
-  <div class="modal">
-    <div class="modal-header"><h3 class="modal-title">Descarga interna al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon se conectará a los servidores de Render para descargar el archivo directamente a la memoria de tu teléfono.</p>
-      <label class="form-label">Formato</label>
-      <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
-      <label class="form-label">Calidad</label>
-      <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
-    </div>
-    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
-  </div>
-</div>
-
 <div class="modal-overlay" id="story-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Nueva historia</h3><button class="modal-close" id="story-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="story-image-upload" id="story-image-upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-      <div style="display:flex;gap:8px;margin-bottom:12px">
-        <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:11px">Permiso Galeria</button>
-        <button class="modal-btn secondary" id="btn-open-camera" style="font-size:11px">Permiso Camara</button>
-      </div>
       <input type="file" id="story-image-input" accept="image/*" style="display:none" />
-      <input type="file" id="story-camera-input" accept="image/*" capture="environment" style="display:none" />
       <label class="form-label">Visibilidad</label>
       <div id="story-privacy-options">
         <div class="privacy-opt selected" data-privacy="public"><div class="privacy-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></div><div><div class="privacy-opt-label">Publica</div><div class="privacy-opt-value">Todos pueden ver</div></div></div>
@@ -735,6 +729,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const API_BASE = 'https://music-horizon.onrender.com';
+fetch(`${API_BASE}/api/search?q=ping`).catch(()=>{}); // Despertar servidor al instante
+
 const ADMIN_EMAIL = 'administradores830@gmail.com';
 const PLATFORM_VERSION = 'V1.0.2.3.BETA';
 
@@ -763,9 +759,6 @@ const state = {
 
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
 
-// ============================================================
-// SEGUIMIENTO Y SINCRONIZACION DE LA LETRA EN TIEMPO REAL
-// ============================================================
 function updateLyricsSync(currentTime) {
   const lines = document.querySelectorAll('.lyrics-line[data-time]');
   if (!lines.length) return;
@@ -806,7 +799,6 @@ function stopLoginPlayer() {
   if (c) c.innerHTML = '';
 }
 
-// INYECCIÓN ANTI-BLOQUEOS Y MARCAS DE AGUA PARA YT PLAYER
 function initMainPlayer(videoId) {
   if (!videoId) return;
   if (!ytMainPlayer) {
@@ -816,11 +808,10 @@ function initMainPlayer(videoId) {
     document.body.appendChild(wrapper);
     ytMainPlayer = new YT.Player('yt-main-div', {
       videoId: videoId,
-      playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0, showinfo: 0, iv_load_policy: 3, disablekb: 1, fs: 0, playsinline: 1, widget_referrer: window.location.origin },
+      playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0, iv_load_policy: 3, disablekb: 1, fs: 0, playsinline: 1 },
       events: {
         onReady: () => { ytMainPlayer.playVideo(); startTimeUpdateLoop(); },
-        onStateChange: onMainPlayerStateChange,
-        onError: () => { toast('Audio restringido. Intentando modo de compatibilidad...', 'warn'); }
+        onStateChange: onMainPlayerStateChange
       }
     });
   } else {
@@ -894,7 +885,7 @@ function renderCleanVideoPlayer(track) {
   if (ytVideoPlayer) { try { ytVideoPlayer.destroy(); } catch(e){} ytVideoPlayer = null; }
   ytVideoPlayer = new YT.Player(divId, {
     videoId: track.youtubeId,
-    playerVars: { autoplay: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, controls: 0, disablekb: 1, fs: 0, playsinline: 1, widget_referrer: window.location.origin },
+    playerVars: { autoplay: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, controls: 0, disablekb: 1, fs: 0, playsinline: 1 },
     events: { onError: () => { ytContainer.innerHTML = ''; fallback.style.display = 'flex'; document.getElementById('video-fallback-link').href = `https://www.youtube.com/watch?v=${track.youtubeId}`; } }
   });
 }
@@ -918,31 +909,30 @@ const DEFAULT_FRIENDS = [
   { name:'Isabella Garcia', username:'isa.garcia', avatar:null, isFriend:false, activity:'Escuchando Gangnam Style', stats:{plays:67,favorites:11,stories:2}, bio:'DJ profesional', instagram:'isa.garcia' },
 ];
 
-// REPARACIÓN EN LAS CAPTURAS DE ERRORES DE FIRESTORE (CUPONES)
 const fs = {
-  async getUserByUid(uid){ if(!db) return null; try{ const s=await getDoc(doc(db,'users',uid)); return s.exists()?{id:s.id,...s.data()}:null; }catch(e){ console.error(e); return null; } },
-  async getUserByUsername(u){ if(!db) return null; try{ const q=query(collection(db,'users'),where('username','==',u)); const s=await getDocs(q); const f=s.docs[0]; return f?{id:f.id,...f.data()}:null; }catch(e){ console.error(e); return null; } },
-  async saveUser(uid,d){ if(!db) return; try{ await setDoc(doc(db,'users',uid),{...d,updatedAt:Date.now()},{merge:true}); }catch(e){ console.error(e); throw e; } },
-  async saveFavorites(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userFavorites',uid),{tracks:t}); }catch(e){ console.error(e); throw e; } },
-  async getFavorites(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userFavorites',uid)); return s.exists()?s.data().tracks||[]:[]; }catch(e){ console.error(e); return []; } },
-  async saveDownloads(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userDownloads',uid),{tracks:t}); }catch(e){ console.error(e); throw e; } },
-  async getDownloads(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userDownloads',uid)); return s.exists()?s.data().tracks||[]:[]; }catch(e){ console.error(e); return []; } },
-  async savePlaylists(uid,p){ if(!db) return; try{ await setDoc(doc(db,'userPlaylists',uid),{playlists:p}); }catch(e){ console.error(e); throw e; } },
-  async getPlaylists(uid){ if(!db) return [{id:1,name:'Mis Favoritas',tracks:[]}]; try{ const s=await getDoc(doc(db,'userPlaylists',uid)); return s.exists()?s.data().playlists||[{id:1,name:'Mis Favoritas',tracks:[]}]:[{id:1,name:'Mis Favoritas',tracks:[]}]; }catch(e){ console.error(e); return [{id:1,name:'Mis Favoritas',tracks:[]}]; } },
-  async saveSettings(uid,s){ if(!db) return; try{ await setDoc(doc(db,'userSettings',uid),s); }catch(e){ console.error(e); throw e; } },
-  async getSettings(uid){ if(!db) return {defaultPrivacy:'public'}; try{ const s=await getDoc(doc(db,'userSettings',uid)); return s.exists()?s.data():{defaultPrivacy:'public'}; }catch(e){ console.error(e); return {defaultPrivacy:'public'}; } },
-  async saveStory(st){ if(!db) return st.id; try{ await setDoc(doc(db,'stories',String(st.id)),st); return st.id; }catch(e){ console.error(e); throw e; } },
-  async updateStory(st){ if(!db) return; try{ await setDoc(doc(db,'stories',String(st.id)),st); }catch(e){ console.error(e); throw e; } },
-  async getStories(){ if(!db) return []; try{ const s=await getDocs(collection(db,'stories')); return s.docs.map(d=>({id:d.id,...d.data()})); }catch(e){ console.error(e); return []; } },
-  async getSavedStories(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'savedStories',uid)); return s.exists()?s.data().stories||[]:[]; }catch(e){ console.error(e); return []; } },
-  async saveSavedStories(uid,s){ if(!db) return; try{ await setDoc(doc(db,'savedStories',uid),{stories:s}); }catch(e){ console.error(e); throw e; } },
-  async getCoupon(code){ if(!db) return null; try{ const s=await getDoc(doc(db,'coupons',code)); return s.exists()?{id:s.id,...s.data()}:null; }catch(e){ console.error(e); return null; } },
-  async createCoupon(code,data){ if(!db) return; try{ await setDoc(doc(db,'coupons',code),{...data,code,used:false,createdAt:Date.now()}); }catch(e){ console.error(e); throw e; } },
-  async markCouponUsed(code,by){ if(!db) return; try{ await updateDoc(doc(db,'coupons',code),{used:true,usedBy:by,usedAt:Date.now()}); }catch(e){ console.error(e); throw e; } },
-  async saveCouponRedemption(d){ if(!db) return; try{ await setDoc(doc(collection(db,'couponRedemptions')),{...d,createdAt:Date.now()}); }catch(e){ console.error(e); throw e; } },
-  async addNotification(n){ if(!db) return; try{ await setDoc(doc(collection(db,'notifications')),{...n,createdAt:Date.now()}); }catch(e){ console.error(e); throw e; } },
-  async getNotifications(uid){ if(!db) return []; try{ const q=query(collection(db,'notifications'),where('toUser','==',uid)); const s=await getDocs(q); return s.docs.map(d=>({id:d.id,...d.data()})); }catch(e){ console.error(e); return []; } },
-  async markNotifRead(id){ if(!db||!id) return; try{ await updateDoc(doc(db,'notifications',id),{read:true}); }catch(e){ console.error(e); throw e; } },
+  async getUserByUid(uid){ if(!db) return null; try{ const s=await getDoc(doc(db,'users',uid)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
+  async getUserByUsername(u){ if(!db) return null; try{ const q=query(collection(db,'users'),where('username','==',u)); const s=await getDocs(q); const f=s.docs[0]; return f?{id:f.id,...f.data()}:null; }catch{ return null; } },
+  async saveUser(uid,d){ if(!db) return; try{ await setDoc(doc(db,'users',uid),{...d,updatedAt:Date.now()},{merge:true}); }catch{} },
+  async saveFavorites(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userFavorites',uid),{tracks:t}); }catch{} },
+  async getFavorites(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userFavorites',uid)); return s.exists()?s.data().tracks||[]:[]; }catch{ return []; } },
+  async saveDownloads(uid,t){ if(!db) return; try{ await setDoc(doc(db,'userDownloads',uid),{tracks:t}); }catch{} },
+  async getDownloads(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'userDownloads',uid)); return s.exists()?s.data().tracks||[]:[]; }catch{ return []; } },
+  async savePlaylists(uid,p){ if(!db) return; try{ await setDoc(doc(db,'userPlaylists',uid),{playlists:p}); }catch{} },
+  async getPlaylists(uid){ if(!db) return [{id:1,name:'Mis Favoritas',tracks:[]}]; try{ const s=await getDoc(doc(db,'userPlaylists',uid)); return s.exists()?s.data().playlists||[{id:1,name:'Mis Favoritas',tracks:[]}]:[{id:1,name:'Mis Favoritas',tracks:[]}]; }catch{ return [{id:1,name:'Mis Favoritas',tracks:[]}]; } },
+  async saveSettings(uid,s){ if(!db) return; try{ await setDoc(doc(db,'userSettings',uid),s); }catch{} },
+  async getSettings(uid){ if(!db) return {defaultPrivacy:'public'}; try{ const s=await getDoc(doc(db,'userSettings',uid)); return s.exists()?s.data():{defaultPrivacy:'public'}; }catch{ return {defaultPrivacy:'public'}; } },
+  async saveStory(st){ if(!db) return st.id; try{ await setDoc(doc(db,'stories',String(st.id)),st); return st.id; }catch{ return st.id; } },
+  async updateStory(st){ if(!db) return; try{ await setDoc(doc(db,'stories',String(st.id)),st); }catch{} },
+  async getStories(){ if(!db) return []; try{ const s=await getDocs(collection(db,'stories')); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
+  async getSavedStories(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'savedStories',uid)); return s.exists()?s.data().stories||[]:[]; }catch{ return []; } },
+  async saveSavedStories(uid,s){ if(!db) return; try{ await setDoc(doc(db,'savedStories',uid),{stories:s}); }catch{} },
+  async getCoupon(code){ if(!db) return null; try{ const s=await getDoc(doc(db,'coupons',code)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
+  async createCoupon(code,data){ if(!db) return; try{ await setDoc(doc(db,'coupons',code),{...data,code,used:false,createdAt:Date.now()}); }catch{} },
+  async markCouponUsed(code,by){ if(!db) return; try{ await updateDoc(doc(db,'coupons',code),{used:true,usedBy:by,usedAt:Date.now()}); }catch{} },
+  async saveCouponRedemption(d){ if(!db) return; try{ await addDoc(collection(db,'couponRedemptions'),{...d,createdAt:serverTimestamp()}); }catch{} },
+  async addNotification(n){ if(!db) return; try{ await addDoc(collection(db,'notifications'),{...n,createdAt:serverTimestamp()}); }catch{} },
+  async getNotifications(uid){ if(!db) return []; try{ const q=query(collection(db,'notifications'),where('toUser','==',uid)); const s=await getDocs(q); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
+  async markNotifRead(id){ if(!db||!id) return; try{ await updateDoc(doc(db,'notifications',id),{read:true}); }catch{} },
 };
 
 let toastTimer;
@@ -985,11 +975,7 @@ async function loadAllUserData(uid){
   state.favorites=f; state.downloads=d; state.playlists=p; state.defaultPrivacy=s.defaultPrivacy||'public'; state.savedStories=saved;
 }
 
-document.getElementById('avatar-upload').addEventListener('click',()=>{
-  if(confirm("Music Horizon solicita permiso para acceder a tus archivos de galería para tu foto de perfil.")) {
-    document.getElementById('avatar-file-input').click();
-  }
-});
+document.getElementById('avatar-upload').addEventListener('click',()=>document.getElementById('avatar-file-input').click());
 document.getElementById('avatar-file-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ document.getElementById('avatar-preview').src=ev.target.result; document.getElementById('avatar-preview').style.display='block'; document.getElementById('avatar-initial').style.display='none'; }; r.readAsDataURL(f); } });
 document.getElementById('setup-btn').addEventListener('click',completeProfileSetup);
 document.getElementById('setup-username').addEventListener('keydown',(e)=>{ if(e.key==='Enter') completeProfileSetup(); });
@@ -1012,7 +998,7 @@ async function completeProfileSetup(){
     document.getElementById('profile-setup-modal').classList.remove('active');
     btn.disabled=false; btn.textContent='Crear perfil';
     onAuthSuccess(user);
-  }catch(e){ errorEl.textContent='Error al crear perfil. Asegúrate de tener conexión.'; btn.disabled=false; btn.textContent='Crear perfil'; }
+  }catch(e){ errorEl.textContent='Error: '+e.message; btn.disabled=false; btn.textContent='Crear perfil'; }
 }
 
 function onAuthSuccess(user){
@@ -1154,11 +1140,10 @@ document.getElementById('nav-search-btn').addEventListener('click',()=>{ if(stat
 document.getElementById('nav-notif-btn').addEventListener('click',()=>{ renderNotifications(); markAllNotifsRead(); document.getElementById('notifications-panel').classList.add('active'); });
 document.getElementById('notif-panel-close').addEventListener('click',()=>document.getElementById('notifications-panel').classList.remove('active'));
 
-async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Añadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
-function isFavorite(id){ return state.favorites.some(f=>f.id===id); }
+async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Anadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
 
 // ============================================================
-// BUSCADOR BLINDADO CON LECTURA LIMPIA Y REDUNDANCIA
+// BUSCADOR DEFINITIVO: INSTANCIAS PÚBLICAS -> RENDER -> LOCAL
 // ============================================================
 async function performSearch(q, resultsEl, playFirst = false) {
   if (!q || typeof q !== 'string') return;
@@ -1174,41 +1159,42 @@ async function performSearch(q, resultsEl, playFirst = false) {
   let results = [];
   const queryLower = cleanQuery.toLowerCase();
 
-  // Intento 1: Backend Propio (Flask/Render)
-  try {
-    const res = await fetch(`${API_BASE}/api/search`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: cleanQuery })
-    });
-    if (res.ok) {
-      const data = await res.json();
-      if (data.results && data.results.length > 0) results = data.results;
-    }
-  } catch(e) { console.warn("Backend falló, usando respaldo público"); }
-
-  // Intento 2: Nodos Públicos (Invidious)
-  if (results.length === 0) {
-    const instances = ['https://vid.priv.au', 'https://invidious.jing.rocks', 'https://invidious.no-punts.com'];
-    for (let inst of instances) {
-      try {
-        const encodedQuery = encodeURIComponent(cleanQuery);
-        const res = await fetch(`${inst}/api/v1/search?q=${encodedQuery}&type=video`, { method: 'GET', headers: { 'Accept': 'application/json' } });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && Array.isArray(data) && data.length > 0) {
-            results = data.slice(0, 10).map(item => ({
-              id: item.videoId, youtubeId: item.videoId, title: item.title || 'Sin título',
-              artist: item.author || 'Desconocido', cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
-            }));
-            break;
-          }
+  // Intento 1: Nodos Públicos Rápidos
+  const instances = ['https://invidious.jing.rocks', 'https://vid.priv.au', 'https://invidious.nerdvpn.de', 'https://invidious.no-punts.com'];
+  for (let inst of instances) {
+    try {
+      const res = await fetch(`${inst}/api/v1/search?q=${encodeURIComponent(cleanQuery)}&type=video`, { method: 'GET', headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) {
+          results = data.slice(0, 10).map(item => ({
+            id: item.videoId, youtubeId: item.videoId, title: item.title || 'Sin título',
+            artist: item.author || 'Desconocido', cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
+          }));
+          break;
         }
-      } catch(e) { continue; }
-    }
+      }
+    } catch(e) { continue; }
   }
 
-  // Intento 3: Respaldo de Catálogo Local
+  // Intento 2: Backend de Render
+  if (results.length === 0) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const res = await fetch(`${API_BASE}/api/search`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: cleanQuery }), signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.results && data.results.length > 0) results = data.results;
+      }
+    } catch(e) { console.warn("Backend falló", e); }
+  }
+
+  // Intento 3: Local
   if (results.length === 0) {
     const localMatches = TRACKS.filter(t => !t.isWelcome && (t.title.toLowerCase().includes(queryLower) || t.artist.toLowerCase().includes(queryLower)));
     results = localMatches.map(t => ({ id: t.id, youtubeId: t.youtubeId, title: t.title, artist: t.artist, cover: t.cover }));
@@ -1217,7 +1203,7 @@ async function performSearch(q, resultsEl, playFirst = false) {
   if (results.length > 0) {
     renderSearchResults(results, resultsEl, playFirst);
   } else {
-    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados. Intenta con otro término.</div>';
+    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados.</div>';
   }
 }
 
@@ -1236,7 +1222,7 @@ function renderSearchResults(results, resultsEl, playFirst) {
 }
 
 // ============================================================
-// DESCARGA INTERNA REAL (Redirección nativa por Backend)
+// DESCARGA DIRECTA AL TELÉFONO (BLOB FETCH)
 // ============================================================
 function openDownloadModal(track) {
   state.pendingDownloadTrack = track;
@@ -1248,65 +1234,45 @@ document.getElementById('dl-cancel').addEventListener('click', () => document.ge
 
 document.getElementById('dl-confirm').addEventListener('click', async () => {
   const format = document.getElementById('dl-format').value;
-  const quality = document.getElementById('dl-quality').value;
   const track = state.pendingDownloadTrack;
   document.getElementById('download-modal').classList.remove('active');
 
   if (!track || !track.youtubeId) {
-    toast('Error: pista no válida', 'error');
+    toast('Error: pista no válida para descarga', 'error');
     return;
   }
   
-  toast(`Conectando con servidor de almacenamiento para ${format.toUpperCase()}...`, 'info');
+  toast(`Descargando ${track.title}... Puede tardar unos segundos.`, 'info');
   
-  // Guardado en historial de descargas del usuario
   const i = state.downloads.findIndex(d => d.id === track.id);
   if (i === -1) { state.downloads.push({...track, downloadedAt: Date.now()}); }
   if (state.firebaseUser) fs.saveDownloads(state.firebaseUser.uid, state.downloads);
 
-  // Generación de enlace a través del backend o apertura limpia de archivo
-  setTimeout(() => {
+  try {
     const url = `${API_BASE}/api/stream/${track.youtubeId}`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Fallo en la red");
+    
+    const blob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.target = '_blank'; // Abre el enlace directo procesado por Flask
+    a.style.display = 'none';
+    a.href = downloadUrl;
+    a.download = `${track.title.replace(/[^a-zA-Z0-9 ]/g, "")} - ${track.artist.replace(/[^a-zA-Z0-9 ]/g, "")}.${format}`;
     document.body.appendChild(a);
     a.click();
+    
+    window.URL.revokeObjectURL(downloadUrl);
     document.body.removeChild(a);
-    toast('Iniciando guardado en la memoria de descargas', 'success');
-  }, 1000);
-});
-
-// HISTORIAS, CÁMARA Y GALERÍA
-document.getElementById('btn-open-gallery').addEventListener('click', () => {
-  if(confirm("Music Horizon solicita permiso para acceder a la galería y archivos de imágenes de tu teléfono.")) {
-    document.getElementById('story-image-input').click();
-  }
-});
-document.getElementById('btn-open-camera').addEventListener('click', () => {
-  if(confirm("Music Horizon solicita permiso para usar la cámara y capturar fotos.")) {
-    document.getElementById('story-camera-input').click();
+    toast('¡Descarga guardada exitosamente!', 'success');
+  } catch (error) {
+    console.error("Error de descarga:", error);
+    toast('Error en la descarga. Servidor ocupado.', 'error');
   }
 });
 
-document.getElementById('story-image-input').addEventListener('change', handleStoryFile);
-document.getElementById('story-camera-input').addEventListener('change', handleStoryFile);
-
-function handleStoryFile(e) {
-  const f = e.target.files[0];
-  if (f) {
-    const r = new FileReader();
-    r.onload = (ev) => {
-      state.storyImageData = ev.target.result;
-      const u = document.getElementById('story-image-upload');
-      u.classList.add('has-image');
-      u.innerHTML = `<img src="${ev.target.result}" alt=""/>`;
-      toast('Imagen cargada con éxito', 'success');
-    };
-    r.readAsDataURL(f);
-  }
-}
-
+document.getElementById('story-image-upload').addEventListener('click',()=>document.getElementById('story-image-input').click());
+document.getElementById('story-image-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } });
 document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
 document.getElementById('story-modal-close').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
 document.getElementById('story-cancel').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
@@ -1368,13 +1334,9 @@ document.getElementById('admin-create-coupon').addEventListener('click',async ()
   const code=generateCode16();
   const data={type,service,createdBy:ADMIN_EMAIL};
   if(type==='account'){ data.email=document.getElementById('admin-coupon-email').value.trim(); data.password=document.getElementById('admin-coupon-password').value.trim(); data.profile=document.getElementById('admin-coupon-profile').value.trim()||'Perfil 1'; }
-  try {
-    await fs.createCoupon(code,data);
-    document.getElementById('admin-created-code').textContent=formatCouponCode(code);
-    toast('Codigo registrado exitosamente','success');
-  } catch(e) {
-    toast('Error en Base de Datos: revisa permisos','error');
-  }
+  await fs.createCoupon(code,data);
+  document.getElementById('admin-created-code').textContent=formatCouponCode(code);
+  toast('Codigo registrado','success');
 });
 
 document.getElementById('coupon-redeem').addEventListener('click',async ()=>{
@@ -1385,25 +1347,20 @@ document.getElementById('coupon-redeem').addEventListener('click',async ()=>{
   const coupon=await fs.getCoupon(code);
   if(!coupon){ resultDiv.innerHTML='<div class="coupon-result error">Codigo no encontrado.</div>'; return; }
   if(coupon.used){ resultDiv.innerHTML='<div class="coupon-result error">Este codigo ya fue canjeado.</div>'; return; }
-  
-  try {
-    if(coupon.type==='account'){
-      resultDiv.innerHTML=`<div class="coupon-result success"><strong>Cuenta activada: ${coupon.service||'Servicio'}</strong><div class="coupon-credentials"><div><strong>Correo</strong><span>${coupon.email||'N/A'}</span></div><div><strong>Contrasena</strong><span>${coupon.password||'N/A'}</span></div><div><strong>Perfil</strong><span>${coupon.profile||'N/A'}</span></div></div><div class="coupon-help"><button id="coupon-help-btn">Obtener ayuda</button><button id="coupon-use-pass">Usar contrasena</button></div></div>`;
-      await fs.saveCouponRedemption({code,userId:state.firebaseUser.uid,username:state.user.username,type:'account',service:coupon.service,redeemedAt:Date.now()});
-      await fs.markCouponUsed(code,state.user.username);
-      document.getElementById('coupon-help-btn').onclick=()=>toast('Contacta al administrador para recuperacion','info');
-      document.getElementById('coupon-use-pass').onclick=()=>{ navigator.clipboard.writeText(coupon.password||'').then(()=>toast('Contrasena copiada','success')).catch(()=>toast(coupon.password||'','info')); };
-    } else {
-      emailContainer.style.display='block';
-      const email=document.getElementById('coupon-email').value.trim();
-      if(!email||!email.includes('@')){ resultDiv.innerHTML='<div class="coupon-result error">Ingresa un correo valido.</div>'; return; }
-      await fs.saveCouponRedemption({code,userId:state.firebaseUser.uid,username:state.user.username,type:'invitation',service:coupon.service,email,status:'pendiente_autorizacion',redeemedAt:Date.now()});
-      await fs.markCouponUsed(code,state.user.username);
-      resultDiv.innerHTML=`<div class="coupon-result pending"><strong>Correo registrado.</strong><br/>Pronto te enviaremos la invitacion a <strong>${email}</strong>.</div>`;
-      document.getElementById('coupon-email').value=''; emailContainer.style.display='none';
-    }
-  } catch(e) {
-    resultDiv.innerHTML='<div class="coupon-result error">Fallo al canjear. Revisa conexión o permisos.</div>';
+  if(coupon.type==='account'){
+    resultDiv.innerHTML=`<div class="coupon-result success"><strong>Cuenta activada: ${coupon.service||'Servicio'}</strong><div class="coupon-credentials"><div><strong>Correo</strong><span>${coupon.email||'N/A'}</span></div><div><strong>Contrasena</strong><span>${coupon.password||'N/A'}</span></div><div><strong>Perfil</strong><span>${coupon.profile||'N/A'}</span></div></div><div class="coupon-help"><button id="coupon-help-btn">Obtener ayuda</button><button id="coupon-use-pass">Usar contrasena</button></div></div>`;
+    await fs.saveCouponRedemption({code,userId:state.firebaseUser.uid,username:state.user.username,type:'account',service:coupon.service,redeemedAt:Date.now()});
+    await fs.markCouponUsed(code,state.user.username);
+    document.getElementById('coupon-help-btn').onclick=()=>toast('Contacta al administrador para recuperacion','info');
+    document.getElementById('coupon-use-pass').onclick=()=>{ navigator.clipboard.writeText(coupon.password||'').then(()=>toast('Contrasena copiada','success')).catch(()=>toast(coupon.password||'','info')); };
+  } else {
+    emailContainer.style.display='block';
+    const email=document.getElementById('coupon-email').value.trim();
+    if(!email||!email.includes('@')){ resultDiv.innerHTML='<div class="coupon-result error">Ingresa un correo valido.</div>'; return; }
+    await fs.saveCouponRedemption({code,userId:state.firebaseUser.uid,username:state.user.username,type:'invitation',service:coupon.service,email,status:'pendiente_autorizacion',redeemedAt:Date.now()});
+    await fs.markCouponUsed(code,state.user.username);
+    resultDiv.innerHTML=`<div class="coupon-result pending"><strong>Correo registrado.</strong><br/>Pronto te enviaremos la invitacion a <strong>${email}</strong>.</div>`;
+    document.getElementById('coupon-email').value=''; emailContainer.style.display='none';
   }
 });
 
@@ -1597,7 +1554,7 @@ document.addEventListener('keydown',(e)=>{
   if(e.key==='Escape'){
     if(document.getElementById('full-player').classList.contains('active')){ document.getElementById('full-player').classList.remove('active'); destroyVideo(); state.activeTab='music'; switchTab('music'); }
     if(document.getElementById('story-viewer').classList.contains('active')) closeStoryViewer();
-    ['story-modal','profile-setup-modal','info-modal','visibility-modal','permissions-modal','download-modal'].forEach(id=>document.getElementById(id).classList.remove('active'));
+    ['story-modal','profile-setup-modal','info-modal','visibility-modal','permissions-modal','download-modal','coupon-modal'].forEach(id=>document.getElementById(id).classList.remove('active'));
     if(document.getElementById('notifications-panel').classList.contains('active')) document.getElementById('notifications-panel').classList.remove('active');
   }
   if(e.key===' '&&document.activeElement.tagName!=='INPUT'){ e.preventDefault(); togglePlay(); }
