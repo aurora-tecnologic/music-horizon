@@ -3,8 +3,9 @@ from flask_cors import CORS
 import yt_dlp
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Habilitar CORS para recibir peticiones desde tu Netlify
 
+# Configuracion estricta para evadir bloqueos de bots de YouTube en servidores cloud (Render)
 YDL_OPTIONS_AUDIO = {
     'format': 'bestaudio/best',
     'noplaylist': True,
@@ -31,6 +32,10 @@ def search_tracks():
     else:
         query = request.args.get('q', '')
 
+    # Controlador del ping silencioso para despertar el servidor
+    if query == 'ping':
+        return jsonify({"status": "ok", "message": "Render Server Awake"})
+
     if not query:
         return jsonify({'results': []}), 400
     
@@ -41,20 +46,19 @@ def search_tracks():
             results = []
             
             for entry in entries:
-                if entry:
+                if entry and entry.get('id'):
                     vid_id = entry.get('id')
-                    if vid_id:
-                        results.append({
-                            'id': vid_id,
-                            'youtubeId': vid_id,
-                            'title': entry.get('title'),
-                            'artist': entry.get('uploader') or entry.get('channel') or 'Desconocido',
-                            'duration': entry.get('duration', 0),
-                            'cover': entry.get('thumbnail') or f"https://i.ytimg.com/vi/{vid_id}/maxresdefault.jpg"
-                        })
+                    results.append({
+                        'id': vid_id,
+                        'youtubeId': vid_id,
+                        'title': entry.get('title', 'Sin título'),
+                        'artist': entry.get('uploader') or entry.get('channel') or 'Desconocido',
+                        'duration': entry.get('duration', 0),
+                        'cover': entry.get('thumbnail') or f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
+                    })
             return jsonify({'results': results})
     except Exception as e:
-        print(f"Error en búsqueda: {e}")
+        print(f"Error en búsqueda en Render: {e}")
         return jsonify({'results': [], 'error': str(e)}), 500
 
 @app.route('/api/stream/<video_id>', methods=['GET'])
@@ -64,10 +68,13 @@ def stream_audio(video_id):
         with yt_dlp.YoutubeDL(YDL_OPTIONS_AUDIO) as ydl:
             info = ydl.extract_info(url, download=False)
             audio_url = info.get('url')
+            if not audio_url:
+                raise Exception("No se pudo extraer el stream directo de YouTube")
+            # Redirige el reproductor o el gestor de descargas al archivo de audio real
             return redirect(audio_url)
     except Exception as e:
         print(f"Error al obtener stream de audio: {e}")
-        return jsonify({'error': 'No se pudo procesar el audio'}), 500
+        return jsonify({'error': 'No se pudo procesar el audio por bloqueo de YouTube', 'details': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
