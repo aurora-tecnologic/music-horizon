@@ -759,7 +759,7 @@ const state = {
   storyViewerIndex: 0, storyViewerTimer: null, currentViewingStory: null, storyImageData: null,
   shuffleEnabled: false, repeatMode: 0, shuffledQueue: [], shuffledIndex: 0,
   permissions: { notifications: 'pending', gallery: 'pending', media: 'granted' },
-  activeTab: 'music', ytReady: false
+  activeTab: 'music', ytReady: false, pendingDownloadTrack: null
 };
 
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
@@ -982,7 +982,11 @@ async function loadAllUserData(uid){
   state.favorites=f; state.downloads=d; state.playlists=p; state.defaultPrivacy=s.defaultPrivacy||'public'; state.savedStories=saved;
 }
 
-document.getElementById('avatar-upload').addEventListener('click',()=>document.getElementById('avatar-file-input').click());
+document.getElementById('avatar-upload').addEventListener('click',()=>{
+  if(confirm("Music Horizon solicita permiso para acceder a tus archivos de galería para tu foto de perfil.")) {
+    document.getElementById('avatar-file-input').click();
+  }
+});
 document.getElementById('avatar-file-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ document.getElementById('avatar-preview').src=ev.target.result; document.getElementById('avatar-preview').style.display='block'; document.getElementById('avatar-initial').style.display='none'; }; r.readAsDataURL(f); } });
 document.getElementById('setup-btn').addEventListener('click',completeProfileSetup);
 document.getElementById('setup-username').addEventListener('keydown',(e)=>{ if(e.key==='Enter') completeProfileSetup(); });
@@ -1005,7 +1009,7 @@ async function completeProfileSetup(){
     document.getElementById('profile-setup-modal').classList.remove('active');
     btn.disabled=false; btn.textContent='Crear perfil';
     onAuthSuccess(user);
-  }catch(e){ errorEl.textContent='Error: '+e.message; btn.disabled=false; btn.textContent='Crear perfil'; }
+  }catch(e){ errorEl.textContent='Error al crear perfil. Asegúrate de tener conexión.'; btn.disabled=false; btn.textContent='Crear perfil'; }
 }
 
 function onAuthSuccess(user){
@@ -1148,10 +1152,9 @@ document.getElementById('nav-notif-btn').addEventListener('click',()=>{ renderNo
 document.getElementById('notif-panel-close').addEventListener('click',()=>document.getElementById('notifications-panel').classList.remove('active'));
 
 async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Anadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
-function isFavorite(id){ return state.favorites.some(f=>f.id===id); }
 
 // ============================================================
-// BUSCADOR INSTANTANEO (PIPED + INVIOUS + RENDER + LOCAL)
+// BUSCADOR DEFINITIVO: INSTANCIAS PÚBLICAS -> RENDER -> LOCAL
 // ============================================================
 async function performSearch(q, resultsEl, playFirst = false) {
   if (!q || typeof q !== 'string') return;
@@ -1162,50 +1165,24 @@ async function performSearch(q, resultsEl, playFirst = false) {
   }
 
   resultsEl.classList.add('show');
-  resultsEl.innerHTML = '<div class="search-loading">Buscando en red global...</div>';
+  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones...</div>';
   
   let results = [];
   const queryLower = cleanQuery.toLowerCase();
 
-  // Intento 1: Nodos Públicos (Piped / Invidious) - Son instantáneos
-  const instances = [
-    { url: 'https://pipedapi.kavin.rocks', type: 'piped' },
-    { url: 'https://invidious.jing.rocks/api/v1', type: 'invidious' },
-    { url: 'https://vid.priv.au/api/v1', type: 'invidious' }
-  ];
-
+  // Intento 1: Nodos Públicos Rápidos
+  const instances = ['https://inv.tux.pizza/api/v1', 'https://invidious.flokinet.to/api/v1', 'https://invidious.weblibre.org/api/v1'];
   for (let inst of instances) {
     try {
-      let res, data;
-      if (inst.type === 'piped') {
-        res = await fetch(`${inst.url}/search?q=${encodeURIComponent(cleanQuery)}&filter=videos`);
-        if (res.ok) {
-          data = await res.json();
-          if (data.items && data.items.length > 0) {
-            results = data.items.slice(0, 15).map(item => ({
-              id: item.url.split('?v=')[1],
-              youtubeId: item.url.split('?v=')[1],
-              title: item.title,
-              artist: item.uploaderName || 'Desconocido',
-              cover: item.thumbnail
-            }));
-            break;
-          }
-        }
-      } else {
-        res = await fetch(`${inst.url}/search?q=${encodeURIComponent(cleanQuery)}&type=video`);
-        if (res.ok) {
-          data = await res.json();
-          if (data && data.length > 0) {
-            results = data.slice(0, 15).map(item => ({
-              id: item.videoId,
-              youtubeId: item.videoId,
-              title: item.title,
-              artist: item.author || 'Desconocido',
-              cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
-            }));
-            break;
-          }
+      const res = await fetch(`${inst}/search?q=${encodeURIComponent(cleanQuery)}&type=video`, { method: 'GET', headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) {
+          results = data.slice(0, 10).map(item => ({
+            id: item.videoId, youtubeId: item.videoId, title: item.title || 'Sin título',
+            artist: item.author || 'Desconocido', cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
+          }));
+          break;
         }
       }
     } catch(e) { continue; }
@@ -1213,10 +1190,9 @@ async function performSearch(q, resultsEl, playFirst = false) {
 
   // Intento 2: Backend de Render
   if (results.length === 0) {
-    resultsEl.innerHTML = '<div class="search-loading">Despertando servidor principal (puede tardar 30s)...</div>';
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
       const res = await fetch(`${API_BASE}/api/search`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: cleanQuery }), signal: controller.signal
@@ -1238,7 +1214,7 @@ async function performSearch(q, resultsEl, playFirst = false) {
   if (results.length > 0) {
     renderSearchResults(results, resultsEl, playFirst);
   } else {
-    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados. Intenta con otro término.</div>';
+    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados.</div>';
   }
 }
 
@@ -1257,7 +1233,7 @@ function renderSearchResults(results, resultsEl, playFirst) {
 }
 
 // ============================================================
-// DESCARGA INTERNA REAL POR ARCHIVO (BLOB)
+// DESCARGA DIRECTA AL TELÉFONO (BLOB FETCH)
 // ============================================================
 function openDownloadModal(track) {
   state.pendingDownloadTrack = track;
@@ -1269,7 +1245,6 @@ document.getElementById('dl-cancel').addEventListener('click', () => document.ge
 
 document.getElementById('dl-confirm').addEventListener('click', async () => {
   const format = document.getElementById('dl-format').value;
-  const quality = document.getElementById('dl-quality').value;
   const track = state.pendingDownloadTrack;
   document.getElementById('download-modal').classList.remove('active');
 
@@ -1278,7 +1253,7 @@ document.getElementById('dl-confirm').addEventListener('click', async () => {
     return;
   }
   
-  toast(`Obteniendo archivo ${format.toUpperCase()} de los servidores... Por favor espera.`, 'info');
+  toast(`Descargando ${track.title}... Puede tardar unos segundos.`, 'info');
   
   const i = state.downloads.findIndex(d => d.id === track.id);
   if (i === -1) { state.downloads.push({...track, downloadedAt: Date.now()}); }
@@ -1300,16 +1275,16 @@ document.getElementById('dl-confirm').addEventListener('click', async () => {
     
     window.URL.revokeObjectURL(downloadUrl);
     document.body.removeChild(a);
-    toast('¡Descarga guardada en la memoria interna!', 'success');
+    toast('¡Descarga guardada exitosamente!', 'success');
   } catch (error) {
     console.error("Error de descarga:", error);
-    toast('Error en la descarga. El servidor puede estar saturado.', 'error');
+    toast('Error en la descarga. Servidor ocupado.', 'error');
   }
 });
 
 document.getElementById('story-image-upload').addEventListener('click',()=>document.getElementById('story-image-input').click());
 document.getElementById('story-image-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } });
-document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
+document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.defaultPrivacy=o.dataset.privacy; }));
 document.getElementById('story-modal-close').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
 document.getElementById('story-cancel').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
 document.getElementById('story-publish').addEventListener('click',async ()=>{
