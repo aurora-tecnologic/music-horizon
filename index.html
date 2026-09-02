@@ -91,7 +91,7 @@ svg{display:block}
 .content::-webkit-scrollbar{width:0}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
 .section-title{font-size:18px;font-weight:800;letter-spacing:-.5px}
-.section-link{font-size:11px;color:var(--accent-light);font-weight:600;padding:4px 10px;border-radius:16px;background:rgba(51,133,230,.1);white-space:nowrap}
+.section-link{font-size:11px;color:var(--accent-light);font-weight:600;padding:4px 10px;border-radius:16px;background:rgba(51,133,230,.1);white-space:nowrap;cursor:pointer}
 
 .search-wrap{position:relative;margin-bottom:16px}
 .search-input{width:100%;height:46px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;padding:0 46px 0 18px;font-size:13px;color:var(--text-primary);transition:all .2s}
@@ -113,7 +113,7 @@ svg{display:block}
 
 .cat-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none}
 .cat-scroll::-webkit-scrollbar{height:0}
-.cat-chip{flex:0 0 auto;height:36px;padding:0 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;display:flex;align-items:center;font-size:12px;font-weight:600;white-space:nowrap;transition:all .2s}
+.cat-chip{flex:0 0 auto;height:36px;padding:0 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;display:flex;align-items:center;font-size:12px;font-weight:600;white-space:nowrap;transition:all .2s;cursor:pointer}
 .cat-chip.active{background:var(--gradient-primary);border-color:transparent}
 .cat-chip:hover:not(.active){border-color:var(--accent)}
 
@@ -243,7 +243,7 @@ svg{display:block}
 .profile-stat-value{font-size:16px;font-weight:800;color:var(--accent-light)}
 .profile-stat-label{font-size:9px;color:var(--text-secondary);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
 .profile-actions{display:flex;gap:6px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-.profile-action-btn{padding:7px 14px;border-radius:16px;background:var(--bg-card);font-size:11px;font-weight:600;border:1px solid var(--border);transition:all .15s}
+.profile-action-btn{padding:7px 14px;border-radius:16px;background:var(--bg-card);font-size:11px;font-weight:600;border:1px solid var(--border);transition:all .15s;cursor:pointer}
 .profile-action-btn:hover{background:var(--bg-card-hover)}
 .profile-action-btn.primary{background:var(--gradient-primary);border-color:transparent}
 .profile-action-btn.admin{background:var(--accent-purple);border-color:transparent}
@@ -258,7 +258,7 @@ svg{display:block}
 .profile-option-value{font-size:10px;color:var(--text-secondary);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .profile-option-arrow{color:var(--text-muted);flex-shrink:0}
 .profile-option-arrow svg{width:14px;height:14px}
-.profile-logout{width:100%;padding:12px;background:rgba(239,68,68,.08);border:1px solid var(--danger);border-radius:12px;color:var(--danger);font-weight:700;font-size:13px;margin-top:10px;transition:all .15s}
+.profile-logout{width:100%;padding:12px;background:rgba(239,68,68,.08);border:1px solid var(--danger);border-radius:12px;color:var(--danger);font-weight:700;font-size:13px;margin-top:10px;transition:all .15s;cursor:pointer}
 .profile-logout:hover{background:rgba(239,68,68,.15)}
 
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-height);background:rgba(13,19,33,.98);backdrop-filter:blur(30px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90;padding:0 8px;padding-bottom:env(safe-area-inset-bottom)}
@@ -281,9 +281,8 @@ svg{display:block}
 .modal-close:hover{background:rgba(255,255,255,.08)}
 .modal-close svg{width:16px;height:16px}
 .modal-body{padding:14px 16px;overflow-y:auto;flex:1;scrollbar-width:none}
-.modal-body::-webkit-scrollbar{width:0}
 .modal-footer{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:6px;flex-shrink:0}
-.modal-btn{flex:1;height:40px;border-radius:10px;font-weight:700;font-size:12px;transition:all .15s}
+.modal-btn{flex:1;height:40px;border-radius:10px;font-weight:700;font-size:12px;transition:all .15s;cursor:pointer}
 .modal-btn.secondary{background:var(--bg-card-hover)}
 .modal-btn.primary{background:var(--gradient-primary);box-shadow:0 4px 14px var(--accent-glow)}
 .modal-btn.admin{background:var(--accent-purple)}
@@ -473,17 +472,18 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
+<!-- MODAL DESCARGA INTERNA REAL (BLOB) -->
 <div class="modal-overlay center" id="download-modal">
   <div class="modal">
-    <div class="modal-header"><h3 class="modal-title">Descarga interna al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-header"><h3 class="modal-title">Descarga al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon solicitará permisos de almacenamiento para guardar el archivo en la memoria física de tu teléfono.</p>
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon guardará el archivo físicamente en la memoria de tu dispositivo.</p>
       <label class="form-label">Formato</label>
       <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
       <label class="form-label">Calidad</label>
       <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
     </div>
-    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar</button></div>
   </div>
 </div>
 
@@ -594,12 +594,17 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
 
 <div class="modal-overlay" id="story-modal">
   <div class="modal">
-    <div class="modal-header"><h3 class="modal-title">Nueva historia</h3><button class="modal-close" id="story-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-header"><h3 class="modal-title">Nueva subida</h3><button class="modal-close" id="story-modal-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
+      <label class="form-label">Tipo de publicación</label>
+      <select class="setup-input" id="story-post-type" style="margin-bottom:12px">
+        <option value="story">Historia (Desaparece en 24h)</option>
+        <option value="post">Publicación (Permanente en tu perfil)</option>
+      </select>
       <div class="story-image-upload" id="story-image-upload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
       <div style="display:flex;gap:8px;margin-bottom:12px">
-        <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:11px">Permiso Galeria</button>
-        <button class="modal-btn secondary" id="btn-open-camera" style="font-size:11px">Permiso Camara</button>
+        <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:11px">Galeria</button>
+        <button class="modal-btn secondary" id="btn-open-camera" style="font-size:11px">Camara</button>
       </div>
       <input type="file" id="story-image-input" accept="image/*" style="display:none" />
       <input type="file" id="story-camera-input" accept="image/*" capture="environment" style="display:none" />
@@ -646,6 +651,7 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
       <button class="story-action-btn" id="story-like-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Me gusta</span></button>
       <button class="story-action-btn" id="story-comment-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Comentar</span></button>
       <button class="story-action-btn" id="story-save-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Guardar</span></button>
+      <button class="story-action-btn" id="story-delete-btn" style="display:none; color:var(--danger); border-color:rgba(239,68,68,0.3);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg><span>Eliminar</span></button>
     </div>
     <div class="story-nav-zone prev" id="story-prev"></div>
     <div class="story-nav-zone next" id="story-next"></div>
@@ -731,10 +737,10 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc, arrayUnion } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const API_BASE = 'https://music-horizon.onrender.com';
-fetch(`${API_BASE}/api/search?q=ping`).catch(()=>{}); // Despertar servidor principal silenciosamente
+fetch(`${API_BASE}/api/search?q=ping`).catch(()=>{}); 
 
 const ADMIN_EMAIL = 'administradores830@gmail.com';
 const PLATFORM_VERSION = 'V1.0.2.3.BETA';
@@ -745,12 +751,11 @@ const firebaseConfig = {
   projectId: "music-horizon-844de",
   storageBucket: "music-horizon-844de.firebasestorage.app",
   messagingSenderId: "418224032968",
-  appId: "1:418224032968:web:62dcf87c3fac9bd829e9fd",
-  measurementId: "G-EGEZNLYLBM"
+  appId: "1:418224032968:web:62dcf87c3fac9bd829e9fd"
 };
 
 let firebaseAuth = null, db = null;
-try { const fbApp = initializeApp(firebaseConfig); firebaseAuth = getAuth(fbApp); db = getFirestore(fbApp); } catch (e) { console.warn('Init:', e); }
+try { const fbApp = initializeApp(firebaseConfig); firebaseAuth = getAuth(fbApp); db = getFirestore(fbApp); } catch (e) {}
 
 const state = {
   user: null, firebaseUser: null, currentTrack: null, currentIndex: 0, isPlaying: false,
@@ -760,6 +765,13 @@ const state = {
   shuffleEnabled: false, repeatMode: 0, shuffledQueue: [], shuffledIndex: 0,
   permissions: { notifications: 'pending', gallery: 'pending', media: 'granted' },
   activeTab: 'music', ytReady: false, pendingDownloadTrack: null
+};
+
+// ==========================================
+// FUNCIÓN GLOBAL CRÍTICA PARA RENDERIZADO
+// ==========================================
+window.isFavorite = function(id) {
+  return state.favorites && state.favorites.some(f => f.id === id);
 };
 
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
@@ -783,7 +795,6 @@ function onYouTubeIframeAPIReady() {
   state.ytReady = true;
   initLoginPlayer();
 }
-
 window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
 function initLoginPlayer() {
@@ -892,7 +903,7 @@ function renderCleanVideoPlayer(track) {
   if (ytVideoPlayer) { try { ytVideoPlayer.destroy(); } catch(e){} ytVideoPlayer = null; }
   ytVideoPlayer = new YT.Player(divId, {
     videoId: track.youtubeId,
-    playerVars: { autoplay: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, controls: 0, disablekb: 1, fs: 0, playsinline: 1 },
+    playerVars: { autoplay: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, controls: 0, disablekb: 1, fs: 0, playsinline: 1, widget_referrer: window.location.origin },
     events: { onError: () => { ytContainer.innerHTML = ''; fallback.style.display = 'flex'; document.getElementById('video-fallback-link').href = `https://www.youtube.com/watch?v=${track.youtubeId}`; } }
   });
 }
@@ -906,14 +917,6 @@ const TRACKS = [
   { id:6, title:'Uptown Funk', artist:'Mark Ronson ft. Bruno Mars', youtubeId:'OPf0YbXqDm0', cover:'https://i.ytimg.com/vi/OPf0YbXqDm0/maxresdefault.jpg', genre:'funk' },
   { id:7, title:'Roar', artist:'Katy Perry', youtubeId:'CevxZvSJLk8', cover:'https://i.ytimg.com/vi/CevxZvSJLk8/maxresdefault.jpg', genre:'pop' },
   { id:8, title:'Counting Stars', artist:'OneRepublic', youtubeId:'hT_nvWreIhg', cover:'https://i.ytimg.com/vi/hT_nvWreIhg/maxresdefault.jpg', genre:'pop' },
-];
-
-const DEFAULT_FRIENDS = [
-  { name:'Sofia Martinez', username:'sofia.mtz', avatar:null, isFriend:false, activity:'Escuchando Despacito', stats:{plays:142,favorites:28,stories:5}, bio:'Amante de la musica latina', instagram:'sofia.mtz' },
-  { name:'Carlos Ruiz', username:'carlos.ruiz99', avatar:null, isFriend:true, activity:'Compartio una historia', stats:{plays:89,favorites:15,stories:3}, bio:'Productor musical', instagram:'carlos.ruiz' },
-  { name:'Valentina Lopez', username:'vale.lopez', avatar:null, isFriend:true, activity:'Escuchando Shape of You', stats:{plays:203,favorites:42,stories:8}, bio:'Cantante y compositora', instagram:'vale.lopez' },
-  { name:'Diego Hernandez', username:'diego.hdz', avatar:null, isFriend:false, activity:'Nuevo en Music Horizon', stats:{plays:12,favorites:3,stories:0}, bio:'', instagram:'' },
-  { name:'Isabella Garcia', username:'isa.garcia', avatar:null, isFriend:false, activity:'Escuchando Gangnam Style', stats:{plays:67,favorites:11,stories:2}, bio:'DJ profesional', instagram:'isa.garcia' },
 ];
 
 const fs = {
@@ -930,6 +933,7 @@ const fs = {
   async getSettings(uid){ if(!db) return {defaultPrivacy:'public'}; try{ const s=await getDoc(doc(db,'userSettings',uid)); return s.exists()?s.data():{defaultPrivacy:'public'}; }catch{ return {defaultPrivacy:'public'}; } },
   async saveStory(st){ if(!db) return st.id; try{ await setDoc(doc(db,'stories',String(st.id)),st); return st.id; }catch{ return st.id; } },
   async updateStory(st){ if(!db) return; try{ await setDoc(doc(db,'stories',String(st.id)),st); }catch{} },
+  async deleteStory(id){ if(!db) return; try{ await deleteDoc(doc(db,'stories',String(id))); }catch(e){ console.error(e); } },
   async getStories(){ if(!db) return []; try{ const s=await getDocs(collection(db,'stories')); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
   async getSavedStories(uid){ if(!db) return []; try{ const s=await getDoc(doc(db,'savedStories',uid)); return s.exists()?s.data().stories||[]:[]; }catch{ return []; } },
   async saveSavedStories(uid,s){ if(!db) return; try{ await setDoc(doc(db,'savedStories',uid),{stories:s}); }catch{} },
@@ -982,11 +986,7 @@ async function loadAllUserData(uid){
   state.favorites=f; state.downloads=d; state.playlists=p; state.defaultPrivacy=s.defaultPrivacy||'public'; state.savedStories=saved;
 }
 
-document.getElementById('avatar-upload').addEventListener('click',()=>{
-  if(confirm("Music Horizon solicita permiso para acceder a tus archivos de galería para tu foto de perfil.")) {
-    document.getElementById('avatar-file-input').click();
-  }
-});
+document.getElementById('avatar-upload').addEventListener('click',()=>document.getElementById('avatar-file-input').click());
 document.getElementById('avatar-file-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ document.getElementById('avatar-preview').src=ev.target.result; document.getElementById('avatar-preview').style.display='block'; document.getElementById('avatar-initial').style.display='none'; }; r.readAsDataURL(f); } });
 document.getElementById('setup-btn').addEventListener('click',completeProfileSetup);
 document.getElementById('setup-username').addEventListener('keydown',(e)=>{ if(e.key==='Enter') completeProfileSetup(); });
@@ -1003,24 +1003,31 @@ async function completeProfileSetup(){
   btn.disabled=true; btn.textContent='Creando...';
   try{
     const avatar=document.getElementById('avatar-preview').style.display!=='none'?document.getElementById('avatar-preview').src:(state.firebaseUser?.photoURL||null);
-    const user={name,username,email:state.firebaseUser?.email||null,avatar,bio,instagram,firebaseUid:state.firebaseUser?.uid,isGoogle:true,createdAt:Date.now(),stats:{plays:0,shares:0,stories:0}};
+    const user={name,username,email:state.firebaseUser?.email||null,avatar,bio,instagram,firebaseUid:state.firebaseUser?.uid,isGoogle:true,createdAt:Date.now(),friends:[],stats:{plays:0,shares:0,stories:0}};
     if(db) await fs.saveUser(state.firebaseUser.uid,user);
-    state.user=user; state.favorites=[]; state.downloads=[]; state.playlists=[{id:1,name:'Mis Favoritas',tracks:[]}]; state.notifications=[]; state.savedStories=[];
+    state.user=user; state.friends=[]; state.favorites=[]; state.downloads=[]; state.playlists=[{id:1,name:'Mis Favoritas',tracks:[]}]; state.notifications=[]; state.savedStories=[];
     document.getElementById('profile-setup-modal').classList.remove('active');
     btn.disabled=false; btn.textContent='Crear perfil';
     onAuthSuccess(user);
-  }catch(e){ errorEl.textContent='Error al crear perfil. Asegúrate de tener conexión.'; btn.disabled=false; btn.textContent='Crear perfil'; }
+  }catch(e){ errorEl.textContent='Error: '+e.message; btn.disabled=false; btn.textContent='Crear perfil'; }
 }
 
 function onAuthSuccess(user){
-  state.user=user; state.friends=DEFAULT_FRIENDS;
+  state.user=user;
+  state.friends = user.friends || [];
   document.getElementById('auth-login-screen').style.display='none';
   loadAllUserData(state.firebaseUser.uid).then(async ()=>{
-    showLayer('layer-main'); updateNavAvatar(); navigateTo('home');
-    state.stories=await fs.getStories(); renderStoriesBar(); updateNotifBadge();
-    requestNotificationPermission();
+    showLayer('layer-main'); updateNavAvatar();
+    state.stories=await fs.getStories();
+    
     const urlUser=new URLSearchParams(location.search).get('user');
-    if(urlUser&&urlUser!==user.username){ setTimeout(()=>{ navigateTo('friends'); setTimeout(()=>{ const fi=document.getElementById('friend-search-input'); if(fi){ fi.value=urlUser; fi.dispatchEvent(new Event('input')); } },150); },300); }
+    if(urlUser){
+      renderOtherProfileView(urlUser);
+    } else {
+      navigateTo('home');
+    }
+    renderStoriesBar(); updateNotifBadge();
+    requestNotificationPermission();
   });
 }
 
@@ -1154,7 +1161,7 @@ document.getElementById('notif-panel-close').addEventListener('click',()=>docume
 async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Anadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
 
 // ============================================================
-// BUSCADOR DEFINITIVO: INSTANCIAS PÚBLICAS -> RENDER -> LOCAL
+// BUSCADOR INSTANTANEO (PIPED + INVIOUS + RENDER + LOCAL)
 // ============================================================
 async function performSearch(q, resultsEl, playFirst = false) {
   if (!q || typeof q !== 'string') return;
@@ -1165,34 +1172,59 @@ async function performSearch(q, resultsEl, playFirst = false) {
   }
 
   resultsEl.classList.add('show');
-  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones...</div>';
+  resultsEl.innerHTML = '<div class="search-loading">Buscando en red global...</div>';
   
   let results = [];
   const queryLower = cleanQuery.toLowerCase();
 
-  // Intento 1: Nodos Públicos Rápidos
-  const instances = ['https://inv.tux.pizza/api/v1', 'https://invidious.flokinet.to/api/v1', 'https://invidious.weblibre.org/api/v1'];
+  const instances = [
+    { url: 'https://pipedapi.kavin.rocks', type: 'piped' },
+    { url: 'https://invidious.jing.rocks/api/v1', type: 'invidious' },
+    { url: 'https://vid.priv.au/api/v1', type: 'invidious' }
+  ];
+
   for (let inst of instances) {
     try {
-      const res = await fetch(`${inst}/search?q=${encodeURIComponent(cleanQuery)}&type=video`, { method: 'GET', headers: { 'Accept': 'application/json' } });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.length > 0) {
-          results = data.slice(0, 10).map(item => ({
-            id: item.videoId, youtubeId: item.videoId, title: item.title || 'Sin título',
-            artist: item.author || 'Desconocido', cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
-          }));
-          break;
+      let res, data;
+      if (inst.type === 'piped') {
+        res = await fetch(`${inst.url}/search?q=${encodeURIComponent(cleanQuery)}&filter=videos`);
+        if (res.ok) {
+          data = await res.json();
+          if (data.items && data.items.length > 0) {
+            results = data.items.slice(0, 15).map(item => ({
+              id: item.url.split('?v=')[1],
+              youtubeId: item.url.split('?v=')[1],
+              title: item.title,
+              artist: item.uploaderName || 'Desconocido',
+              cover: item.thumbnail
+            }));
+            break;
+          }
+        }
+      } else {
+        res = await fetch(`${inst.url}/search?q=${encodeURIComponent(cleanQuery)}&type=video`);
+        if (res.ok) {
+          data = await res.json();
+          if (data && data.length > 0) {
+            results = data.slice(0, 15).map(item => ({
+              id: item.videoId,
+              youtubeId: item.videoId,
+              title: item.title,
+              artist: item.author || 'Desconocido',
+              cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
+            }));
+            break;
+          }
         }
       }
     } catch(e) { continue; }
   }
 
-  // Intento 2: Backend de Render
   if (results.length === 0) {
+    resultsEl.innerHTML = '<div class="search-loading">Despertando servidor principal (puede tardar 30s)...</div>';
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const res = await fetch(`${API_BASE}/api/search`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: cleanQuery }), signal: controller.signal
@@ -1205,7 +1237,6 @@ async function performSearch(q, resultsEl, playFirst = false) {
     } catch(e) { console.warn("Backend falló", e); }
   }
 
-  // Intento 3: Local
   if (results.length === 0) {
     const localMatches = TRACKS.filter(t => !t.isWelcome && (t.title.toLowerCase().includes(queryLower) || t.artist.toLowerCase().includes(queryLower)));
     results = localMatches.map(t => ({ id: t.id, youtubeId: t.youtubeId, title: t.title, artist: t.artist, cover: t.cover }));
@@ -1214,7 +1245,7 @@ async function performSearch(q, resultsEl, playFirst = false) {
   if (results.length > 0) {
     renderSearchResults(results, resultsEl, playFirst);
   } else {
-    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados.</div>';
+    resultsEl.innerHTML = '<div class="search-loading">No se encontraron resultados. Intenta con otro término.</div>';
   }
 }
 
@@ -1233,7 +1264,7 @@ function renderSearchResults(results, resultsEl, playFirst) {
 }
 
 // ============================================================
-// DESCARGA DIRECTA AL TELÉFONO (BLOB FETCH)
+// DESCARGA INTERNA REAL POR ARCHIVO (BLOB)
 // ============================================================
 function openDownloadModal(track) {
   state.pendingDownloadTrack = track;
@@ -1245,6 +1276,7 @@ document.getElementById('dl-cancel').addEventListener('click', () => document.ge
 
 document.getElementById('dl-confirm').addEventListener('click', async () => {
   const format = document.getElementById('dl-format').value;
+  const quality = document.getElementById('dl-quality').value;
   const track = state.pendingDownloadTrack;
   document.getElementById('download-modal').classList.remove('active');
 
@@ -1253,7 +1285,7 @@ document.getElementById('dl-confirm').addEventListener('click', async () => {
     return;
   }
   
-  toast(`Descargando ${track.title}... Puede tardar unos segundos.`, 'info');
+  toast(`Obteniendo archivo ${format.toUpperCase()} de los servidores... Por favor espera.`, 'info');
   
   const i = state.downloads.findIndex(d => d.id === track.id);
   if (i === -1) { state.downloads.push({...track, downloadedAt: Date.now()}); }
@@ -1275,24 +1307,33 @@ document.getElementById('dl-confirm').addEventListener('click', async () => {
     
     window.URL.revokeObjectURL(downloadUrl);
     document.body.removeChild(a);
-    toast('¡Descarga guardada exitosamente!', 'success');
+    toast('¡Descarga guardada en la memoria interna!', 'success');
   } catch (error) {
     console.error("Error de descarga:", error);
-    toast('Error en la descarga. Servidor ocupado.', 'error');
+    toast('Error en la descarga. El servidor puede estar saturado.', 'error');
   }
 });
 
+// HISTORIAS Y PUBLICACIONES
 document.getElementById('story-image-upload').addEventListener('click',()=>document.getElementById('story-image-input').click());
-document.getElementById('story-image-input').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } });
-document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.defaultPrivacy=o.dataset.privacy; }));
+document.getElementById('btn-open-gallery').addEventListener('click',()=>document.getElementById('story-image-input').click());
+document.getElementById('btn-open-camera').addEventListener('click',()=>document.getElementById('story-camera-input').click());
+
+document.getElementById('story-image-input').addEventListener('change',handleStoryFile);
+document.getElementById('story-camera-input').addEventListener('change',handleStoryFile);
+
+function handleStoryFile(e){ const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onload=(ev)=>{ state.storyImageData=ev.target.result; const u=document.getElementById('story-image-upload'); u.classList.add('has-image'); u.innerHTML=`<img src="${ev.target.result}" alt=""/>`; }; r.readAsDataURL(f); } }
+
+document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o=>o.addEventListener('click',()=>{ document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); state.selectedPrivacy=o.dataset.privacy; }));
 document.getElementById('story-modal-close').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
 document.getElementById('story-cancel').addEventListener('click',()=>{ document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); });
 document.getElementById('story-publish').addEventListener('click',async ()=>{
   if(!state.currentTrack||!state.user){ toast('Reproduce una cancion primero','error'); return; }
-  const story={id:Date.now(),username:state.user.username,userName:state.user.name,userAvatar:state.user.avatar,track:{...state.currentTrack},privacy:state.selectedPrivacy,imageData:state.storyImageData||null,createdAt:Date.now(),seenBy:[],likes:[],comments:[]};
+  const postType = document.getElementById('story-post-type').value; // 'story' o 'post'
+  const story={id:Date.now(),username:state.user.username,userName:state.user.name,userAvatar:state.user.avatar,track:{...state.currentTrack},privacy:state.selectedPrivacy,imageData:state.storyImageData||null,createdAt:Date.now(),seenBy:[],likes:[],comments:[], postType: postType};
   await fs.saveStory(story); state.stories.push(story);
   if(state.user){ state.user.stats.stories=(state.user.stats.stories||0)+1; if(state.firebaseUser) await fs.saveUser(state.firebaseUser.uid,{stats:state.user.stats}); }
-  document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); toast('Historia publicada','success'); renderStoriesBar();
+  document.getElementById('story-modal').classList.remove('active'); resetStoryCreator(); toast(postType==='story'?'Historia publicada (24h)':'Publicación guardada en tu perfil','success'); renderStoriesBar(); refreshCurrentView();
 });
 function resetStoryCreator(){ state.storyImageData=null; const u=document.getElementById('story-image-upload'); u.classList.remove('has-image'); u.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'; document.getElementById('story-image-input').value=''; document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(x=>x.classList.remove('selected')); document.querySelector('#story-privacy-options .privacy-opt[data-privacy="public"]').classList.add('selected'); state.selectedPrivacy='public'; }
 function openStoryCreator(track){ if(!track) return; resetStoryCreator(); document.getElementById('story-modal').classList.add('active'); }
@@ -1304,8 +1345,24 @@ function openStoryViewer(stories,index){
   document.getElementById('story-prev').onclick=()=>{ if(index>0){ state.currentViewingStory=stories[index-1]; showStory(stories[index-1]); state.storyViewerIndex=index-1; startStoryTimer(stories); } else closeStoryViewer(); };
   document.getElementById('story-next').onclick=()=>{ if(index<stories.length-1){ state.currentViewingStory=stories[index+1]; showStory(stories[index+1]); state.storyViewerIndex=index+1; startStoryTimer(stories); } else closeStoryViewer(); };
   document.getElementById('story-play-btn').onclick=()=>playTrack(stories[index].track,true);
-  const likeBtn=document.getElementById('story-like-btn'); const saveBtn=document.getElementById('story-save-btn');
+  const likeBtn=document.getElementById('story-like-btn'); const saveBtn=document.getElementById('story-save-btn'); const delBtn=document.getElementById('story-delete-btn');
   const story=stories[index];
+  
+  if(story.username === state.user.username || state.user.email === ADMIN_EMAIL){
+      delBtn.style.display = 'flex';
+      delBtn.onclick = async () => {
+          if(confirm("¿Eliminar definitivamente?")) {
+              await fs.deleteStory(story.id);
+              state.stories = state.stories.filter(s => s.id !== story.id);
+              closeStoryViewer();
+              refreshCurrentView();
+              toast('Eliminado correctamente', 'success');
+          }
+      };
+  } else {
+      delBtn.style.display = 'none';
+  }
+
   const liked=story.likes&&story.likes.includes(state.user.username);
   const saved=state.savedStories.some(s=>s.id===story.id);
   likeBtn.style.background=liked?'rgba(239,68,68,.2)':''; likeBtn.querySelector('span').textContent=liked?'Te gusta':'Me gusta';
@@ -1322,7 +1379,7 @@ function showStory(story){
   document.getElementById('story-viewer-artist').textContent=story.track.artist;
   document.getElementById('story-viewer-player-title').textContent=story.track.title;
   document.getElementById('story-viewer-player-artist').textContent=story.track.artist;
-  document.getElementById('story-viewer-name').textContent=story.userName;
+  document.getElementById('story-viewer-name').textContent=story.userName || story.username;
   document.getElementById('story-viewer-avatar').textContent=(story.username||'?')[0].toUpperCase();
   document.getElementById('story-viewer-time').textContent=getTimeAgo(story.createdAt);
   const ic=document.getElementById('story-viewer-image-container'); const cc=document.getElementById('story-viewer-cover-container');
@@ -1437,10 +1494,10 @@ function createReleaseCard(track){ const c=document.createElement('div'); c.clas
 function renderExploreView(container){ let html=`<div class="section-head"><h2 class="section-title">Explorar</h2></div><div class="cat-scroll"><div class="cat-chip active">Todo</div><div class="cat-chip">Rock</div><div class="cat-chip">Pop</div><div class="cat-chip">Jazz</div><div class="cat-chip">Electronica</div><div class="cat-chip">Urbano</div></div><div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2></div><div class="trend-grid" id="explore-grid"></div>`; container.innerHTML=html; TRACKS.filter(t=>!t.isWelcome).forEach((t,i)=>container.querySelector('#explore-grid').appendChild(createTrendCard(t,i))); container.querySelectorAll('.cat-chip').forEach(c=>c.addEventListener('click',()=>{ container.querySelectorAll('.cat-chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); })); }
 
 function renderFriendsView(container){
-  let html=`<div class="section-head"><h2 class="section-title">Amigos</h2></div>
+  let html=`<div class="section-head"><h2 class="section-title">Comunidad</h2></div>
   <div class="friend-search-wrap"><input type="text" class="friend-search-input" id="friend-search-input" placeholder="Buscar por @username..."/><div class="friend-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
   <div id="friend-search-results"></div>
-  <div class="section-head" style="margin-top:14px"><h2 class="section-title" style="font-size:15px">Sugerencias</h2></div>
+  <div class="section-head" style="margin-top:14px"><h2 class="section-title" style="font-size:15px">Tus amigos</h2></div>
   <div id="friends-list"></div>`;
   container.innerHTML=html; renderFriendsList();
   const si=container.querySelector('#friend-search-input'); const rd=container.querySelector('#friend-search-results'); let st;
@@ -1448,44 +1505,102 @@ function renderFriendsView(container){
 }
 async function searchUsers(q,rd){
   rd.innerHTML='<div class="search-loading">Buscando usuarios...</div>';
-  const local=state.friends.filter(f=>f.username.toLowerCase().includes(q)||f.name.toLowerCase().includes(q));
   let fu=null; if(db){ try{ fu=await fs.getUserByUsername(q); }catch{} }
-  const all=[...local]; if(fu&&!all.find(f=>f.username===fu.username)) all.push(fu);
-  if(!all.length){ rd.innerHTML='<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No se encontraron usuarios</div></div>'; return; }
-  rd.innerHTML=all.map(u=>createUserProfileCard(u)).join(''); attachUserProfileEvents(rd);
+  if(!fu){ rd.innerHTML='<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No se encontraron usuarios</div></div>'; return; }
+  rd.innerHTML=createUserProfileCard(fu); attachUserProfileEvents(rd);
 }
 function createUserProfileCard(user){
-  const isFriend=state.friends.find(f=>f.username===user.username)?.isFriend||false;
+  const isFriend = state.friends.includes(user.username);
   const initial=(user.name||user.username||'?')[0].toUpperCase(); const stats=user.stats||{plays:0,favorites:0,stories:0};
   return `<div class="user-profile-card" data-username="${user.username}">
   <div class="user-profile-header"><div class="user-profile-avatar">${user.avatar?`<img src="${user.avatar}"/>`:initial}</div><div style="flex:1;min-width:0"><div class="user-profile-name">${user.name||'Usuario'}</div><div class="user-profile-username">@${user.username}</div></div></div>
   ${user.bio?`<div class="user-profile-bio">${user.bio}</div>`:''}
-  <div class="user-profile-stats"><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.plays||0}</div><div class="user-profile-stat-label">Plays</div></div><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.favorites||0}</div><div class="user-profile-stat-label">Favoritos</div></div><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.stories||0}</div><div class="user-profile-stat-label">Historias</div></div></div>
+  <div class="user-profile-stats"><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.plays||0}</div><div class="user-profile-stat-label">Plays</div></div><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.favorites||0}</div><div class="user-profile-stat-label">Favoritos</div></div><div class="user-profile-stat"><div class="user-profile-stat-value">${stats.stories||0}</div><div class="user-profile-stat-label">Posts</div></div></div>
   <div class="user-profile-actions"><button class="user-profile-btn ${isFriend?'secondary':'primary'}" data-action="${isFriend?'unfriend':'add'}">${isFriend?'Amigos':'Agregar'}</button><button class="user-profile-btn secondary" data-action="view">Ver perfil</button></div></div>`;
 }
 function attachUserProfileEvents(container){
   container.querySelectorAll('.user-profile-card').forEach(card=>{
     card.querySelectorAll('[data-action]').forEach(btn=>{
       btn.addEventListener('click',async (e)=>{ e.stopPropagation(); const action=btn.dataset.action; const username=card.dataset.username;
-        if(action==='add'){ const f=state.friends.find(x=>x.username===username); if(f){ f.isFriend=true; btn.textContent='Amigos'; btn.className='user-profile-btn secondary'; toast(username+' agregado','success'); } else { state.friends.push({name:username,username,avatar:null,isFriend:true,activity:'Nuevo amigo',stats:{plays:0,favorites:0,stories:0}}); btn.textContent='Amigos'; btn.className='user-profile-btn secondary'; toast(username+' agregado','success'); } }
-        else if(action==='unfriend'){ const f=state.friends.find(x=>x.username===username); if(f){ f.isFriend=false; btn.textContent='Agregar'; btn.className='user-profile-btn primary'; toast(username+' eliminado','info'); } }
-        else if(action==='view'){ const link=`https://music-horizon.netlify.app/?user=${username}`; navigator.clipboard.writeText(link).then(()=>toast('Enlace de perfil copiado','success')).catch(()=>toast(link,'info')); }
+        if(action==='add'){ 
+            if(!state.friends.includes(username)) { state.friends.push(username); if(state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, {friends: state.friends}); }
+            btn.textContent='Amigos'; btn.className='user-profile-btn secondary'; toast(username+' agregado','success'); 
+        }
+        else if(action==='unfriend'){ 
+            state.friends = state.friends.filter(u => u !== username); if(state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, {friends: state.friends});
+            btn.textContent='Agregar'; btn.className='user-profile-btn primary'; toast(username+' eliminado','info'); refreshCurrentView();
+        }
+        else if(action==='view'){ 
+            renderOtherProfileView(username);
+        }
       });
     });
   });
 }
-function renderFriendsList(){ const list=document.getElementById('friends-list'); if(!list) return; const friends=state.friends.filter(f=>f.isFriend); if(!friends.length){ list.innerHTML='<div class="empty-state"><div class="empty-state-title">Sin amigos aun</div><div class="empty-state-desc">Busca usuarios por @username para agregarlos</div></div>'; return; } list.innerHTML=friends.map(u=>createUserProfileCard(u)).join(''); attachUserProfileEvents(list); }
+async function renderFriendsList(){ 
+  const list=document.getElementById('friends-list'); if(!list) return; 
+  if(!state.friends || !state.friends.length){ list.innerHTML='<div class="empty-state"><div class="empty-state-title">Sin amigos aun</div><div class="empty-state-desc">Busca usuarios por @username para agregarlos</div></div>'; return; } 
+  list.innerHTML = '<div class="search-loading">Cargando amigos...</div>';
+  let html = '';
+  for(let un of state.friends) {
+      const u = await fs.getUserByUsername(un);
+      if(u) html += createUserProfileCard(u);
+  }
+  list.innerHTML = html || '<div class="empty-state-desc">Error cargando amigos</div>';
+  attachUserProfileEvents(list); 
+}
+
+async function renderOtherProfileView(username) {
+  if(username === state.user.username) { navigateTo('profile'); return; }
+  const c = document.getElementById('main-content');
+  c.innerHTML = '<div class="search-loading" style="margin-top:40px;">Cargando perfil...</div>';
+  const u = await fs.getUserByUsername(username);
+  if(!u) { c.innerHTML = '<div class="empty-state"><div class="empty-state-title">Usuario no encontrado</div></div>'; return; }
+  
+  const posts = state.stories.filter(s => s.username === u.username && s.postType === 'post');
+  const isFriend = state.friends.includes(u.username);
+  
+  let html = `<div style="padding-bottom:10px;"><button class="profile-action-btn secondary" onclick="navigateTo('friends')" style="margin-bottom:10px;">← Volver</button></div>
+  <div class="profile-header">
+  <div class="profile-avatar-large">${u.avatar?`<img src="${u.avatar}"/>`:u.name[0].toUpperCase()}</div>
+  <div class="profile-name">${u.name}</div><div class="profile-username">@${u.username}</div>
+  ${u.bio?`<div class="profile-bio">${u.bio}</div>`:''}
+  ${u.instagram?`<div class="profile-social"><div class="profile-social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>${u.instagram}</div></div>`:''}
+  <div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${u.stats?.plays||0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${posts.length}</div><div class="profile-stat-label">Posts</div></div></div>
+  <div class="profile-actions" id="other-profile-actions">
+    <button class="profile-action-btn ${isFriend?'secondary':'primary'}" id="toggle-friend-btn">${isFriend?'Eliminar Amigo':'Agregar Amigo'}</button>
+  </div></div>
+  <div class="profile-section"><div class="profile-section-title">Publicaciones de @${u.username}</div><div id="other-posts-list">${posts.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No hay publicaciones</div></div>':posts.slice().reverse().map(s=>{ const lc=(s.likes||[]).length; const cc=(s.comments||[]).length; return `<div class="track-list-item" data-storyid="${s.id}"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${lc} me gusta · ${cc} comentarios</div></div></div>`; }).join('')}</div></div>`;
+  c.innerHTML = html;
+  
+  c.querySelector('#toggle-friend-btn').onclick = async function() {
+      if(state.friends.includes(u.username)) {
+          state.friends = state.friends.filter(x => x !== u.username);
+          this.textContent = 'Agregar Amigo'; this.className = 'profile-action-btn primary';
+          toast('Amigo eliminado', 'info');
+      } else {
+          state.friends.push(u.username);
+          this.textContent = 'Eliminar Amigo'; this.className = 'profile-action-btn secondary';
+          toast('Amigo agregado', 'success');
+      }
+      if(state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, {friends: state.friends});
+  };
+  
+  c.querySelectorAll('.track-list-item').forEach(el => {
+      el.onclick = () => { const s = state.stories.find(x => x.id === parseInt(el.dataset.storyid)); if(s) openStoryViewer([s], 0); };
+  });
+}
 
 function renderProfileView(container){
   const u=state.user; if(!u) return;
-  const stories=state.stories.filter(s=>s.username===u.username);
+  const posts=state.stories.filter(s=>s.username===u.username && s.postType === 'post');
   const isAdmin=u.email===ADMIN_EMAIL;
   let html=`<div class="profile-header">
   <div class="profile-avatar-large" id="profile-avatar-edit">${u.avatar?`<img src="${u.avatar}"/>`:u.name[0].toUpperCase()}<div class="edit-badge"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" style="width:11px;height:11px"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div></div>
   <div class="profile-name">${u.name}</div><div class="profile-username">@${u.username}</div>
   ${u.bio?`<div class="profile-bio">${u.bio}</div>`:''}
   ${u.instagram?`<div class="profile-social"><div class="profile-social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>${u.instagram}</div></div>`:''}
-  <div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${u.stats.plays||0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div><div class="profile-stat"><div class="profile-stat-value">${stories.length}</div><div class="profile-stat-label">Historias</div></div></div>
+  <div class="profile-stats"><div class="profile-stat"><div class="profile-stat-value">${u.stats.plays||0}</div><div class="profile-stat-label">Plays</div></div><div class="profile-stat"><div class="profile-stat-value">${state.favorites.length}</div><div class="profile-stat-label">Favoritos</div></div><div class="profile-stat"><div class="profile-stat-value">${posts.length}</div><div class="profile-stat-label">Posts</div></div></div>
   <div class="profile-actions"><button class="profile-action-btn" id="edit-profile-btn">Editar perfil</button><button class="profile-action-btn primary" id="share-profile-btn">Compartir</button><button class="profile-action-btn ${isAdmin?'admin':''}" id="coupon-btn">${isAdmin?'Crear codigos':'Canjear codigo'}</button></div></div>
   <div class="profile-section"><div class="profile-section-title">Cuenta</div>
     <div class="profile-option" id="opt-username"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Nombre de usuario</div><div class="profile-option-value">@${u.username}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
@@ -1494,13 +1609,18 @@ function renderProfileView(container){
     <div class="profile-option" id="opt-e2e"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div class="profile-option-value">Activo · Datos protegidos</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
     <div class="profile-option" id="opt-visibility"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div><div class="profile-option-label">Visibilidad de historias</div><div class="profile-option-value">Configurar quien ve tus historias</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
     <div class="profile-option" id="opt-permissions"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="profile-option-label">Permisos del sistema</div><div class="profile-option-value">Notificaciones, galeria, multimedia</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div></div>
-  <div class="profile-section"><div class="profile-section-title">Historias guardadas</div><div id="saved-stories-list">${state.savedStories.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No has guardado historias</div></div>':state.savedStories.slice().reverse().map(s=>`<div class="track-list-item"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${s.track.artist}</div></div></div>`).join('')}</div></div>
-  <div class="profile-section"><div class="profile-section-title">Mis historias publicadas</div><div id="my-stories-list">${stories.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">Aun no has compartido historias</div></div>':stories.slice().reverse().map(s=>{ const vc=(s.seenBy||[]).length; const lc=(s.likes||[]).length; const cc=(s.comments||[]).length; return `<div class="track-list-item"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${vc} vistas · ${lc} me gusta · ${cc} comentarios</div></div></div>`; }).join('')}</div></div>
+  <div class="profile-section"><div class="profile-section-title">Publicaciones guardadas</div><div id="saved-stories-list">${state.savedStories.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">No has guardado nada</div></div>':state.savedStories.slice().reverse().map(s=>`<div class="track-list-item" data-storyid="${s.id}"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${s.track.artist}</div></div></div>`).join('')}</div></div>
+  <div class="profile-section"><div class="profile-section-title">Mis publicaciones permanentes</div><div id="my-stories-list">${posts.length===0?'<div class="empty-state" style="padding:14px"><div class="empty-state-desc">Aun no has publicado nada</div></div>':posts.slice().reverse().map(s=>{ const lc=(s.likes||[]).length; const cc=(s.comments||[]).length; return `<div class="track-list-item" data-storyid="${s.id}"><div class="track-list-cover"><img src="${s.imageData||s.track.cover}" alt=""/></div><div class="track-list-info"><div class="track-list-title">${s.track.title}</div><div class="track-list-artist">${lc} me gusta · ${cc} comentarios</div></div></div>`; }).join('')}</div></div>
   <div class="profile-section"><div class="profile-section-title">Sistema</div>
     <div class="profile-option" id="opt-version"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="profile-option-label">Version</div><div class="profile-option-value">${PLATFORM_VERSION}</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
     <div class="profile-option" id="opt-diagnostics"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><div class="profile-option-label">Diagnostico</div><div class="profile-option-value">Informacion tecnica del dispositivo</div></div></div><div class="profile-option-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div></div>
   <button class="profile-logout" id="logout-btn">Cerrar sesion</button><div style="height:16px"></div>`;
   container.innerHTML=html;
+  
+  container.querySelectorAll('.track-list-item').forEach(el => {
+    el.onclick = () => { const s = state.stories.find(x => x.id === parseInt(el.dataset.storyid)) || state.savedStories.find(x => x.id === parseInt(el.dataset.storyid)); if(s) openStoryViewer([s], 0); };
+  });
+
   container.querySelector('#logout-btn').addEventListener('click',logout);
   container.querySelector('#share-profile-btn').addEventListener('click',()=>{ const link=`https://music-horizon.netlify.app/?user=${state.user.username}`; const text=`Sigueme en Music Horizon y escucha mi musica ${link}`; if(navigator.share){ navigator.share({title:'Music Horizon',text,url:link}).catch(()=>{}); } else { navigator.clipboard.writeText(link).then(()=>toast('Link de perfil copiado','success')).catch(()=>toast(link,'info')); } });
   container.querySelector('#coupon-btn').addEventListener('click',()=>{ document.getElementById('coupon-modal').classList.add('active'); document.getElementById('coupon-input').value=''; document.getElementById('coupon-result').innerHTML=''; document.getElementById('coupon-email-container').style.display='none'; document.getElementById('admin-created-code').textContent=''; const isAdmin=state.user.email===ADMIN_EMAIL; document.getElementById('admin-coupon-section').style.display=isAdmin?'block':'none'; });
@@ -1534,11 +1654,20 @@ function updateNavAvatar(){ const a=document.getElementById('nav-avatar'); if(st
 function renderStoriesBar(){
   const b=document.getElementById('stories-bar');
   let html=`<div class="story-item" id="add-story-btn"><div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="story-name">Tu historia</div></div>`;
-  const su=new Map(); state.stories.forEach(s=>{ if(!su.has(s.username)) su.set(s.username,[]); su.get(s.username).push(s); });
+  const su=new Map(); 
+  
+  // Filtrar historias para que solo duren 24h en la barra superior (posts permanentes no salen aqui)
+  const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+  const activeStories = state.stories.filter(s => {
+      if(s.postType === 'post') return false; 
+      return (Date.now() - s.createdAt) < TWENTY_FOUR_HOURS;
+  });
+  
+  activeStories.forEach(s=>{ if(!su.has(s.username)) su.set(s.username,[]); su.get(s.username).push(s); });
   su.forEach((us,un)=>{ const ls=us[us.length-1]; const seen=ls.seenBy&&ls.seenBy.includes(state.user?.username); html+=`<div class="story-item" data-username="${un}"><div class="story-ring ${seen?'seen':''}"><div class="story-ring-inner">${(un||'?')[0].toUpperCase()}</div></div><div class="story-name">${un}</div></div>`; });
   b.innerHTML=html;
   document.getElementById('add-story-btn').addEventListener('click',()=>{ if(state.currentTrack) openStoryCreator(state.currentTrack); else toast('Reproduce una cancion primero','error'); });
-  b.querySelectorAll('.story-item[data-username]').forEach(item=>item.addEventListener('click',()=>{ const un=item.dataset.username; openStoryViewer(state.stories.filter(s=>s.username===un),0); }));
+  b.querySelectorAll('.story-item[data-username]').forEach(item=>item.addEventListener('click',()=>{ const un=item.dataset.username; openStoryViewer(activeStories.filter(s=>s.username===un),0); }));
 }
 
 function enterOverlord(){ if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; } showLayer('layer-overlord'); initOverlord(); }
