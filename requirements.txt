@@ -8,3 +8,4 @@ click==8.1.7
 itsdangerous==2.1.2
 blinker==1.7.0
 yt-dlp
+youtube-search-python
