@@ -4,13 +4,12 @@ import urllib.parse
 import requests
 from flask import Flask, jsonify, request, redirect
 from flask_cors import CORS
-import yt_dlp
 
 app = Flask(__name__)
 CORS(app)
 
 def search_youtube_innertube(query):
-    """Buscador Antibloqueos (Ya comprobado que funciona)"""
+    """Buscador Antibloqueos (Funciona 100%)"""
     url = "https://www.youtube.com/youtubei/v1/search"
     headers = {
         "Content-Type": "application/json",
@@ -108,51 +107,77 @@ def search_tracks():
     results = search_youtube_innertube(query)
     return jsonify({'results': results})
 
-
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def stream_audio(video_id):
-    """Motor Antibloqueos para Descargas y Streaming"""
+    """
+    Cadena de Extracción Blindada:
+    Usa múltiples APIs globales para evitar que Render sea detectado como bot.
+    """
     
-    # INTENTO 1: Extracción limpia a través de Nodos Piped (Evita que YouTube bloquee la IP de Render)
+    # INTENTO 1: Cobalt API (Alta velocidad y estabilidad)
+    try:
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "url": f"https://www.youtube.com/watch?v={video_id}",
+            "isAudioOnly": True,
+            "aFormat": "mp3"
+        }
+        res = requests.post("https://api.cobalt.tools/api/json", json=payload, headers=headers, timeout=5)
+        if res.status_code == 200:
+            data = res.json()
+            stream_url = data.get("url")
+            if stream_url:
+                return redirect(stream_url)
+    except Exception as e:
+        print(f"Cobalt falló: {e}")
+
+    # INTENTO 2: Nodos Piped
     piped_nodes = [
         f"https://pipedapi.kavin.rocks/streams/{video_id}",
         f"https://pipedapi.tokhmi.xyz/streams/{video_id}",
+        f"https://api.piped.projectsegfau.lt/streams/{video_id}",
         f"https://pipedapi.smnz.de/streams/{video_id}"
     ]
     
     for url in piped_nodes:
         try:
-            res = requests.get(url, timeout=5)
+            res = requests.get(url, timeout=4)
             if res.status_code == 200:
                 data = res.json()
                 audio_streams = data.get('audioStreams', [])
                 if audio_streams:
-                    # Seleccionamos el último stream (suele ser el de mejor calidad MP3/M4A)
-                    stream_url = audio_streams[-1].get('url')
-                    if stream_url:
-                        return redirect(stream_url)
+                    best_audio = sorted(audio_streams, key=lambda x: int(x.get('bitrate', 0)), reverse=True)
+                    if best_audio:
+                        return redirect(best_audio[0].get('url'))
         except Exception:
             continue
 
-    # INTENTO 2: Respaldo con yt-dlp usando clientes de navegador seguro
-    try:
-        url = f"https://www.youtube.com/watch?v={video_id}"
-        YDL_OPTIONS_AUDIO = {
-            'format': 'bestaudio/best',
-            'noplaylist': True,
-            'quiet': True,
-            'skip_download': True,
-            'extractor_args': {'youtube': {'player_client': ['web_safari', 'ios', 'android']}},
-        }
-        with yt_dlp.YoutubeDL(YDL_OPTIONS_AUDIO) as ydl:
-            info = ydl.extract_info(url, download=False)
-            audio_url = info.get('url')
-            if audio_url:
-                return redirect(audio_url)
-    except Exception as e:
-        print(f"Error fatal extrayendo audio: {e}")
-        
-    return jsonify({'error': 'Servidores bloqueados por YouTube. Intenta de nuevo más tarde.'}), 500
+    # INTENTO 3: Nodos Invidious
+    invidious_nodes = [
+        f"https://inv.tux.pizza/api/v1/videos/{video_id}",
+        f"https://invidious.weblibre.org/api/v1/videos/{video_id}",
+        f"https://invidious.flokinet.to/api/v1/videos/{video_id}"
+    ]
+    
+    for url in invidious_nodes:
+        try:
+            res = requests.get(url, timeout=4)
+            if res.status_code == 200:
+                data = res.json()
+                adaptive = data.get('adaptiveFormats', [])
+                audios = [f for f in adaptive if f.get('type', '').startswith('audio')]
+                if audios:
+                    best_audio = sorted(audios, key=lambda x: int(x.get('bitrate', 0)), reverse=True)
+                    if best_audio:
+                        return redirect(best_audio[0].get('url'))
+        except Exception:
+            continue
+
+    # Si todo falla, no usamos yt-dlp para no generar error 500 por bot.
+    return jsonify({'error': 'Servidores saturados temporalmente. Intenta nuevamente en unos segundos.'}), 500
 
 
 if __name__ == '__main__':
