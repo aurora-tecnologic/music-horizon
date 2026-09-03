@@ -29,33 +29,24 @@ svg{display:block}
 .layer{position:fixed;inset:0;display:none;opacity:0;transition:opacity .45s var(--ease-out-expo);overflow:hidden}
 .layer.active{display:flex;opacity:1}
 
-/* BOTONES GLOBALES REPARADOS */
+/* BOTONES GLOBALES */
 .modal-btn {
-  width: 100%;
-  height: 48px;
-  min-height: 48px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 14px;
-  background: var(--gradient-primary);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none; /* Evita que el botón se estire */
-  cursor: pointer;
-  transition: all 0.2s;
+  width: 100%; height: 48px; min-height: 48px; border-radius: 12px; font-weight: 700; font-size: 14px;
+  background: var(--gradient-primary); color: #fff; display: flex; align-items: center; justify-content: center;
+  flex: none; cursor: pointer; transition: all 0.2s;
 }
-.modal-btn.secondary {
-  background: var(--bg-card-hover);
-  border: 1px solid var(--border);
-}
+.modal-btn.secondary { background: var(--bg-card-hover); border: 1px solid var(--border); }
 
-/* 1. Muro de Permisos */
-#gate-screen{position:fixed;inset:0;z-index:999999;background:#0D1321;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;transition:opacity 0.4s}
+/* 1. Muro de Permisos (Rediseñado) */
+#gate-screen{position:fixed;inset:0;z-index:999999;background:#0D1321;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;transition:opacity 0.4s;overflow-y:auto}
 #gate-screen.hidden{opacity:0;pointer-events:none}
-.gate-icon{width:80px;height:80px;border-radius:24px;background:rgba(51,133,230,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:20px;border:2px solid var(--accent);flex:none}
-.gate-icon svg{width:40px;height:40px;color:var(--accent-light)}
+.gate-icon{width:70px;height:70px;border-radius:20px;background:rgba(51,133,230,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:16px;border:2px solid var(--accent);flex:none}
+.gate-icon svg{width:34px;height:34px;color:var(--accent-light)}
+.gate-list{width:100%;max-width:340px;display:flex;flex-direction:column;gap:16px;margin-bottom:30px;text-align:left;background:var(--bg-card);padding:20px;border-radius:16px;border:1px solid var(--border)}
+.gate-item{display:flex;gap:14px;align-items:flex-start}
+.gate-item-icon{width:28px;height:28px;color:var(--accent-light);flex-shrink:0}
+.gate-item-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.gate-item-desc{font-size:11px;color:var(--text-secondary);line-height:1.4}
 
 /* 2. Update Banner */
 .update-banner-wrap{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);z-index:100000;display:none;align-items:center;justify-content:center;padding:20px}
@@ -78,23 +69,7 @@ svg{display:block}
 .login-logo-box svg{width:40px;height:40px}
 .login-title-text{font-size:28px;font-weight:bold;color:#fff;margin-bottom:8px}
 .login-sub-text{font-size:14px;color:#a0aec0;margin-bottom:30px;line-height:1.5}
-#google-login-btn {
-  background: #fff;
-  color: #1a1a1a;
-  height: 48px;
-  min-height: 48px;
-  border-radius: 14px;
-  font-weight: bold;
-  font-size: 15px;
-  width: 100%;
-  max-width: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex: none; /* Repara el botón gigante de Google */
-  margin: 0 auto;
-}
+#google-login-btn {background:#fff;color:#1a1a1a;height:48px;min-height:48px;border-radius:14px;font-weight:bold;font-size:15px;width:100%;max-width:300px;display:flex;align-items:center;justify-content:center;gap:12px;flex:none;margin:0 auto;}
 .login-loading{display:none;align-items:center;justify-content:center;gap:8px;color:#a0aec0;font-size:13px;margin-top:20px}
 .login-loading.show{display:flex}
 .spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
@@ -290,13 +265,45 @@ svg{display:block}
 </head>
 <body>
 
-<!-- 1. Muro de Permisos (Bloqueo Total Inicial) -->
+<!-- 1. Muro de Permisos (Desglosado e informativo) -->
 <div id="gate-screen">
   <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
   <h2 style="font-size:24px;font-weight:800;margin-bottom:10px">Permisos Requeridos</h2>
-  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:30px;max-width:300px;line-height:1.5">Music Horizon necesita acceso a tu <b>cámara</b> (para subir historias), <b>almacenamiento</b> (para descargar canciones) y <b>notificaciones</b> para funcionar correctamente. Sin esto, no puedes acceder.</p>
-  <div id="gate-error" style="color:var(--danger);font-size:12px;margin-bottom:15px;display:none;font-weight:700">Debes otorgar los permisos desde los ajustes del navegador para continuar.</div>
-  <button class="modal-btn" id="btn-gate-accept" style="max-width:300px;margin:0 auto">Conceder y Continuar</button>
+  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;max-width:320px;line-height:1.5">Music Horizon necesita los siguientes permisos para brindarte una experiencia completa y funcional:</p>
+  
+  <div class="gate-list">
+     <div class="gate-item">
+         <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+         <div>
+             <div class="gate-item-title">Cámara y Micrófono</div>
+             <div class="gate-item-desc">Para capturar fotos y grabar audio al subir tus historias y publicaciones.</div>
+         </div>
+     </div>
+     <div class="gate-item">
+         <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+         <div>
+             <div class="gate-item-title">Almacenamiento Local</div>
+             <div class="gate-item-desc">Para guardar música descargada en tu dispositivo y acceder a tu galería de imágenes.</div>
+         </div>
+     </div>
+     <div class="gate-item">
+         <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+         <div>
+             <div class="gate-item-title">Notificaciones</div>
+             <div class="gate-item-desc">Para recibir alertas de mensajes, nuevos seguidores, likes y actividad.</div>
+         </div>
+     </div>
+     <div class="gate-item">
+         <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
+         <div>
+             <div class="gate-item-title">Audio Avanzado</div>
+             <div class="gate-item-desc">Para la optimización del sonido y reproducción nativa en segundo plano con pantalla apagada.</div>
+         </div>
+     </div>
+  </div>
+
+  <div id="gate-error" style="color:var(--danger);font-size:12px;margin-bottom:15px;display:none;font-weight:700">Debes otorgar los permisos obligatorios desde los ajustes de tu navegador para continuar.</div>
+  <button class="modal-btn" id="btn-gate-accept" style="max-width:340px;margin:0 auto">Aceptar Permisos y Continuar</button>
 </div>
 
 <!-- 2. Update Banner -->
@@ -325,7 +332,7 @@ svg{display:block}
   </div>
 </div>
 
-<!-- Modales Varios -->
+<!-- Modales de Sistema -->
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Tu Perfil Público</h3></div>
@@ -348,7 +355,7 @@ svg{display:block}
 
 <div class="modal-overlay center" id="playlist-modal">
   <div class="modal">
-    <div class="modal-header"><h3 class="modal-title">Playlists (Códigos)</h3><button class="modal-close" onclick="document.getElementById('playlist-modal').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-header"><h3 class="modal-title">Playlists Compartidas</h3><button class="modal-close" onclick="document.getElementById('playlist-modal').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
       <div class="playlist-share-card">
         <div style="font-size:12px;color:var(--text-secondary)">Crear nueva playlist pública</div>
@@ -549,10 +556,10 @@ svg{display:block}
   <div class="ov-input-wrap"><span style="color:#10B981">root@horizon:~#</span><input type="text" id="ov-input" style="flex:1;background:transparent;border:none;color:#fff;outline:none" autocomplete="off" /></div>
 </section>
 
-<!-- Panel de Notificaciones -->
+<!-- Panel de Notificaciones con Firebase Restaurado -->
 <div class="notifications-panel" id="notifications-panel">
   <div class="modal-header"><h3 class="modal-title">Notificaciones</h3><button class="modal-close" onclick="document.getElementById('notifications-panel').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-  <div style="padding:16px;font-size:12px;color:var(--text-secondary)" id="notifications-list">Cargando alertas de Firebase...</div>
+  <div style="padding:16px;font-size:12px;color:var(--text-secondary)" id="notifications-list">Cargando alertas del servidor...</div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -608,23 +615,34 @@ const fs = {
 };
 
 // ==========================================
-// 2. MURO DE PERMISOS ESTRICTO
+// 2. MURO DE PERMISOS ESTRICTO CON LISTA DETALLADA
 // ==========================================
 document.getElementById('btn-gate-accept').addEventListener('click', async () => {
     const errorEl = document.getElementById('gate-error');
+    const btn = document.getElementById('btn-gate-accept');
     errorEl.style.display = 'none';
+    btn.textContent = "Procesando permisos...";
+    
     try {
-        if ('Notification' in window && Notification.permission !== 'granted') {
+        // Pedir Notificaciones (Alerta de SO)
+        if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
             await Notification.requestPermission();
         }
+        
+        // Pedir Cámara y Micrófono (Alerta de SO)
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            // Apagar las pistas inmediatamente, solo se quería el permiso.
             stream.getTracks().forEach(track => track.stop());
-        } else { throw new Error(); }
+        } else { 
+            throw new Error("Dispositivo no soportado o bloqueado"); 
+        }
 
+        // Si pasó el bloque anterior, ocultamos la pantalla
         document.getElementById('gate-screen').style.opacity = '0';
         setTimeout(() => document.getElementById('gate-screen').classList.add('hidden'), 400);
         
+        // Mostrar Update Banner o Auth
         if(!localStorage.getItem('mh_update_seen_v150')) {
             document.getElementById('update-banner-wrap').style.display = 'flex';
         } else {
@@ -632,6 +650,7 @@ document.getElementById('btn-gate-accept').addEventListener('click', async () =>
         }
     } catch (err) {
         errorEl.style.display = 'block';
+        btn.textContent = "Reintentar";
     }
 });
 
@@ -673,6 +692,7 @@ window.playTrack = function(track) {
   if(!track) return;
   state.currentTrack = track;
   
+  // Streaming directo desde Render Proxy (Habilita el 2do plano sin que YT lo corte)
   globalAudio.src = `${API_BASE}/api/stream/${track.youtubeId}`;
   globalAudio.play().catch(e => toast('Cargando en segundo plano...','info'));
   
@@ -692,6 +712,7 @@ window.playTrack = function(track) {
     navigator.mediaSession.setActionHandler('pause', () => globalAudio.pause());
   }
   
+  // Si estamos en la pestaña video
   const activeTab = document.querySelector('.full-tab.active').dataset.tab;
   if(activeTab === 'video') renderCleanVideoPlayer(track);
   if(activeTab === 'lyrics') loadLyrics(track);
