@@ -29,20 +29,43 @@ svg{display:block}
 .layer{position:fixed;inset:0;display:none;opacity:0;transition:opacity .45s var(--ease-out-expo);overflow:hidden}
 .layer.active{display:flex;opacity:1}
 
-/* Muro de Permisos (Bloqueo inicial) */
+/* BOTONES GLOBALES REPARADOS */
+.modal-btn {
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  background: var(--gradient-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none; /* Evita que el botón se estire */
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.modal-btn.secondary {
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border);
+}
+
+/* 1. Muro de Permisos */
 #gate-screen{position:fixed;inset:0;z-index:999999;background:#0D1321;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;transition:opacity 0.4s}
 #gate-screen.hidden{opacity:0;pointer-events:none}
-.gate-icon{width:80px;height:80px;border-radius:24px;background:rgba(51,133,230,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:20px;border:2px solid var(--accent)}
+.gate-icon{width:80px;height:80px;border-radius:24px;background:rgba(51,133,230,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:20px;border:2px solid var(--accent);flex:none}
 .gate-icon svg{width:40px;height:40px;color:var(--accent-light)}
 
-/* Update Banner */
+/* 2. Update Banner */
 .update-banner-wrap{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);z-index:100000;display:none;align-items:center;justify-content:center;padding:20px}
 .update-banner-content{background:var(--bg-card);border:1px solid var(--accent);border-radius:20px;padding:24px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 50px rgba(51,133,230,0.2);animation:slideUp .4s var(--ease-out-expo)}
-.update-icon{width:60px;height:60px;border-radius:50%;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:2px solid var(--warning)}
+.update-icon{width:60px;height:60px;border-radius:50%;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:2px solid var(--warning);flex:none}
 .update-icon svg{width:30px;height:30px;color:var(--warning)}
 .update-title{font-size:20px;font-weight:800;margin-bottom:8px}
 .update-version{display:inline-block;padding:4px 12px;background:var(--gradient-primary);border-radius:20px;font-size:11px;font-weight:700;margin-bottom:16px}
 
+/* 3. Pantalla de Login */
 #auth-login-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0D1321;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:20px}
 .login-grid-bg{position:absolute;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;opacity:0.15;transform:scale(1.1);filter:blur(2px);z-index:0}
 .login-grid-bg div{border-radius:20px;height:180px}
@@ -51,17 +74,33 @@ svg{display:block}
 .login-grid-bg .g3{background:linear-gradient(135deg,#3385E6,#0D1321)}
 .login-grid-bg .g4{background:linear-gradient(135deg,#6B46FF,#0D1321);margin-top:-20px}
 .login-content-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;max-width:400px;width:100%;text-align:center;margin:auto}
-.login-logo-box{width:80px;height:80px;border-radius:24px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.login-logo-box{width:80px;height:80px;min-height:80px;border-radius:24px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;margin-bottom:20px;flex:none}
 .login-logo-box svg{width:40px;height:40px}
 .login-title-text{font-size:28px;font-weight:bold;color:#fff;margin-bottom:8px}
 .login-sub-text{font-size:14px;color:#a0aec0;margin-bottom:30px;line-height:1.5}
-#google-login-btn{background:#fff;color:#1a1a1a;padding:14px 24px;border-radius:14px;font-weight:bold;font-size:15px;width:100%;display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px}
-.login-loading{display:none;align-items:center;gap:8px;color:#a0aec0;font-size:13px;margin-top:14px}
+#google-login-btn {
+  background: #fff;
+  color: #1a1a1a;
+  height: 48px;
+  min-height: 48px;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 15px;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex: none; /* Repara el botón gigante de Google */
+  margin: 0 auto;
+}
+.login-loading{display:none;align-items:center;justify-content:center;gap:8px;color:#a0aec0;font-size:13px;margin-top:20px}
 .login-loading.show{display:flex}
 .spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Navbar & Main */
+/* Layout Principal */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(180deg,rgba(13,19,33,.98),rgba(13,19,33,.85));backdrop-filter:blur(30px);border-bottom:1px solid var(--border);z-index:60;flex-shrink:0}
 .nav-left{display:flex;align-items:center;gap:10px}
@@ -75,15 +114,6 @@ svg{display:block}
 .nav-avatar{width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;overflow:hidden;cursor:pointer}
 .nav-avatar img{width:100%;height:100%;object-fit:cover}
 
-/* Descargas en Lote */
-.batch-bar{display:none;align-items:center;justify-content:space-between;background:var(--accent);padding:10px 16px;border-radius:12px;margin-bottom:16px}
-.batch-bar.active{display:flex}
-.batch-btn{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.2)}
-.track-checkbox{display:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--border);margin-right:10px;align-items:center;justify-content:center;flex-shrink:0}
-.track-checkbox.visible{display:flex}
-.track-checkbox.checked{background:var(--accent);border-color:var(--accent)}
-.track-checkbox.checked::after{content:'';width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
-
 /* Historias */
 .stories-bar{display:flex;gap:10px;padding:12px 16px;overflow-x:auto;border-bottom:1px solid var(--border);flex-shrink:0;scrollbar-width:none}
 .stories-bar::-webkit-scrollbar{height:0}
@@ -93,13 +123,23 @@ svg{display:block}
 .story-ring.add{background:transparent;border:2px dashed var(--border);padding:0;display:flex;align-items:center;justify-content:center}
 .story-ring-inner{width:100%;height:100%;border-radius:50%;background:var(--bg-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;overflow:hidden;border:3px solid var(--bg-primary)}
 .story-ring-inner img{width:100%;height:100%;object-fit:cover}
+.story-name{font-size:10px;color:var(--text-secondary);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 16px 210px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .content::-webkit-scrollbar{width:0}
 
+/* Descargas en Lote */
+.batch-bar{display:none;align-items:center;justify-content:space-between;background:var(--accent);padding:10px 16px;border-radius:12px;margin-bottom:16px}
+.batch-bar.active{display:flex}
+.batch-btn{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+.track-checkbox{display:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--border);margin-right:10px;align-items:center;justify-content:center;flex-shrink:0}
+.track-checkbox.visible{display:flex}
+.track-checkbox.checked{background:var(--accent);border-color:var(--accent)}
+.track-checkbox.checked::after{content:'';width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
+
 /* Buscador Híbrido */
 .search-wrap{position:relative;margin-bottom:16px}
-.search-input{width:100%;height:46px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;padding:0 46px 0 18px;font-size:13px}
+.search-input{width:100%;height:46px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;padding:0 46px 0 18px;font-size:13px;color:var(--text-primary)}
 .search-btn{position:absolute;right:5px;top:5px;width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center}
 .search-results{position:absolute;top:52px;left:0;right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;max-height:320px;overflow-y:auto;z-index:50;display:none;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .search-results.show{display:block}
@@ -117,7 +157,7 @@ svg{display:block}
 .profile-name{font-size:15px;font-weight:700;margin-bottom:2px}
 .profile-bio{font-size:13px;line-height:1.4;white-space:pre-wrap}
 .profile-actions-row{display:flex;gap:8px}
-.btn-insta{flex:1;padding:8px;border-radius:8px;background:var(--bg-card-hover);font-size:13px;font-weight:600;text-align:center;border:1px solid var(--border)}
+.btn-insta{flex:1;padding:8px;border-radius:8px;background:var(--bg-card-hover);font-size:13px;font-weight:600;text-align:center;border:1px solid var(--border);color:var(--text-primary)}
 .btn-insta.primary{background:var(--accent);color:#fff;border:none}
 .profile-grid-tabs{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:2px}
 .grid-tab{flex:1;text-align:center;padding:12px;color:var(--text-muted);cursor:pointer;position:relative}
@@ -136,21 +176,19 @@ svg{display:block}
 .profile-option-icon svg{width:14px;height:14px;color:var(--accent-light)}
 .profile-logout{width:100%;padding:12px;background:rgba(239,68,68,.08);border:1px solid var(--danger);border-radius:12px;color:var(--danger);font-weight:700;font-size:13px;margin-top:10px;cursor:pointer}
 
-/* Compartir Playlists */
+/* Playlists y Canciones */
 .playlist-share-card{background:linear-gradient(135deg,rgba(107,70,255,.15),rgba(51,133,230,.15));border:1px solid rgba(107,70,255,.3);border-radius:16px;padding:20px;margin-bottom:20px;text-align:center}
 .playlist-code-display{font-size:28px;font-weight:800;letter-spacing:4px;color:var(--accent-light);margin:10px 0}
-.playlist-input{width:100%;height:44px;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:0 14px;font-size:14px;text-transform:uppercase;text-align:center;letter-spacing:2px}
+.playlist-input{width:100%;height:44px;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:0 14px;font-size:14px;text-transform:uppercase;text-align:center;letter-spacing:2px;color:var(--text-primary)}
 
-/* Listas y Tarjetas */
-.track-list{display:flex;flex-direction:column;gap:4px}
-.track-list-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer}
+.track-list{display:flex;flex-direction:column;gap:2px}
+.track-list-item{display:flex;align-items:center;gap:10px;padding:7px 5px;border-radius:7px;cursor:pointer;transition:background .15s}
 .track-list-item:hover{background:var(--bg-card-hover)}
-.track-list-cover{width:48px;height:48px;border-radius:6px;overflow:hidden;flex-shrink:0}
+.track-list-cover{width:40px;height:40px;border-radius:7px;overflow:hidden;flex-shrink:0}
 .track-list-cover img{width:100%;height:100%;object-fit:cover}
 .track-list-info{flex:1;min-width:0}
-.track-list-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.track-list-artist{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-profile-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}
+.track-list-title{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track-list-artist{font-size:10px;color:var(--text-secondary);margin-top:2px}
 
 /* Reproductores */
 .mini-player{position:fixed;left:10px;right:10px;bottom:calc(var(--nav-height) + 10px);height:64px;background:rgba(20,28,46,.95);backdrop-filter:blur(30px);border:1px solid var(--border-light);border-radius:14px;display:flex;align-items:center;gap:10px;padding:7px;z-index:95;cursor:pointer}
@@ -190,33 +228,33 @@ svg{display:block}
 .layer-lyrics.active{display:flex}
 .lyrics-line{font-size:14px;color:var(--text-muted);margin:10px 0;text-align:center;line-height:1.5;transition:all .3s ease;padding:6px 12px;border-radius:8px}
 .lyrics-line.active{color:var(--text-primary);font-weight:700;font-size:17px;background:rgba(51,133,230,0.1);transform:scale(1.05)}
-.full-info{text-align:center;margin:10px 0}
-.full-title{font-size:22px;font-weight:800}
-.full-artist{font-size:13px;color:var(--text-secondary)}
-.progress-bar{width:100%;height:6px;background:rgba(255,255,255,.08);border-radius:3px;cursor:pointer;margin-bottom:6px}
-.progress-bar-fill{height:100%;background:var(--gradient-primary);border-radius:3px;width:0%}
-.progress-times{display:flex;justify-content:space-between;font-size:11px;color:var(--text-secondary)}
+.full-info{text-align:center;margin:10px 0 6px}
+.full-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.full-artist{font-size:12px;color:var(--text-secondary)}
+.progress-bar{width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer;margin-bottom:6px}
+.progress-bar-fill{height:100%;background:var(--gradient-primary);border-radius:2px;width:0%}
+.progress-times{display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary)}
 .full-controls{display:flex;align-items:center;justify-content:space-around;margin-top:10px}
-.full-btn{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.full-btn.play{width:64px;height:64px;background:var(--gradient-primary)}
+.full-btn{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.full-btn.play{width:58px;height:58px;background:var(--gradient-primary);box-shadow:0 8px 24px var(--accent-glow)}
+.full-btn svg{width:20px;height:20px}
 
-/* Modals */
+/* Modales Compartidos */
 .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.active{display:flex}
 .modal-overlay.center{align-items:center;padding:20px}
 .modal{width:100%;max-width:480px;background:var(--bg-card);border-radius:20px 20px 0 0;overflow:hidden;animation:slideUp .3s var(--ease-out-expo);display:flex;flex-direction:column;max-height:90vh}
 .modal-overlay.center .modal{border-radius:20px}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border)}
 .modal-title{font-size:16px;font-weight:700}
 .modal-close{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08)}
 .modal-body{padding:16px;overflow-y:auto}
 .modal-footer{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:6px}
 .setup-input{width:100%;height:48px;background:var(--bg-primary);border:1px solid var(--border);border-radius:12px;padding:0 14px;font-size:14px;color:var(--text-primary);margin-bottom:12px}
-.modal-btn{flex:1;height:48px;border-radius:12px;font-weight:700;font-size:14px;background:var(--gradient-primary);color:#fff;display:flex;align-items:center;justify-content:center}
-.modal-btn.secondary{background:var(--bg-card-hover)}
 .form-label{font-size:10px;color:var(--text-secondary);margin-bottom:4px;text-transform:uppercase;display:block}
 
-/* Visor de Historias (Incluye Comentarios, Me Gusta y Eliminar) */
+/* Visor de Historias (Stories 24h) */
 #story-viewer{position:fixed;inset:0;background:#000;z-index:600;display:none;align-items:center;justify-content:center}
 #story-viewer.active{display:flex}
 .story-viewer-inner{width:100%;max-width:440px;height:100%;position:relative;background:#000}
@@ -232,45 +270,47 @@ svg{display:block}
 .story-action-btn{flex:1;height:38px;border-radius:19px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:600;color:#fff}
 .story-comments-box{position:absolute;bottom:60px;left:14px;right:14px;z-index:11;background:rgba(10,15,26,.95);border:1px solid var(--border-light);border-radius:12px;padding:10px;display:none;max-height:40%;overflow-y:auto}
 
-/* Consola Overlord Completa */
+/* Consola Overlord Original */
 #layer-overlord{flex-direction:column;background:#000;z-index:900}
 .ov-header{padding:14px 18px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;font-size:11px}
 .ov-body{flex:1;overflow-y:auto;padding:16px 18px 90px;font-size:12px;line-height:1.7;color:#8899B4}
 .ov-input-wrap{position:fixed;bottom:0;left:0;right:0;padding:12px 18px;background:#000;border-top:1px solid #1a1a1a;display:flex;align-items:center;gap:8px}
-.ov-panic{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid var(--danger);display:flex;align-items:center;justify-content:center;z-index:50}
+.ov-panic{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid var(--danger);display:flex;align-items:center;justify-content:center;z-index:50;flex:none}
 
 .notifications-panel{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:360px;background:var(--bg-card);z-index:700;transform:translateX(100%);transition:transform .25s;border-left:1px solid var(--border);display:flex;flex-direction:column}
 .notifications-panel.active{transform:translateX(0)}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-height);background:rgba(13,19,33,.98);backdrop-filter:blur(30px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90}
 .bottom-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-muted);cursor:pointer;position:relative}
 .bottom-nav-item.active{color:var(--text-primary)}
+.bottom-nav-item svg{width:22px;height:22px;flex:none}
+
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 20px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:1000000;transition:transform .3s;text-align:center;color:#fff}
 .toast.show{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- 1. Muro de Permisos Obligatorios -->
+<!-- 1. Muro de Permisos (Bloqueo Total Inicial) -->
 <div id="gate-screen">
   <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
   <h2 style="font-size:24px;font-weight:800;margin-bottom:10px">Permisos Requeridos</h2>
-  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:30px;max-width:300px;line-height:1.5">Music Horizon necesita acceso a tu <b>cámara</b> (para subir historias), <b>almacenamiento</b> (para descargar canciones y fotos) y <b>notificaciones</b> para funcionar correctamente. Sin esto, no puedes acceder.</p>
-  <div id="gate-error" style="color:var(--danger);font-size:12px;margin-bottom:15px;display:none;font-weight:700">Debes otorgar los permisos obligatorios desde los ajustes de tu navegador para continuar.</div>
-  <button class="modal-btn" id="btn-gate-accept" style="max-width:300px">Conceder y Continuar</button>
+  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:30px;max-width:300px;line-height:1.5">Music Horizon necesita acceso a tu <b>cámara</b> (para subir historias), <b>almacenamiento</b> (para descargar canciones) y <b>notificaciones</b> para funcionar correctamente. Sin esto, no puedes acceder.</p>
+  <div id="gate-error" style="color:var(--danger);font-size:12px;margin-bottom:15px;display:none;font-weight:700">Debes otorgar los permisos desde los ajustes del navegador para continuar.</div>
+  <button class="modal-btn" id="btn-gate-accept" style="max-width:300px;margin:0 auto">Conceder y Continuar</button>
 </div>
 
-<!-- 2. Update Banner (Aviso de Actualización) -->
+<!-- 2. Update Banner -->
 <div class="update-banner-wrap" id="update-banner-wrap">
   <div class="update-banner-content">
     <div class="update-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
     <div class="update-title">Actualización Importante</div>
     <div class="update-version">V1.5.0.PRO</div>
-    <div class="update-desc">Hemos añadido <b>descargas en lote</b>, <b>reproducción nativa en segundo plano</b> (pantalla apagada), y <b>perfiles de red social</b>. Algunas funciones pueden presentar inestabilidad mientras se configuran los nuevos servidores globales. Disfruta la nueva experiencia.</div>
+    <div class="update-desc">Hemos añadido <b>descargas en lote</b>, <b>reproducción nativa en 2do plano</b> (pantalla apagada), y <b>perfiles de red social</b>. Disfruta la nueva experiencia.</div>
     <button class="modal-btn" id="btn-close-update">Entendido, disfrutar</button>
   </div>
 </div>
 
-<!-- 3. Pantalla de Login -->
+<!-- 3. Pantalla de Login Auth -->
 <div id="auth-login-screen">
   <div class="login-grid-bg"><div class="g1"></div><div class="g2"></div><div class="g3"></div><div class="g4"></div><div class="g5"></div><div class="g6"></div></div>
   <div class="login-content-wrap">
@@ -285,13 +325,13 @@ svg{display:block}
   </div>
 </div>
 
-<!-- Modales de Sistema (Setup, Descargas, Playlists, Historias, Cupones) -->
+<!-- Modales Varios -->
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Tu Perfil Público</h3></div>
     <div class="modal-body">
       <div style="text-align:center;margin-bottom:14px">
-        <div id="avatar-upload" style="width:90px;height:90px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;position:relative;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer">
+        <div id="avatar-upload" style="width:90px;height:90px;border-radius:50%;margin:0 auto 8px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;position:relative;overflow:hidden;border:3px solid rgba(255,255,255,.1);cursor:pointer;flex:none">
           <span id="avatar-initial">?</span><img id="avatar-preview" style="display:none;width:100%;height:100%;object-fit:cover" alt="" />
         </div>
         <div style="font-size:10px;color:var(--text-muted)">Toca para subir foto</div>
@@ -315,7 +355,7 @@ svg{display:block}
         <input type="text" class="setup-input" id="new-playlist-name" placeholder="Nombre de la playlist" style="margin-top:10px"/>
         <button class="modal-btn" id="btn-create-playlist" style="height:40px;font-size:12px">Generar Código Único</button>
         <div id="generated-code-box" style="display:none;margin-top:15px">
-            <div style="font-size:11px">Código Único (No se puede repetir):</div>
+            <div style="font-size:11px">Código Único (No se repite):</div>
             <div class="playlist-code-display" id="generated-code">ABC12345</div>
         </div>
       </div>
@@ -332,13 +372,13 @@ svg{display:block}
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Descarga directa</h3><button class="modal-close" onclick="document.getElementById('download-modal').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">El archivo se guardará en la memoria interna usando el gestor nativo de tu celular.</p>
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">El archivo se guardará en la memoria interna usando el gestor nativo de tu celular para evitar cortes.</p>
       <label class="form-label">Formato</label>
       <select class="setup-input" id="dl-format"><option value="mp3">Audio (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
     </div>
     <div class="modal-footer">
         <button class="modal-btn secondary" onclick="document.getElementById('download-modal').classList.remove('active')">Cancelar</button>
-        <button class="modal-btn" id="dl-confirm">Descargar</button>
+        <button class="modal-btn" id="dl-confirm">Descargar Archivo</button>
     </div>
   </div>
 </div>
@@ -352,7 +392,6 @@ svg{display:block}
       <div id="coupon-result" style="font-size:12px;margin-bottom:10px"></div>
       <button class="modal-btn" id="coupon-redeem">Verificar y Canjear</button>
       
-      <!-- Panel de Admin incrustado -->
       <div id="admin-coupon-section" style="display:none;margin-top:20px;border-top:1px dashed var(--border);padding-top:15px">
         <div style="font-size:11px;font-weight:700;color:var(--accent-purple);margin-bottom:10px">PANEL ADMIN: CREAR CÓDIGO</div>
         <select class="setup-input" id="admin-coupon-type"><option value="account">Acceso directo</option></select>
@@ -398,7 +437,6 @@ svg{display:block}
   
   <div class="stories-bar" id="stories-bar"></div>
   
-  <!-- Barra de Selección Múltiple (Lote) -->
   <div class="batch-bar" id="batch-bar">
       <div class="batch-title" id="batch-count" style="font-size:13px;font-weight:700;color:#fff">0 seleccionadas</div>
       <div style="display:flex;gap:8px">
@@ -427,12 +465,12 @@ svg{display:block}
   </nav>
 </section>
 
-<!-- Full Player Nativo (Fusión de Tabs: Musica, Letras en Vivo, Video) -->
+<!-- Full Player Nativo 2do Plano -->
 <section class="full-player" id="full-player">
   <div class="full-inner">
     <div class="full-top">
       <button class="full-close" onclick="document.getElementById('full-player').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div style="font-size:11px;font-weight:700;letter-spacing:1px">REPRODUCIENDO EN SEGUNDO PLANO</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px">REPRODUCIENDO EN 2DO PLANO</div>
       <button class="full-close" id="full-share-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
     </div>
     
@@ -450,7 +488,7 @@ svg{display:block}
             <div class="video-holder"><div id="yt-video-container"></div></div>
         </div>
         <div class="media-layer layer-lyrics" id="layer-lyrics">
-            <div id="lyrics-content"><div style="text-align:center;color:var(--text-secondary);font-size:12px">Buscando letras en LRCLIB...</div></div>
+            <div id="lyrics-content"><div style="text-align:center;color:var(--text-secondary);font-size:12px">Buscando letras en servidores globales...</div></div>
         </div>
     </div>
 
@@ -467,7 +505,7 @@ svg{display:block}
   </div>
 </section>
 
-<!-- Visor de Historias y Posts Completo -->
+<!-- Visor de Historias Completo -->
 <div id="story-viewer">
   <div class="story-viewer-inner">
     <div class="story-progress-bar" id="story-progress-container"></div>
@@ -489,7 +527,7 @@ svg{display:block}
       <div id="story-comments-list" style="color:#fff;font-size:11px"></div>
       <div style="display:flex;gap:6px;margin-top:8px">
         <input type="text" class="setup-input" id="story-comment-input" placeholder="Escribe un comentario..." style="height:34px;margin:0;flex:1"/>
-        <button class="modal-btn" id="story-comment-send" style="width:34px;height:34px;border-radius:50%;padding:0"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        <button class="modal-btn" id="story-comment-send" style="width:34px;height:34px;border-radius:50%;padding:0;min-height:34px"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:14px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
       </div>
     </div>
     
@@ -511,10 +549,10 @@ svg{display:block}
   <div class="ov-input-wrap"><span style="color:#10B981">root@horizon:~#</span><input type="text" id="ov-input" style="flex:1;background:transparent;border:none;color:#fff;outline:none" autocomplete="off" /></div>
 </section>
 
-<!-- Panel de Notificaciones con Firebase Restaurado -->
+<!-- Panel de Notificaciones -->
 <div class="notifications-panel" id="notifications-panel">
   <div class="modal-header"><h3 class="modal-title">Notificaciones</h3><button class="modal-close" onclick="document.getElementById('notifications-panel').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-  <div style="padding:16px;font-size:12px;color:var(--text-secondary)" id="notifications-list">Cargando alertas del servidor...</div>
+  <div style="padding:16px;font-size:12px;color:var(--text-secondary)" id="notifications-list">Cargando alertas de Firebase...</div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -635,7 +673,6 @@ window.playTrack = function(track) {
   if(!track) return;
   state.currentTrack = track;
   
-  // Streaming directo desde Render Proxy (Habilita el 2do plano sin que YT lo corte)
   globalAudio.src = `${API_BASE}/api/stream/${track.youtubeId}`;
   globalAudio.play().catch(e => toast('Cargando en segundo plano...','info'));
   
@@ -655,7 +692,6 @@ window.playTrack = function(track) {
     navigator.mediaSession.setActionHandler('pause', () => globalAudio.pause());
   }
   
-  // Si estamos en la pestaña video
   const activeTab = document.querySelector('.full-tab.active').dataset.tab;
   if(activeTab === 'video') renderCleanVideoPlayer(track);
   if(activeTab === 'lyrics') loadLyrics(track);
@@ -811,7 +847,6 @@ async function onAuthSuccess(user) {
     if(state.user.avatar) document.getElementById('nav-avatar').innerHTML = `<img src="${state.user.avatar}">`;
     else document.getElementById('nav-avatar').textContent = state.user.username[0].toUpperCase();
     
-    // Cargar Historias reales de DB
     if(db) state.stories = await fs.getStories();
     if(db && state.firebaseUser) {
         state.notifications = await fs.getNotifications(state.user.username);
@@ -850,14 +885,14 @@ function renderHome(c) {
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <h2 style="font-size:18px;font-weight:800">Tus Favoritos</h2>
-            <button style="font-size:11px;color:var(--accent-light);background:rgba(51,133,230,.1);padding:4px 10px;border-radius:12px;font-weight:700" onclick="toggleBatchMode(!state.batchMode)">Descargar Lote</button>
+            <button style="font-size:11px;color:var(--accent-light);background:rgba(51,133,230,.1);padding:4px 10px;border-radius:12px;font-weight:700;border:none;cursor:pointer" onclick="toggleBatchMode(!state.batchMode)">Descargar Lote</button>
         </div>
         <div class="track-list" id="fav-list"></div>
     `;
     renderStoriesBar();
     renderTrackList(document.getElementById('fav-list'), [
-        {id:101, title:'Despacito', artist:'Luis Fonsi', cover:'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg', youtubeId:'kJQP7kiw5Fk'},
-        {id:102, title:'Shape of You', artist:'Ed Sheeran', cover:'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg', youtubeId:'JGwWNGJdvx8'}
+        {id:'kJQP7kiw5Fk', title:'Despacito', artist:'Luis Fonsi', cover:'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg', youtubeId:'kJQP7kiw5Fk'},
+        {id:'JGwWNGJdvx8', title:'Shape of You', artist:'Ed Sheeran', cover:'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg', youtubeId:'JGwWNGJdvx8'}
     ]);
     
     document.getElementById('search-input').addEventListener('keydown', (e) => {
@@ -917,7 +952,7 @@ function renderExplore(c) {
 function renderFriends(c) {
     c.innerHTML = `
         <h2 style="font-size:18px;font-weight:800;margin-bottom:15px">Comunidad</h2>
-        <input type="text" class="search-input" id="friend-search-input" placeholder="Buscar usuarios por @username..." style="margin-bottom:15px"/>
+        <input type="text" class="search-input" id="friend-search-input" placeholder="Buscar usuarios por @username..." style="margin-bottom:15px;width:100%"/>
         <div id="friend-search-results"></div>
         <h2 style="font-size:15px;font-weight:800;margin-top:20px">Tus Amigos</h2>
         <div id="friends-list" style="font-size:12px;color:var(--text-secondary)">Usa el buscador para conectar con perfiles reales de Firebase.</div>
@@ -993,7 +1028,6 @@ function renderProfile(c, u) {
         <button class="profile-logout" onclick="location.reload()">Cerrar sesión</button>
     `;
     
-    // Si es administrador, mostrar opciones de admin en el modal de cupones
     if(isAdmin) {
         document.getElementById('admin-coupon-section').style.display = 'block';
     }
@@ -1054,7 +1088,6 @@ window.openStory = function(img, title, user, id) {
     document.getElementById('story-viewer-name').textContent = user;
     document.getElementById('story-viewer-avatar').textContent = user[0].toUpperCase();
     
-    // Verificar Likes y Propiedad
     const s = state.currentViewingStory;
     const likeBtn = document.getElementById('story-like-btn');
     const delBtn = document.getElementById('story-delete-btn');
@@ -1075,7 +1108,6 @@ window.openStory = function(img, title, user, id) {
             };
         } else delBtn.style.display = 'none';
         
-        // Render Comments
         const cList = document.getElementById('story-comments-list');
         cList.innerHTML = (s.comments && s.comments.length) ? s.comments.map(c => `<div><b>@${c.user}</b>: ${c.text}</div>`).join('') : 'Se el primero en comentar';
     }
@@ -1101,7 +1133,7 @@ document.getElementById('story-like-btn').addEventListener('click', async () => 
     }
     else { s.likes.splice(i,1); }
     if(db) await fs.updateStory(s);
-    openStory(s.cover, s.track.title, s.username, s.id); // Refresh
+    openStory(s.cover, s.track.title, s.username, s.id);
 });
 
 document.getElementById('story-comment-send').addEventListener('click', async () => {
@@ -1111,7 +1143,7 @@ document.getElementById('story-comment-send').addEventListener('click', async ()
     s.comments.push({user: state.user.username, text: txt});
     if(db) await fs.updateStory(s);
     document.getElementById('story-comment-input').value = '';
-    openStory(s.cover, s.track.title, s.username, s.id); // Refresh
+    openStory(s.cover, s.track.title, s.username, s.id);
     toast("Comentario enviado", "success");
 });
 
@@ -1122,9 +1154,8 @@ window.closeStoryViewer = function() {
     state.currentViewingStory = null;
 }
 
-// Navegación Izquierda/Derecha en historias
-document.getElementById('story-prev').addEventListener('click', () => { p=0; }); // Reinicia progreso (simulado)
-document.getElementById('story-next').addEventListener('click', closeStoryViewer); // Pasa a la siguiente o cierra
+document.getElementById('story-prev').addEventListener('click', () => { document.getElementById('sp-fill').style.width = '0%'; });
+document.getElementById('story-next').addEventListener('click', closeStoryViewer);
 
 // ==========================================
 // 7. DESCARGA DIRECTA AL CELULAR Y LOTE
@@ -1138,7 +1169,6 @@ document.getElementById('dl-confirm').addEventListener('click', () => {
     if(!t) return;
     document.getElementById('download-modal').classList.remove('active');
     toast(`Iniciando descarga de ${t.title}... Revisa tus notificaciones.`);
-    // Descarga nativa saltando CORS y memoria RAM de Javascript
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = `${API_BASE}/api/stream/${t.youtubeId}`;
@@ -1196,7 +1226,6 @@ document.getElementById('btn-download-batch').addEventListener('click', async ()
     const tracksArray = Array.from(state.batchSelection);
     toggleBatchMode(false);
 
-    // Ciclo for con retardo de 2s para no colapsar la RAM del celular ni activar bloqueo de popups
     for(let i=0; i<tracksArray.length; i++) {
         const t = tracksArray[i];
         toast(`Descargando ${i+1}/${tracksArray.length}: ${t.title}`);
@@ -1250,7 +1279,7 @@ document.getElementById('ov-input').addEventListener('keydown', (e) => {
         const b = document.getElementById('ov-body');
         b.innerHTML += `<br><span style="color:#10B981">root@horizon:~#</span> <span style="color:#fff">${cmd}</span>`;
         
-        if(cmd === 'clear') { b.innerHTML = "ADMIN CONSOLE (OVERLORD V1.5)<br>> Escribe 'help' para comandos."; return; }
+        if(cmd === 'clear') { b.innerHTML = "ADMIN CONSOLE (OVERLORD V1.5)<br>Administrador: administradores830@gmail.com<br>> Escribe 'help' para comandos."; return; }
         if(cmd === 'exit') { document.getElementById('layer-overlord').classList.remove('active'); return; }
         
         if(COMMANDS[cmd]) b.innerHTML += `<br><span style="color:var(--text-secondary)">${COMMANDS[cmd]()}</span>`;
@@ -1267,7 +1296,6 @@ setInterval(() => {
     }
 }, 1000);
 
-// Cupones Admin
 document.getElementById('admin-create-coupon').addEventListener('click', async () => {
     const service = document.getElementById('admin-coupon-service').value.trim();
     if(!service) { toast("Falta servicio", "error"); return; }
