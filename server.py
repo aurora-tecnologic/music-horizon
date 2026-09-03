@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 def search_youtube_innertube(query):
-    """Buscador Antibloqueos de Alta Velocidad"""
+    """Buscador Antibloqueos de Alta Velocidad (Ya comprobado que funciona)"""
     url = "https://www.youtube.com/youtubei/v1/search"
     headers = {
         "Content-Type": "application/json",
@@ -109,59 +109,76 @@ def search_tracks():
 def stream_audio(video_id):
     """
     MODO TÚNEL BLINDADO:
-    Obtiene el link directo y lo retransmite en fragmentos hacia el celular.
-    Evita que Netlify/Navegador bloqueen la descarga por CORS.
+    1. Usa APIs globales especializadas en MP3 para evitar el bloqueo de Render.
+    2. Transmite el archivo al celular en fragmentos para engañar la seguridad CORS del navegador.
     """
     stream_url = None
 
-    # 1. Múltiples Nodos Piped Oficiales
-    piped_nodes = [
-        "https://pipedapi.kavin.rocks",
-        "https://pipedapi.tokhmi.xyz",
-        "https://api.piped.projectsegfau.lt",
-        "https://pipedapi.smnz.de",
-        "https://pipedapi.adminforge.de"
-    ]
-    
-    for node in piped_nodes:
-        try:
-            res = requests.get(f"{node}/streams/{video_id}", timeout=4)
-            if res.status_code == 200:
-                audio_streams = res.json().get('audioStreams', [])
-                if audio_streams:
-                    best = sorted(audio_streams, key=lambda x: int(x.get('bitrate', 0)), reverse=True)
-                    stream_url = best[0].get('url')
-                    if stream_url:
-                        break
-        except Exception:
-            continue
-
-    # 2. Cobalt API Actualizada (Respaldo)
-    if not stream_url:
-        try:
-            headers = {"Accept": "application/json", "Content-Type": "application/json"}
-            payload = {"url": f"https://www.youtube.com/watch?v={video_id}", "isAudioOnly": True}
-            res = requests.post("https://api.cobalt.tools/", json=payload, headers=headers, timeout=5)
-            if res.status_code == 200:
-                stream_url = res.json().get("url")
-        except Exception:
-            pass
-
-    if not stream_url:
-        return jsonify({'error': 'Servidores globales ocupados. Intenta en unos segundos.'}), 500
-
-    # 3. RETRANSMISIÓN POR FRAGMENTOS (Stream Proxy)
+    # INTENTO 1: API Directa de MP3 (Ultra estable)
     try:
-        req_headers = {"User-Agent": "Mozilla/5.0"}
+        res = requests.get(f"https://api.ryzendesu.vip/api/downloader/ytmp3?url=https://youtu.be/{video_id}", timeout=6)
+        if res.status_code == 200:
+            data = res.json()
+            if data.get('success') and data.get('url'):
+                stream_url = data.get('url')
+    except Exception as e:
+        print(f"Ryzendesu falló: {e}")
+
+    # INTENTO 2: Nodos Piped Oficiales
+    if not stream_url:
+        piped_nodes = [
+            "https://pipedapi.kavin.rocks",
+            "https://pipedapi.tokhmi.xyz",
+            "https://api.piped.projectsegfau.lt"
+        ]
+        for node in piped_nodes:
+            try:
+                res = requests.get(f"{node}/streams/{video_id}", timeout=5)
+                if res.status_code == 200:
+                    audio_streams = res.json().get('audioStreams', [])
+                    if audio_streams:
+                        best = sorted(audio_streams, key=lambda x: int(x.get('bitrate', 0)), reverse=True)
+                        stream_url = best[0].get('url')
+                        if stream_url: break
+            except Exception:
+                continue
+
+    # INTENTO 3: YT-DLP Seguro (Cliente iOS para evadir bot block)
+    if not stream_url:
+        try:
+            import yt_dlp
+            ydl_opts = {
+                'format': 'bestaudio/best',
+                'quiet': True,
+                'skip_download': True,
+                'extractor_args': {'youtube': {'player_client': ['ios']}}
+            }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
+                stream_url = info.get('url')
+        except Exception as e:
+            print(f"yt-dlp falló: {e}")
+
+    # Si definitivamente fallan las 3 capas:
+    if not stream_url:
+        return jsonify({'error': 'Todos los servidores están saturados, intenta en 1 minuto.'}), 500
+
+    # EL TRUCO DE LA TRANSMISIÓN EN FRAGMENTOS
+    try:
+        req_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
         r = requests.get(stream_url, stream=True, headers=req_headers, timeout=10)
         
+        # Si YouTube devuelve 403, significa que el enlace caducó
+        if r.status_code != 200:
+            return jsonify({'error': f'Acceso denegado al archivo (Error {r.status_code})'}), 500
+            
         def generate():
-            # Transmitimos en pedazos de 512KB para mantener viva la conexión
-            for chunk in r.iter_content(chunk_size=1024 * 512):
+            # Pasamos la canción al celular en bloques de 1MB para mantener la conexión viva
+            for chunk in r.iter_content(chunk_size=1024 * 1024):
                 if chunk:
                     yield chunk
 
-        # Construir la respuesta con los encabezados necesarios para engañar al CORS
+        # Al usar Response, el archivo adquiere permisos libres (CORS *) y tu celular lo acepta de inmediato
         response = Response(
             stream_with_context(generate()), 
             content_type=r.headers.get('content-type', 'audio/mpeg')
@@ -172,7 +189,8 @@ def stream_audio(video_id):
 
     except Exception as e:
         print(f"Error transfiriendo al celular: {e}")
-        return jsonify({'error': 'Fallo al procesar el archivo'}), 500
+        return jsonify({'error': 'Fallo al procesar el archivo en el servidor proxy.'}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
