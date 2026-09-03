@@ -472,17 +472,18 @@ select.setup-input{appearance:none;background:var(--bg-primary)}
   </div>
 </div>
 
+<!-- MODAL DESCARGA INTERNA REAL (BLOB) -->
 <div class="modal-overlay center" id="download-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Descarga al dispositivo</h3><button class="modal-close" id="dl-close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon solicitará permisos de almacenamiento para guardar el archivo en la memoria física de tu teléfono.</p>
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Music Horizon guardará el archivo físicamente en la memoria de tu dispositivo.</p>
       <label class="form-label">Formato</label>
       <select class="setup-input" id="dl-format"><option value="mp3">Audio optimizado (MP3)</option><option value="mp4">Video HD (MP4)</option></select>
       <label class="form-label">Calidad</label>
       <select class="setup-input" id="dl-quality"><option value="high">Alta fidelidad (HD)</option><option value="standard">Estándar (Ahorro de espacio)</option></select>
     </div>
-    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar</button></div>
+    <div class="modal-footer"><button class="modal-btn secondary" id="dl-cancel">Cancelar</button><button class="modal-btn primary" id="dl-confirm">Descargar archivo</button></div>
   </div>
 </div>
 
@@ -1161,10 +1162,10 @@ document.getElementById('nav-search-btn').addEventListener('click',()=>{ if(stat
 document.getElementById('nav-notif-btn').addEventListener('click',()=>{ renderNotifications(); markAllNotifsRead(); document.getElementById('notifications-panel').classList.add('active'); });
 document.getElementById('notif-panel-close').addEventListener('click',()=>document.getElementById('notifications-panel').classList.remove('active'));
 
-async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Anadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
+async function toggleFavorite(track){ const i=state.favorites.findIndex(f=>f.id===track.id); if(i===-1){ state.favorites.push({...track,addedAt:Date.now()}); toast('Añadido a favoritos','success'); } else { state.favorites.splice(i,1); toast('Eliminado de favoritos','info'); } if(state.firebaseUser) await fs.saveFavorites(state.firebaseUser.uid,state.favorites); refreshCurrentView(); }
 
 // ============================================================
-// BUSCADOR DEFINITIVO: INSTANCIAS PÚBLICAS -> RENDER -> LOCAL
+// BUSCADOR DIRECTO A RENDER (SIN NODOS EXTERNOS LENTOS)
 // ============================================================
 async function performSearch(q, resultsEl, playFirst = false) {
   if (!q || typeof q !== 'string') return;
@@ -1175,77 +1176,29 @@ async function performSearch(q, resultsEl, playFirst = false) {
   }
 
   resultsEl.classList.add('show');
-  resultsEl.innerHTML = '<div class="search-loading">Buscando canciones...</div>';
+  resultsEl.innerHTML = '<div class="search-loading">Buscando canción...</div>';
   
   let results = [];
   const queryLower = cleanQuery.toLowerCase();
 
-  // Intento 1: Nodos Públicos Rápidos
-  const instances = [
-    { url: 'https://pipedapi.smnz.de', type: 'piped' },
-    { url: 'https://pipedapi.tokhmi.xyz', type: 'piped' },
-    { url: 'https://inv.tux.pizza/api/v1', type: 'invidious' },
-    { url: 'https://invidious.weblibre.org/api/v1', type: 'invidious' }
-  ];
-  
-  for (let inst of instances) {
-    try {
-      let res, data;
-      if (inst.type === 'piped') {
-        res = await fetch(`${inst.url}/search?q=${encodeURIComponent(cleanQuery)}&filter=videos`);
-        if (res.ok) {
-          data = await res.json();
-          if (data.items && data.items.length > 0) {
-            results = data.items.slice(0, 15).map(item => ({
-              id: item.url.split('?v=')[1],
-              youtubeId: item.url.split('?v=')[1],
-              title: item.title,
-              artist: item.uploaderName || 'Desconocido',
-              cover: item.thumbnail
-            }));
-            break;
-          }
-        }
-      } else {
-        res = await fetch(`${inst.url}/search?q=${encodeURIComponent(cleanQuery)}&type=video`);
-        if (res.ok) {
-          data = await res.json();
-          if (data && data.length > 0) {
-            results = data.slice(0, 15).map(item => ({
-              id: item.videoId,
-              youtubeId: item.videoId,
-              title: item.title,
-              artist: item.author || 'Desconocido',
-              cover: `https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`
-            }));
-            break;
-          }
-        }
-      }
-    } catch(e) { continue; }
-  }
+  // Usar directamente el servidor Render actualizado
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch(`${API_BASE}/api/search`, {
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: cleanQuery }), 
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.results && data.results.length > 0) results = data.results;
+    }
+  } catch(e) { console.warn("Backend falló", e); }
 
-  // Intento 2: Backend de Render
-  if (results.length === 0) {
-    resultsEl.innerHTML = '<div class="search-loading">Conectando con el servidor...</div>';
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-      const res = await fetch(`${API_BASE}/api/search`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: cleanQuery }), signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.results && data.results.length > 0) {
-            results = data.results.map(r => ({...r, cover: r.cover.replace('maxresdefault.jpg', 'hqdefault.jpg')}));
-        }
-      }
-    } catch(e) { console.warn("Backend falló", e); }
-  }
-
-  // Intento 3: Local
+  // Respaldo Local
   if (results.length === 0) {
     const localMatches = TRACKS.filter(t => !t.isWelcome && (t.title.toLowerCase().includes(queryLower) || t.artist.toLowerCase().includes(queryLower)));
     results = localMatches.map(t => ({ id: t.id, youtubeId: t.youtubeId, title: t.title, artist: t.artist, cover: t.cover }));
@@ -1254,7 +1207,7 @@ async function performSearch(q, resultsEl, playFirst = false) {
   if (results.length > 0) {
     renderSearchResults(results, resultsEl, playFirst);
   } else {
-    resultsEl.innerHTML = '<div class="search-loading" style="color:var(--danger)">No se encontraron resultados (Servidor ocupado).</div>';
+    resultsEl.innerHTML = '<div class="search-loading" style="color:var(--danger)">No se encontraron resultados. Intenta otra canción.</div>';
   }
 }
 
@@ -1502,7 +1455,7 @@ function createReleaseCard(track){ const c=document.createElement('div'); c.clas
 function renderExploreView(container){ let html=`<div class="section-head"><h2 class="section-title">Explorar</h2></div><div class="cat-scroll"><div class="cat-chip active">Todo</div><div class="cat-chip">Rock</div><div class="cat-chip">Pop</div><div class="cat-chip">Jazz</div><div class="cat-chip">Electronica</div><div class="cat-chip">Urbano</div></div><div class="section-head"><h2 class="section-title">Nuevos lanzamientos</h2></div><div class="trend-grid" id="explore-grid"></div>`; container.innerHTML=html; TRACKS.filter(t=>!t.isWelcome).forEach((t,i)=>container.querySelector('#explore-grid').appendChild(createTrendCard(t,i))); container.querySelectorAll('.cat-chip').forEach(c=>c.addEventListener('click',()=>{ container.querySelectorAll('.cat-chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); })); }
 
 function renderFriendsView(container){
-  let html=`<div class="section-head"><h2 class="section-title">Amigos</h2></div>
+  let html=`<div class="section-head"><h2 class="section-title">Comunidad</h2></div>
   <div class="friend-search-wrap"><input type="text" class="friend-search-input" id="friend-search-input" placeholder="Buscar por @username..."/><div class="friend-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
   <div id="friend-search-results"></div>
   <div class="section-head" style="margin-top:14px"><h2 class="section-title" style="font-size:15px">Tus amigos</h2></div>
@@ -1664,7 +1617,6 @@ function renderStoriesBar(){
   let html=`<div class="story-item" id="add-story-btn"><div class="story-ring add"><div class="story-ring-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="story-name">Tu historia</div></div>`;
   const su=new Map(); 
   
-  // Filtrar historias para que solo duren 24h en la barra superior
   const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
   const activeStories = state.stories.filter(s => {
       if(s.postType === 'post') return false; 
