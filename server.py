@@ -1,12 +1,12 @@
 from flask import Flask, jsonify, request, redirect
 from flask_cors import CORS
 import yt_dlp
-from youtubesearchpython import VideosSearch
+import requests
+import urllib.parse
 
 app = Flask(__name__)
 CORS(app)
 
-# Configuracion estricta para descargas simulando un iPhone para evadir el bloqueo
 YDL_OPTIONS_AUDIO = {
     'format': 'bestaudio/best',
     'noplaylist': True,
@@ -24,34 +24,96 @@ def search_tracks():
     else:
         query = request.args.get('q', '')
 
-    # Ping para despertar el servidor de Render
+    # Ping para mantener el servidor alerta
     if query == 'ping':
         return jsonify({"status": "ok", "message": "Render Server Awake"})
 
     if not query:
         return jsonify({'results': []}), 400
     
+    encoded_query = urllib.parse.quote(query)
+    results = []
+
+    # INTENTO 1: Api Global Piped (Instantáneo y sin bloqueos)
+    piped_nodes = [
+        f"https://pipedapi.smnz.de/search?q={encoded_query}&filter=videos",
+        f"https://pipedapi.tokhmi.xyz/search?q={encoded_query}&filter=videos",
+        f"https://pipedapi.kavin.rocks/search?q={encoded_query}&filter=videos"
+    ]
+    
+    for url in piped_nodes:
+        try:
+            res = requests.get(url, timeout=4)
+            if res.status_code == 200:
+                data = res.json()
+                for item in data.get('items', [])[:15]:
+                    vid_id = item.get('url', '').split('?v=')[-1]
+                    if vid_id:
+                        results.append({
+                            'id': vid_id,
+                            'youtubeId': vid_id,
+                            'title': item.get('title', 'Sin título'),
+                            'artist': item.get('uploaderName', 'Desconocido'),
+                            'cover': item.get('thumbnail', f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg")
+                        })
+                if results:
+                    return jsonify({'results': results})
+        except Exception:
+            continue
+
+    # INTENTO 2: Api Global Invidious de respaldo
+    invidious_nodes = [
+        f"https://inv.tux.pizza/api/v1/search?q={encoded_query}&type=video",
+        f"https://invidious.weblibre.org/api/v1/search?q={encoded_query}&type=video"
+    ]
+    for url in invidious_nodes:
+        try:
+            res = requests.get(url, timeout=4)
+            if res.status_code == 200:
+                data = res.json()
+                for item in data[:15]:
+                    vid_id = item.get('videoId')
+                    if vid_id:
+                        results.append({
+                            'id': vid_id,
+                            'youtubeId': vid_id,
+                            'title': item.get('title', 'Sin título'),
+                            'artist': item.get('author', 'Desconocido'),
+                            'cover': f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
+                        })
+                if results:
+                    return jsonify({'results': results})
+        except Exception:
+            continue
+            
+    # INTENTO 3: Último recurso directo al servidor
     try:
-        # NUEVO MOTOR: Evita el bloqueo de bot de YouTube al buscar
-        videosSearch = VideosSearch(query, limit = 15)
-        results_raw = videosSearch.result()
-        results = []
-        
-        for video in results_raw.get('result', []):
-            vid_id = video.get('id')
-            if vid_id:
-                results.append({
-                    'id': vid_id,
-                    'youtubeId': vid_id,
-                    'title': video.get('title', 'Sin título'),
-                    'artist': video.get('channel', {}).get('name', 'Desconocido'),
-                    'duration': video.get('duration', '0:00'),
-                    'cover': f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
-                })
-        return jsonify({'results': results})
+        ydl_opts = {
+            'format': 'best',
+            'noplaylist': True,
+            'quiet': True,
+            'default_search': 'ytsearch15',
+            'extractor_args': {'youtube': {'player_client': ['android']}}
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(query, download=False)
+            entries = info.get('entries', [info])
+            for entry in entries:
+                if entry and entry.get('id'):
+                    vid_id = entry.get('id')
+                    results.append({
+                        'id': vid_id,
+                        'youtubeId': vid_id,
+                        'title': entry.get('title', 'Sin título'),
+                        'artist': entry.get('uploader', 'Desconocido'),
+                        'cover': f"https://i.ytimg.com/vi/{vid_id}/hqdefault.jpg"
+                    })
+        if results:
+            return jsonify({'results': results})
     except Exception as e:
-        print(f"Error en búsqueda: {e}")
-        return jsonify({'results': [], 'error': str(e)}), 500
+        print(f"Error en yt-dlp: {e}")
+        
+    return jsonify({'results': [], 'error': 'Servidores ocupados'}), 500
 
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def stream_audio(video_id):
