@@ -2,14 +2,14 @@ import re
 import json
 import urllib.parse
 import requests
-from flask import Flask, jsonify, request, Response, stream_with_context
+from flask import Flask, jsonify, request, redirect
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
 def search_youtube_innertube(query):
-    """Buscador Antibloqueos de Alta Velocidad"""
+    """Buscador Antibloqueos de Alta Velocidad (Ya comprobado que funciona)"""
     url = "https://www.youtube.com/youtubei/v1/search"
     headers = {
         "Content-Type": "application/json",
@@ -62,6 +62,7 @@ def search_youtube_innertube(query):
             for item in obj:
                 parse_items(item)
 
+    # Intento de extracción 1
     try:
         r = requests.post(url, json=payload, headers=headers, timeout=6)
         if r.status_code == 200:
@@ -70,6 +71,7 @@ def search_youtube_innertube(query):
     except Exception:
         pass
 
+    # Intento de extracción 2
     try:
         scrape_headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -108,65 +110,55 @@ def search_tracks():
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def stream_audio(video_id):
     """
-    MODO TÚNEL (Proxy): 
-    Render descarga el archivo internamente y se lo inyecta a la app del celular.
-    Esto elimina para siempre el error CORS en el navegador al descargar el Blob.
+    RESOLVEDOR DIRECTO DE ENLACES.
+    Render no descarga nada, solo extrae un enlace de alta velocidad (Cobalt o Piped)
+    y redirige a tu teléfono para que descargue el archivo sin Timeouts.
     """
-    stream_url = None
-
-    # 1. Obtener URL directa desde Cobalt API (La más rápida)
+    # INTENTO 1: Servidor Oficial Cobalt (Soporta CORS y entrega el MP3 directo)
     try:
-        headers = {"Accept": "application/json", "Content-Type": "application/json"}
-        payload = {"url": f"https://www.youtube.com/watch?v={video_id}", "isAudioOnly": True, "aFormat": "mp3"}
-        res = requests.post("https://api.cobalt.tools/api/json", json=payload, headers=headers, timeout=5)
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Origin": "https://cobalt.tools",
+            "Referer": "https://cobalt.tools/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        }
+        payload = {
+            "url": f"https://www.youtube.com/watch?v={video_id}",
+            "isAudioOnly": True,
+            "aFormat": "mp3"
+        }
+        res = requests.post("https://co.wuk.sh/api/json", json=payload, headers=headers, timeout=8)
         if res.status_code == 200:
             stream_url = res.json().get("url")
-    except Exception:
-        pass
-
-    # 2. Respaldo: Nodos Piped
-    if not stream_url:
-        piped_nodes = [
-            f"https://pipedapi.kavin.rocks/streams/{video_id}",
-            f"https://pipedapi.tokhmi.xyz/streams/{video_id}"
-        ]
-        for url in piped_nodes:
-            try:
-                res = requests.get(url, timeout=4)
-                if res.status_code == 200:
-                    audio_streams = res.json().get('audioStreams', [])
-                    if audio_streams:
-                        best_audio = sorted(audio_streams, key=lambda x: int(x.get('bitrate', 0)), reverse=True)
-                        stream_url = best_audio[0].get('url')
-                        break
-            except Exception:
-                continue
-
-    if not stream_url:
-        return jsonify({'error': 'No se encontró el archivo de audio.'}), 500
-
-    # EL TRUCO: Render descarga y transmite el archivo hacia tu celular (Stream Proxy)
-    try:
-        req_headers = {"User-Agent": "Mozilla/5.0"}
-        r = requests.get(stream_url, stream=True, headers=req_headers)
-        
-        def generate():
-            for chunk in r.iter_content(chunk_size=1024 * 1024): # Transmite en bloques de 1MB
-                if chunk:
-                    yield chunk
-
-        # Al usar Response, el archivo adquiere automáticamente los permisos CORS de Render
-        response = Response(
-            stream_with_context(generate()), 
-            content_type=r.headers.get('content-type', 'audio/mpeg')
-        )
-        response.headers['Content-Disposition'] = f'attachment; filename="{video_id}.mp3"'
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        return response
-
+            if stream_url:
+                # El redirect permite que `fetch` en tu celular siga la ruta automáticamente
+                return redirect(stream_url)
     except Exception as e:
-        print(f"Error transfiriendo datos al celular: {e}")
-        return jsonify({'error': 'Fallo al pasar el archivo al dispositivo'}), 500
+        print(f"Cobalt falló: {e}")
+
+    # INTENTO 2: Servidores Piped Proxies (Soportan CORS nativamente)
+    piped_nodes = [
+        f"https://pipedapi.kavin.rocks/streams/{video_id}",
+        f"https://pipedapi.tokhmi.xyz/streams/{video_id}",
+        f"https://pipedapi.smnz.de/streams/{video_id}"
+    ]
+    
+    for url in piped_nodes:
+        try:
+            res = requests.get(url, timeout=6)
+            if res.status_code == 200:
+                audio_streams = res.json().get('audioStreams', [])
+                if audio_streams:
+                    # Seleccionar la mejor calidad
+                    best_audio = sorted(audio_streams, key=lambda x: int(x.get('bitrate', 0)), reverse=True)
+                    if best_audio:
+                        return redirect(best_audio[0].get('url'))
+        except Exception:
+            continue
+
+    return jsonify({'error': 'Todos los servidores están saturados, intenta en 1 minuto.'}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
