@@ -9,16 +9,8 @@ import yt_dlp
 app = Flask(__name__)
 CORS(app)
 
-YDL_OPTIONS_AUDIO = {
-    'format': 'bestaudio/best',
-    'noplaylist': True,
-    'quiet': True,
-    'skip_download': True,
-    'extractor_args': {'youtube': {'player_client': ['android', 'ios']}},
-}
-
 def search_youtube_innertube(query):
-    """Busca directamente mediante el protocolo web de YouTube sin activar bloqueos de bot."""
+    """Buscador Antibloqueos (Ya comprobado que funciona)"""
     url = "https://www.youtube.com/youtubei/v1/search"
     headers = {
         "Content-Type": "application/json",
@@ -71,7 +63,6 @@ def search_youtube_innertube(query):
             for item in obj:
                 parse_items(item)
 
-    # Intento 1: API directa InnerTube
     try:
         r = requests.post(url, json=payload, headers=headers, timeout=6)
         if r.status_code == 200:
@@ -81,7 +72,6 @@ def search_youtube_innertube(query):
     except Exception as e:
         print(f"Error InnerTube: {e}")
 
-    # Intento 2: Extracción web con bypass de cookies
     try:
         scrape_headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -116,22 +106,54 @@ def search_tracks():
         return jsonify({'results': []}), 400
 
     results = search_youtube_innertube(query)
-    # Siempre devuelve HTTP 200 con los resultados obtenidos
     return jsonify({'results': results})
+
 
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def stream_audio(video_id):
+    """Motor Antibloqueos para Descargas y Streaming"""
+    
+    # INTENTO 1: Extracción limpia a través de Nodos Piped (Evita que YouTube bloquee la IP de Render)
+    piped_nodes = [
+        f"https://pipedapi.kavin.rocks/streams/{video_id}",
+        f"https://pipedapi.tokhmi.xyz/streams/{video_id}",
+        f"https://pipedapi.smnz.de/streams/{video_id}"
+    ]
+    
+    for url in piped_nodes:
+        try:
+            res = requests.get(url, timeout=5)
+            if res.status_code == 200:
+                data = res.json()
+                audio_streams = data.get('audioStreams', [])
+                if audio_streams:
+                    # Seleccionamos el último stream (suele ser el de mejor calidad MP3/M4A)
+                    stream_url = audio_streams[-1].get('url')
+                    if stream_url:
+                        return redirect(stream_url)
+        except Exception:
+            continue
+
+    # INTENTO 2: Respaldo con yt-dlp usando clientes de navegador seguro
     try:
         url = f"https://www.youtube.com/watch?v={video_id}"
+        YDL_OPTIONS_AUDIO = {
+            'format': 'bestaudio/best',
+            'noplaylist': True,
+            'quiet': True,
+            'skip_download': True,
+            'extractor_args': {'youtube': {'player_client': ['web_safari', 'ios', 'android']}},
+        }
         with yt_dlp.YoutubeDL(YDL_OPTIONS_AUDIO) as ydl:
             info = ydl.extract_info(url, download=False)
             audio_url = info.get('url')
-            if not audio_url:
-                raise Exception("Audio stream no encontrado")
-            return redirect(audio_url)
+            if audio_url:
+                return redirect(audio_url)
     except Exception as e:
-        print(f"Error al obtener stream: {e}")
-        return jsonify({'error': 'No se pudo procesar la descarga', 'details': str(e)}), 500
+        print(f"Error fatal extrayendo audio: {e}")
+        
+    return jsonify({'error': 'Servidores bloqueados por YouTube. Intenta de nuevo más tarde.'}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
