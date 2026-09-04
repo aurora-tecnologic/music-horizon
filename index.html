@@ -1928,25 +1928,99 @@ function openDownloadModal(track){
 document.getElementById('dl-close').addEventListener('click', () => document.getElementById('download-modal').classList.remove('active'));
 document.getElementById('dl-cancel').addEventListener('click', () => document.getElementById('download-modal').classList.remove('active'));
 
-document.getElementById('dl-confirm').addEventListener('click', () => {
+document.getElementById('dl-confirm').addEventListener('click', async () => {
     const t = state.pendingDownloadTrack;
-    if(!t) return;
-    document.getElementById('download-modal').classList.remove('active');
-    toast(`Iniciando descarga de ${t.title}...`);
-    
-    const idx = state.downloads.findIndex(d => d.youtubeId === t.youtubeId);
-    if(idx === -1) { 
-        state.downloads.push({...t, dlDate: Date.now()}); 
-        localStorage.setItem('mh_downloads', JSON.stringify(state.downloads));
+    if (!t) return;
+
+    const progressBox = document.getElementById('dl-progress-box');
+    const barFill = document.getElementById('dl-bar-fill');
+    const pctText = document.getElementById('dl-progress-pct');
+    const statusText = document.getElementById('dl-progress-status');
+    const footer = document.getElementById('dl-footer');
+    const descText = document.getElementById('dl-desc-text');
+
+    if (descText) descText.textContent = `Descargando "${t.title}"...`;
+    if (progressBox) progressBox.style.display = 'block';
+    if (footer) footer.style.display = 'none';
+    if (barFill) barFill.style.width = '0%';
+    if (pctText) pctText.textContent = '0%';
+    if (statusText) statusText.textContent = 'Conectando con el servidor...';
+
+    try {
+        const response = await fetch(`${API_BASE}/api/stream/${t.youtubeId}`);
+        if (!response.ok) throw new Error("Servidor no disponible");
+
+        const contentLength = response.headers.get('Content-Length');
+        const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
+        let receivedBytes = 0;
+
+        const reader = response.body.getReader();
+        const chunks = [];
+
+        if (statusText) statusText.textContent = 'Transfiriendo audio...';
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            chunks.push(value);
+            receivedBytes += value.length;
+
+            if (totalBytes > 0) {
+                const percent = Math.round((receivedBytes / totalBytes) * 100);
+                if (barFill) barFill.style.width = percent + '%';
+                if (pctText) pctText.textContent = percent + '%';
+                if (statusText) statusText.textContent = `${(receivedBytes / (1024 * 1024)).toFixed(1)} MB de ${(totalBytes / (1024 * 1024)).toFixed(1)} MB`;
+            } else {
+                if (statusText) statusText.textContent = `${(receivedBytes / (1024 * 1024)).toFixed(1)} MB descargados...`;
+                if (barFill) barFill.style.width = '65%';
+            }
+        }
+
+        if (statusText) statusText.textContent = '¡Completado! Guardando archivo...';
+        if (barFill) barFill.style.width = '100%';
+        if (pctText) pctText.textContent = '100%';
+
+        // Descarga directa a la memoria del teléfono sin pestañas nuevas
+        const blob = new Blob(chunks, { type: 'audio/mpeg' });
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = `${t.title}.mp3`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+
+        const idx = state.downloads.findIndex(d => d.youtubeId === t.youtubeId);
+        if (idx === -1) {
+            state.downloads.push({ ...t, dlDate: Date.now() });
+            localStorage.setItem('mh_downloads', JSON.stringify(state.downloads));
+        }
+
+        setTimeout(() => {
+            document.getElementById('download-modal').classList.remove('active');
+            if (progressBox) progressBox.style.display = 'none';
+            if (footer) footer.style.display = 'flex';
+            if (descText) descText.textContent = 'El archivo de audio se guardará directamente en tu almacenamiento interno.';
+            toast(`Guardado: ${t.title}`, 'success');
+        }, 1000);
+
+    } catch (err) {
+        if (statusText) {
+            statusText.textContent = 'Servidores saturados temporalmente';
+            statusText.style.color = 'var(--danger)';
+        }
+        toast('Error al descargar, intenta de nuevo en un momento', 'error');
+        setTimeout(() => {
+            if (progressBox) progressBox.style.display = 'none';
+            if (footer) footer.style.display = 'flex';
+            if (statusText) statusText.style.color = 'var(--text-secondary)';
+            if (descText) descText.textContent = 'El archivo de audio se guardará directamente en tu almacenamiento interno.';
+        }, 2000);
     }
-    
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = `${API_BASE}/api/stream/${t.youtubeId}`;
-    a.target = '_blank';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
 });
 /* ============================================================
    SELECTOR DE FRAGMENTO DE CANCION (sin reproduccion obligatoria)
