@@ -1,4 +1,3 @@
-
 import os
 import requests
 from flask import Flask, request, jsonify, Response, stream_with_context
@@ -6,23 +5,10 @@ from flask_cors import CORS
 import yt_dlp
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, expose_headers=["Content-Length", "Content-Disposition"])
 
-# Opciones optimizadas con emulación Android/iOS para saltar el bloqueo 429 de YouTube
-YDL_SEARCH_OPTS = {
-    'format': 'bestaudio/best',
-    'quiet': True,
-    'no_warnings': True,
-    'extract_flat': True,
-    'skip_download': True,
-    'extractor_args': {
-        'youtube': {
-            'player_client': ['android', 'ios']
-        }
-    }
-}
-
-YDL_STREAM_OPTS = {
+# Opciones de extracción emulando clientes móviles para evadir bloqueos 429/403
+YDL_OPTS = {
     'format': 'bestaudio/best',
     'quiet': True,
     'no_warnings': True,
@@ -36,7 +22,6 @@ YDL_STREAM_OPTS = {
 
 @app.route('/', methods=['GET', 'HEAD'])
 def health_check():
-    """Ruta base para evitar errores 404 en los logs de Render"""
     return jsonify({"status": "online", "service": "Music Horizon API"}), 200
 
 @app.route('/api/search', methods=['POST'])
@@ -47,8 +32,8 @@ def search_tracks():
         return jsonify({"results": []}), 200
 
     try:
-        with yt_dlp.YoutubeDL(YDL_SEARCH_OPTS) as ydl:
-            # Busca los primeros 6 resultados
+        search_opts = {**YDL_OPTS, 'extract_flat': True}
+        with yt_dlp.YoutubeDL(search_opts) as ydl:
             search_results = ydl.extract_info(f"ytsearch6:{query}", download=False)
             entries = search_results.get('entries', [])
 
@@ -66,77 +51,77 @@ def search_tracks():
                 })
             return jsonify({"results": results}), 200
     except Exception as e:
-        print(f"Error en /api/search: {e}")
+        print(f"Error en búsqueda: {e}")
         return jsonify({"results": [], "error": str(e)}), 500
 
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def stream_audio(video_id):
     if not video_id:
-        return jsonify({"error": "ID de video faltante"}), 400
+        return jsonify({"error": "ID requerido"}), 400
 
     direct_url = None
     title = f"{video_id}.mp3"
 
-    # 1. Intento primario: yt-dlp con emulación móvil
+    # 1. Extracción con yt-dlp
     try:
         video_url = f"https://www.youtube.com/watch?v={video_id}"
-        with yt_dlp.YoutubeDL(YDL_STREAM_OPTS) as ydl:
+        with yt_dlp.YoutubeDL(YDL_OPTS) as ydl:
             info = ydl.extract_info(video_url, download=False)
             direct_url = info.get('url')
             if info.get('title'):
                 title = f"{info['title'][:50]}.mp3"
     except Exception as e:
-        print(f"yt-dlp fallo (posible 429): {e}. Probando respaldo...")
+        print(f"yt-dlp bloqueado ({e}), recurriendo a respaldo...")
 
-    # 2. Respaldo secundario: Piped API pública si YouTube bloquea la IP de Render
+    # 2. Respaldo secundario mediante API pública si YouTube bloquea la IP
     if not direct_url:
-        piped_instances = [
-            "https://pipedapi.kavin.rocks",
-            "https://api.piped.privacydev.net",
-            "https://piped-api.lunar.icu"
+        fallbacks = [
+            f"https://pipedapi.kavin.rocks/streams/{video_id}",
+            f"https://api.piped.privacydev.net/streams/{video_id}"
         ]
-        for instance in piped_instances:
+        for api_url in fallbacks:
             try:
-                res = requests.get(f"{instance}/streams/{video_id}", timeout=5)
-                if res.status_code == 200:
-                    stream_data = res.json()
-                    audio_streams = stream_data.get('audioStreams', [])
-                    if audio_streams:
-                        direct_url = audio_streams[-1].get('url')
-                        title = f"{stream_data.get('title', video_id)[:50]}.mp3"
+                r = requests.get(api_url, timeout=5)
+                if r.status_code == 200:
+                    streams = r.json().get('audioStreams', [])
+                    if streams:
+                        direct_url = streams[-1].get('url')
                         break
             except Exception:
                 continue
 
     if not direct_url:
-        return jsonify({"error": "No fue posible obtener el stream de audio"}), 500
+        return jsonify({"error": "Todos los servidores están saturados, intenta en 1 minuto."}), 500
 
-    # 3. Transmisión fragmentada del audio hacia el navegador del celular
+    # 3. Envío del archivo en streaming continuo
     try:
-        headers = {
+        req_headers = {
             'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
         }
-        upstream_req = requests.get(direct_url, headers=headers, stream=True, timeout=10)
+        upstream = requests.get(direct_url, headers=req_headers, stream=True, timeout=10)
 
         def generate():
-            for chunk in upstream_req.iter_content(chunk_size=64 * 1024):
+            for chunk in upstream.iter_content(chunk_size=64 * 1024):
                 if chunk:
                     yield chunk
 
-        # Limpiar caracteres especiales para el encabezado del archivo
         safe_title = "".join(c for c in title if c.isalnum() or c in (' ', '.', '_', '-')).strip()
+
+        resp_headers = {
+            'Content-Disposition': f'attachment; filename="{safe_title}"',
+            'Cache-Control': 'no-cache',
+            'Access-Control-Expose-Headers': 'Content-Length, Content-Disposition'
+        }
+        if upstream.headers.get('Content-Length'):
+            resp_headers['Content-Length'] = upstream.headers.get('Content-Length')
 
         return Response(
             stream_with_context(generate()),
-            content_type=upstream_req.headers.get('Content-Type', 'audio/mpeg'),
-            headers={
-                'Content-Disposition': f'attachment; filename="{safe_title}"',
-                'Cache-Control': 'no-cache'
-            }
+            content_type=upstream.headers.get('Content-Type', 'audio/mpeg'),
+            headers=resp_headers
         )
     except Exception as e:
-        print(f"Error retransmitiendo audio: {e}")
-        return jsonify({"error": "Fallo al enviar datos del archivo"}), 500
+        return jsonify({"error": f"Fallo al transmitir: {e}"}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
