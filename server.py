@@ -7,18 +7,28 @@ import yt_dlp
 app = Flask(__name__)
 CORS(app, expose_headers=["Content-Length", "Content-Disposition"])
 
-# Opciones de extracción emulando clientes móviles para evadir bloqueos 429/403
+# Clientes que no requieren PO-Token y evaden la detección de bot en datacenters
 YDL_OPTS = {
     'format': 'bestaudio/best',
     'quiet': True,
     'no_warnings': True,
     'skip_download': True,
+    'nocheckcertificate': True,
     'extractor_args': {
         'youtube': {
-            'player_client': ['android', 'ios']
+            'player_client': ['ios', 'tv_embedded', 'mweb'],
+            'player_skip': ['webpage', 'configs']
         }
     }
 }
+
+INVIDIOUS_INSTANCES = [
+    "https://inv.nadeko.net",
+    "https://invidious.nerdvpn.de",
+    "https://invidious.drgns.space",
+    "https://yt.artemislena.eu",
+    "https://invidious.private.coffee"
+]
 
 @app.route('/', methods=['GET', 'HEAD'])
 def health_check():
@@ -57,12 +67,12 @@ def search_tracks():
 @app.route('/api/stream/<video_id>', methods=['GET'])
 def stream_audio(video_id):
     if not video_id:
-        return jsonify({"error": "ID requerido"}), 400
+        return jsonify({"error": "ID de video faltante"}), 400
 
     direct_url = None
     title = f"{video_id}.mp3"
 
-    # 1. Extracción con yt-dlp
+    # 1. Extracción primaria con yt-dlp usando clientes iOS y TV Embed
     try:
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         with yt_dlp.YoutubeDL(YDL_OPTS) as ydl:
@@ -71,34 +81,50 @@ def stream_audio(video_id):
             if info.get('title'):
                 title = f"{info['title'][:50]}.mp3"
     except Exception as e:
-        print(f"yt-dlp bloqueado ({e}), recurriendo a respaldo...")
+        print(f"yt-dlp bloqueado en Render ({e}), intentando servidores proxy...")
 
-    # 2. Respaldo secundario mediante API pública si YouTube bloquea la IP
+    # 2. Respaldo Invidious con local=true (fuerza al proxy a emitir el audio sin dar 403)
     if not direct_url:
-        fallbacks = [
-            f"https://pipedapi.kavin.rocks/streams/{video_id}",
-            f"https://api.piped.privacydev.net/streams/{video_id}"
-        ]
-        for api_url in fallbacks:
+        for instance in INVIDIOUS_INSTANCES:
             try:
-                r = requests.get(api_url, timeout=5)
+                proxy_url = f"{instance}/latest_version?id={video_id}&itag=140&local=true&listen=1"
+                r = requests.head(proxy_url, timeout=4, allow_redirects=True)
                 if r.status_code == 200:
-                    streams = r.json().get('audioStreams', [])
-                    if streams:
-                        direct_url = streams[-1].get('url')
-                        break
+                    direct_url = proxy_url
+                    break
+            except Exception:
+                continue
+
+    # 3. Respaldo secundario mediante Cobalt API
+    if not direct_url:
+        cobalt_nodes = [
+            "https://cobalt-api.kwiatekm.me",
+            "https://api.wuk.sh"
+        ]
+        for node in cobalt_nodes:
+            try:
+                res = requests.post(f"{node}/", json={
+                    "url": f"https://www.youtube.com/watch?v={video_id}",
+                    "downloadMode": "audio"
+                }, headers={"Accept": "application/json", "Content-Type": "application/json"}, timeout=5)
+                data = res.json()
+                if "url" in data:
+                    direct_url = data["url"]
+                    break
             except Exception:
                 continue
 
     if not direct_url:
-        return jsonify({"error": "Todos los servidores están saturados, intenta en 1 minuto."}), 500
+        return jsonify({"error": "Servidores temporalmente saturados. Intenta de nuevo en unos segundos."}), 503
 
-    # 3. Envío del archivo en streaming continuo
+    # 4. Transmisión del flujo hacia el navegador
     try:
         req_headers = {
-            'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         }
-        upstream = requests.get(direct_url, headers=req_headers, stream=True, timeout=10)
+        upstream = requests.get(direct_url, headers=req_headers, stream=True, timeout=12)
+        if upstream.status_code != 200:
+            return jsonify({"error": "Fuente de audio inaccesible"}), 502
 
         def generate():
             for chunk in upstream.iter_content(chunk_size=64 * 1024):
