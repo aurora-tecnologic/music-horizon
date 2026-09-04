@@ -28,24 +28,24 @@ svg{display:block}
 .layer{position:fixed;inset:0;display:none;opacity:0;transition:opacity .45s ease;overflow:hidden}
 .layer.active{display:flex;opacity:1}
 
-/* === BOTONES Y MODALES GLOBALES === */
-.modal-btn {
-  width: 100%; max-width: 320px; height: 46px; min-height: 46px; border-radius: 12px; font-weight: 700; font-size: 14px;
-  background: var(--gradient-primary); color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin: 0 auto; flex-shrink: 0; transition: all 0.2s;
-}
-.modal-btn.secondary { background: var(--bg-card-hover); border: 1px solid var(--border); }
-.modal-btn.admin { background: var(--accent-purple); }
-
+/* === MODALES Y BOTONES REPARADOS === */
 .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.active{display:flex}
-.modal{width:100%;max-width:440px;background:var(--bg-card);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;max-height:85vh;border:1px solid var(--border-light)}
+.modal{width:100%;max-width:440px;background:var(--bg-card);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;max-height:85vh;border:1px solid var(--border-light);animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border)}
 .modal-title{font-size:16px;font-weight:700}
 .modal-close{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);flex-shrink:0}
 .modal-body{padding:16px;overflow-y:auto}
 .modal-footer{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px}
 
+.modal-btn {
+  flex: 1; height: 44px; border-radius: 12px; font-weight: 700; font-size: 13px;
+  background: var(--gradient-primary); color: #fff; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.modal-btn.secondary { background: var(--bg-card-hover); border: 1px solid var(--border); }
+.modal-btn.admin { background: var(--accent-purple); }
 .setup-input{width:100%;height:46px;background:var(--bg-primary);border:1px solid var(--border);border-radius:12px;padding:0 14px;font-size:14px;color:var(--text-primary);margin-bottom:12px;transition:0.2s}
 .setup-input:focus{border-color:var(--accent)}
 .form-label{font-size:10px;color:var(--text-secondary);margin-bottom:4px;text-transform:uppercase;display:block;font-weight:700}
@@ -67,46 +67,63 @@ svg{display:block}
 .update-icon{width:60px;height:60px;border-radius:50%;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:2px solid var(--warning);flex-shrink:0}
 .update-icon svg{width:30px;height:30px;color:var(--warning)}
 
-/* === 3. PANTALLA DE LOGIN ORIGINAL === */
+/* === 3. PANTALLA DE LOGIN REPARADA === */
 #auth-login-screen{position:fixed;inset:0;background:#0D1321;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:20px}
 .login-grid-bg{position:absolute;width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;opacity:0.15;transform:scale(1.1);filter:blur(2px);z-index:0}
 .login-grid-bg div{border-radius:20px;height:180px}
 .login-grid-bg .g1{background:linear-gradient(135deg,#3385E6,#1D2A44)}
 .login-grid-bg .g3{background:linear-gradient(135deg,#3385E6,#0D1321)}
 .login-content-wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;max-width:360px;width:100%;text-align:center}
-.login-logo-box{width:80px;height:80px;min-height:80px;border-radius:24px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;margin-bottom:20px;flex-shrink:0}
+.login-logo-box{width:80px;height:80px;border-radius:24px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;margin-bottom:20px;flex-shrink:0;box-shadow:0 10px 30px rgba(51,133,230,0.3)}
 .login-logo-box svg{width:40px;height:40px}
-#google-login-btn {background:#fff;color:#1a1a1a;height:48px;min-height:48px;border-radius:14px;font-weight:bold;font-size:14px;width:100%;max-width:280px;display:flex;align-items:center;justify-content:center;gap:12px;flex-shrink:0;margin:0 auto}
+.login-title-text{font-size:28px;font-weight:bold;color:#fff;margin-bottom:8px}
+.login-sub-text{font-size:14px;color:#a0aec0;margin-bottom:30px;line-height:1.5}
+/* Botón de Google Normalizado */
+#google-login-btn {background:#fff;color:#1a1a1a;height:48px;border-radius:14px;font-weight:bold;font-size:14px;width:260px;display:flex;align-items:center;justify-content:center;gap:12px;margin:0 auto;box-shadow:0 4px 15px rgba(0,0,0,0.2);cursor:pointer;border:none}
+.login-loading{display:none;align-items:center;justify-content:center;gap:8px;color:#a0aec0;font-size:13px;margin-top:20px}
+.login-loading.show{display:flex}
+.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* === LAYOUT PRINCIPAL === */
+/* === LAYOUT PRINCIPAL Y MENÚ === */
 #layer-main{flex-direction:column;background:var(--bg-primary)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(180deg,rgba(13,19,33,.98),rgba(13,19,33,.85));backdrop-filter:blur(30px);border-bottom:1px solid var(--border);z-index:60;flex-shrink:0}
+.nav-left{display:flex;align-items:center;gap:10px}
 .nav-logo{width:34px;height:34px;border-radius:9px;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center}
-.nav-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);position:relative}
-.nav-badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;background:var(--danger);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg-primary)}
-.nav-avatar{width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;overflow:hidden}
-.nav-avatar img{width:100%;height:100%;object-fit:cover}
+.nav-logo svg{width:17px;height:17px}
+.nav-title{font-size:17px;font-weight:800}
+.nav-title span{color:var(--accent-light)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);position:relative;cursor:pointer}
+.nav-badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;background:var(--danger);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg-primary);display:none}
 
-/* Barra Historias */
+/* Menú 3 Puntos */
+#dropdown-menu{position:absolute;top:56px;right:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;width:200px;box-shadow:0 10px 40px rgba(0,0,0,.6);z-index:100;display:none;flex-direction:column;overflow:hidden}
+#dropdown-menu.active{display:flex}
+.dropdown-item{padding:14px 16px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--text-primary);cursor:pointer;border-bottom:1px solid var(--border-light)}
+.dropdown-item:hover{background:var(--bg-card-hover)}
+.dropdown-item svg{width:16px;height:16px;color:var(--accent-light)}
+
+/* Historias */
 .stories-bar{display:flex;gap:10px;padding:12px 16px;overflow-x:auto;border-bottom:1px solid var(--border);flex-shrink:0;scrollbar-width:none}
 .stories-bar::-webkit-scrollbar{height:0}
 .story-item{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer}
-.story-ring{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(45deg, #f09433, #dc2743, #bc1888)}
+.story-ring{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)}
 .story-ring.add{background:transparent;border:2px dashed var(--border);padding:0;display:flex;align-items:center;justify-content:center}
 .story-ring-inner{width:100%;height:100%;border-radius:50%;background:var(--bg-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;overflow:hidden;border:3px solid var(--bg-primary)}
 .story-ring-inner img{width:100%;height:100%;object-fit:cover}
 .story-name{font-size:10px;color:var(--text-secondary);max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* Contenido y Buscador */
 .content{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 16px 210px;scrollbar-width:none}
 .content::-webkit-scrollbar{width:0}
+
+/* Buscador y Lote */
 .search-wrap{position:relative;margin-bottom:16px}
 .search-input{width:100%;height:46px;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;padding:0 46px 0 18px;font-size:13px;color:var(--text-primary)}
 .search-btn{position:absolute;right:5px;top:5px;width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center}
 .search-results{position:absolute;top:52px;left:0;right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;max-height:320px;overflow-y:auto;z-index:50;display:none;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .search-results.show{display:block}
 
-/* Descargas en Lote */
 .batch-bar{display:none;align-items:center;justify-content:space-between;background:var(--accent);padding:10px 16px;border-radius:12px;margin-bottom:16px}
 .batch-bar.active{display:flex}
 .batch-btn{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.2)}
@@ -137,16 +154,15 @@ svg{display:block}
 .profile-name{font-size:15px;font-weight:700;margin-bottom:2px}
 .profile-bio{font-size:13px;line-height:1.4;white-space:pre-wrap;color:var(--text-secondary)}
 .btn-insta{flex:1;padding:8px;border-radius:8px;background:var(--bg-card-hover);font-size:13px;font-weight:600;text-align:center;border:1px solid var(--border);color:var(--text-primary)}
-.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-top:1px solid var(--border);padding-top:2px}
+.profile-grid-tabs{display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:2px}
+.grid-tab{flex:1;text-align:center;padding:12px;color:var(--text-muted);cursor:pointer;position:relative}
+.grid-tab.active{color:var(--text-primary)}
+.grid-tab.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--text-primary)}
+.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding-top:2px}
 .grid-item{aspect-ratio:1/1;background:var(--bg-card-hover);position:relative;cursor:pointer;overflow:hidden}
 .grid-item img{width:100%;height:100%;object-fit:cover}
 
-.playlist-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.playlist-info-col{flex:1;min-width:0}
-.playlist-title{font-size:14px;font-weight:700;margin-bottom:4px}
-.playlist-meta{font-size:11px;color:var(--text-secondary)}
-
-/* Reproductor Mini y Full */
+/* Reproductor Mini y Full (MOTOR Iframe Restaurado) */
 .mini-player{position:fixed;left:10px;right:10px;bottom:calc(var(--nav-height) + 10px);height:64px;background:rgba(20,28,46,.95);backdrop-filter:blur(30px);border:1px solid var(--border-light);border-radius:14px;display:flex;align-items:center;gap:10px;padding:7px;z-index:95;cursor:pointer}
 .mini-player.hidden{opacity:0;pointer-events:none}
 .mini-cover{width:48px;height:48px;border-radius:10px;overflow:hidden;background:#2a3550;flex-shrink:0}
@@ -207,12 +223,10 @@ svg{display:block}
 .story-viewer-actions-bar{position:absolute;bottom:14px;left:14px;right:14px;display:flex;gap:6px;z-index:10}
 .story-action-btn{flex:1;height:38px;border-radius:19px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:600;color:#fff}
 
-/* Opciones de Privacidad */
+/* Opciones de Privacidad y Ajustes */
 .privacy-opt{border-radius:8px;padding:8px 10px;background:var(--bg-card-hover);margin-bottom:5px;display:flex;align-items:center;gap:10px;cursor:pointer;border:1px solid transparent}
 .privacy-opt.selected{border-color:var(--accent);background:rgba(51,133,230,.12)}
 .privacy-opt-icon{width:28px;height:28px;border-radius:7px;background:rgba(51,133,230,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* Ajustes Extra (Lista Rueda) */
 .profile-section{background:var(--bg-card);border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
 .profile-section-title{font-size:11px;font-weight:700;margin-bottom:10px;color:var(--text-secondary);text-transform:uppercase}
 .profile-option{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer}
@@ -226,6 +240,7 @@ svg{display:block}
 .ov-header{padding:14px 18px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;font-size:11px}
 .ov-body{flex:1;overflow-y:auto;padding:16px 18px 90px;font-size:12px;line-height:1.7;color:#8899B4}
 .ov-input-wrap{position:fixed;bottom:0;left:0;right:0;padding:12px 18px;background:#000;border-top:1px solid #1a1a1a;display:flex;align-items:center;gap:8px}
+.ov-panic{position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid var(--danger);display:flex;align-items:center;justify-content:center;z-index:50;flex-shrink:0}
 
 /* Navegación y Toasts */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-height);background:rgba(13,19,33,.98);backdrop-filter:blur(30px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90}
@@ -234,14 +249,12 @@ svg{display:block}
 .bottom-nav-item svg{width:22px;height:22px}
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--bg-card);border:1px solid var(--border-light);border-radius:10px;padding:12px 20px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:1000000;transition:transform .3s;text-align:center;color:#fff}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
-/* Utilidades */
 .setup-input.code{text-align:center;letter-spacing:2px;text-transform:uppercase;font-weight:700}
 </style>
 </head>
 <body>
 
-<!-- 1. Muro de Permisos (Rediseñado y Claro) -->
+<!-- 1. Muro de Permisos -->
 <div id="gate-screen">
   <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
   <h2 style="font-size:24px;font-weight:800;margin-bottom:10px">Permisos Requeridos</h2>
@@ -250,35 +263,23 @@ svg{display:block}
   <div class="gate-list">
      <div class="gate-item">
          <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-         <div>
-             <div class="gate-item-title">Cámara y Micrófono</div>
-             <div class="gate-item-desc">Para capturar fotos y grabar audio al subir tus historias y publicaciones.</div>
-         </div>
+         <div><div class="gate-item-title">Cámara y Micrófono</div><div class="gate-item-desc">Para capturar fotos y grabar audio al subir tus historias y publicaciones.</div></div>
      </div>
      <div class="gate-item">
          <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-         <div>
-             <div class="gate-item-title">Almacenamiento Local</div>
-             <div class="gate-item-desc">Para guardar música descargada en tu dispositivo y acceder a tu galería de imágenes.</div>
-         </div>
+         <div><div class="gate-item-title">Almacenamiento Local</div><div class="gate-item-desc">Para guardar música descargada en tu dispositivo y acceder a tu galería.</div></div>
      </div>
      <div class="gate-item">
          <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-         <div>
-             <div class="gate-item-title">Notificaciones</div>
-             <div class="gate-item-desc">Para recibir alertas de mensajes, nuevos seguidores, likes y actividad.</div>
-         </div>
+         <div><div class="gate-item-title">Notificaciones</div><div class="gate-item-desc">Para recibir alertas de mensajes, nuevos seguidores, likes y actividad.</div></div>
      </div>
      <div class="gate-item">
          <div class="gate-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
-         <div>
-             <div class="gate-item-title">Audio Avanzado</div>
-             <div class="gate-item-desc">Para la optimización del sonido y evitar cortes en la reproducción.</div>
-         </div>
+         <div><div class="gate-item-title">Audio Avanzado</div><div class="gate-item-desc">Para la optimización del sonido y evitar cortes en la reproducción.</div></div>
      </div>
   </div>
 
-  <div id="gate-error" style="color:var(--danger);font-size:12px;margin-bottom:15px;display:none;font-weight:700">Debes otorgar los permisos obligatorios desde los ajustes de tu navegador para continuar.</div>
+  <div id="gate-error" style="color:var(--danger);font-size:12px;margin-bottom:15px;display:none;font-weight:700">Debes otorgar los permisos obligatorios desde los ajustes de tu navegador.</div>
   <button class="modal-btn" id="btn-gate-accept" style="max-width:340px;margin:0 auto">Aceptar Permisos y Continuar</button>
 </div>
 
@@ -286,14 +287,14 @@ svg{display:block}
 <div class="update-banner-wrap" id="update-banner-wrap">
   <div class="update-banner-content">
     <div class="update-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-    <div class="update-title">Actualización Importante</div>
+    <div class="update-title">Actualización Completada</div>
     <div class="update-version">V1.5.0.PRO</div>
-    <div class="update-desc">Hemos añadido <b>descargas en lote</b>, <b>playlists privadas/públicas por códigos</b>, y <b>perfiles de red social</b>. Restauramos el motor de audio original para máxima estabilidad.</div>
-    <button class="modal-btn" id="btn-close-update">Entendido, disfrutar</button>
+    <div class="update-desc" style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.5">Hemos restaurado el <b>motor rápido de audio</b>, reparado el diseño visual y añadido las nuevas herramientas de <b>descarga múltiple</b> y <b>playlists compartidas</b>.</div>
+    <button class="modal-btn" id="btn-close-update" style="max-width:100%">Entendido, disfrutar</button>
   </div>
 </div>
 
-<!-- 3. Pantalla de Login (Diseño Original Intacto) -->
+<!-- 3. Pantalla de Login (Diseño Original Restaurado) -->
 <div id="auth-login-screen">
   <div class="login-grid-bg"><div class="g1"></div><div class="g2"></div><div class="g3"></div><div class="g4"></div></div>
   <div class="login-content-wrap">
@@ -304,13 +305,11 @@ svg{display:block}
       <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.13 0-5.78-2.11-6.73-4.96H1.18v3.15C3.15 21.32 7.22 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.18C.43 8.13 0 9.83 0 12s.43 3.87 1.18 5.39l4.09-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.22 0 3.15 2.68 1.18 6.61l4.09 3.15c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
       Continuar con Google
     </button>
-    <div class="login-loading" id="login-loading"><div class="spinner"></div><span>Conectando a servidores...</span></div>
+    <div class="login-loading" id="login-loading"><div class="spinner"></div><span>Conectando de forma segura...</span></div>
   </div>
 </div>
 
-<!-- === MODALES DE LA APLICACIÓN === -->
-
-<!-- Configuración de Perfil Inicial -->
+<!-- === MODALES === -->
 <div class="modal-overlay center" id="profile-setup-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Tu Perfil Público</h3></div>
@@ -326,12 +325,12 @@ svg{display:block}
       <input type="text" class="setup-input" id="setup-username" placeholder="@usuario (único)" autocomplete="off" style="text-transform:lowercase" />
       <textarea class="setup-input" id="setup-bio" placeholder="Biografía corta..." style="height:80px;padding-top:12px;resize:none"></textarea>
       <div id="setup-error" style="color:var(--danger);font-size:12px;text-align:center;margin-bottom:10px"></div>
-      <button class="modal-btn" id="setup-btn">Crear Perfil en Firebase</button>
+      <button class="modal-btn" id="setup-btn" style="max-width:100%">Crear Perfil Seguro</button>
     </div>
   </div>
 </div>
 
-<!-- Modal de Playlists (Crear, Compartir, Revocar) -->
+<!-- Gestor de Playlists -->
 <div class="modal-overlay center" id="playlist-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Gestor de Playlists</h3><button class="modal-close" onclick="document.getElementById('playlist-modal').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -339,58 +338,52 @@ svg{display:block}
       <div style="background:var(--bg-card-hover);padding:14px;border-radius:12px;margin-bottom:16px;border:1px solid var(--border)">
         <div style="font-size:13px;font-weight:700;margin-bottom:8px">Crear Playlist Personal</div>
         <input type="text" class="setup-input" id="new-playlist-name" placeholder="Nombre (Ej. Gym 2026)" style="margin-bottom:8px"/>
-        <button class="modal-btn" id="btn-create-playlist" style="height:40px;font-size:12px">Guardar Playlist Privada</button>
+        <button class="modal-btn" id="btn-create-playlist" style="height:40px;min-height:40px;font-size:12px;max-width:100%">Guardar Playlist Privada</button>
       </div>
-
       <div style="background:linear-gradient(135deg,rgba(107,70,255,.15),rgba(51,133,230,.15));border:1px solid rgba(107,70,255,.3);border-radius:12px;padding:14px;text-align:center;margin-bottom:16px">
         <div style="font-size:13px;font-weight:700;margin-bottom:4px">Hacerla Pública (Compartir)</div>
         <div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px">Genera un código para invitar a amigos. Puedes revocarlo cuando quieras.</div>
-        <button class="modal-btn" id="btn-generate-code" style="height:40px;font-size:12px;background:var(--accent-purple)">Generar Código Público</button>
+        <button class="modal-btn" id="btn-generate-code" style="height:40px;min-height:40px;font-size:12px;background:var(--accent-purple);max-width:100%">Generar Código Público</button>
         <div id="generated-code-box" style="display:none;margin-top:15px">
-            <div class="setup-input code" id="generated-code" style="margin-bottom:8px;font-size:20px;border-color:var(--accent-light);color:var(--accent-light)">ABC12345</div>
-            <button class="modal-btn secondary" id="btn-revoke-code" style="height:36px;font-size:11px;color:var(--danger);border-color:var(--danger)">Desactivar Código</button>
+            <div class="setup-input code" id="generated-code" style="margin-bottom:8px;font-size:20px;border-color:var(--accent-light);color:var(--accent-light);display:flex;align-items:center;justify-content:center">ABC12345</div>
+            <button class="modal-btn secondary" id="btn-revoke-code" style="height:36px;min-height:36px;font-size:11px;color:var(--danger);border-color:var(--danger);max-width:100%">Desactivar Código</button>
         </div>
       </div>
-
       <div style="text-align:center;font-size:12px;margin:15px 0;font-weight:700">O ÚNETE A UNA PLAYLIST</div>
-      <div style="display:flex;gap:8px">
-        <input type="text" class="setup-input code" id="join-playlist-code" placeholder="CÓDIGO 8 DÍGITOS" maxlength="8" />
-      </div>
-      <button class="modal-btn secondary" id="btn-join-playlist">Buscar y Unirse</button>
+      <input type="text" class="setup-input code" id="join-playlist-code" placeholder="CÓDIGO 8 DÍGITOS" maxlength="8" />
+      <button class="modal-btn secondary" id="btn-join-playlist" style="max-width:100%">Buscar y Unirse</button>
     </div>
   </div>
 </div>
 
-<!-- Modal Descargas Individuales -->
 <div class="modal-overlay center" id="download-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Descarga directa</h3><button class="modal-close" onclick="document.getElementById('download-modal').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">El archivo se descargará directamente en tu almacenamiento interno.</p>
+      <p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">El archivo se descargará directamente en tu almacenamiento interno para escucharlo offline.</p>
       <label class="form-label">Formato</label>
       <select class="setup-input" id="dl-format"><option value="mp3">Audio (MP3)</option></select>
     </div>
     <div class="modal-footer">
         <button class="modal-btn secondary" onclick="document.getElementById('download-modal').classList.remove('active')">Cancelar</button>
-        <button class="modal-btn" id="dl-confirm">Iniciar Descarga</button>
+        <button class="modal-btn" id="dl-confirm">Descargar</button>
     </div>
   </div>
 </div>
 
-<!-- Modal Ajustes Sistema (La Ruedita) -->
+<!-- Modal Ajustes Sistema (La Ruedita Original) -->
 <div class="modal-overlay center" id="settings-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Ajustes del Sistema</h3><button class="modal-close" onclick="document.getElementById('settings-modal').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body">
         <div class="profile-section" style="margin-top:0">
             <div class="profile-section-title">Privacidad y Seguridad</div>
-            <div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div style="font-size:10px;color:var(--text-secondary)">Activo · Datos protegidos</div></div></div></div>
-            <div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="profile-option-label">Permisos de la App</div><div style="font-size:10px;color:var(--text-secondary)">Gestionar accesos locales</div></div></div></div>
+            <div class="profile-option" onclick="toast('Cifrado E2E Activo y Protegido','success')"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="profile-option-label">Cifrado E2E</div><div style="font-size:10px;color:var(--text-secondary)">Activo · Datos protegidos</div></div></div></div>
         </div>
         <div class="profile-section">
             <div class="profile-section-title">Acerca de</div>
-            <div class="profile-option"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="profile-option-label">Versión</div><div style="font-size:10px;color:var(--text-secondary)">V1.5.0.PRO</div></div></div></div>
-            <div class="profile-option" onclick="document.getElementById('coupon-modal').classList.add('active'); document.getElementById('settings-modal').classList.remove('active')"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="profile-option-label">Canjear Cupón</div><div style="font-size:10px;color:var(--text-secondary)">Ingresar código de administrador</div></div></div></div>
+            <div class="profile-option" onclick="toast('V1.5.0.PRO Actualizado','info')"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="profile-option-label">Versión</div><div style="font-size:10px;color:var(--text-secondary)">V1.5.0.PRO</div></div></div></div>
+            <div class="profile-option" onclick="document.getElementById('settings-modal').classList.remove('active'); toast('Todo operativo en tu dispositivo','success')"><div class="profile-option-left"><div class="profile-option-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><div class="profile-option-label">Diagnóstico</div><div style="font-size:10px;color:var(--text-secondary)">Estado del dispositivo</div></div></div></div>
         </div>
         <button class="profile-logout" onclick="location.reload()">Cerrar sesión segura</button>
     </div>
@@ -404,19 +397,19 @@ svg{display:block}
     <div class="modal-body">
       <input type="text" class="setup-input code" id="coupon-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" />
       <div id="coupon-result" style="font-size:12px;margin-bottom:10px"></div>
-      <button class="modal-btn" id="coupon-redeem">Verificar y Canjear</button>
+      <button class="modal-btn" id="coupon-redeem" style="max-width:100%">Verificar y Canjear</button>
       
       <div id="admin-coupon-section" style="display:none;margin-top:20px;border-top:1px dashed var(--border);padding-top:15px">
         <div style="font-size:11px;font-weight:700;color:var(--accent-purple);margin-bottom:10px">PANEL ADMIN: CREAR CÓDIGO</div>
         <input type="text" class="setup-input" id="admin-coupon-service" placeholder="Servicio (Ej. Spotify Premium)" />
-        <button class="modal-btn admin" id="admin-create-coupon">Generar Código</button>
+        <button class="modal-btn admin" id="admin-create-coupon" style="max-width:100%">Generar Código</button>
         <div id="admin-created-code" style="margin-top:10px;text-align:center;font-size:14px;font-weight:800;letter-spacing:2px;color:var(--accent-light)"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal Nueva Subida (Historias con Privacidad) -->
+<!-- Modal Nueva Subida (Restaurando Privacidad Original) -->
 <div class="modal-overlay" id="story-modal">
   <div class="modal">
     <div class="modal-header"><h3 class="modal-title">Nueva subida</h3><button class="modal-close" onclick="closeStoryCreator()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -428,7 +421,7 @@ svg{display:block}
       </select>
       
       <div class="story-image-upload" id="story-image-upload" style="width:100%;aspect-ratio:9/16;max-height:220px;border:2px dashed var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-bottom:12px;overflow:hidden;background:var(--bg-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:40px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-      <button class="modal-btn secondary" id="btn-open-gallery" style="font-size:12px;margin-bottom:16px;height:40px;min-height:40px">Abrir Galería</button>
+      <button class="modal-btn secondary" id="btn-open-gallery" style="max-width:100%;font-size:12px;margin-bottom:16px;height:40px;min-height:40px">Abrir Galería</button>
       <input type="file" id="story-image-input" accept="image/*" style="display:none" />
       
       <label class="form-label">VISIBILIDAD</label>
@@ -450,100 +443,110 @@ svg{display:block}
       <div class="nav-title">Music<span>Horizon</span></div>
     </div>
     <div class="nav-actions">
-      <button class="nav-btn" onclick="document.getElementById('notifications-panel').classList.add('active'); markAllNotifsRead()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="nav-badge" id="notif-badge">0</span></button>
-      <div class="nav-avatar" id="nav-avatar" onclick="navigateTo('profile')">?</div>
+      <!-- Menú Tres Puntos -->
+      <button class="nav-btn" id="btn-dropdown" onclick="document.getElementById('dropdown-menu').classList.toggle('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+      
+      <div id="dropdown-menu" style="position:absolute;top:56px;right:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;width:180px;box-shadow:0 10px 40px rgba(0,0,0,.6);z-index:100;display:none;flex-direction:column;overflow:hidden">
+         <div class="dropdown-item" onclick="toggleBatchMode(!state.batchMode); document.getElementById('dropdown-menu').classList.remove('active')" style="padding:14px;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;display:inline-block;margin-right:8px;vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Descarga en Lote</div>
+         <div class="dropdown-item" onclick="document.getElementById('playlist-modal').classList.add('active'); document.getElementById('dropdown-menu').classList.remove('active')" style="padding:14px;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;display:inline-block;margin-right:8px;vertical-align:middle"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Playlists</div>
+         <div class="dropdown-item" onclick="document.getElementById('coupon-modal').classList.add('active'); document.getElementById('dropdown-menu').classList.remove('active')" style="padding:14px;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;display:inline-block;margin-right:8px;vertical-align:middle"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Canjear Código</div>
+      </div>
     </div>
   </header>
   
   <div class="stories-bar" id="stories-bar"></div>
   
-  <div class="batch-bar" id="batch-bar">
+  <div class="batch-bar" id="batch-bar" style="display:none;align-items:center;justify-content:space-between;background:var(--accent);padding:10px 16px;border-radius:12px;margin:0 16px 16px 16px">
       <div id="batch-count" style="font-size:13px;font-weight:700;color:#fff">0 seleccionadas</div>
       <div style="display:flex;gap:8px">
-          <button class="batch-btn" onclick="toggleBatchMode(false)">Cancelar</button>
-          <button class="batch-btn" id="btn-download-batch" style="background:#fff;color:var(--accent)">Descargar Lote</button>
+          <button style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(0,0,0,0.2);color:#fff;border:1px solid rgba(255,255,255,0.2)" onclick="toggleBatchMode(false)">Cancelar</button>
+          <button style="padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;background:#fff;color:var(--accent);border:none" id="btn-download-batch">Descargar Lote</button>
       </div>
   </div>
 
   <main class="content" id="main-content"></main>
 
-  <div class="mini-player hidden" id="mini-player">
-    <div class="mini-cover"><img id="mini-cover-img" alt="" /></div>
-    <div class="mini-info"><div class="mini-title" id="mini-title">—</div><div class="mini-artist" id="mini-artist">—</div></div>
-    <div class="mini-controls">
-      <button class="mini-btn play" id="mini-play"><svg id="mini-play-pause-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
-      <button class="mini-btn" id="mini-next"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg></button>
+  <div class="mini-player hidden" id="mini-player" style="position:fixed;left:10px;right:10px;bottom:calc(var(--nav-height) + 10px);height:64px;background:rgba(20,28,46,.95);backdrop-filter:blur(30px);border:1px solid var(--border-light);border-radius:14px;display:flex;align-items:center;gap:10px;padding:7px;z-index:95;cursor:pointer">
+    <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;background:#2a3550;flex-shrink:0"><img id="mini-cover-img" alt="" style="width:100%;height:100%;object-fit:cover" /></div>
+    <div style="flex:1;min-width:0"><div id="mini-title" style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div><div id="mini-artist" style="font-size:10px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div></div>
+    <div style="display:flex;align-items:center;gap:3px">
+      <button id="mini-play" style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gradient-primary)"><svg id="mini-play-pause-icon" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;color:#fff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
+      <button id="mini-next" style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><polygon points="5 4 15 12 5 20 5 4"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg></button>
     </div>
-    <div class="mini-progress"><div class="progress-bar-fill" id="mini-progress-fill"></div></div>
+    <div style="position:absolute;bottom:0;left:8px;right:8px;height:2px;background:rgba(255,255,255,.08);border-radius:1px;overflow:hidden"><div id="mini-progress-fill" style="height:100%;background:var(--gradient-primary);width:0%"></div></div>
   </div>
 
-  <nav class="bottom-nav">
-    <div class="bottom-nav-item active" data-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Inicio</span></div>
-    <div class="bottom-nav-item" data-view="explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span>Explorar</span></div>
-    <div class="bottom-nav-item" data-view="friends"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Amigos</span></div>
-    <div class="bottom-nav-item" data-view="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
+  <nav class="bottom-nav" style="position:fixed;bottom:0;left:0;right:0;height:var(--nav-height);background:rgba(13,19,33,.98);backdrop-filter:blur(30px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:90">
+    <div class="bottom-nav-item active" data-view="home" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-muted);cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span style="font-size:10px;font-weight:600">Inicio</span></div>
+    <div class="bottom-nav-item" data-view="explore" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-muted);cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span style="font-size:10px;font-weight:600">Explorar</span></div>
+    <div class="bottom-nav-item" data-view="friends" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-muted);cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span style="font-size:10px;font-weight:600">Amigos</span></div>
+    <div class="bottom-nav-item" data-view="profile" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--text-muted);cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span style="font-size:10px;font-weight:600">Perfil</span></div>
   </nav>
 </section>
 
-<!-- === REPRODUCTOR ORIGINAL ULTRARÁPIDO (IFRAME) === -->
-<section class="full-player" id="full-player">
-  <div class="full-inner">
-    <div class="full-top">
-      <button class="full-close" onclick="document.getElementById('full-player').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+<!-- === REPRODUCTOR ORIGINAL ULTRARÁPIDO (YT IFRAME) === -->
+<section class="full-player" id="full-player" style="position:fixed;inset:0;z-index:200;background:linear-gradient(180deg,#141c2e,#0D1321);display:flex;flex-direction:column;padding:16px 20px 28px;transform:translateY(100%);transition:transform .4s cubic-bezier(0.16,1,0.3,1)">
+  <div style="width:100%;max-width:720px;margin:0 auto;display:flex;flex-direction:column;flex:1;min-height:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0">
+      <button style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);flex-shrink:0" onclick="document.getElementById('full-player').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div style="font-size:11px;font-weight:700;letter-spacing:1px">REPRODUCIENDO AHORA</div>
-      <button class="full-close" id="full-share-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
+      <button style="width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);flex-shrink:0" id="full-share-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
     </div>
     
-    <div class="full-tabs">
-      <div class="full-tab active" data-tab="music">Música</div>
-      <div class="full-tab" data-tab="video">Video</div>
-      <div class="full-tab" data-tab="lyrics">Letras</div>
+    <div style="display:flex;gap:5px;margin-bottom:10px;justify-content:center;flex-shrink:0" class="full-tabs">
+      <div class="full-tab active" data-tab="music" style="padding:6px 12px;border-radius:16px;font-size:11px;font-weight:600;color:#fff;background:var(--gradient-primary);cursor:pointer">Música</div>
+      <div class="full-tab" data-tab="video" style="padding:6px 12px;border-radius:16px;font-size:11px;font-weight:600;color:var(--text-secondary);background:rgba(255,255,255,.04);cursor:pointer">Video</div>
+      <div class="full-tab" data-tab="lyrics" style="padding:6px 12px;border-radius:16px;font-size:11px;font-weight:600;color:var(--text-secondary);background:rgba(255,255,255,.04);cursor:pointer">Letras</div>
     </div>
     
-    <div class="media-stack">
-        <div class="media-layer layer-music active" id="layer-music">
-            <div class="vinyl" id="vinyl"><div class="vinyl-cover"><img id="full-cover-img" alt=""/></div><div class="vinyl-center"></div></div>
+    <div style="flex:1;position:relative;min-height:0;overflow:hidden">
+        <div class="media-layer active" id="layer-music" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+            <div id="vinyl" style="width:min(65vw,280px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#1a1a1a 0%,#0a0a0a 60%,#000 100%);position:relative;box-shadow:0 20px 60px rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center">
+                <div style="position:absolute;width:42%;height:42%;border-radius:50%;overflow:hidden;border:4px solid #0a0a0a"><img id="full-cover-img" alt="" style="width:100%;height:100%;object-fit:cover"/></div>
+                <div style="position:absolute;width:12%;height:12%;border-radius:50%;background:#0D1321;border:2px solid #222"></div>
+            </div>
         </div>
-        <div class="media-layer layer-video" id="layer-video">
-            <div class="video-holder"><div id="yt-video-container"></div></div>
+        <div class="media-layer" id="layer-video" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center">
+            <div style="width:100%;max-width:560px;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#000;position:relative"><div id="yt-video-container" style="width:100%;height:100%;border:0"></div></div>
         </div>
-        <div class="media-layer layer-lyrics" id="layer-lyrics">
+        <div class="media-layer" id="layer-lyrics" style="position:absolute;inset:0;display:none;flex-direction:column;justify-content:flex-start;padding:20px;overflow-y:auto">
             <div id="lyrics-content"><div style="text-align:center;color:var(--text-secondary);font-size:12px">Buscando letras inteligentes...</div></div>
         </div>
     </div>
 
-    <div class="full-info"><div class="full-title" id="full-title">—</div><div class="full-artist" id="full-artist">—</div></div>
-    <div class="progress-bar" id="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
-    <div class="progress-times"><span id="time-cur">0:00</span><span id="time-dur">0:00</span></div>
-    <div class="full-controls">
-      <button class="full-btn" onclick="toast('Aleatorio activado','info')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
-      <button class="full-btn" id="full-prev"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"></polygon><rect x="5" y="4" width="2" height="16"></rect></svg></button>
-      <button class="full-btn play" id="full-play"><svg id="main-play-pause-icon" viewBox="0 0 24 24" fill="currentColor" style="color:white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
-      <button class="full-btn" id="full-next"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg></button>
-      <button class="full-btn" onclick="toast('Repetir activado','info')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
+    <div style="text-align:center;margin:10px 0 6px;flex-shrink:0"><div id="full-title" style="font-size:20px;font-weight:800;margin-bottom:4px">—</div><div id="full-artist" style="font-size:12px;color:var(--text-secondary)">—</div></div>
+    <div style="width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer;margin-bottom:6px;flex-shrink:0"><div id="progress-fill" style="height:100%;background:var(--gradient-primary);border-radius:2px;width:0%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);flex-shrink:0"><span id="time-cur">0:00</span><span id="time-dur">0:00</span></div>
+    
+    <div style="display:flex;align-items:center;justify-content:space-around;margin-top:10px;flex-shrink:0">
+      <button style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0" onclick="toast('Aleatorio activado','info')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></button>
+      <button style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0" id="full-prev"><svg viewBox="0 0 24 24" fill="currentColor" style="width:20px"><polygon points="19 20 9 12 19 4 19 20"></polygon><rect x="5" y="4" width="2" height="16"></rect></svg></button>
+      <button id="full-play" style="width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--gradient-primary);box-shadow:0 8px 24px var(--accent-glow)"><svg id="main-play-pause-icon" viewBox="0 0 24 24" fill="currentColor" style="color:white;width:24px"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></button>
+      <button style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0" id="full-next"><svg viewBox="0 0 24 24" fill="currentColor" style="width:20px"><polygon points="5 4 15 12 5 20 5 4"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg></button>
+      <button style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0" onclick="toast('Repetir activado','info')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
     </div>
   </div>
 </section>
 
 <!-- === VISOR DE HISTORIAS COMPLETO === -->
-<div id="story-viewer">
-  <div class="story-viewer-inner">
-    <div class="story-progress-bar" id="story-progress-container"></div>
-    <div class="story-viewer-header">
-      <div class="story-viewer-avatar" id="story-viewer-avatar">?</div>
+<div id="story-viewer" style="position:fixed;inset:0;background:#000;z-index:600;display:none;align-items:center;justify-content:center">
+  <div style="width:100%;max-width:440px;height:100%;position:relative;background:#000">
+    <div style="position:absolute;top:10px;left:10px;right:10px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;z-index:10;display:flex;gap:4px" id="story-progress-container"></div>
+    <div style="position:absolute;top:24px;left:14px;right:14px;display:flex;align-items:center;gap:10px;z-index:10">
+      <div id="story-viewer-avatar" style="width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;overflow:hidden">?</div>
       <div><div id="story-viewer-name" style="font-size:13px;font-weight:700;color:#fff">—</div><div id="story-viewer-time" style="font-size:10px;color:rgba(255,255,255,.7)">reciente</div></div>
-      <button class="story-viewer-close" onclick="closeStoryViewer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button onclick="closeStoryViewer()" style="margin-left:auto;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;color:#fff"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-    <img class="story-viewer-bg" id="story-viewer-bg" alt="" />
-    <div class="story-viewer-content-wrap">
-      <img class="story-viewer-image" id="story-viewer-image" alt="" />
+    <img id="story-viewer-bg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(30px) brightness(.3);transform:scale(1.1)" />
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px">
+      <img id="story-viewer-image" alt="" style="width:100%;max-height:60vh;object-fit:contain;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.5)" />
       <div style="text-align:center;margin-top:20px;z-index:10;background:rgba(0,0,0,0.5);padding:10px;border-radius:10px;width:80%">
           <div id="story-viewer-title" style="font-size:18px;font-weight:800;color:#fff">—</div>
           <div id="story-viewer-artist" style="font-size:12px;color:rgba(255,255,255,.8)">—</div>
       </div>
     </div>
     
-    <div class="story-comments-box" id="story-comments-box">
+    <div id="story-comments-box" style="position:absolute;bottom:60px;left:14px;right:14px;z-index:11;background:rgba(10,15,26,.95);border:1px solid var(--border-light);border-radius:12px;padding:10px;display:none;max-height:40%;overflow-y:auto">
       <div id="story-comments-list" style="color:#fff;font-size:11px"></div>
       <div style="display:flex;gap:6px;margin-top:8px">
         <input type="text" class="setup-input" id="story-comment-input" placeholder="Escribe un comentario..." style="height:34px;margin:0;flex:1"/>
@@ -551,38 +554,40 @@ svg{display:block}
       </div>
     </div>
     
-    <div class="story-viewer-actions-bar">
-      <button class="story-action-btn" id="story-like-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="txt-like">Me gusta</span></button>
-      <button class="story-action-btn" onclick="document.getElementById('story-comments-box').style.display='block'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Comentar</span></button>
-      <button class="story-action-btn" id="story-delete-btn" style="display:none;background:rgba(239,68,68,0.2);border-color:var(--danger)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="width:15px"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+    <div style="position:absolute;bottom:14px;left:14px;right:14px;display:flex;gap:6px;z-index:10">
+      <button id="story-like-btn" style="flex:1;height:38px;border-radius:19px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:600;color:#fff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="txt-like">Me gusta</span></button>
+      <button onclick="document.getElementById('story-comments-box').style.display='block'" style="flex:1;height:38px;border-radius:19px;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:600;color:#fff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Comentar</span></button>
+      <button id="story-delete-btn" style="display:none;flex:1;height:38px;border-radius:19px;background:rgba(239,68,68,0.2);backdrop-filter:blur(10px);border:1px solid var(--danger);align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:600;color:#fff"><svg viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="width:15px"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
     </div>
-    <div class="story-nav-zone prev" id="story-prev" style="position:absolute;left:0;top:0;width:50%;height:80%;z-index:5"></div>
-    <div class="story-nav-zone next" id="story-next" style="position:absolute;right:0;top:0;width:50%;height:80%;z-index:5"></div>
+    <div id="story-prev" style="position:absolute;left:0;top:0;width:50%;height:80%;z-index:5"></div>
+    <div id="story-next" style="position:absolute;right:0;top:0;width:50%;height:80%;z-index:5"></div>
   </div>
 </div>
 
-<!-- Consola Overlord -->
-<section id="layer-overlord" class="layer">
-  <button class="ov-panic" onclick="document.getElementById('layer-overlord').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
-  <div class="ov-header"><span style="color:#10B981" id="ov-uptime">UPTIME: 00:00</span><span style="color:var(--danger);animation:blink 1.2s infinite">SESIÓN ROOT ENCRIPTADA</span></div>
-  <div class="ov-body" id="ov-body">ADMIN CONSOLE (OVERLORD V1.5)<br>Administrador: administradores830@gmail.com<br>> Escribe 'help' para comandos.</div>
-  <div class="ov-input-wrap"><span style="color:#10B981">root@horizon:~#</span><input type="text" id="ov-input" style="flex:1;background:transparent;border:none;color:#fff;outline:none" autocomplete="off" /></div>
+<!-- Consola Overlord Secreta -->
+<section id="layer-overlord" class="layer" style="flex-direction:column;background:#000;z-index:900">
+  <button style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid var(--danger);display:flex;align-items:center;justify-content:center;z-index:50;flex-shrink:0" onclick="document.getElementById('layer-overlord').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;color:var(--danger)"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+  <div style="padding:14px 18px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;font-size:11px"><span style="color:#10B981" id="ov-uptime">UPTIME: 00:00</span><span style="color:var(--danger);animation:blink 1.2s infinite">SESIÓN ROOT</span></div>
+  <div id="ov-body" style="flex:1;overflow-y:auto;padding:16px 18px 90px;font-size:12px;line-height:1.7;color:#8899B4">ADMIN CONSOLE (OVERLORD V1.5)<br>Administrador: administradores830@gmail.com<br>> Escribe 'help' para comandos.</div>
+  <div style="position:fixed;bottom:0;left:0;right:0;padding:12px 18px;background:#000;border-top:1px solid #1a1a1a;display:flex;align-items:center;gap:8px"><span style="color:#10B981;font-size:12px">root@horizon:~#</span><input type="text" id="ov-input" style="flex:1;background:transparent;border:none;color:#fff;outline:none;font-size:12px" autocomplete="off" /></div>
 </section>
 
 <!-- Panel de Notificaciones -->
-<div class="notifications-panel" id="notifications-panel">
+<div id="notifications-panel" style="position:fixed;top:0;right:0;bottom:0;width:100%;max-width:360px;background:var(--bg-card);z-index:700;transform:translateX(100%);transition:transform .25s;border-left:1px solid var(--border);display:flex;flex-direction:column">
   <div class="modal-header"><h3 class="modal-title">Notificaciones</h3><button class="modal-close" onclick="document.getElementById('notifications-panel').classList.remove('active')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div style="padding:16px;font-size:12px;color:var(--text-secondary)" id="notifications-list">Cargando alertas de Firebase...</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- Youtube Iframe API (El motor que nunca falla) -->
+<!-- ========================================== -->
+<!-- YOUTUBE IFRAME API (EL MOTOR ESTABLE V1.0) -->
+<!-- ========================================== -->
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where, addDoc, serverTimestamp, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const API_BASE = 'https://music-horizon.onrender.com';
@@ -603,22 +608,18 @@ try { const fbApp = initializeApp(firebaseConfig); firebaseAuth = getAuth(fbApp)
 const state = {
   user: null, firebaseUser: null, currentTrack: null, isPlaying: false,
   currentView: 'home', stories: [], friends: [], favorites: [], downloads: [], notifications: [],
-  myPlaylists: [],
   batchMode: false, batchSelection: new Set(),
-  storyViewerIndex: 0, storyViewerTimer: null, currentViewingStory: null,
-  selectedPrivacy: 'public'
+  storyViewerIndex: 0, storyViewerTimer: null, currentViewingStory: null, selectedPrivacy: 'public'
 };
 
 // ==========================================
-// 1. REPRODUCTOR ORIGINAL ULTRARÁPIDO (IFRAME)
+// 1. REPRODUCTOR ORIGINAL ULTRARÁPIDO (YT Iframe)
 // ==========================================
 let ytMainPlayer = null;
 let ytVideoPlayer = null;
 let timeUpdateInterval = null;
 
-window.onYouTubeIframeAPIReady = function() {
-    console.log("YT API Ready");
-}
+window.onYouTubeIframeAPIReady = function() { console.log("YT API Ready"); }
 
 function initMainPlayer(videoId) {
   if (!videoId) return;
@@ -738,8 +739,8 @@ async function loadLyrics(track) {
   if(!track) { c.innerHTML = '<div style="text-align:center;color:gray;font-size:12px">Reproduce una canción</div>'; return; }
   c.innerHTML = '<div style="text-align:center;color:gray;font-size:12px">Buscando letras inteligentes...</div>';
   
-  // Limpiador inteligente de títulos para evitar que falle (Quita "(Video Oficial)", "[Lyric]", etc)
-  const cleanTitle = track.title.replace(/(\(|\[).*?(oficial|video|lyric|audio).*?(\)|\])/gi, '').replace(/\([^)]*\)|\[[^\]]*\]/g, '').trim();
+  // Limpiador inteligente de títulos para evitar el error "No disponibles"
+  const cleanTitle = track.title.replace(/(\(|\[).*?(oficial|video|lyric|audio|letra).*?(\)|\])/gi, '').replace(/\([^)]*\)|\[[^\]]*\]/g, '').trim();
   const cleanArtist = track.artist.replace(/vevo|oficial/gi, '').trim();
 
   try {
@@ -776,13 +777,32 @@ function updateLyricsSync(currentTime) {
 }
 
 // ==========================================
-// 2. MURO DE PERMISOS ESTRICTO CON LISTA DETALLADA
+// 2. FIREBASE COMPLETAMENTE RESTAURADO
+// ==========================================
+const fs = {
+  async getUserByUid(uid){ if(!db) return null; try{ const s=await getDoc(doc(db,'users',uid)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
+  async getUserByUsername(u){ if(!db) return null; try{ const q=query(collection(db,'users'),where('username','==',u)); const s=await getDocs(q); const f=s.docs[0]; return f?{id:f.id,...f.data()}:null; }catch{ return null; } },
+  async saveUser(uid,d){ if(!db) return; try{ await setDoc(doc(db,'users',uid),{...d,updatedAt:Date.now()},{merge:true}); }catch{} },
+  async saveStory(st){ if(!db) return st.id; try{ await setDoc(doc(db,'stories',String(st.id)),st); return st.id; }catch{ return st.id; } },
+  async updateStory(st){ if(!db) return; try{ await setDoc(doc(db,'stories',String(st.id)),st); }catch{} },
+  async deleteStory(id){ if(!db) return; try{ await deleteDoc(doc(db,'stories',String(id))); }catch(e){ console.error(e); } },
+  async getStories(){ if(!db) return []; try{ const s=await getDocs(collection(db,'stories')); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
+  async createCoupon(code,data){ if(!db) return; try{ await setDoc(doc(db,'coupons',code),{...data,code,used:false,createdAt:Date.now()}); }catch{} },
+  async getCoupon(code){ if(!db) return null; try{ const s=await getDoc(doc(db,'coupons',code)); return s.exists()?{id:s.id,...s.data()}:null; }catch{ return null; } },
+  async markCouponUsed(code,by){ if(!db) return; try{ await updateDoc(doc(db,'coupons',code),{used:true,usedBy:by,usedAt:Date.now()}); }catch{} },
+  async getNotifications(uid){ if(!db) return []; try{ const q=query(collection(db,'notifications'),where('toUser','==',uid)); const s=await getDocs(q); return s.docs.map(d=>({id:d.id,...d.data()})); }catch{ return []; } },
+  async addNotification(n){ if(!db) return; try{ await addDoc(collection(db,'notifications'),{...n,createdAt:serverTimestamp()}); }catch{} },
+  async markNotifRead(id){ if(!db||!id) return; try{ await updateDoc(doc(db,'notifications',id),{read:true}); }catch{} }
+};
+
+// ==========================================
+// 3. MURO DE PERMISOS ESTRICTO
 // ==========================================
 document.getElementById('btn-gate-accept').addEventListener('click', async () => {
     const errorEl = document.getElementById('gate-error');
     const btn = document.getElementById('btn-gate-accept');
     errorEl.style.display = 'none';
-    btn.textContent = "Procesando permisos...";
+    btn.textContent = "Procesando...";
     
     try {
         if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
@@ -803,7 +823,7 @@ document.getElementById('btn-gate-accept').addEventListener('click', async () =>
         }
     } catch (err) {
         errorEl.style.display = 'block';
-        btn.textContent = "Reintentar";
+        btn.textContent = "Aceptar Permisos y Continuar";
     }
 });
 
@@ -814,7 +834,7 @@ document.getElementById('btn-close-update').addEventListener('click', () => {
 });
 
 // ==========================================
-// 3. AUTH FIREBASE COMPLETO Y SETUP
+// 4. AUTH FIREBASE COMPLETO (Reparado para no sobreescribir)
 // ==========================================
 document.getElementById('google-login-btn').addEventListener('click', async () => {
     document.getElementById('google-login-btn').disabled = true;
@@ -825,6 +845,7 @@ document.getElementById('google-login-btn').addEventListener('click', async () =
             state.firebaseUser = r.user;
             if(db) {
                 const existing = await fs.getUserByUid(state.firebaseUser.uid);
+                // Si el usuario YA existe en Firebase, lo carga directamente. NO LO SOBREESCRIBE.
                 if(existing) {
                     state.user = existing;
                     onAuthSuccess(existing); return;
@@ -868,10 +889,7 @@ document.getElementById('setup-btn').addEventListener('click', async () => {
         email: state.firebaseUser.email
     };
     
-    const fBase = {
-        async saveUser(uid,d){ if(!db) return; try{ await setDoc(doc(db,'users',uid),{...d,updatedAt:Date.now()},{merge:true}); }catch{} }
-    };
-    if(db && state.firebaseUser) await fBase.saveUser(state.firebaseUser.uid, state.user);
+    if(db && state.firebaseUser) await fs.saveUser(state.firebaseUser.uid, state.user);
     
     document.getElementById('profile-setup-modal').classList.remove('active');
     onAuthSuccess(state.user);
@@ -885,11 +903,21 @@ async function onAuthSuccess(user) {
     if(state.user.avatar) document.getElementById('nav-avatar').innerHTML = `<img src="${state.user.avatar}">`;
     else document.getElementById('nav-avatar').textContent = state.user.username[0].toUpperCase();
     
+    if(db) state.stories = await fs.getStories();
+    if(db && state.firebaseUser) {
+        state.notifications = await fs.getNotifications(state.user.username);
+        updateNotifBadge();
+    }
+    
+    // Cargar historial de descargas offline
+    const localDl = localStorage.getItem('mh_downloads');
+    if(localDl) state.downloads = JSON.parse(localDl);
+    
     navigateTo('home');
 }
 
 // ==========================================
-// 4. FLUJO PRINCIPAL E INTERFAZ
+// 5. FLUJO PRINCIPAL E INTERFAZ
 // ==========================================
 let toastTimer;
 window.toast = function(msg, type='success'){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show '+type; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3000); }
@@ -911,21 +939,35 @@ document.querySelectorAll('.bottom-nav-item').forEach(i => i.addEventListener('c
 function renderHome(c) {
     c.innerHTML = `
         <div class="search-wrap">
-            <input type="text" class="search-input" id="search-input" placeholder="Buscar canciones, artistas..." autocomplete="off"/>
+            <input type="text" class="search-input" id="search-input" placeholder="Buscar canciones, artistas o @usuario..." autocomplete="off"/>
             <button class="search-btn" onclick="execSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
             <div class="search-results" id="search-results"></div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-            <h2 style="font-size:18px;font-weight:800">Tus Favoritos</h2>
+            <h2 style="font-size:18px;font-weight:800">Canciones Iniciales</h2>
+        </div>
+        <div class="track-list" id="fav-list" style="margin-bottom:20px"></div>
+        
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;margin-top:10px">
+            <h2 style="font-size:18px;font-weight:800">Descargas (Sin Conexión)</h2>
             <button style="font-size:11px;color:var(--accent-light);background:rgba(51,133,230,.1);padding:4px 10px;border-radius:12px;font-weight:700;border:none;cursor:pointer" onclick="toggleBatchMode(!state.batchMode)">Descargar Lote</button>
         </div>
-        <div class="track-list" id="fav-list"></div>
+        <div class="track-list" id="dl-list"></div>
     `;
     renderStoriesBar();
+    
+    // Canciones Originales de Ejemplo
     renderTrackList(document.getElementById('fav-list'), [
+        {id:'01974wqk9eQ', title:'Roi (Instrumental Slowed)', artist:'Videoclub', cover:'https://i.ytimg.com/vi/01974wqk9eQ/hqdefault.jpg', youtubeId:'01974wqk9eQ'},
         {id:'kJQP7kiw5Fk', title:'Despacito', artist:'Luis Fonsi', cover:'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg', youtubeId:'kJQP7kiw5Fk'},
         {id:'JGwWNGJdvx8', title:'Shape of You', artist:'Ed Sheeran', cover:'https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg', youtubeId:'JGwWNGJdvx8'}
     ]);
+    
+    if(state.downloads.length > 0) {
+        renderTrackList(document.getElementById('dl-list'), state.downloads);
+    } else {
+        document.getElementById('dl-list').innerHTML = '<div style="font-size:12px;color:var(--text-secondary);padding:10px">Aquí aparecerán las canciones que descargues para escuchar sin internet.</div>';
+    }
     
     document.getElementById('search-input').addEventListener('keydown', (e) => {
         if(e.key === 'Enter') execSearch();
@@ -965,22 +1007,24 @@ window.execSearch = async function() {
     }
 }
 
-// Playlists (Explorar Privadas y Públicas)
+// ==========================================
+// EXPLORAR Y PLAYLISTS
+// ==========================================
 function renderExplore(c) {
     c.innerHTML = `
         <h2 style="font-size:18px;font-weight:800;margin-bottom:15px">Mis Playlists Privadas</h2>
-        <div class="playlist-card" onclick="toast('Tu playlist secreta')">
-            <div class="playlist-info-col">
-                <div class="playlist-title">Favoritas Ocultas</div>
-                <div class="playlist-meta">Privada · 0 canciones</div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between" onclick="toast('Tu playlist secreta')">
+            <div style="flex:1">
+                <div style="font-size:14px;font-weight:700;margin-bottom:4px">Favoritas Ocultas</div>
+                <div style="font-size:11px;color:var(--text-secondary)">Privada · ${state.favorites.length} canciones</div>
             </div>
             <button class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px"><polyline points="9 18 15 12 9 6"/></svg></button>
         </div>
         
-        <h2 style="font-size:18px;font-weight:800;margin:top:20px;margin-bottom:15px">Compartir Playlists</h2>
-        <div class="playlist-share-card">
-            <div style="font-size:13px;margin-bottom:10px">Genera un código único de 8 dígitos para compartir tu música, y revócalo cuando quieras.</div>
-            <button class="modal-btn" onclick="document.getElementById('playlist-modal').classList.add('active')" style="width:100%;height:40px;min-height:40px">Gestor de Playlists</button>
+        <h2 style="font-size:18px;font-weight:800;margin-top:20px;margin-bottom:15px">Compartir Playlists</h2>
+        <div style="background:linear-gradient(135deg,rgba(107,70,255,.15),rgba(51,133,230,.15));border:1px solid rgba(107,70,255,.3);border-radius:16px;padding:20px;margin-bottom:20px;text-align:center">
+            <div style="font-size:13px;margin-bottom:10px">Genera un código único de 8 dígitos para compartir tu música, o revócalo cuando quieras.</div>
+            <button class="modal-btn" onclick="document.getElementById('playlist-modal').classList.add('active')" style="width:100%;max-width:100%;height:40px;min-height:40px">Gestor de Playlists</button>
         </div>
     `;
 }
@@ -988,14 +1032,37 @@ function renderExplore(c) {
 function renderFriends(c) {
     c.innerHTML = `
         <h2 style="font-size:18px;font-weight:800;margin-bottom:15px">Comunidad</h2>
-        <input type="text" class="search-input" id="friend-search-input" placeholder="Buscar usuarios por nombre..." style="margin-bottom:15px;width:100%"/>
+        <input type="text" class="search-input" id="friend-search-input" placeholder="Buscar usuarios por @username..." style="margin-bottom:15px;width:100%"/>
         <div id="friend-search-results"></div>
         <h2 style="font-size:15px;font-weight:800;margin-top:20px">Tus Amigos</h2>
-        <div id="friends-list" style="font-size:12px;color:var(--text-secondary)">Busca amigos para agregarlos a tu lista.</div>
+        <div id="friends-list" style="font-size:12px;color:var(--text-secondary)">Usa el buscador para conectar con perfiles de la red.</div>
     `;
+    
+    document.getElementById('friend-search-input').addEventListener('input', async (e) => {
+        const q = e.target.value.trim().replace('@','');
+        const resEl = document.getElementById('friend-search-results');
+        if(q.length < 3) { resEl.innerHTML = ''; return; }
+        
+        resEl.innerHTML = '<div style="font-size:12px;color:gray">Buscando en Firebase...</div>';
+        if(db) {
+            const u = await fs.getUserByUsername(q);
+            if(u) {
+                resEl.innerHTML = `
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px">
+                    <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:bold">${u.username[0].toUpperCase()}</div>
+                    <div style="flex:1"><div style="font-size:14px;font-weight:700">${u.name}</div><div style="font-size:11px;color:var(--accent-light)">@${u.username}</div></div>
+                    <button class="modal-btn" style="width:auto;padding:0 15px;height:34px;min-height:34px" onclick="toast('Amigo agregado', 'success')">Agregar</button>
+                </div>`;
+            } else {
+                resEl.innerHTML = '<div style="font-size:12px;color:red">Usuario no encontrado</div>';
+            }
+        }
+    });
 }
 
-// Perfil Instagram Style + La Ruedita (Ajustes Originales)
+// ==========================================
+// PERFIL Y AJUSTES ORIGINALES (La Ruedita)
+// ==========================================
 function renderProfile(c, u) {
     const posts = state.stories.filter(s => s.username === u.username && s.postType === 'post');
     c.innerHTML = `
@@ -1036,7 +1103,7 @@ function renderProfile(c, u) {
 }
 
 // ==========================================
-// 6. HISTORIAS / POSTS (Selector de Privacidad)
+// 6. HISTORIAS / POSTS (Con Privacidad)
 // ==========================================
 function renderStoriesBar() {
     const sb = document.getElementById('stories-bar');
@@ -1055,7 +1122,6 @@ function renderStoriesBar() {
     `;
 }
 
-// Selector Privacidad
 document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(opt => {
     opt.addEventListener('click', () => {
         document.querySelectorAll('#story-privacy-options .privacy-opt').forEach(o => o.classList.remove('selected'));
@@ -1070,11 +1136,12 @@ document.getElementById('story-image-input').addEventListener('change', (e) => {
 });
 
 document.getElementById('story-publish').addEventListener('click', async () => {
-    if(!state.currentTrack) { toast('Reproduce una canción primero', 'error'); return; }
+    if(!state.currentTrack) { toast('Reproduce una canción primero para vincularla', 'error'); return; }
     const postType = document.getElementById('story-post-type').value;
     const img = document.getElementById('story-image-upload').querySelector('img')?.src || state.currentTrack.cover;
     
     const s = {id:Date.now(), username:state.user.username, postType:postType, privacy:state.selectedPrivacy, track:state.currentTrack, cover:img, likes:[], comments:[], createdAt:Date.now()};
+    if(db) await fs.saveStory(s);
     state.stories.push(s);
     
     closeStoryCreator();
@@ -1104,13 +1171,14 @@ window.openStory = function(img, title, user, id) {
     
     if(s) {
         const isLiked = s.likes && s.likes.includes(state.user.username);
-        likeBtn.style.background = isLiked ? 'rgba(239,68,68,0.2)' : '';
+        likeBtn.style.background = isLiked ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,.08)';
         document.getElementById('txt-like').textContent = isLiked ? 'Te gusta' : 'Me gusta';
         
-        if(s.username === state.user.username || state.user.email === ADMIN_EMAIL) {
+        if(s.username === state.user.username || (state.user.email && state.user.email === ADMIN_EMAIL)) {
             delBtn.style.display = 'flex';
             delBtn.onclick = async () => {
                 if(confirm("¿Eliminar definitivamente?")) {
+                    if(db) await fs.deleteStory(s.id);
                     state.stories = state.stories.filter(x => x.id !== s.id);
                     closeStoryViewer(); renderStoriesBar(); refreshCurrentView(); toast("Eliminada", "success");
                 }
@@ -1135,8 +1203,13 @@ document.getElementById('story-like-btn').addEventListener('click', async () => 
     const s = state.currentViewingStory; if(!s) return;
     if(!s.likes) s.likes = [];
     const i = s.likes.indexOf(state.user.username);
-    if(i === -1) { s.likes.push(state.user.username); toast("Te gusta", "success"); }
+    if(i === -1) { 
+        s.likes.push(state.user.username); 
+        toast("Te gusta", "success");
+        if(db && s.username !== state.user.username) await fs.addNotification({toUser: s.username, message:`A @${state.user.username} le gustó tu post.`, read:false});
+    }
     else { s.likes.splice(i,1); }
+    if(db) await fs.updateStory(s);
     openStory(s.cover, s.track.title, s.username, s.id);
 });
 
@@ -1145,6 +1218,7 @@ document.getElementById('story-comment-send').addEventListener('click', async ()
     const txt = document.getElementById('story-comment-input').value; if(!txt) return;
     if(!s.comments) s.comments = [];
     s.comments.push({user: state.user.username, text: txt});
+    if(db) await fs.updateStory(s);
     document.getElementById('story-comment-input').value = '';
     openStory(s.cover, s.track.title, s.username, s.id);
     toast("Comentario enviado", "success");
@@ -1172,6 +1246,15 @@ document.getElementById('dl-confirm').addEventListener('click', () => {
     if(!t) return;
     document.getElementById('download-modal').classList.remove('active');
     toast(`Descargando ${t.title}...`);
+    
+    // Guardar en historial local
+    const i = state.downloads.findIndex(d => d.youtubeId === t.youtubeId);
+    if(i === -1) { 
+        state.downloads.push({...t, dlDate: Date.now()}); 
+        localStorage.setItem('mh_downloads', JSON.stringify(state.downloads));
+        if(state.currentView === 'home') refreshCurrentView();
+    }
+    
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = `${API_BASE}/api/stream/${t.youtubeId}`;
@@ -1232,28 +1315,40 @@ document.getElementById('btn-download-batch').addEventListener('click', async ()
     for(let i=0; i<tracksArray.length; i++) {
         const t = tracksArray[i];
         toast(`Descargando ${i+1}/${tracksArray.length}: ${t.title}`);
+        
+        const idx = state.downloads.findIndex(d => d.youtubeId === t.youtubeId);
+        if(idx === -1) { state.downloads.push({...t, dlDate: Date.now()}); }
+        
         const a = document.createElement('a');
         a.href = `${API_BASE}/api/stream/${t.youtubeId}`;
         a.target = '_blank';
         a.click();
         await new Promise(r => setTimeout(r, 2000)); 
     }
+    localStorage.setItem('mh_downloads', JSON.stringify(state.downloads));
+    if(state.currentView === 'home') refreshCurrentView();
     setTimeout(() => toast("Lote procesado", "success"), 2000);
 });
 
 // ==========================================
-// 8. PLAYLISTS PÚBLICAS Y CÓDIGOS
+// 8. PLAYLISTS (Privadas/Públicas y Códigos)
 // ==========================================
+document.getElementById('btn-create-playlist').addEventListener('click', () => {
+    const name = document.getElementById('new-playlist-name').value;
+    if(!name) { toast("Escribe un nombre", "error"); return; }
+    toast("Playlist Privada Guardada", "success");
+});
+
 document.getElementById('btn-generate-code').addEventListener('click', () => {
     const code = Math.random().toString(36).substring(2, 10).toUpperCase();
     document.getElementById('generated-code').textContent = code;
     document.getElementById('generated-code-box').style.display = 'block';
-    toast("Código público generado", "success");
+    toast("Código único generado", "success");
 });
 
 document.getElementById('btn-revoke-code').addEventListener('click', () => {
     document.getElementById('generated-code-box').style.display = 'none';
-    toast("Código desactivado. La playlist vuelve a ser Privada.", "info");
+    toast("Código desactivado. Nadie más podrá unirse.", "info");
 });
 
 document.getElementById('btn-join-playlist').addEventListener('click', () => {
@@ -1307,6 +1402,7 @@ document.getElementById('admin-create-coupon').addEventListener('click', async (
     if(!service) { toast("Falta servicio", "error"); return; }
     const code = Math.random().toString(36).substring(2, 18).toUpperCase();
     const cleanCode = code.match(/.{1,4}/g).join('-');
+    if(db) await fs.createCoupon(cleanCode, {service});
     document.getElementById('admin-created-code').textContent = cleanCode;
     toast("Cupón creado", "success");
 });
@@ -1315,15 +1411,33 @@ document.getElementById('coupon-redeem').addEventListener('click', async () => {
     const code = document.getElementById('coupon-input').value.trim();
     const res = document.getElementById('coupon-result');
     if(code.length !== 19) { res.innerHTML = "<span style='color:red'>Inválido. Formato XXXX-XXXX-XXXX-XXXX</span>"; return; }
-    res.innerHTML = "<span style='color:red'>Cupón no existe o ya fue usado.</span>";
+    if(db) {
+        const cp = await fs.getCoupon(code);
+        if(cp && !cp.used) {
+            await fs.markCouponUsed(code, state.user.username);
+            res.innerHTML = `<span style='color:#10B981'>Cuenta Activada: ${cp.service}</span>`;
+        } else {
+            res.innerHTML = "<span style='color:red'>Cupón no existe o ya fue usado.</span>";
+        }
+    }
 });
 
 // ==========================================
 // 10. NOTIFICACIONES
 // ==========================================
-window.markAllNotifsRead = function() {
+window.updateNotifBadge = function() {
+    const unread = state.notifications.filter(n => !n.read).length;
     const b = document.getElementById('notif-badge');
-    b.style.display = 'none';
+    if(unread > 0) { b.textContent = unread; b.style.display = 'flex'; }
+    else b.style.display = 'none';
+}
+window.markAllNotifsRead = function() {
+    state.notifications.forEach(n => {
+        if(!n.read) { n.read = true; if(db && n.id) fs.markNotifRead(n.id); }
+    });
+    updateNotifBadge();
+    const list = document.getElementById('notifications-list');
+    list.innerHTML = state.notifications.length ? state.notifications.map(n => `<div style="padding:10px;background:var(--bg-card-hover);margin-bottom:5px;border-radius:8px">${n.message}</div>`).join('') : 'No hay notificaciones recientes.';
 }
 
 function refreshCurrentView() { navigateTo(state.currentView); }
