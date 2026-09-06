@@ -1326,56 +1326,11 @@ setInterval(applyDayTheme, 10*60*1000);
 function hexToRgb(hex){ hex=hex.replace('#',''); if(hex.length===3) hex=hex.split('').map(c=>c+c).join(''); const n=parseInt(hex,16); return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}; }
 function rgbToHex(r,g,b){ return '#'+[r,g,b].map(x=>Math.max(0,Math.min(255,Math.round(x))).toString(16).padStart(2,'0')).join(''); }
 function hexToHsl(hex){ let {r,g,b}=hexToRgb(hex); r/=255;g/=255;b/=255; const max=Math.max(r,g,b),min=Math.min(r,g,b); let h,s,l=(max+min)/2; if(max===min){h=s=0;} else { const d=max-min; s=l>0.5?d/(2-max-min):d/(max+min); switch(max){ case r: h=(g-b)/d+(g<b?6:0); break; case g: h=(b-r)/d+2; break; default: h=(r-g)/d+4; } h/=6; } return {h:h*360,s:s*100,l:l*100}; }
-function hslToHex(h,s,l){ h=((h%360)+360)%360; s=Math.max(0,Math.min(100,s))/100; l=Math.max(0,Math.min(100,l))/100; const c=(1-Math.abs(2*l-1))*s; const x=c*(1-Math.abs((h/60)%2-1)); const m=l-c/2; let r,g,b; if(h<60){r=c;g=x;b=0;} else if(h<120){r=x;g=c;b=0;} else if(h<180){r=0;g=c;b=x;} else if(h<240){r=0;g=x;b=c;} else if(h<300){r=x;g=0;b=c;} else {r=c;g=0;b=x;} return rgbToHex((r+m)*255,(g+m)*255,(b+m)*255); }
+function hslToHex(h,s,l){ h=((h%360)+360)%360; s=Math.max(0,Math.min(100,s))/100; l=Math.max(0,Math.min(100,l))/100; const c=(1-Math.abs(2*l-1))*s; const x=c*(1-Math.abs((h/60)%2-1)); const m=l-c/2; let r,g,b; if(h<60){r=c;g=x;b=0;} else if(h<120){r=x;g=c;b=0;} else if(h<180){r=0;g=c;b=x;} else if(h<240){r=0;g=c;b=x;} else if(h<300){r=x;g=0;b=c;} else {r=c;g=0;b=x;} return rgbToHex((r+m)*255,(g+m)*255,(b+m)*255); }
 function buildThemeFromHex(hex){
   const {h,s,l}=hexToHsl(hex); const {r,g,b}=hexToRgb(hex);
   return { accent:hex, accentLight:hslToHex(h,Math.min(100,s+5),Math.min(78,l+18)), accentGlow:`rgba(${r},${g},${b},.35)`, accentPurple:hslToHex(h+45,Math.min(100,s+10),l) };
 }
-function applyAdminTheme(t){ document.body.style.setProperty('--accent',t.accent); document.body.style.setProperty('--accent-light',t.accentLight); document.body.style.setProperty('--accent-glow',t.accentGlow); document.body.style.setProperty('--accent-purple',t.accentPurple); }
-function clearAdminTheme(){ ['--accent','--accent-light','--accent-glow','--accent-purple'].forEach(v=>document.body.style.removeProperty(v)); }
-const THEME_PRESETS=[
-  {accent:'#E63385',accentLight:'#FF5BA3',accentGlow:'rgba(230,51,133,.35)',accentPurple:'#B446FF'},
-  {accent:'#3385E6',accentLight:'#5BA3FF',accentGlow:'rgba(51,133,230,.35)',accentPurple:'#6B46FF'},
-  {accent:'#33C2E6',accentLight:'#5BD8FF',accentGlow:'rgba(51,194,230,.35)',accentPurple:'#468CFF'},
-  {accent:'#33E6A8',accentLight:'#5BFFC4',accentGlow:'rgba(51,230,168,.35)',accentPurple:'#33B4E6'},
-  {accent:'#E6A833',accentLight:'#FFC65B',accentGlow:'rgba(230,168,51,.35)',accentPurple:'#E66B33'},
-  {accent:'#B446FF',accentLight:'#CE7CFF',accentGlow:'rgba(180,70,255,.35)',accentPurple:'#E633A8'},
-  {accent:'#E64B3D',accentLight:'#FF7D64',accentGlow:'rgba(230,75,61,.35)',accentPurple:'#E68333'}
-];
-function subscribeAdminTheme(){
-  if(!db) return;
-  try{ onSnapshot(doc(db,'appConfig','theme'),(snap)=>{ if(snap.exists()){ const t=snap.data(); if(t.enabled) applyAdminTheme(t); else clearAdminTheme(); } }); }catch{}
-}
-subscribeAdminTheme();
-function openAdminThemeModal(){
-  const sw=document.getElementById('theme-swatches');
-  sw.innerHTML=THEME_PRESETS.map((p,i)=>`<div class="theme-swatch" data-i="${i}" style="background:${p.accent}"></div>`).join('');
-  sw.querySelectorAll('.theme-swatch').forEach(el=>el.addEventListener('click',()=>{
-    const p=THEME_PRESETS[el.dataset.i];
-    document.getElementById('admin-theme-color').value=p.accent;
-    document.getElementById('admin-theme-preview').textContent=p.accent.toUpperCase();
-    sw.querySelectorAll('.theme-swatch').forEach(s=>s.classList.remove('active')); el.classList.add('active');
-  }));
-  document.getElementById('admin-theme-modal').classList.add('active');
-}
-document.getElementById('admin-theme-close').addEventListener('click',()=>document.getElementById('admin-theme-modal').classList.remove('active'));
-document.getElementById('admin-theme-color').addEventListener('input',(e)=>{ document.getElementById('admin-theme-preview').textContent=e.target.value.toUpperCase(); document.getElementById('theme-swatches').querySelectorAll('.theme-swatch').forEach(s=>s.classList.remove('active')); });
-document.getElementById('admin-theme-apply').addEventListener('click',async ()=>{
-  if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; }
-  const hex=document.getElementById('admin-theme-color').value;
-  const theme=buildThemeFromHex(hex);
-  applyAdminTheme(theme);
-  await fs.setAppTheme({...theme,enabled:true});
-  toast('Tema aplicado a todos los usuarios','success');
-  document.getElementById('admin-theme-modal').classList.remove('active');
-});
-document.getElementById('admin-theme-reset').addEventListener('click',async ()=>{
-  if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; }
-  clearAdminTheme(); applyDayTheme();
-  await fs.setAppTheme({enabled:false});
-  toast('Tema restablecido al automatico por dia','info');
-  document.getElementById('admin-theme-modal').classList.remove('active');
-});
 
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
 
@@ -1410,6 +1365,7 @@ function initLoginPlayer() {
     }
   });
 }
+
 function stopLoginPlayer() {
   if (loginPlayer) { try { loginPlayer.stopVideo(); loginPlayer.destroy(); } catch(e){} loginPlayer = null; }
   const c = document.getElementById('login-audio-container');
@@ -1430,11 +1386,17 @@ function initMainPlayer(videoId) {
     });
   } else { ytMainPlayer.loadVideoById(videoId); }
 }
+
 function onMainPlayerStateChange(e) {
   if (e.data === YT.PlayerState.PLAYING) { state.isPlaying = true; updatePlayStateUI(true); startTimeUpdateLoop(); }
   else if (e.data === YT.PlayerState.PAUSED) { state.isPlaying = false; updatePlayStateUI(false); }
-  else if (e.data === YT.PlayerState.ENDED) { if (state.repeatMode === 2 && ytMainPlayer) { ytMainPlayer.seekTo(0); ytMainPlayer.playVideo(); } else if (state.appSettings.autoplay) nextTrack(); else { state.isPlaying=false; updatePlayStateUI(false); } }
+  else if (e.data === YT.PlayerState.ENDED) { 
+    if (state.repeatMode === 2 && ytMainPlayer) { ytMainPlayer.seekTo(0); ytMainPlayer.playVideo(); } 
+    else if (state.appSettings.autoplay) nextTrack(); 
+    else { state.isPlaying=false; updatePlayStateUI(false); } 
+  }
 }
+
 function startTimeUpdateLoop() {
   if (timeUpdateInterval) clearInterval(timeUpdateInterval);
   timeUpdateInterval = setInterval(() => {
@@ -1458,6 +1420,15 @@ function startTimeUpdateLoop() {
       }
     }
   }, 250);
+}
+
+function formatTime(seconds) {
+  if (!isFinite(seconds) || seconds < 0) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
 }
 function formatTime(seconds) {
   if (!isFinite(seconds) || seconds < 0) return '0:00';
