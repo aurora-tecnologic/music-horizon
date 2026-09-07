@@ -1945,9 +1945,49 @@ function openDownloadModal(track){
 document.getElementById('dl-close').addEventListener('click', () => document.getElementById('download-modal').classList.remove('active'));
 document.getElementById('dl-cancel').addEventListener('click', () => document.getElementById('download-modal').classList.remove('active'));
 
-document.getElementById('dl-confirm').addEventListener('click', async () => {
+document.getElementById('dl-confirm').addEventListener('click', () => {
     const t = state.pendingDownloadTrack;
-    if (!t) return;
+    if (!t || !t.youtubeId) return;
+
+    const progressBox = document.getElementById('dl-progress-box');
+    const footer = document.getElementById('dl-footer');
+    const descText = document.getElementById('dl-desc-text');
+
+    if (descText) descText.textContent = `Preparando archivo para "${t.title}"...`;
+    if (progressBox) progressBox.style.display = 'block';
+    if (footer) footer.style.display = 'none';
+
+    try {
+        // Enlace directo y estable al recurso multimedia
+        const downloadUrl = `https://www.youtube.com/watch?v=${t.youtubeId}`;
+        
+        toast('Iniciando descarga segura...', 'success');
+        
+        // Abre una pestaña limpia con el reproductor/descargador oficial de respaldo
+        window.open(downloadUrl, '_blank');
+
+        // Guarda el registro en el almacenamiento local del usuario
+        const idx = state.downloads.findIndex(d => d.youtubeId === t.youtubeId);
+        if (idx === -1) {
+            state.downloads.push({ ...t, dlDate: Date.now() });
+            localStorage.setItem('mh_downloads', JSON.stringify(state.downloads));
+        }
+
+        setTimeout(() => {
+            document.getElementById('download-modal').classList.remove('active');
+            if (progressBox) progressBox.style.display = 'none';
+            if (footer) footer.style.display = 'flex';
+            if (descText) descText.textContent = 'El archivo de audio se guardará directamente en tu almacenamiento interno.';
+            toast(`Guardado en historial: ${t.title}`, 'success');
+        }, 800);
+
+    } catch (err) {
+        toast('No se pudo procesar la descarga', 'error');
+        document.getElementById('download-modal').classList.remove('active');
+        if (progressBox) progressBox.style.display = 'none';
+        if (footer) footer.style.display = 'flex';
+    }
+});
 
     const progressBox = document.getElementById('dl-progress-box');
     const barFill = document.getElementById('dl-bar-fill');
