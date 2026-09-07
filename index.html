@@ -1332,6 +1332,60 @@ function buildThemeFromHex(hex){
   return { accent:hex, accentLight:hslToHex(h,Math.min(100,s+5),Math.min(78,l+18)), accentGlow:`rgba(${r},${g},${b},.35)`, accentPurple:hslToHex(h+45,Math.min(100,s+10),l) };
 }
 
+function applyAdminTheme(t){ document.body.style.setProperty('--accent',t.accent); document.body.style.setProperty('--accent-light',t.accentLight); document.body.style.setProperty('--accent-glow',t.accentGlow); document.body.style.setProperty('--accent-purple',t.accentPurple); }
+function clearAdminTheme(){ ['--accent','--accent-light','--accent-glow','--accent-purple'].forEach(v=>document.body.style.removeProperty(v)); }
+const THEME_PRESETS=[
+  {accent:'#E63385',accentLight:'#FF5BA3',accentGlow:'rgba(230,51,133,.35)',accentPurple:'#B446FF'},
+  {accent:'#3385E6',accentLight:'#5BA3FF',accentGlow:'rgba(51,133,230,.35)',accentPurple:'#6B46FF'},
+  {accent:'#33C2E6',accentLight:'#5BD8FF',accentGlow:'rgba(51,194,230,.35)',accentPurple:'#468CFF'},
+  {accent:'#33E6A8',accentLight:'#5BFFC4',accentGlow:'rgba(51,230,168,.35)',accentPurple:'#33B4E6'},
+  {accent:'#E6A833',accentLight:'#FFC65B',accentGlow:'rgba(230,168,51,.35)',accentPurple:'#E66B33'},
+  {accent:'#B446FF',accentLight:'#CE7CFF',accentGlow:'rgba(180,70,255,.35)',accentPurple:'#E633A8'},
+  {accent:'#E64B3D',accentLight:'#FF7D64',accentGlow:'rgba(230,75,61,.35)',accentPurple:'#E68333'}
+];
+
+function subscribeAdminTheme(){
+  if(!db) return;
+  try{
+    onSnapshot(doc(db,'appConfig','theme'), (snap)=>{
+      if(snap.exists()){ const t=snap.data(); if(t.enabled) applyAdminTheme(t); else clearAdminTheme(); }
+    }, (error)=>{
+      console.warn("Lectura de tema remoto omitida; usando tema local.");
+    });
+  }catch(e){}
+}
+subscribeAdminTheme();
+
+function openAdminThemeModal(){
+  const sw=document.getElementById('theme-swatches');
+  sw.innerHTML=THEME_PRESETS.map((p,i)=>`<div class="theme-swatch" data-i="${i}" style="background:${p.accent}"></div>`).join('');
+  sw.querySelectorAll('.theme-swatch').forEach(el=>el.addEventListener('click',()=>{
+    const p=THEME_PRESETS[el.dataset.i];
+    document.getElementById('admin-theme-color').value=p.accent;
+    document.getElementById('admin-theme-preview').textContent=p.accent.toUpperCase();
+    sw.querySelectorAll('.theme-swatch').forEach(s=>s.classList.remove('active')); el.classList.add('active');
+  }));
+  document.getElementById('admin-theme-modal').classList.add('active');
+}
+document.getElementById('admin-theme-close').addEventListener('click',()=>document.getElementById('admin-theme-modal').classList.remove('active'));
+document.getElementById('admin-theme-color').addEventListener('input',(e)=>{ document.getElementById('admin-theme-preview').textContent=e.target.value.toUpperCase(); document.getElementById('theme-swatches').querySelectorAll('.theme-swatch').forEach(s=>s.classList.remove('active')); });
+document.getElementById('admin-theme-apply').addEventListener('click',async ()=>{
+  if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; }
+  const hex=document.getElementById('admin-theme-color').value;
+  const theme=buildThemeFromHex(hex);
+  applyAdminTheme(theme);
+  await fs.setAppTheme({...theme,enabled:true});
+  toast('Tema aplicado a todos los usuarios','success');
+  document.getElementById('admin-theme-modal').classList.remove('active');
+});
+document.getElementById('admin-theme-reset').addEventListener('click',async ()=>{
+  if(state.user?.email!==ADMIN_EMAIL){ toast('Acceso restringido al administrador','error'); return; }
+  clearAdminTheme(); applyDayTheme();
+  await fs.setAppTheme({enabled:false});
+  toast('Tema restablecido al automatico por dia','info');
+  document.getElementById('admin-theme-modal').classList.remove('active');
+});
+
 let ytMainPlayer = null, ytVideoPlayer = null, timeUpdateInterval = null, loginPlayer = null;
 
 function updateLyricsSync(currentTime) {
@@ -1422,14 +1476,6 @@ function startTimeUpdateLoop() {
   }, 250);
 }
 
-function formatTime(seconds) {
-  if (!isFinite(seconds) || seconds < 0) return '0:00';
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-}
-
-}
 function formatTime(seconds) {
   if (!isFinite(seconds) || seconds < 0) return '0:00';
   const mins = Math.floor(seconds / 60);
