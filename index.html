@@ -1635,25 +1635,46 @@ document.getElementById('admin-update-close').addEventListener('click',()=>docum
 
 document.getElementById('google-login-btn').addEventListener('click', async () => {
   stopLoginPlayer();
-  const btn=document.getElementById('google-login-btn'); const loading=document.getElementById('login-loading');
-  btn.disabled=true; loading.classList.add('show');
-  try{
-    let firebaseUser=null;
-    if(firebaseAuth){ const r=await signInWithPopup(firebaseAuth,new GoogleAuthProvider()); firebaseUser=r.user; }
-    else { await new Promise(r=>setTimeout(r,1000)); firebaseUser={uid:'demo_'+Date.now(),displayName:'Usuario',email:'usuario@gmail.com',photoURL:null}; }
-    state.firebaseUser=firebaseUser;
-    if(db){ const existing=await fs.getUserByUid(firebaseUser.uid); if(existing){ state.user=existing; await loadAllUserData(firebaseUser.uid); onAuthSuccess(existing); return; } }
+  const btn = document.getElementById('google-login-btn');
+  const loading = document.getElementById('login-loading');
+  btn.disabled = true;
+  loading.classList.add('show');
+  try {
+    let firebaseUser = null;
+    if (firebaseAuth) {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const r = await signInWithPopup(firebaseAuth, provider);
+      firebaseUser = r.user;
+    } else {
+      await new Promise(r => setTimeout(r, 1000));
+      firebaseUser = { uid: 'demo_' + Date.now(), displayName: 'Usuario', email: 'usuario@gmail.com', photoURL: null };
+    }
+    state.firebaseUser = firebaseUser;
+    if (db) {
+      const existing = await fs.getUserByUid(firebaseUser.uid);
+      if (existing) {
+        state.user = existing;
+        await loadAllUserData(firebaseUser.uid);
+        onAuthSuccess(existing);
+        return;
+      }
+    }
     document.getElementById('profile-setup-modal').classList.add('active');
-    document.getElementById('setup-name').value=firebaseUser.displayName||'';
-    document.getElementById('setup-username').value='';
-    document.getElementById('setup-bio').value='';
-    document.getElementById('setup-instagram').value='';
-    document.getElementById('setup-error').textContent='';
-    document.getElementById('avatar-preview').style.display='none';
-    document.getElementById('avatar-initial').style.display='block';
-    document.getElementById('avatar-initial').textContent=(firebaseUser.displayName||'?')[0].toUpperCase();
-  }catch(e){ toast('Error: '+e.message,'error'); }
-  finally{ btn.disabled=false; loading.classList.remove('show'); }
+    document.getElementById('setup-name').value = firebaseUser.displayName || '';
+    document.getElementById('setup-username').value = '';
+    document.getElementById('setup-bio').value = '';
+    document.getElementById('setup-instagram').value = '';
+    document.getElementById('setup-error').textContent = '';
+    document.getElementById('avatar-preview').style.display = 'none';
+    document.getElementById('avatar-initial').style.display = 'block';
+    document.getElementById('avatar-initial').textContent = (firebaseUser.displayName || '?')[0].toUpperCase();
+  } catch (e) {
+    toast('Error: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    loading.classList.remove('show');
+  }
 });
 
 async function loadAllUserData(uid){
